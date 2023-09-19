@@ -1,4 +1,4 @@
-import '@/src/styles/globals.css'
+import '@/styles/globals.css'
 import React, { ReactElement, ReactNode, useState } from 'react'
 
 import { NextPage } from 'next'
