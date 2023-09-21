@@ -3,5 +3,6 @@ module.exports = {
     '@it-incubator/stylelint-config',
     'stylelint-config-tailwindcss',
     'stylelint-config-tailwindcss/scss',
+    'stylelint-config-clean-order'
   ],
 }
