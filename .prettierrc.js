@@ -1,4 +1,6 @@
 module.exports = {
-  ...require('@it-incubator/prettier-config'),
-  //override settings here
-}
+  trailingComma: 'es5',
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true,
+};
