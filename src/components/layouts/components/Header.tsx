@@ -9,6 +9,7 @@ export function Header() {
       <Container>
         <div className="flex bg-red-400 justify-between">
           <div>
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <span
               className="block text-emerald-900"
               onClick={() => replace(route, undefined, { shallow: true })}
