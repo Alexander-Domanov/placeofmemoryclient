@@ -5,9 +5,9 @@ export function Header() {
   const { replace, route } = useRouter();
 
   return (
-    <header className="h-[60px] flex items-center text-white bg-dark-700 border-b border-dark-100">
+    <header className="h-[60px] flex items-center border-b ">
       <Container>
-        <div className="flex bg-red-400 justify-between">
+        <div className="flex justify-between">
           <div>
             <span
               className="block text-emerald-900"
@@ -16,7 +16,7 @@ export function Header() {
               Minsk
             </span>
           </div>
-          <div className="flex text-emerald-900 gap-3">
+          <div className="flex gap-3">
             <div>LogIn</div>
             <div>SignUp</div>
           </div>
