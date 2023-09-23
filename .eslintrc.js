@@ -31,5 +31,6 @@ module.exports = {
     'react/function-component-definition': 0,
     'import/no-extraneous-dependencies': 0,
     'global-require': 0,
+    'react/no-unescaped-entities': 0,
   },
 };
