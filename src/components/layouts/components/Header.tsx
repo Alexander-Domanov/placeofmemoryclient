@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Container } from '@/components/layouts/components/Containter';
 
 export function Header() {
@@ -7,7 +8,7 @@ export function Header() {
   return (
     <header className="h-[60px] flex items-center border-b ">
       <Container>
-        <div className="flex justify-between">
+        <section className="flex justify-between">
           <div>
             <span
               className="block text-emerald-900"
@@ -16,11 +17,17 @@ export function Header() {
               Minsk
             </span>
           </div>
-          <div className="flex gap-3">
-            <div>LogIn</div>
-            <div>SignUp</div>
-          </div>
-        </div>
+          <nav>
+            <ul className="flex gap-3">
+              <li>
+                <Link href="/signin/session/new">LogIn</Link>
+              </li>
+              <li>
+                <Link href="/signup/new">SignUp</Link>
+              </li>
+            </ul>
+          </nav>
+        </section>
       </Container>
     </header>
   );

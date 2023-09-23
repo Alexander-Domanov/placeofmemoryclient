@@ -11,6 +11,8 @@ export const Container: FC<PropsWithChildren<Props>> = ({
   className,
 }) => {
   return (
-    <div className={clsx('w-full px-4 mx-auto', className)}>{children}</div>
+    <section className={clsx('max-w-7xl w-full px-4 mx-auto', className)}>
+      {children}
+    </section>
   );
 };
