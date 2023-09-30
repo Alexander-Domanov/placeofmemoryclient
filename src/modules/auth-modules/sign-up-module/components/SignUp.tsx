@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { AuthLayout, Container } from '@/components';
+import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { OAUTH_AUTHORIZATION } from '@/services';
 import {
@@ -15,10 +15,7 @@ export const SignUp = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema);
 
-  const { sendRegisteredData, isLoading, variables } = useRegister(
-    () => reset(),
-    setCustomError
-  );
+  const { sendRegisteredData } = useRegister(() => reset(), setCustomError);
   const registeredDataSubmit = (data: any) => {
     sendRegisteredData(data);
   };

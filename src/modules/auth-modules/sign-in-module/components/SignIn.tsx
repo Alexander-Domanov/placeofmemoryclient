@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
-import { AuthLayout, Container } from '@/components';
+import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
@@ -14,7 +14,7 @@ export const SignIn = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin);
 
-  const { sendLoginData, isLoading } = useLoginMutation(
+  const { sendLoginData } = useLoginMutation(
     () =>
       setCustomError(
         'password',

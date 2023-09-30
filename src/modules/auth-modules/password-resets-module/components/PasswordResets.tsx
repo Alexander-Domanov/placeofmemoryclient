@@ -14,7 +14,7 @@ export const PasswordResets = () => {
 
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(emailSchema);
-  const { sendLinkPasswordRecovery, isLoading, variables } = useForgotPassword(
+  const { sendLinkPasswordRecovery } = useForgotPassword(
     // onSuccess,
     (field: string, massage: string) => {
       setCustomError(field, massage);
