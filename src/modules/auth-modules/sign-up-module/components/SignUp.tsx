@@ -32,35 +32,39 @@ export const SignUp = () => {
             Sign up with Google
           </Button>
           <Button onClick={() => setshowOrHiddenForm(!showOrHiddenForm)}>
-            Continue with email
+            {!showOrHiddenForm
+              ? 'Continue with email'
+              : 'Continue without email'}
           </Button>
-          <form onSubmit={handleSubmit(registeredDataSubmit)}>
-            <Input
-              type="text"
-              id="userName"
-              label="Username"
-              error={errors?.userName?.message}
-              {...register('userName')}
-            />
-            <Input
-              type="email"
-              id="email"
-              label="Email"
-              error={errors?.email?.message}
-              {...register('email')}
-            />
-            <Input
-              placeholder="6+ characters"
-              type="password"
-              id="password"
-              error={errors?.password?.message}
-              label="Password"
-              {...register('password')}
-            />
-            <Button className="mt-1" type="submit">
-              Sign Up
-            </Button>
-          </form>
+          {showOrHiddenForm && (
+            <form onSubmit={handleSubmit(registeredDataSubmit)}>
+              <Input
+                type="text"
+                id="userName"
+                label="Username"
+                error={errors?.userName?.message}
+                {...register('userName')}
+              />
+              <Input
+                type="email"
+                id="email"
+                label="Email"
+                error={errors?.email?.message}
+                {...register('email')}
+              />
+              <Input
+                placeholder="6+ characters"
+                type="password"
+                id="password"
+                error={errors?.password?.message}
+                label="Password"
+                {...register('password')}
+              />
+              <Button className="mt-1" type="submit">
+                Sign Up
+              </Button>
+            </form>
+          )}
           <div className="flex gap-1">
             <span> Already have an account?</span>
             <Link className="underline" href="/signin/session/new">
