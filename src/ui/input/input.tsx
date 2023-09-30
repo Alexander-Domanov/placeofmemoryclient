@@ -12,7 +12,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ placeholder, error, className, type, id, label, ...props }, ref) => {
     return (
       <>
-        <label htmlFor={id}>{label}</label>
+        <label className="font-bold" htmlFor={id}>
+          {label}
+        </label>
         <input
           id={id}
           type={type}

@@ -34,5 +34,6 @@ module.exports = {
     'react/no-unescaped-entities': 0,
     '@typescript-eslint/no-shadow': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
   },
 };

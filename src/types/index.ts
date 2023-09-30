@@ -1,1 +1,2 @@
-export * from './loginType/responseType';
+export * from '@/types/auth/responseType';
+export * from './auth/requestType';

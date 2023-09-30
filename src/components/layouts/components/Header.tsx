@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Container } from '@/components/layouts/components/Containter';
+import { routes } from '@/common/routing/routes';
 
 export function Header() {
   const { replace, route } = useRouter();
@@ -20,10 +21,10 @@ export function Header() {
           <nav>
             <ul className="flex gap-3">
               <li>
-                <Link href="/signin/session/new">LogIn</Link>
+                <Link href={routes.auth.signIn}>LogIn</Link>
               </li>
               <li>
-                <Link href="/signup/new">SignUp</Link>
+                <Link href={routes.auth.signUp}>SignUp</Link>
               </li>
             </ul>
           </nav>
