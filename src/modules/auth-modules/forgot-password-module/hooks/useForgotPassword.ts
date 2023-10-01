@@ -3,11 +3,11 @@ import { passwordRecoveryAPI } from '@/services';
 import { ResponseError } from '@/types/response-error-type';
 
 interface ForgotPasswordType {
-  // onSuccess: () => void;
+  onSuccess: () => void;
   setError: (name: string, message: string) => void;
 }
 export const useForgotPassword = (
-  // onSuccess: ForgotPasswordType['onSuccess'],
+  onSuccess: ForgotPasswordType['onSuccess'],
   setError: ForgotPasswordType['setError']
 ) => {
   const {
@@ -19,7 +19,7 @@ export const useForgotPassword = (
     mutationFn: passwordRecoveryAPI.passwordRecoveryWithRecaptcha,
     onSuccess: (data) => {
       if (data) {
-        // onSuccess();
+        onSuccess();
       } else {
         setError('email', 'user is not found');
       }

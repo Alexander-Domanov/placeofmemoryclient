@@ -1,8 +1,8 @@
 export const routes = {
   auth: {
-    signIn: '/signin/session/new',
-    signUp: '/signup/new',
-    forgotPassword: '/password_resets/new',
+    signIn: '/auth/login/',
+    signUp: '/auth/registration',
+    forgotPassword: '/auth/forgot-password',
   },
   main: '/',
 };

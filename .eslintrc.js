@@ -35,5 +35,8 @@ module.exports = {
     '@typescript-eslint/no-shadow': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-unused-expressions': 0,
+    'react/jsx-no-useless-fragment': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
   },
 };
