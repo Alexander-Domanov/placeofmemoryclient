@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { PasswordResets } from '@/modules/auth-modules/password-resets-module';
+import { PasswordResets } from '@/modules/auth-modules/forgot-password-module';
 
 const PasswordResetsPage = () => {
   return (

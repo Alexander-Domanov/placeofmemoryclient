@@ -2,13 +2,13 @@ import { useMutation, useQueryClient } from 'react-query';
 import { sendLoginRequest } from '@/modules/auth-modules/sign-in-module';
 
 type LoginMutation = {
-  // onSuccess: () => void;
+  onSuccess: () => void;
   setCustomError: () => void;
   reset: () => void;
 };
 
 export const useLoginMutation = (
-  // onSuccess: LoginMutation['onSuccess'],
+  onSuccess: LoginMutation['onSuccess'],
   setCustomError: LoginMutation['setCustomError'],
   reset: LoginMutation['reset']
 ) => {
@@ -26,7 +26,7 @@ export const useLoginMutation = (
       const { accessToken } = data.data;
 
       localStorage.setItem('accessToken', accessToken);
-      // onSuccess();
+      onSuccess();
       reset();
 
       client.invalidateQueries(['me']);
