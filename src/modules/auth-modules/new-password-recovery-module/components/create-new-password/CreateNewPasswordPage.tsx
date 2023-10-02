@@ -2,11 +2,11 @@ import React from 'react';
 
 import { useRouter } from 'next/router';
 import { AuthLayout } from '@/components';
+import { routes } from '@/common/routing/routes';
 import {
   CreateNewPasswordForm,
   useCreateNewPassword,
-} from '@/modules/auth-modules/recovery-module';
-import { routes } from '@/common/routing/routes';
+} from '@/modules/auth-modules/new-password-recovery-module';
 
 interface CreateNewPasswordPageProps {
   recoveryCode: string;
@@ -17,18 +17,21 @@ export const CreateNewPasswordPage = ({
 }: CreateNewPasswordPageProps) => {
   const router = useRouter();
 
-  const { mutate: createNewPassword, isLoading } = useCreateNewPassword();
+  const {
+    mutate: createNewPassword,
+    isLoading,
+    isSuccess,
+  } = useCreateNewPassword();
 
   const onSubmitHandler = async (newPassword: string) => {
     createNewPassword({
       newPassword,
       recoveryCode,
     });
-    await router.push(routes.auth.signIn);
   };
 
   if (isLoading) return <div>Loading...</div>;
-
+  if (isSuccess) router.push(routes.auth.signIn);
   return (
     <AuthLayout image="image">
       <CreateNewPasswordForm onSubmitHandler={onSubmitHandler} />

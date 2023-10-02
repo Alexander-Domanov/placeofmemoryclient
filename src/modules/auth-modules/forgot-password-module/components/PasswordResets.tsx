@@ -17,7 +17,7 @@ export const PasswordResets = () => {
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(emailSchema);
-  const { sendLinkPasswordRecovery } = useForgotPassword(
+  const { sendLinkPasswordRecovery, isLoading } = useForgotPassword(
     () => setShowMessage(true),
     (field: string, massage: string) => {
       setCustomError(field, massage);
@@ -33,6 +33,8 @@ export const PasswordResets = () => {
     sendLinkPasswordRecovery({ email, recaptcha: captcha });
     reset();
   };
+
+  if (isLoading) <div>Loading...</div>;
   return (
     <AuthLayout image="image">
       {showMessage ? (
@@ -66,8 +68,8 @@ export const PasswordResets = () => {
               error={errors?.email?.message}
               {...register('email')}
             />
-            <Button className="mt-1">Send Reset Instructions</Button>
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
+            <Button className="mt-1">Send Reset Instructions</Button>
           </form>
           <div />
         </>

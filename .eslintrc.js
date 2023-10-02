@@ -38,5 +38,10 @@ module.exports = {
     '@typescript-eslint/no-unused-expressions': 0,
     'react/jsx-no-useless-fragment': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
+    'no-param-reassign': 0,
+    'no-underscore-dangle': 0,
+    'react/button-has-type': 0,
+    'react/display-name': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
 };

@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { passwordRecoveryAPI } from '@/services';
 import { ResponseError } from '@/types/response-error-type';
 
