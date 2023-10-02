@@ -15,10 +15,14 @@ export const SignUp = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema);
 
-  const { sendRegisteredData } = useRegister(() => reset(), setCustomError);
+  const { sendRegisteredData, isLoading } = useRegister(
+    () => reset(),
+    setCustomError
+  );
   const registeredDataSubmit = (data: any) => {
     sendRegisteredData(data);
   };
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <AuthLayout image="Image">

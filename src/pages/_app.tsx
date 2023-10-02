@@ -1,10 +1,13 @@
+import { ReactElement, ReactNode, useState } from 'react';
 import '@/styles/globals.css';
-import React, { ReactElement, ReactNode, useState } from 'react';
-
 import { NextPage } from 'next';
-import type { AppProps } from 'next/app';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { AppProps } from 'next/app';
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import AuthProtection from '@/components/auth-protection/AuthProtection';
 
 export type NextPageWithLayout<P = NonNullable<unknown>, IP = P> = NextPage<
   P,
@@ -24,9 +27,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        {getLayout(<Component {...pageProps} />)}
+        <AuthProtection>
+          {getLayout(<Component {...pageProps} />)}
+        </AuthProtection>
       </Hydrate>
-      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

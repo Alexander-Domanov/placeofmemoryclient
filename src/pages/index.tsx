@@ -16,7 +16,7 @@ export function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col justify-center align-middle">
-        <span className="">Content</span>
+        <span>Content</span>
       </div>
     </main>
   );

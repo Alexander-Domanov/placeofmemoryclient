@@ -1,7 +1,8 @@
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import { createNewPasswordSchema } from '@/modules/auth-modules/recovery-module';
+
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { Button, Input } from '@/ui';
+import { createNewPasswordSchema } from '@/modules/auth-modules/new-password-recovery-module';
 
 interface CreateNewPasswordFormProps {
   onSubmitHandler: (password: string) => void;

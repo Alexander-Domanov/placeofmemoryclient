@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Recovery } from '@/modules/auth-modules/recovery-module';
+import { Recovery } from '@/modules/auth-modules/new-password-recovery-module';
 
 const PageRecovery: NextPageWithLayout = () => {
   return (

@@ -5,7 +5,7 @@ import {
   CreateNewPasswordPage,
   ResendingVerificationLink,
   useCheckRecoveryCode,
-} from '@/modules/auth-modules/recovery-module';
+} from '@/modules/auth-modules/new-password-recovery-module';
 
 export const Recovery = () => {
   const router = useRouter();

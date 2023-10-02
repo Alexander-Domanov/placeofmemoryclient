@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { sendLoginRequest } from '@/modules/auth-modules/sign-in-module';
 
 type LoginMutation = {

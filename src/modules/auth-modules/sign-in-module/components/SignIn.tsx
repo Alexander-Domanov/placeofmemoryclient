@@ -16,7 +16,7 @@ export const SignIn = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin);
   const { query, push } = useRouter();
-  const { sendLoginData } = useLoginMutation(
+  const { sendLoginData, isLoading } = useLoginMutation(
     () => {
       push(routes.main);
     },
@@ -54,6 +54,8 @@ export const SignIn = () => {
       );
     }
   }, [queryStatus]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <AuthLayout image="Image">
