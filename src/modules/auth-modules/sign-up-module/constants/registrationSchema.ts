@@ -17,5 +17,12 @@ export const registrationSchema = yup.object({
     .required()
     .min(6, 'minimum number of characters 6')
     .max(20, 'password must be at most 20 characters')
+    .matches(/[a-z]/, 'Password must contain a lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain an uppercase letter')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      'Password must contain a special character'
+    )
+    .matches(/[0-9]/, 'Password must contain a digit')
     .trim(),
 });

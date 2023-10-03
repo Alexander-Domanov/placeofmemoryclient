@@ -20,6 +20,7 @@ export const CreateNewPasswordForm = ({
     onSubmitHandler(password);
     reset();
   };
+
   return (
     <>
       <form
@@ -33,6 +34,7 @@ export const CreateNewPasswordForm = ({
           error={errors?.password?.message}
           {...register('password')}
         />
+        <span>Password must contain 1-9, a-z, A-Z, and specified symbols</span>
         <Button className="mt-1" type="submit">
           Create new password
         </Button>
