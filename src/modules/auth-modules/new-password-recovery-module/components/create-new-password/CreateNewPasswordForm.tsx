@@ -1,6 +1,5 @@
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 
-import { useEffect } from 'react';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { Button, Input } from '@/ui';
 import { createNewPasswordSchema } from '@/modules/auth-modules/new-password-recovery-module';
@@ -12,8 +11,9 @@ interface CreateNewPasswordFormProps {
 export const CreateNewPasswordForm = ({
   onSubmitHandler,
 }: CreateNewPasswordFormProps) => {
-  const { errors, register, reset, handleSubmit, setCustomError } =
-    useGlobalForm(createNewPasswordSchema);
+  const { errors, register, reset, handleSubmit } = useGlobalForm(
+    createNewPasswordSchema
+  );
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const { password } = data;
