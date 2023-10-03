@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ResMe } from '@/types';
+import { User } from '@/types/userType';
 
 export const authInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -10,7 +10,7 @@ export const authInstance = axios.create({
 });
 
 export const meSendRequest = async () => {
-  const res = await authInstance.get<ResMe>('auth/me');
+  const res = await authInstance.get<User>('auth/me');
 
   return res.data;
 };

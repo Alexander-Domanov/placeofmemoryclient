@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { sendLoginRequest } from '@/modules/auth-modules/sign-in-module';
 
-type LoginMutation = {
+interface LoginMutation {
   onSuccess: () => void;
   setCustomError: () => void;
   reset: () => void;
-};
+}
 
-export const useLoginMutation = (
+export const useLogin = (
   onSuccess: LoginMutation['onSuccess'],
   setCustomError: LoginMutation['setCustomError'],
   reset: LoginMutation['reset']
