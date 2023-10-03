@@ -60,6 +60,9 @@ export const SignUp = () => {
             label="Password"
             {...register('password')}
           />
+          <span>
+            Password must contain 1-9, a-z, A-Z, and specified symbols
+          </span>
           <Button className="mt-1" type="submit">
             Sign Up
           </Button>
