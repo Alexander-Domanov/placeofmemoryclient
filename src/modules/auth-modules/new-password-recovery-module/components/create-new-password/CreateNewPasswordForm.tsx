@@ -24,7 +24,7 @@ export const CreateNewPasswordForm = ({
   return (
     <>
       <form
-        className="flex flex-col grow pt-[22px]  pb-[18px] w-full gap-[24px]"
+        className="flex flex-col w-full gap-3"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
@@ -34,7 +34,11 @@ export const CreateNewPasswordForm = ({
           error={errors?.password?.message}
           {...register('password')}
         />
-        <span>Password must contain 1-9, a-z, A-Z, and specified symbols</span>
+        <div className="flex justify-center text-sm">
+          <span>
+            Password must contain 1-9, a-z, A-Z, and specified symbols
+          </span>
+        </div>
         <Button className="mt-1" type="submit">
           Create new password
         </Button>

@@ -11,7 +11,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
       <section className="w-[450px] h-screen">
         <video
           playsInline
-          className="auth-sidebar-video object-cover h-full"
+          className="auth-sidebar-video object-cover w-full h-full"
           autoPlay
           loop
           muted

@@ -25,17 +25,25 @@ export const SignUp = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <AuthLayout image="Image">
-      <h1 className="font-bold">Sign up to Minsk</h1>
-      <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
-        Sign up with Google
-      </Button>
+    <AuthLayout>
+      <h1 className="font-bold text-xl mb-10">Sign up to Minsk</h1>
+      {!showOrHiddenForm && (
+        <>
+          <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
+            Sign up with Google
+          </Button>
+
+          <div className="flex justify-center text-sm mb-7 mt-7">
+            <span>or</span>
+          </div>
+        </>
+      )}
       <Button onClick={() => setShowOrHiddenForm(!showOrHiddenForm)}>
-        {!showOrHiddenForm ? 'Continue with email' : 'Continue without email'}
+        {!showOrHiddenForm ? 'Continue with email' : 'Go back'}
       </Button>
       {showOrHiddenForm && (
         <form
-          className="flex flex-col"
+          className="flex flex-col gap-3"
           onSubmit={handleSubmit(registeredDataSubmit)}
         >
           <Input
@@ -60,15 +68,17 @@ export const SignUp = () => {
             label="Password"
             {...register('password')}
           />
-          <span>
-            Password must contain 1-9, a-z, A-Z, and specified symbols
-          </span>
+          <div className="text-sm flex justify-center">
+            <span>
+              Password must contain 1-9, a-z, A-Z, and specified symbols
+            </span>
+          </div>
           <Button className="mt-1" type="submit">
             Sign Up
           </Button>
         </form>
       )}
-      <div className="flex gap-1">
+      <div className="flex gap-1 text-sm justify-center">
         <span> Already have an account?</span>
         <Link className="underline" href={routes.auth.signIn}>
           Sign In
