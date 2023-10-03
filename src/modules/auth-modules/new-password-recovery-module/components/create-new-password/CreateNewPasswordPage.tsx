@@ -33,7 +33,7 @@ export const CreateNewPasswordPage = ({
   if (isLoading) return <div>Loading...</div>;
   if (isSuccess) router.push(routes.auth.signIn);
   return (
-    <AuthLayout image="image">
+    <AuthLayout>
       <CreateNewPasswordForm onSubmitHandler={onSubmitHandler} />
     </AuthLayout>
   );

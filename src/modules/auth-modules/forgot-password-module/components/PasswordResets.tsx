@@ -36,21 +36,24 @@ export const PasswordResets = () => {
 
   if (isLoading) <div>Loading...</div>;
   return (
-    <AuthLayout image="image">
+    <AuthLayout>
       {showMessage ? (
         <>
           <p>
             if this email address was used to create an account, instructions to
             reset your password will be sent to you. Please check your email.
           </p>
-          <Link className="underline font-bold" href={routes.auth.signIn}>
+          <Link
+            className="underline text-sm font-bold"
+            href={routes.auth.signIn}
+          >
             Go to Sign In
           </Link>
         </>
       ) : (
         <>
-          <h1 className="font-bold">Forgot Password?</h1>
-          <div className="break-normal w-[416px]">
+          <h1 className="font-bold text-xl mb-10">Forgot Password?</h1>
+          <div className="break-normal text-sm w-[416px]">
             <p>
               Enter the email address you used when you joined and we’ll send
               you instructions to reset your password.
