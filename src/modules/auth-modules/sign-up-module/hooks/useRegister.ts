@@ -1,15 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { sendRegisterRequest } from '@/modules/auth-modules/sign-up-module';
-import { ResponseError } from '@/types/response-error-type';
+import { ResponseError } from '@/types/response-error-message-type';
 
 interface RegisterType {
-  // onSuccess: () => void;
   reset: () => void;
   setError: (name: string, message: string) => void;
 }
 
 export const useRegister = (
-  // onSuccess: RegisterType['onSuccess'],
   reset: RegisterType['reset'],
   setError: RegisterType['setError']
 ) => {
@@ -21,7 +19,6 @@ export const useRegister = (
   } = useMutation({
     mutationFn: sendRegisterRequest,
     onSuccess: () => {
-      // onSuccess();
       reset();
     },
     onError: (error: ResponseError) => {

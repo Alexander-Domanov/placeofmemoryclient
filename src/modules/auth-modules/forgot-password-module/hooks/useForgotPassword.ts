@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { passwordRecoveryAPI } from '@/services';
-import { ResponseError } from '@/types/response-error-type';
+import { ResponseError } from '@/types/response-error-message-type';
 
 interface ForgotPasswordType {
   onSuccess: () => void;

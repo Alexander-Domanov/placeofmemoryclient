@@ -1,9 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { authInstance } from '@/services';
 import {
-  ReqNewPassword,
-  ReqPasswordRecoveryWithRecaptcha,
-  ResCheckRecoveryCode,
+  NewPasswordRequest,
+  PasswordRecoveryRequestWithRecaptcha,
 } from '@/types';
 
 export const OAUTH_AUTHORIZATION = {
@@ -39,11 +38,11 @@ export const passwordRecoveryAPI: IAuthAPI = {
 };
 
 interface IAuthAPI {
-  createNewPassword: (data: ReqNewPassword) => Promise<AxiosResponse>;
+  createNewPassword: (data: NewPasswordRequest) => Promise<AxiosResponse>;
   checkRecoveryCode: (
-    data: Omit<ReqNewPassword, 'newPassword'>
-  ) => Promise<AxiosResponse<ResCheckRecoveryCode>>;
+    data: Omit<NewPasswordRequest, 'newPassword'>
+  ) => Promise<AxiosResponse<PasswordRecoveryRequestWithRecaptcha>>;
   passwordRecoveryWithRecaptcha: (
-    data: ReqPasswordRecoveryWithRecaptcha
+    data: PasswordRecoveryRequestWithRecaptcha
   ) => Promise<AxiosResponse>;
 }

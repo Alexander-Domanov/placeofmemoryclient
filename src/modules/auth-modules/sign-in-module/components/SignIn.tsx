@@ -6,17 +6,14 @@ import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
-import {
-  schemaLogin,
-  useLoginMutation,
-} from '@/modules/auth-modules/sign-in-module';
+import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
 
 export const SignIn = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin);
   const { query, push } = useRouter();
-  const { sendLoginData, isLoading } = useLoginMutation(
+  const { sendLoginData, isLoading } = useLogin(
     () => {
       push(routes.main);
     },
