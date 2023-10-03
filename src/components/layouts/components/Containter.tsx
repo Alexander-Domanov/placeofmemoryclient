@@ -19,7 +19,8 @@ export const Container: FC<PropsWithChildren<Props>> = ({
       className={clsx(
         'max-w-7xl w-full px-4 mx-auto',
         className,
-        types === 'auth' && 'flex justify-center items-center h-screen'
+        types === 'auth' &&
+          'flex px-0 justify-between max-w-full items-center h-screen'
       )}
     >
       {children}
