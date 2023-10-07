@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Container } from '@/components/layouts/components/Containter';
 import { routes } from '@/common/routing/routes';
-import { LogoutButton } from '@/modules/auth-modules/logout-module';
 import { useUserStore } from '@/store/userStore';
+import { DropdownMenuHeader } from '@/components';
 
 export function Header() {
   const { replace, route } = useRouter();
@@ -32,11 +32,7 @@ export function Header() {
                 </li>
               </ul>
             ) : (
-              <ul>
-                <li>
-                  <LogoutButton />
-                </li>
-              </ul>
+              <DropdownMenuHeader />
             )}
           </nav>
         </section>

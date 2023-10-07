@@ -15,5 +15,8 @@ export const routes = {
     '/auth/registration-confirmation',
     '/',
   ],
+  dropdownMenuHeader: {
+    settings: '/settings',
+  },
   main: '/',
 };
