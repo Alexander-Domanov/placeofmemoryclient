@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { SignUp } from '@/modules/auth-modules/sign-up-module';
 
 export const Settings = () => {
   return (
