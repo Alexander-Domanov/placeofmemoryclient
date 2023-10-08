@@ -43,5 +43,6 @@ module.exports = {
     'react/button-has-type': 0,
     'react/display-name': 0,
     'react-hooks/exhaustive-deps': 0,
+    'react/no-array-index-key': 0,
   },
 };
