@@ -16,4 +16,8 @@ export const routes = {
     '/',
   ],
   main: '/',
+  dashboard: {
+    index: '/dashboard',
+    gallery: '/dashboard/gallery',
+  },
 };
