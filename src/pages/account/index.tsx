@@ -1,13 +1,17 @@
 import Head from 'next/head';
+import { EditProfile } from '@/modules/account-modules/edit-profile-module';
+import { getGlobalLayout } from '@/components';
 
-export const Settings = () => {
+const Settings = () => {
   return (
     <>
       <Head>
-        <title>Account</title>
+        <title>Edit Profile | Minsk</title>
       </Head>
-      <div>asdfasd</div>
+      <EditProfile />
     </>
   );
 };
+Settings.getLayout = getGlobalLayout;
+
 export default Settings;
