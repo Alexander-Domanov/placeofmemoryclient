@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { sendRegisterRequest } from '@/modules/auth-modules/sign-up-module';
-import { ResponseError } from '@/types/response-error-message-type';
+import { IResponseError } from '@/types/response-error-message.type';
 
 interface RegisterType {
   reset: () => void;
@@ -21,7 +21,7 @@ export const useRegister = (
     onSuccess: () => {
       reset();
     },
-    onError: (error: ResponseError) => {
+    onError: (error: IResponseError) => {
       const message = error?.response?.data?.messages;
 
       message?.forEach(({ message, field }) => {

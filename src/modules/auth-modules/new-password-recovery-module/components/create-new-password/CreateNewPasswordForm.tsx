@@ -4,13 +4,13 @@ import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { Button, Input } from '@/ui';
 import { createNewPasswordSchema } from '@/modules/auth-modules/new-password-recovery-module';
 
-interface CreateNewPasswordFormProps {
+interface ICreateNewPasswordFormProps {
   onSubmitHandler: (password: string) => void;
 }
 
 export const CreateNewPasswordForm = ({
   onSubmitHandler,
-}: CreateNewPasswordFormProps) => {
+}: ICreateNewPasswordFormProps) => {
   const { errors, register, reset, handleSubmit } = useGlobalForm(
     createNewPasswordSchema
   );

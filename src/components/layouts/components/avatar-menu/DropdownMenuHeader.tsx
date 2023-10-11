@@ -3,9 +3,9 @@ import { LogoutButton } from '@/modules/auth-modules/logout-module';
 import { DropdownMenuComponent } from '@/ui';
 
 import { routes } from '@/common/routing/routes';
-import { DropdownMenuItems } from '@/types';
+import { IDropdownMenuItems } from '@/types';
 
-const menuHeader: DropdownMenuItems[] = [
+const menuHeader: IDropdownMenuItems[] = [
   { title: 'Dashboard', href: routes.dropdownMenuHeader.dashboard },
   { title: 'Settings', href: routes.dropdownMenuHeader.settings },
   { content: <LogoutButton /> },

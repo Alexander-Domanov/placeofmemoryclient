@@ -1,4 +1,4 @@
-export type ResponseError = {
+export interface IResponseError {
   response: {
     data: {
       messages: {
@@ -7,4 +7,4 @@ export type ResponseError = {
       }[];
     };
   };
-};
+}

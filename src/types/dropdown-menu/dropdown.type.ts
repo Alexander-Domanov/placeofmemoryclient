@@ -1,11 +1,11 @@
-export interface DropdownMenuItems {
+export interface IDropdownMenuItems {
   title?: string;
   href?: string;
   content?: React.ReactNode;
 }
 
-export interface DropdownMenuComponentProps {
+export interface IDropdownMenuComponentProps {
   children: React.ReactNode;
-  items: DropdownMenuItems[];
+  items: IDropdownMenuItems[];
   menuLabel?: string;
 }
