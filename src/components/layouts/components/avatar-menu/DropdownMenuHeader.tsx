@@ -6,6 +6,7 @@ import { routes } from '@/common/routing/routes';
 import { DropdownMenuItems } from '@/types';
 
 const menuHeader: DropdownMenuItems[] = [
+  { title: 'Dashboard', href: routes.dropdownMenuHeader.dashboard },
   { title: 'Settings', href: routes.dropdownMenuHeader.settings },
   { content: <LogoutButton /> },
 ];
