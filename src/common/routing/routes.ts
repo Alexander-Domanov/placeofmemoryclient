@@ -19,4 +19,8 @@ export const routes = {
     settings: '/account',
   },
   main: '/',
+  dashboard: {
+    index: '/dashboard',
+    gallery: '/dashboard/gallery',
+  },
 };
