@@ -4,6 +4,7 @@ import { Layout, Menu } from 'antd';
 import { LaptopOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { routes } from '@/common/routing/routes';
+import { DashboardModals } from '@/components';
 
 const siderStyle: React.CSSProperties = {
   minHeight: '100vh',
@@ -17,22 +18,26 @@ const contentStyle: React.CSSProperties = {
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
-    <Layout>
-      <Layout.Sider width={300} style={siderStyle}>
-        <Menu mode="inline" style={{ height: '100%' }}>
-          <Menu.Item key="dashboard" icon={<LaptopOutlined />}>
-            <Link href={routes.dashboard.index}>Dashboard</Link>
-          </Menu.Item>
-          <Menu.Item key="gallery" icon={<LaptopOutlined />}>
-            <Link href={routes.dashboard.gallery}>Gallery</Link>
-          </Menu.Item>
-        </Menu>
-      </Layout.Sider>
-
+    <>
       <Layout>
-        <Layout.Content style={contentStyle}>{children}</Layout.Content>
+        <Layout.Sider width={300} style={siderStyle}>
+          <Menu mode="inline" style={{ height: '100%' }}>
+            <Menu.Item key="dashboard" icon={<LaptopOutlined />}>
+              <Link href={routes.dashboard.index}>Dashboard</Link>
+            </Menu.Item>
+            <Menu.Item key="gallery" icon={<LaptopOutlined />}>
+              <Link href={routes.dashboard.gallery}>Gallery</Link>
+            </Menu.Item>
+          </Menu>
+        </Layout.Sider>
+
+        <Layout>
+          <Layout.Content style={contentStyle}>{children}</Layout.Content>
+        </Layout>
       </Layout>
-    </Layout>
+
+      <DashboardModals />
+    </>
   );
 };
 

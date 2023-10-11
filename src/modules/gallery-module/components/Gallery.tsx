@@ -1,56 +1,69 @@
 import { FC, useState } from 'react';
-import type { UploadProps } from 'antd';
-import { message, Upload } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Pagination, Row, Space } from 'antd';
 import { useGallery } from '../hooks/useGallery';
-
-const { Dragger } = Upload;
-
-const props: UploadProps = {
-  name: 'file',
-  multiple: true,
-  action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery`,
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-  withCredentials: true,
-  headers: {
-    Authorization: `Bearer ${
-      typeof window !== 'undefined' ? localStorage?.getItem('accessToken') : ''
-    }`,
-  },
-};
+import { UploadGalleryModal } from './UploadGalleryModal';
+import { GalleryItem } from './GalleryItem';
 
 export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(18);
+  const { gallery, isLoading } = useGallery(page, pageSize);
 
-  const { gallery, isLoading } = useGallery(page);
+  const [isUploadGalleryOpen, setIsUploadGalleryOpen] = useState(false);
+
+  const onPageChange = (_page: number) => {
+    setPage(_page);
+  };
+
+  const onPageSizeChange = (_page: number, size: number) => {
+    setPage(1);
+    setPageSize(size);
+  };
 
   return (
-    <>
-      <Dragger {...props}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibited from
-          uploading company data or other banned files.
-        </p>
-      </Dragger>
-    </>
+    <div>
+      <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <Button type="primary" onClick={() => setIsUploadGalleryOpen(true)}>
+              Add File
+            </Button>
+          </div>
+
+          <div>
+            <Pagination
+              total={gallery?.totalCount || 1}
+              current={page}
+              onChange={onPageChange}
+              defaultCurrent={1}
+              defaultPageSize={18}
+              pageSizeOptions={[18, 24, 36, 48, 96]}
+              onShowSizeChange={onPageSizeChange}
+            />
+          </div>
+        </div>
+
+        <Card>
+          <Row gutter={[16, 16]}>
+            {gallery?.items.map((item) => (
+              <Col span={4} key={item.uploadId}>
+                <GalleryItem file={item} />
+              </Col>
+            ))}
+          </Row>
+        </Card>
+      </Space>
+
+      <UploadGalleryModal
+        isOpen={isUploadGalleryOpen}
+        setIsOpen={setIsUploadGalleryOpen}
+      />
+    </div>
   );
 };
