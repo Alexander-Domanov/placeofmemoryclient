@@ -10,6 +10,8 @@ import {
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { routes } from '@/common/routing/routes';
 
+const videoForLayout =
+  'https://media.istockphoto.com/id/670852240/video/nature-photographer.mp4?s=mp4-640x640-is&k=20&c=MWW5_lvT4duO8Ztd45Q1Xy6dmDrBaQ0mWGHVITArPJo=';
 export const SignUp = () => {
   const [showOrHiddenForm, setShowOrHiddenForm] = useState<boolean>(false);
   const { errors, register, reset, handleSubmit, setCustomError } =
@@ -25,7 +27,7 @@ export const SignUp = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <AuthLayout>
+    <AuthLayout videoSrc={videoForLayout}>
       <h1 className="font-bold text-xl mb-10">Sign up to Minsk</h1>
       {!showOrHiddenForm && (
         <>
