@@ -1,13 +1,16 @@
 import { FC, useState } from 'react';
-import { Button, Card, Col, Pagination, Row, Space } from 'antd';
+import { Button, Card, Col, Pagination, Row, Space, Select } from 'antd';
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
 
+const { Option } = Select;
+
 export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
-  const { gallery, isLoading } = useGallery(page, pageSize);
+  const [status, setStatus] = useState('all');
+  const { gallery, isLoading } = useGallery(page, pageSize, status);
 
   const [isUploadGalleryOpen, setIsUploadGalleryOpen] = useState(false);
 
@@ -18,6 +21,11 @@ export const Gallery: FC = () => {
   const onPageSizeChange = (_page: number, size: number) => {
     setPage(1);
     setPageSize(size);
+  };
+
+  const onStatusChange = (value: string) => {
+    setPage(1);
+    setStatus(value);
   };
 
   return (
@@ -34,6 +42,18 @@ export const Gallery: FC = () => {
             <Button type="primary" onClick={() => setIsUploadGalleryOpen(true)}>
               Add File
             </Button>
+          </div>
+          <div>
+            <Select
+              value={status}
+              style={{ width: 120 }}
+              onChange={onStatusChange}
+            >
+              <Option value="all">All</Option>
+              <Option value="draft">Draft</Option>
+              <Option value="pendingReview">Pending Review</Option>
+              <Option value="published">Published</Option>
+            </Select>
           </div>
 
           <div>

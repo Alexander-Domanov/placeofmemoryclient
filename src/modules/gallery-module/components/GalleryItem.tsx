@@ -1,12 +1,27 @@
-import { FC } from 'react';
-import { Button, Image } from 'antd';
-import { FaEye } from 'react-icons/fa6';
+import { FC, useState } from 'react';
+import { Dropdown, Image, Menu, message, Modal, Select } from 'antd';
+import { BsEyeSlashFill, BsEyeFill, BsEye } from 'react-icons/bs';
 import { GalleryFile } from '@/modules/gallery-module/api/gallery-api';
 import { useDashboardModalsStore } from '@/store';
+
+const { Option } = Select;
 
 interface Props {
   file: GalleryFile;
 }
+
+const getStatusIcon = (status: string) => {
+  switch (status) {
+    case 'PUBLISHED':
+      return <BsEyeFill color="green" size={32} />;
+    case 'DRAFT':
+      return <BsEyeSlashFill color="red" size={32} />;
+    case 'PENDING_REVIEW':
+      return <BsEye color="orange" size={32} />;
+    default:
+      return null;
+  }
+};
 
 export const GalleryItem: FC<Props> = ({ file }) => {
   const { setIsOpen, setUploadId } = useDashboardModalsStore(
@@ -18,8 +33,68 @@ export const GalleryItem: FC<Props> = ({ file }) => {
     setIsOpen(true);
   };
 
+  const [isStatusMenuVisible, setStatusMenuVisible] = useState(false);
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [newStatus, setNewStatus] = useState(file.status);
+  const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
+
+  const statusIcon = getStatusIcon(file.status);
+
+  const handleStatusMenuVisibleChange = (visible: boolean) => {
+    setStatusMenuVisible(visible);
+  };
+  const showUpdateModal = () => {
+    setUpdateModalVisible(true);
+    setStatusMenuOpen(false);
+  };
+  const hideUpdateModal = () => {
+    setUpdateModalVisible(false);
+  };
+  const showDeleteModal = () => {
+    setDeleteModalVisible(true);
+    setStatusMenuOpen(false);
+  };
+  const hideDeleteModal = () => {
+    setDeleteModalVisible(false);
+  };
+
+  const handleMenuClick = ({ key }: { key: React.Key }) => {
+    if (key === 'update') {
+      // Handle the "Update status" action
+      showUpdateModal();
+    } else if (key === 'delete') {
+      // Handle the "Delete image" action
+      showDeleteModal();
+    }
+  };
+  const confirmDelete = () => {
+    // Handle the delete action here
+    message.info(`Deleting image with ID ${file.uploadId}`);
+    hideDeleteModal();
+  };
+  const handleUpdate = () => {
+    // Handle the update status action here
+    message.info(`Updating status to ${newStatus} for ${file.uploadId}`);
+    hideUpdateModal();
+  };
+
+  const statusMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="update">Update status</Menu.Item>
+      <Menu.Item key="delete">Delete…</Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div style={{ position: 'relative', aspectRatio: '1/1', display: 'flex' }}>
+    <div
+      style={{
+        position: 'relative',
+        aspectRatio: '1/1',
+        display: 'flex',
+        cursor: 'pointer',
+      }}
+    >
       <Image
         src={file.versions?.large?.url}
         preview={false}
@@ -27,11 +102,37 @@ export const GalleryItem: FC<Props> = ({ file }) => {
         style={{
           display: 'block',
           objectFit: 'cover',
+          borderRadius: '0.5vw',
           width: '100%',
           height: '100%',
           aspectRatio: '1/1',
         }}
+        onClick={onViewClick}
       />
+      <div
+        style={{
+          display: 'flex',
+          // backgroundColor: 'white rgba(0, 0, 0, 0.4)',
+          // borderRadius: '50%',
+          // padding: '2px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          filter: 'drop-shadow(4px 1px 2px rgb(0 0 0 / 0.4))',
+          top: '1vw',
+          right: '1vw',
+          zIndex: 1,
+        }}
+      >
+        <Dropdown
+          overlay={statusMenu}
+          trigger={['click']}
+          open={isStatusMenuOpen}
+          onVisibleChange={setStatusMenuOpen}
+        >
+          {statusIcon}
+        </Dropdown>
+      </div>
 
       <div
         style={{
@@ -41,13 +142,34 @@ export const GalleryItem: FC<Props> = ({ file }) => {
           transform: 'translate(-50%, -50%)',
         }}
       >
-        <Button
-          type="primary"
-          icon={<FaEye />}
-          shape="circle"
-          size="large"
-          onClick={onViewClick}
-        />
+        <Modal
+          title="Update Status"
+          visible={isUpdateModalVisible}
+          onOk={handleUpdate}
+          onCancel={hideUpdateModal}
+        >
+          <p>Select a new status:</p>
+          <Select
+            value={newStatus}
+            onChange={setNewStatus}
+            style={{ width: '100%' }}
+          >
+            <Option value="DRAFT">Draft</Option>
+            <Option value="PENDING_REVIEW">Pending Review</Option>
+            <Option value="REJECTED">Rejected</Option>
+            <Option value="PUBLISHED">Published</Option>
+            <Option value="ARCHIVED">Archived</Option>
+            <Option value="DELETED">Deleted</Option>
+          </Select>
+        </Modal>
+        <Modal
+          title="Confirm Delete"
+          visible={isDeleteModalVisible}
+          onOk={confirmDelete}
+          onCancel={hideDeleteModal}
+        >
+          <p>Are you sure you want to delete this image?</p>
+        </Modal>
       </div>
     </div>
   );

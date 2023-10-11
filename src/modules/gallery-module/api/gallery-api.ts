@@ -33,11 +33,12 @@ interface GetGalleryResponse {
   items: GalleryFile[];
 }
 
-export const getGallery = (page: number, pageSize: number) => {
+export const getGallery = (page: number, pageSize: number, status: string) => {
   return authInstance.get<GetGalleryResponse>('gallery', {
     params: {
       pageNumber: page,
       pageSize,
+      status,
     },
   });
 };
