@@ -3,4 +3,5 @@ export interface User {
   userName: string | null;
   email: string;
   hasBusinessAccount: boolean;
+  urlAvatar: string;
 }

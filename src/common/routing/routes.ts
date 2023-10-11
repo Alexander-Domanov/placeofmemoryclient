@@ -16,7 +16,7 @@ export const routes = {
     '/',
   ],
   dropdownMenuHeader: {
-    settings: '/settings',
+    settings: '/account',
   },
   main: '/',
   dashboard: {

@@ -4,7 +4,8 @@ import { noRefetch } from '@/common/helpers/noRefetch';
 
 export const useMeQuery = (
   saveUserId?: (userId: number | null) => void,
-  setUserName?: (userName: string | null) => void
+  setUserName?: (userName: string | null) => void,
+  setUrlAvatar?: (urlAvatar: string | null) => void
 ) => {
   return useQuery({
     queryFn: meSendRequest,
@@ -15,6 +16,7 @@ export const useMeQuery = (
       if (setUserName) {
         setUserName(data.userName);
       }
+      if (setUrlAvatar) setUrlAvatar(data.urlAvatar);
     },
     onError: () => {
       if (saveUserId) {

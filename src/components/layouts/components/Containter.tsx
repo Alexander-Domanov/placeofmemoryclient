@@ -18,12 +18,11 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
   return (
     <section
       className={twMerge(
-        'max-w-7xl w-full text-base px-4 mx-auto',
+        'w-full text-base px-4 mx-auto',
         className,
         clsx(
           className,
-          types === 'auth' &&
-            'flex max-w-screen-xl px-0 justify-center items-center h-screen'
+          types === 'auth' && 'flex px-0 justify-center items-center h-screen'
         )
       )}
     >

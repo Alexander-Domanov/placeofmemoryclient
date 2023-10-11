@@ -13,7 +13,7 @@ export function Header() {
     <header className="h-[60px] flex items-center border-b ">
       <Container>
         <section className="flex justify-between">
-          <div>
+          <div className="flex items-center">
             <span
               className="block text-emerald-900"
               onClick={() => replace(route, undefined, { shallow: true })}
@@ -25,7 +25,7 @@ export function Header() {
             {!userName ? (
               <ul className="flex gap-3">
                 <li>
-                  <Link href={routes.auth.signIn}>LogIn</Link>
+                  <Link href={routes.auth.signIn}>Log in</Link>
                 </li>
                 <li>
                   <Link href={routes.auth.signUp}>SignUp</Link>
