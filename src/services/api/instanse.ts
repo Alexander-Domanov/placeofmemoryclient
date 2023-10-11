@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { User } from '@/types/userType';
+import { IMeType } from '@/types/auth/me.type';
 
 export const authInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -10,7 +10,7 @@ export const authInstance = axios.create({
 });
 
 export const meSendRequest = async () => {
-  const res = await authInstance.get<User>('auth/me');
+  const res = await authInstance.get<IMeType>('auth/me');
 
   return res.data;
 };

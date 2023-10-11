@@ -1,7 +1,7 @@
-export interface User {
+export interface IMeType {
   userId: number;
   userName: string | null;
   email: string;
   hasBusinessAccount: boolean;
-  urlAvatar: string;
+  urlAvatar: string | null;
 }

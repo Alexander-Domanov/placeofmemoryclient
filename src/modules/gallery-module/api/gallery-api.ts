@@ -1,40 +1,9 @@
 import { authInstance } from '@/services';
-
-export interface GalleryFile {
-  typeFile: string;
-  uploadId: string;
-  status: string;
-  mime: string;
-  subType: string;
-  alt: string;
-  createdAt: string;
-  updatedAt: string;
-  versions?: {
-    huge?: {
-      url: string;
-      width: number;
-      height: number;
-      fileSize: number;
-    };
-    large?: {
-      url: string;
-      width: number;
-      height: number;
-      fileSize: number;
-    };
-  };
-}
-
-interface GetGalleryResponse {
-  totalCount: number;
-  pagesCount: number;
-  page: number;
-  pageSize: number;
-  items: GalleryFile[];
-}
+import { IGalleryFile } from '@/types/images/gallery-file.type';
+import { IGetGalleryResponse } from '@/types/images/get-gallery-response.type';
 
 export const getGallery = (page: number, pageSize: number, status: string) => {
-  return authInstance.get<GetGalleryResponse>('gallery', {
+  return authInstance.get<IGetGalleryResponse>('gallery', {
     params: {
       pageNumber: page,
       pageSize,
@@ -44,7 +13,7 @@ export const getGallery = (page: number, pageSize: number, status: string) => {
 };
 
 export const getGalleryFile = (id: string | null) => {
-  return authInstance.get<GalleryFile>(`gallery/${id}`);
+  return authInstance.get<IGalleryFile>(`gallery/${id}`);
 };
 
 export const deleteGalleryFile = (id: string | undefined) => {

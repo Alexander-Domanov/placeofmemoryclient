@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
 import { Dropdown, Image, Menu, message, Modal, Select } from 'antd';
-import { BsEyeSlashFill, BsEyeFill, BsEye } from 'react-icons/bs';
-import { GalleryFile } from '@/modules/gallery-module/api/gallery-api';
+import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
+import { IGalleryFile } from '@/types/images/gallery-file.type';
 
 const { Option } = Select;
 
 interface Props {
-  file: GalleryFile;
+  file: IGalleryFile;
 }
 
 const getStatusIcon = (status: string) => {

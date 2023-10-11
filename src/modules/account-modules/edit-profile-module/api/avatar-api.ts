@@ -1,8 +1,8 @@
 import { authInstance } from '@/services';
-import { AvatarType } from '@/types';
+import { IAvatarVersions, IVersionsType } from '@/types';
 
 export const sendAvatar = async (formData: FormData) => {
-  const res = await authInstance.post<AvatarType>(
+  const res = await authInstance.post<IVersionsType<IAvatarVersions>>(
     'users/profile/avatar',
     formData,
     {
