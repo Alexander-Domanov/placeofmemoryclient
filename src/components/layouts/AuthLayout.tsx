@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Container } from '@/components';
 
-interface AuthLayoutProps {
+interface IAuthLayoutProps {
   children: ReactNode;
   videoSrc?: string;
 }
@@ -12,7 +12,7 @@ const baseVideoSrc =
 export const AuthLayout = ({
   children,
   videoSrc = baseVideoSrc,
-}: AuthLayoutProps) => {
+}: IAuthLayoutProps) => {
   return (
     <Container types="auth">
       <section className="w-[450px] h-screen">

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { passwordRecoveryAPI } from '@/services';
-import { ResponseError } from '@/types/response-error-message-type';
+import { IResponseError } from '@/types/response-error-message.type';
 
 interface ForgotPasswordType {
   onSuccess: () => void;
@@ -24,7 +24,7 @@ export const useForgotPassword = (
         setError('email', 'user is not found');
       }
     },
-    onError: (error: ResponseError) => {
+    onError: (error: IResponseError) => {
       if (error.response.data) {
         const { message } = error.response.data.messages[0];
 

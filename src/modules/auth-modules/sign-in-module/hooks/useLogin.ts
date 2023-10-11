@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { sendLoginRequest } from '@/modules/auth-modules/sign-in-module';
 
-interface LoginMutation {
+interface ILoginMutation {
   onSuccess: () => void;
   setCustomError: () => void;
   reset: () => void;
 }
 
 export const useLogin = (
-  onSuccess: LoginMutation['onSuccess'],
-  setCustomError: LoginMutation['setCustomError'],
-  reset: LoginMutation['reset']
+  onSuccess: ILoginMutation['onSuccess'],
+  setCustomError: ILoginMutation['setCustomError'],
+  reset: ILoginMutation['reset']
 ) => {
   const client = useQueryClient();
 

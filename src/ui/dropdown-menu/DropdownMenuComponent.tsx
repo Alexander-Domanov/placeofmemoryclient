@@ -7,13 +7,13 @@ import {
   DropdownMenuTrigger,
   LinkComponent,
 } from '@/ui';
-import { DropdownMenuComponentProps } from '@/types';
+import { IDropdownMenuComponentProps } from '@/types';
 
 export const DropdownMenuComponent = ({
   children,
   items,
   menuLabel,
-}: DropdownMenuComponentProps) => {
+}: IDropdownMenuComponentProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
