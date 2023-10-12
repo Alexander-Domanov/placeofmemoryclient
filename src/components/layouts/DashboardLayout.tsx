@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
 import React, { PropsWithChildren, ReactElement } from 'react';
 import { Layout, Menu } from 'antd';
-import { LaptopOutlined } from '@ant-design/icons';
+import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
+import { FaUsers } from 'react-icons/fa';
 import Link from 'next/link';
 import { routes } from '@/common/routing/routes';
 import { DashboardModals } from '@/components';
@@ -20,13 +21,16 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <Layout>
-        <Layout.Sider width={300} style={siderStyle}>
+        <Layout.Sider width={200} style={siderStyle}>
           <Menu mode="inline" style={{ height: '100%' }}>
             <Menu.Item key="dashboard" icon={<LaptopOutlined />}>
               <Link href={routes.dashboard.index}>Dashboard</Link>
             </Menu.Item>
-            <Menu.Item key="gallery" icon={<LaptopOutlined />}>
+            <Menu.Item key="gallery" icon={<FolderOpenOutlined />}>
               <Link href={routes.dashboard.gallery}>Gallery</Link>
+            </Menu.Item>
+            <Menu.Item key="users" icon={<FaUsers />}>
+              <Link href={routes.dashboard.users}>Users</Link>
             </Menu.Item>
           </Menu>
         </Layout.Sider>
