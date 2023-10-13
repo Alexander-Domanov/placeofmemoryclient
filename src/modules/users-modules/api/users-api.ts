@@ -8,7 +8,8 @@ export const getUsers = (
   pageSize: number,
   status: string,
   role: string,
-  userName: string
+  userName: string,
+  sorting: { field: string | null; order: string | null }
 ) => {
   return authInstance.get<IGetUsersResponse>('users', {
     params: {
@@ -17,6 +18,8 @@ export const getUsers = (
       status,
       role,
       userName,
+      sortBy: sorting.field,
+      sortDirection: sorting.order,
     },
   });
 };
