@@ -128,7 +128,7 @@ export const GalleryItem: FC<Props> = ({ file }) => {
           overlay={statusMenu}
           trigger={['click']}
           open={isStatusMenuOpen}
-          onVisibleChange={setStatusMenuOpen}
+          onOpenChange={setStatusMenuOpen}
         >
           {statusIcon}
         </Dropdown>
@@ -144,7 +144,7 @@ export const GalleryItem: FC<Props> = ({ file }) => {
       >
         <Modal
           title="Update Status"
-          visible={isUpdateModalVisible}
+          open={isUpdateModalVisible}
           onOk={handleUpdate}
           onCancel={hideUpdateModal}
         >
@@ -164,7 +164,7 @@ export const GalleryItem: FC<Props> = ({ file }) => {
         </Modal>
         <Modal
           title="Confirm Delete"
-          visible={isDeleteModalVisible}
+          open={isDeleteModalVisible}
           onOk={confirmDelete}
           onCancel={hideDeleteModal}
         >
