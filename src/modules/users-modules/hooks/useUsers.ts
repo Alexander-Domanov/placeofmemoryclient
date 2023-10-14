@@ -8,11 +8,16 @@ export const useUsers = (
   status: string,
   role: string,
   userName: string,
-  sorting: { field: string | null; order: string | null }
+  sorting: { field: string | null | number | bigint; order: string | null },
+  extensions: string[] = []
 ) => {
   const { data: users, isLoading } = useQuery({
-    queryKey: ['users', { page, pageSize, status, role, userName, sorting }],
-    queryFn: () => getUsers(page, pageSize, status, role, userName, sorting),
+    queryKey: [
+      'users',
+      { page, pageSize, status, role, userName, sorting, extensions },
+    ],
+    queryFn: () =>
+      getUsers(page, pageSize, status, role, userName, sorting, extensions),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,

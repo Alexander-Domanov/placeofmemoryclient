@@ -1,7 +1,6 @@
 import { authInstance } from '@/services';
 import { IUser } from '@/types/users/user.type';
 import { IGetUsersResponse } from '@/types/users/get-users-response.type';
-import { IUpdateUser } from '@/types/users/user-update.type';
 
 export const getUsers = (
   page: number,
@@ -9,7 +8,8 @@ export const getUsers = (
   status: string,
   role: string,
   userName: string,
-  sorting: { field: string | null; order: string | null }
+  sorting: { field: string | null | number | bigint; order: string | null },
+  extensions: string[] = []
 ) => {
   return authInstance.get<IGetUsersResponse>('users', {
     params: {
@@ -20,6 +20,7 @@ export const getUsers = (
       userName,
       sortBy: sorting.field,
       sortDirection: sorting.order,
+      extensions,
     },
   });
 };
@@ -28,10 +29,14 @@ export const getUser = (id: number | null) => {
   return authInstance.get<IUser>(`users/${id}`);
 };
 
-export const deleteUser = (id: number | undefined) => {
+export const deleteUser = (id: number | null) => {
   return authInstance.delete(`users/${id}`);
 };
 
-export const updateUser = (id: number | undefined, user: IUpdateUser) => {
-  return authInstance.put(`users/${id}`, user);
+export const updateUserRole = (id: number | undefined, role: string) => {
+  return authInstance.put(`users/${id}/role`, { role });
+};
+
+export const updateUserStatus = (id: number | undefined, status: string) => {
+  return authInstance.put(`users/${id}/status`, { status });
 };

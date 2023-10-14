@@ -8,7 +8,7 @@ export const useUser = (id: number | null) => {
     isLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['users', { id }],
+    queryKey: ['user', { id }],
     queryFn: () => getUser(id),
     enabled: !!id,
     select: (response) => response.data,

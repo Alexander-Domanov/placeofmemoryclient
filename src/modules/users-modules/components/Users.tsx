@@ -1,33 +1,41 @@
 import { FC, useState } from 'react';
-import { Avatar, Badge, Input, Modal, Select, Space, Table, Tag } from 'antd';
+import { Input, List, Select, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import Link from 'next/link';
 import { ColumnsType } from 'antd/es/table';
-import {
-  CheckCircleOutlined,
-  MinusCircleOutlined,
-  SyncOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { PresetStatusColorType } from 'antd/es/_util/colors';
+import { FilterValue, SorterResult } from 'antd/lib/table/interface';
+import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
 import { IUser } from '@/types';
-import { UserItem } from '@/modules/users-modules/components/UserItem';
-
-const { Option } = Select;
+import { tagRender } from '@/modules/users-modules/components/TagRender';
+import { renderAvatar } from '@/modules/users-modules/components/RenderAvatar';
+import SelectInput from '@/modules/users-modules/components/SelectInput';
+import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
+import { RoleDropdown } from '@/modules/users-modules/components/RoleDropdown';
+import { StatusDropdown } from '@/modules/users-modules/components/StatusDropdown';
 
 export const Users: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [sorting, setSorting] = useState<{
-    field: string | null;
+    field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
+  const [extensions, setExtensions] = useState<string[]>(['places', 'persons']);
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+
+  const showDrawer = (user: IUser) => {
+    setSelectedUser(user);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   const search = useDebounce(searchTerm, 500);
 
@@ -37,7 +45,8 @@ export const Users: FC = () => {
     status,
     role,
     search,
-    sorting
+    sorting,
+    extensions
   );
 
   const onPageChange = (_page: number) => {
@@ -58,7 +67,11 @@ export const Users: FC = () => {
     setRole(value.value);
   };
 
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<IUser> | any
+  ) => {
     if (sorter && sorter.columnKey) {
       const orderBy = sorter.order === 'ascend' ? 'asc' : 'desc';
       setSorting({ field: sorter.columnKey, order: orderBy });
@@ -66,15 +79,8 @@ export const Users: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
-
-  const openModal = (user: IUser) => {
-    setSelectedUser(user);
-    setIsModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setSelectedUser(null);
-    setIsModalVisible(false);
+  const handleExtensionsChange = (value: string[]) => {
+    setExtensions(value);
   };
 
   const columns: ColumnsType<IUser> = [
@@ -89,18 +95,7 @@ export const Users: FC = () => {
       title: 'Avatar',
       dataIndex: 'avatars',
       key: 'avatar',
-      render: (avatars, record) =>
-        avatars ? (
-          <Avatar
-            src={avatars.thumbnail?.url}
-            size={30}
-            icon={<UserOutlined />}
-            onClick={() => openModal(record)}
-            style={{ cursor: 'pointer' }}
-          />
-        ) : (
-          <Avatar size={30} icon={<UserOutlined />} />
-        ),
+      render: (avatars) => renderAvatar(avatars, 30),
     },
     {
       title: 'Name',
@@ -135,79 +130,23 @@ export const Users: FC = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => {
-        let tagProps = {
-          color: 'default-color',
-          text: 'Unknown Status',
-          icon: <MinusCircleOutlined />,
-        };
-        if (!status)
-          tagProps = {
-            color: 'default-color',
-            text: 'Unknown Status',
-            icon: <MinusCircleOutlined />,
-          };
-        if (status === 'ACTIVE')
-          tagProps = {
-            color: 'green',
-            text: 'Active',
-            icon: <CheckCircleOutlined />,
-          };
-        if (status === 'BANNED')
-          tagProps = {
-            color: 'red',
-            text: 'Banned',
-            icon: <MinusCircleOutlined />,
-          };
-        if (status === 'PENDING')
-          tagProps = {
-            color: 'geekblue',
-            text: 'Pending',
-            icon: <SyncOutlined spin />,
-          };
-
-        return (
-          <Tag color={tagProps.color}>
-            {tagProps.icon} {tagProps.text}
-          </Tag>
-        );
-      },
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => {
-        let statusColor: Partial<PresetStatusColorType> = 'default';
-        if (status === 'PENDING') statusColor = 'processing';
-        if (status === 'ACTIVE') statusColor = 'success';
-        if (status === 'BANNED') statusColor = 'error';
-        return <Badge status={statusColor} text={status} />;
-      },
+      render: (text, record) => <StatusDropdown {...record} />,
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
-      render: (role) => {
-        let tagProps = { color: 'default-color', text: 'Unknown Role' };
-        if (!role) {
-          tagProps = { color: 'default-color', text: 'Unknown Role' };
-        }
-        if (role === 'ADMIN') {
-          tagProps = { color: 'gold', text: 'Admin' };
-        }
-        if (role === 'EDITOR') {
-          tagProps = { color: 'geekblue', text: 'Editor' };
-        }
-        if (role === 'AUTHOR') {
-          tagProps = { color: 'green', text: 'Author' };
-        }
-        if (role === 'USER') {
-          tagProps = { color: 'lightgrey', text: 'User' };
-        }
-        return <Tag color={tagProps.color}>{tagProps.text}</Tag>;
-      },
+      render: (text, record) => <RoleDropdown {...record} />,
+    },
+    {
+      title: 'View Profile',
+      dataIndex: 'view profile',
+      key: 'view profile',
+      render: (text, record) => (
+        <List.Item
+          actions={[<a onClick={() => showDrawer(record)}>more…</a>]}
+        />
+      ),
     },
   ];
 
@@ -227,31 +166,21 @@ export const Users: FC = () => {
             style={{ width: 200 }}
           />
           <div>
-            <Select
-              labelInValue
+            <SelectInput
               defaultValue={{ value: 'all', label: 'All' }}
-              style={{ width: 120 }}
-              onChange={onStatusChange}
               options={[
                 { label: 'All', value: 'all' },
                 { label: 'Active', value: 'active' },
                 { label: 'Banned', value: 'banned' },
                 { label: 'Pending', value: 'pending' },
               ]}
-            >
-              <Option value="all">All</Option>
-              <Option value="active">Active</Option>
-              <Option value="banned">Banned</Option>
-              <Option value="pending">Pending</Option>
-            </Select>
+              onChange={onStatusChange}
+            />
           </div>
 
           <div>
-            <Select
-              labelInValue
+            <SelectInput
               defaultValue={{ value: 'all', label: 'All' }}
-              style={{ width: 120 }}
-              onChange={onRoleChange}
               options={[
                 { label: 'All', value: 'all' },
                 { label: 'Admin', value: 'ADMIN' },
@@ -259,6 +188,20 @@ export const Users: FC = () => {
                 { label: 'Author', value: 'AUTHOR' },
                 { label: 'User', value: 'USER' },
               ]}
+              onChange={onRoleChange}
+            />
+          </div>
+          <div>
+            <Select
+              mode="multiple"
+              tagRender={tagRender}
+              defaultValue={['places', 'persons']}
+              style={{ width: '300px' }}
+              options={[
+                { value: 'places', label: 'Places' },
+                { value: 'persons', label: 'Persons' },
+              ]}
+              onChange={handleExtensionsChange}
             />
           </div>
         </div>
@@ -267,7 +210,6 @@ export const Users: FC = () => {
           columns={columns}
           dataSource={users?.items}
           loading={isLoading}
-          // sortDirections={['ascend', 'descend']}
           pagination={{
             position: ['bottomCenter'],
             total: users?.totalCount || 1,
@@ -281,18 +223,19 @@ export const Users: FC = () => {
           scroll={{ y: 600 }}
           onChange={handleTableChange}
         />
+        <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />
       </Space>
 
-      <Modal
-        title="User Details"
-        visible={isModalVisible}
-        onOk={closeModal}
-        onCancel={closeModal}
-        width={700}
-        style={{ top: 20 }}
-      >
-        {selectedUser && <UserItem user={selectedUser} />}
-      </Modal>
+      {/* <Modal */}
+      {/*  title="User Details" */}
+      {/*  open={isModalVisible} */}
+      {/*  onOk={closeModal} */}
+      {/*  onCancel={closeModal} */}
+      {/*  width={700} */}
+      {/*  style={{ top: 20 }} */}
+      {/* > */}
+      {/*  {selectedUser && <UserItem user={selectedUser} />} */}
+      {/* </Modal> */}
       {/* <GalleryUserInfoModal /> */}
     </div>
   );
