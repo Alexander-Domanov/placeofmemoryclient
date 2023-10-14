@@ -10,7 +10,10 @@ export enum UserStatuses {
   BANNED = 'BANNED',
   DELETED = 'DELETED',
 }
-export interface IUpdateUser {
+export interface IUpdateUserRole {
   role: UserRoles;
+}
+
+export interface IUpdateUserStatus {
   status: UserStatuses;
 }
