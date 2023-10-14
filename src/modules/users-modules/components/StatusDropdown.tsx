@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Dropdown, Menu, Tag } from 'antd';
+import { Dropdown, Menu, Space, Tag } from 'antd';
 import {
   CheckCircleOutlined,
   DeleteOutlined,
+  DownOutlined,
   LockOutlined,
   MinusCircleOutlined,
   SyncOutlined,
@@ -73,7 +74,10 @@ export const StatusDropdown: React.FC<Partial<IUser>> = (user) => {
         onOpenChange={setStatusMenuOpen}
       >
         <Tag color={statusTagProps.color} className="ant-dropdown-link">
-          {statusTagProps.icon} {statusTagProps.text}
+          <Space size={2} align="center">
+            {statusTagProps.icon} {statusTagProps.text}
+            <DownOutlined />
+          </Space>
         </Tag>
       </Dropdown>
     </div>

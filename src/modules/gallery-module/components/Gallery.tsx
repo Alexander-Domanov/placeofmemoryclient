@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Button, Card, Col, Pagination, Row, Space, Select } from 'antd';
+import { Button, Card, Col, Empty, Pagination, Row, Select, Space } from 'antd';
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
@@ -70,13 +70,17 @@ export const Gallery: FC = () => {
         </div>
 
         <Card>
-          <Row gutter={[16, 16]}>
-            {gallery?.items.map((item) => (
-              <Col span={4} key={item.uploadId}>
-                <GalleryItem file={item} />
-              </Col>
-            ))}
-          </Row>
+          {!gallery?.items.length ? (
+            <Empty />
+          ) : (
+            <Row gutter={[16, 16]}>
+              {gallery?.items.map((item) => (
+                <Col span={4} key={item.uploadId}>
+                  <GalleryItem file={item} />
+                </Col>
+              ))}
+            </Row>
+          )}
         </Card>
       </Space>
 

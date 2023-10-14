@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dropdown, Menu, Tag } from 'antd';
+import { Dropdown, Menu, Space, Tag } from 'antd';
 import {
   DownOutlined,
   FormOutlined,
@@ -61,10 +61,14 @@ export const RoleDropdown: React.FC<Partial<IUser>> = (user) => {
         overlay={roleMenu}
         trigger={['hover']}
         open={isRoleMenuOpen}
+        arrow
         onOpenChange={setRoleMenuOpen}
       >
         <Tag color={roleTagProps.color} className="ant-dropdown-link">
-          {roleTagProps.text}
+          <Space size={2} align="center">
+            {roleTagProps.text}
+            <DownOutlined />
+          </Space>
         </Tag>
       </Dropdown>
     </div>

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Input, List, Select, Space, Table } from 'antd';
+import { Button, Input, List, Select, Space, Table, Typography } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import Link from 'next/link';
 import { ColumnsType } from 'antd/es/table';
@@ -108,7 +108,7 @@ export const Users: FC = () => {
             query: { id: record.id },
           }}
         >
-          {text}
+          <Typography.Text ellipsis>{text}</Typography.Text>
         </Link>
       ),
       sorter: true,
@@ -144,7 +144,16 @@ export const Users: FC = () => {
       key: 'view profile',
       render: (text, record) => (
         <List.Item
-          actions={[<a onClick={() => showDrawer(record)}>more…</a>]}
+          actions={[
+            <Button
+              key={0}
+              style={{ cursor: 'pointer', color: '#1890ff' }}
+              onClick={() => showDrawer(record)}
+              ghost
+            >
+              more…
+            </Button>,
+          ]}
         />
       ),
     },
@@ -162,6 +171,7 @@ export const Users: FC = () => {
         >
           <Input
             placeholder="Search by name"
+            allowClear
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: 200 }}
           />
@@ -220,7 +230,7 @@ export const Users: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          scroll={{ y: 600 }}
+          scroll={{ y: 800 }}
           onChange={handleTableChange}
         />
         <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />
