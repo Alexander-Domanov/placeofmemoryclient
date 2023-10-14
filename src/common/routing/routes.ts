@@ -23,5 +23,6 @@ export const routes = {
   dashboard: {
     index: '/dashboard',
     gallery: '/dashboard/gallery',
+    users: '/dashboard/users',
   },
 };
