@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Dropdown, Menu, Tag } from 'antd';
 import {
   CheckCircleOutlined,
+  DeleteOutlined,
+  LockOutlined,
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
@@ -36,6 +38,7 @@ export const StatusDropdown: React.FC<Partial<IUser>> = (user) => {
     } else if (status === 'BANNED') {
       color = 'red';
       text = 'Banned';
+      icon = <LockOutlined />;
     } else if (status === 'PENDING') {
       color = 'geekblue';
       text = 'Pending';
@@ -53,10 +56,10 @@ export const StatusDropdown: React.FC<Partial<IUser>> = (user) => {
         <CheckCircleOutlined /> Active
       </Menu.Item>
       <Menu.Item key="BANNED">
-        <MinusCircleOutlined /> Banned
+        <LockOutlined /> Banned
       </Menu.Item>
       <Menu.Item key="DELETED">
-        <SyncOutlined spin /> Deleted
+        <DeleteOutlined /> Deleted
       </Menu.Item>
     </Menu>
   );

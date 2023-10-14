@@ -42,7 +42,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({
         style={{ display: 'flex', justifyContent: 'flex-start' }}
       >
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          {renderAvatar(selectedUser?.avatars, 120)}
+          {renderAvatar(selectedUser?.avatars?.medium.url, 120)}
         </Space>
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row style={{ marginBottom: 4 }}>

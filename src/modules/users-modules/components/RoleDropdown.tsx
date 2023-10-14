@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Dropdown, Menu, Tag } from 'antd';
 import {
-  DoubleRightOutlined,
   DownOutlined,
   FormOutlined,
+  SolutionOutlined,
   UpOutlined,
 } from '@ant-design/icons';
 import { IUser } from '@/types';
@@ -44,7 +44,7 @@ export const RoleDropdown: React.FC<Partial<IUser>> = (user) => {
         <UpOutlined /> Admin
       </Menu.Item>
       <Menu.Item key="EDITOR">
-        <DoubleRightOutlined /> Editor
+        <SolutionOutlined /> Editor
       </Menu.Item>
       <Menu.Item key="AUTHOR">
         <FormOutlined /> Author

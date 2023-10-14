@@ -95,7 +95,7 @@ export const Users: FC = () => {
       title: 'Avatar',
       dataIndex: 'avatars',
       key: 'avatar',
-      render: (avatars) => renderAvatar(avatars, 30),
+      render: (avatars) => renderAvatar(avatars?.thumbnail.url, 30),
     },
     {
       title: 'Name',
