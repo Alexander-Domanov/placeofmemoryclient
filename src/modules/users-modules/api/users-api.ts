@@ -1,5 +1,5 @@
 import { authInstance } from '@/services';
-import { IUser } from '@/types/users/user.type';
+import { IUserWithShortExtensions } from '@/types/users/user.type';
 import { IGetUsersResponse } from '@/types/users/get-users-response.type';
 
 export const getUsers = (
@@ -26,7 +26,7 @@ export const getUsers = (
 };
 
 export const getUser = (id: number | null) => {
-  return authInstance.get<IUser>(`users/${id}`);
+  return authInstance.get<IUserWithShortExtensions>(`users/${id}`);
 };
 
 export const deleteUser = (id: number | null) => {

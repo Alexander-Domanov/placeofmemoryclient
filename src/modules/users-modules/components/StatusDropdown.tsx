@@ -8,10 +8,12 @@ import {
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
-import { IUser } from '@/types';
+import { IUserWithShortExtensions } from '@/types';
 import { useUpdateUserStatus } from '@/modules/users-modules/hooks/useUpdateUserStatus';
 
-export const StatusDropdown: React.FC<Partial<IUser>> = (user) => {
+export const StatusDropdown: React.FC<Partial<IUserWithShortExtensions>> = (
+  user
+) => {
   const { id, status } = user;
   const [newStatus, setNewStatus] = useState(status);
   const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);

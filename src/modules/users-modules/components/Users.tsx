@@ -6,9 +6,9 @@ import { ColumnsType } from 'antd/es/table';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
-import { IUser } from '@/types';
+import { IUserWithShortExtensions } from '@/types';
 import { tagRender } from '@/modules/users-modules/components/TagRender';
-import { renderAvatar } from '@/modules/users-modules/components/RenderAvatar';
+import { renderAvatarImage } from '@/modules/users-modules/components/RenderAvatar';
 import SelectInput from '@/modules/users-modules/components/SelectInput';
 import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
 import { RoleDropdown } from '@/modules/users-modules/components/RoleDropdown';
@@ -21,14 +21,19 @@ export const Users: FC = () => {
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-  const [extensions, setExtensions] = useState<string[]>(['places', 'persons']);
+  const [extensions, setExtensions] = useState<string[]>([
+    'places',
+    'persons',
+    'articles',
+  ]);
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [open, setOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [selectedUser, setSelectedUser] =
+    useState<IUserWithShortExtensions | null>(null);
 
-  const showDrawer = (user: IUser) => {
+  const showDrawer = (user: IUserWithShortExtensions) => {
     setSelectedUser(user);
     setOpen(true);
   };
@@ -70,7 +75,7 @@ export const Users: FC = () => {
   const handleTableChange = (
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>,
-    sorter: SorterResult<IUser> | any
+    sorter: SorterResult<IUserWithShortExtensions> | any
   ) => {
     if (sorter && sorter.columnKey) {
       const orderBy = sorter.order === 'ascend' ? 'asc' : 'desc';
@@ -83,19 +88,23 @@ export const Users: FC = () => {
     setExtensions(value);
   };
 
-  const columns: ColumnsType<IUser> = [
+  const columns: ColumnsType<IUserWithShortExtensions> = [
     {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
       sorter: true,
       sortDirections: ['ascend', 'descend'],
+      render: (text, record) => (
+        <Typography.Text ellipsis>{text}</Typography.Text>
+      ),
     },
     {
       title: 'Avatar',
       dataIndex: 'avatars',
       key: 'avatar',
-      render: (avatars) => renderAvatar(avatars?.thumbnail.url, 30),
+      render: (avatars, record) =>
+        renderAvatarImage(avatars?.thumbnail.url, 30, record),
     },
     {
       title: 'Name',
@@ -118,6 +127,9 @@ export const Users: FC = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      render: (text, record) => (
+        <Typography.Text ellipsis>{text}</Typography.Text>
+      ),
     },
     {
       title: 'Created At',
@@ -137,6 +149,30 @@ export const Users: FC = () => {
       dataIndex: 'role',
       key: 'role',
       render: (text, record) => <RoleDropdown {...record} />,
+    },
+    {
+      title: 'Pending to review',
+      dataIndex: 'pendingToReview',
+      key: 'pendingToReview',
+      render: (text, record) => {
+        const countAll =
+          (record?.places?.pendingReview.length || 0) +
+          (record?.persons?.pendingReview.length || 0) +
+          (record?.articles?.pendingReview.length || 0);
+        return <Typography.Text ellipsis>{countAll}</Typography.Text>;
+      },
+    },
+    {
+      title: 'Published',
+      dataIndex: 'published',
+      key: 'published',
+      render: (text, record) => {
+        const countAll =
+          (record?.places?.publications.length || 0) +
+          (record?.persons?.publications.length || 0) +
+          (record?.articles?.publications.length || 0);
+        return <Typography.Text ellipsis>{countAll}</Typography.Text>;
+      },
     },
     {
       title: 'View Profile',
@@ -205,11 +241,12 @@ export const Users: FC = () => {
             <Select
               mode="multiple"
               tagRender={tagRender}
-              defaultValue={['places', 'persons']}
+              defaultValue={['places', 'persons', 'articles']}
               style={{ width: '300px' }}
               options={[
                 { value: 'places', label: 'Places' },
                 { value: 'persons', label: 'Persons' },
+                { value: 'articles', label: 'Articles' },
               ]}
               onChange={handleExtensionsChange}
             />
@@ -230,7 +267,7 @@ export const Users: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          scroll={{ y: 800 }}
+          // scroll={{ y: 800 }}
           onChange={handleTableChange}
         />
         <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />
