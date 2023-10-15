@@ -17,11 +17,7 @@ export const StatusDropdown: React.FC<Partial<IUserWithShortExtensions>> = (
   const { id, status } = user;
   const [newStatus, setNewStatus] = useState(status);
   const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
-  const {
-    mutate: updateUserStatus,
-    isLoading,
-    isSuccess,
-  } = useUpdateUserStatus();
+  const { mutate: updateUserStatus } = useUpdateUserStatus();
 
   const handleMenuClick = (status: string) => {
     setStatusMenuOpen(false);

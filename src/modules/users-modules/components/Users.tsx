@@ -95,9 +95,7 @@ export const Users: FC = () => {
       key: 'id',
       sorter: true,
       sortDirections: ['ascend', 'descend'],
-      render: (text, record) => (
-        <Typography.Text ellipsis>{text}</Typography.Text>
-      ),
+      render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
     },
     {
       title: 'Avatar',
@@ -132,9 +130,7 @@ export const Users: FC = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      render: (text, record) => (
-        <Typography.Text ellipsis>{text}</Typography.Text>
-      ),
+      render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
     },
     {
       title: 'Created At',

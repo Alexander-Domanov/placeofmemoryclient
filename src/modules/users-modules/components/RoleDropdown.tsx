@@ -15,7 +15,7 @@ export const RoleDropdown: React.FC<Partial<IUserWithShortExtensions>> = (
   const { id, role } = user;
   const [newRole, setNewRole] = useState(role);
   const [isRoleMenuOpen, setRoleMenuOpen] = useState(false);
-  const { mutate: updateUserRole, isLoading, isSuccess } = useUpdateUserRole();
+  const { mutate: updateUserRole } = useUpdateUserRole();
 
   const handleMenuClick = (role: string) => {
     setRoleMenuOpen(false);
