@@ -143,12 +143,16 @@ export const Users: FC = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      sorter: true,
+      sortDirections: ['ascend', 'descend'],
       render: (text, record) => <StatusDropdown {...record} />,
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
+      sorter: true,
+      sortDirections: ['ascend', 'descend'],
       render: (text, record) => <RoleDropdown {...record} />,
     },
     {
@@ -255,6 +259,8 @@ export const Users: FC = () => {
         </div>
 
         <Table
+          bordered
+          size="middle"
           columns={columns}
           dataSource={users?.items}
           loading={isLoading}
@@ -268,7 +274,7 @@ export const Users: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          // scroll={{ y: 800 }}
+          // scroll={{ y: 800, x: 600 }}
           onChange={handleTableChange}
         />
         <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />

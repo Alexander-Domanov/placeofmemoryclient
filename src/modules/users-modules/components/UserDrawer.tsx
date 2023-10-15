@@ -13,7 +13,7 @@ interface DescriptionItemProps {
 const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
   <div className="site-description-item-profile-wrapper">
     <span className="font-normal text-neutral-400">{title}: </span>
-    <span className="font-bold text-base">{content}</span>
+    <span className="font-normal text-base">{content}</span>
   </div>
 );
 
