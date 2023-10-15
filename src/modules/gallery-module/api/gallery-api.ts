@@ -16,6 +16,10 @@ export const getGalleryFile = (id: string | null) => {
   return authInstance.get<IGalleryFile>(`gallery/${id}`);
 };
 
+export const updateGalleryFile = (id: string | null, form: any) => {
+  return authInstance.put(`gallery/${id}`, form);
+};
+
 export const deleteGalleryFile = (id: string | undefined) => {
   return authInstance.delete(`gallery/${id}`);
 };

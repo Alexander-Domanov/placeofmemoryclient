@@ -109,18 +109,16 @@ export const GalleryItem: FC<Props> = ({ file }) => {
         }}
         onClick={onViewClick}
       />
+
       <div
         style={{
           display: 'flex',
-          // backgroundColor: 'white rgba(0, 0, 0, 0.4)',
-          // borderRadius: '50%',
-          // padding: '2px',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
           filter: 'drop-shadow(4px 1px 2px rgb(0 0 0 / 0.4))',
-          top: '1vw',
-          right: '1vw',
+          top: '16px',
+          right: '16px',
           zIndex: 1,
         }}
       >
