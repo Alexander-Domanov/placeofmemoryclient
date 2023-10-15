@@ -32,9 +32,9 @@ export const UserDrawer: FC<UserDrawerProps> = ({
     <Drawer
       width={540}
       placement="right"
-      closable={false}
       onClose={onClose}
       open={open}
+      style={{ position: 'absolute' }}
     >
       <Space
         direction="horizontal"
@@ -80,12 +80,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({
                   textAlign: 'right',
                   position: 'fixed',
                   top: '20px',
-                  right: '60px',
-                  padding: '4px',
-                  border: '1px solid #e8e8e8',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
+                  right: '30px',
                 }}
               >
                 <DescriptionItem title="ID" content={selectedUser?.id} />
@@ -146,15 +141,15 @@ export const UserDrawer: FC<UserDrawerProps> = ({
           <b className="site-description-item-profile-p">Articles:</b>
           <DescriptionItem
             title="Draft"
-            content={selectedUser?.persons?.drafts.length}
+            content={selectedUser?.articles?.drafts.length}
           />
           <DescriptionItem
             title="Pending to review"
-            content={selectedUser?.persons?.pendingReview.length}
+            content={selectedUser?.articles?.pendingReview.length}
           />
           <DescriptionItem
             title="Published"
-            content={selectedUser?.persons?.publications.length}
+            content={selectedUser?.articles?.publications.length}
           />
         </Col>
       </Row>

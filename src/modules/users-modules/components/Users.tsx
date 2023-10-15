@@ -117,7 +117,12 @@ export const Users: FC = () => {
             query: { id: record.id },
           }}
         >
-          <Typography.Text ellipsis>{text}</Typography.Text>
+          <Typography.Text
+            ellipsis
+            style={{ cursor: 'pointer', color: '#1087f6' }}
+          >
+            {text}
+          </Typography.Text>
         </Link>
       ),
       sorter: true,

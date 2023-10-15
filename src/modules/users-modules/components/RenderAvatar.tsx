@@ -27,12 +27,14 @@ export const renderAvatarImage = (
       </Badge>
     </Space>
   ) : (
-    <Avatar
-      shape="square"
-      size={size}
-      icon={<UserOutlined />}
-      // style={{ borderRadius: '50%', cursor: 'pointer' }}
-      // onClick={() => openModal(record)}
-    />
+    <Badge count={countAll} size="default">
+      <Avatar
+        shape="square"
+        size={size}
+        icon={<UserOutlined />}
+        // style={{ borderRadius: '50%', cursor: 'pointer' }}
+        // onClick={() => openModal(record)}
+      />
+    </Badge>
   );
 };
