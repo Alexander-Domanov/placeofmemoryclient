@@ -2,6 +2,7 @@ export * from './auth/auth.type';
 export * from './auth/me.type';
 export * from './common/base-date.type';
 export * from './common/get-pagination-response.type';
+export * from './common/summary-status-group.type';
 export * from './common/versions.type';
 export * from './dropdown-menu/dropdown.type';
 export * from './images/avatar-versions.type';

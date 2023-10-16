@@ -6,14 +6,16 @@ import {
   SolutionOutlined,
   UpOutlined,
 } from '@ant-design/icons';
-import { IUser } from '@/types';
+import { IUserWithShortExtensions } from '@/types';
 import { useUpdateUserRole } from '@/modules/users-modules/hooks/useUpdateUserRole';
 
-export const RoleDropdown: React.FC<Partial<IUser>> = (user) => {
+export const RoleDropdown: React.FC<Partial<IUserWithShortExtensions>> = (
+  user
+) => {
   const { id, role } = user;
   const [newRole, setNewRole] = useState(role);
   const [isRoleMenuOpen, setRoleMenuOpen] = useState(false);
-  const { mutate: updateUserRole, isLoading, isSuccess } = useUpdateUserRole();
+  const { mutate: updateUserRole } = useUpdateUserRole();
 
   const handleMenuClick = (role: string) => {
     setRoleMenuOpen(false);

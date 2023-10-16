@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Col, Divider, Drawer, Row, Space } from 'antd';
-import { IUser } from '@/types';
+import { IUserWithShortExtensions } from '@/types';
 import { RoleDropdown } from '@/modules/users-modules/components/RoleDropdown';
-import { renderAvatar } from '@/modules/users-modules/components/RenderAvatar';
+import { renderAvatarImage } from '@/modules/users-modules/components/RenderAvatar';
 import { StatusDropdown } from '@/modules/users-modules/components/StatusDropdown';
 
 interface DescriptionItemProps {
@@ -12,15 +12,15 @@ interface DescriptionItemProps {
 
 const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
   <div className="site-description-item-profile-wrapper">
-    <span className="font-normal">{title}: </span>
-    <span className="font-bold text-base">{content}</span>
+    <span className="font-normal text-neutral-400">{title}: </span>
+    <span className="font-normal text-base">{content}</span>
   </div>
 );
 
 interface UserDrawerProps {
   open: boolean;
   onClose: () => void;
-  selectedUser: IUser | null;
+  selectedUser: IUserWithShortExtensions | null;
 }
 
 export const UserDrawer: FC<UserDrawerProps> = ({
@@ -30,11 +30,11 @@ export const UserDrawer: FC<UserDrawerProps> = ({
 }) => {
   return (
     <Drawer
-      width={680}
+      width={540}
       placement="right"
-      closable={false}
       onClose={onClose}
       open={open}
+      style={{ position: 'absolute' }}
     >
       <Space
         direction="horizontal"
@@ -42,7 +42,12 @@ export const UserDrawer: FC<UserDrawerProps> = ({
         style={{ display: 'flex', justifyContent: 'flex-start' }}
       >
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          {renderAvatar(selectedUser?.avatars?.medium.url, 120)}
+          {renderAvatarImage(
+            selectedUser?.avatars?.medium.url,
+            120,
+            selectedUser,
+            true
+          )}
         </Space>
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row style={{ marginBottom: 4 }}>
@@ -75,12 +80,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({
                   textAlign: 'right',
                   position: 'fixed',
                   top: '20px',
-                  right: '60px',
-                  padding: '4px',
-                  border: '1px solid #e8e8e8',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
+                  right: '30px',
                 }}
               >
                 <DescriptionItem title="ID" content={selectedUser?.id} />
@@ -106,6 +106,54 @@ export const UserDrawer: FC<UserDrawerProps> = ({
         </Col>
       </Row>
       <Divider />
+      <Row style={{ marginTop: 16 }}>
+        <Col span={12}>
+          <b className="site-description-item-profile-p">Places:</b>
+          <DescriptionItem
+            title="Draft"
+            content={selectedUser?.places?.drafts.length}
+          />
+          <DescriptionItem
+            title="Pending to review"
+            content={selectedUser?.places?.pendingReview.length}
+          />
+          <DescriptionItem
+            title="Published"
+            content={selectedUser?.places?.publications.length}
+          />
+        </Col>
+        <Col span={12}>
+          <b className="site-description-item-profile-p">Persons:</b>
+          <DescriptionItem
+            title="Draft"
+            content={selectedUser?.persons?.drafts.length}
+          />
+          <DescriptionItem
+            title="Pending to review"
+            content={selectedUser?.persons?.pendingReview.length}
+          />
+          <DescriptionItem
+            title="Published"
+            content={selectedUser?.persons?.publications.length}
+          />
+        </Col>
+        <Col span={12} style={{ marginTop: 16 }}>
+          <b className="site-description-item-profile-p">Articles:</b>
+          <DescriptionItem
+            title="Draft"
+            content={selectedUser?.articles?.drafts.length}
+          />
+          <DescriptionItem
+            title="Pending to review"
+            content={selectedUser?.articles?.pendingReview.length}
+          />
+          <DescriptionItem
+            title="Published"
+            content={selectedUser?.articles?.publications.length}
+          />
+        </Col>
+      </Row>
+      <Divider />
       <Row>
         <Col span={12}>
           <DescriptionItem title="Added" content={selectedUser?.createdAt} />
@@ -118,23 +166,6 @@ export const UserDrawer: FC<UserDrawerProps> = ({
         </Col>
       </Row>
       <Divider />
-      <p className="site-description-item-profile-p">Content</p>
-      <Row style={{ marginTop: 16 }}>
-        <Col span={12}>
-          <DescriptionItem
-            title="Places"
-            content={selectedUser?.places.length}
-          />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem
-            title="Persons"
-            content={selectedUser?.persons.length}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <p className="site-description-item-profile-p">Content</p>
     </Drawer>
   );
 };
