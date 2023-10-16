@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, Input, List, Select, Space, Table, Typography } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import Link from 'next/link';
@@ -214,7 +214,7 @@ export const Users: FC = () => {
             placeholder="Search by name"
             allowClear
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: 200 }}
+            style={{ width: 200, boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)` }}
           />
           <div>
             <SelectInput
@@ -247,7 +247,11 @@ export const Users: FC = () => {
               mode="multiple"
               tagRender={tagRender}
               defaultValue={['places', 'persons', 'articles']}
-              style={{ width: '300px' }}
+              style={{
+                width: '300px',
+                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                borderRadius: '7px',
+              }}
               options={[
                 { value: 'places', label: 'Places' },
                 { value: 'persons', label: 'Persons' },
@@ -260,7 +264,7 @@ export const Users: FC = () => {
 
         <Table
           bordered
-          size="middle"
+          size="small"
           columns={columns}
           dataSource={users?.items}
           loading={isLoading}
@@ -274,7 +278,7 @@ export const Users: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          // scroll={{ y: 800, x: 600 }}
+          scroll={{ y: 800 }}
           onChange={handleTableChange}
         />
         <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />
