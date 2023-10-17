@@ -1,6 +1,6 @@
 import { authInstance } from '@/services';
-import { IUserWithShortExtensions } from '@/types/users/user.type';
 import { IGetUsersResponse } from '@/types/users/get-users-response.type';
+import { IUser } from '@/types';
 
 export const getUsers = (
   page: number,
@@ -25,10 +25,6 @@ export const getUsers = (
   });
 };
 
-export const getUser = (id: number | null) => {
-  return authInstance.get<IUserWithShortExtensions>(`users/${id}`);
-};
-
 export const deleteUser = (id: number | null) => {
   return authInstance.delete(`users/${id}`);
 };
@@ -39,4 +35,8 @@ export const updateUserRole = (id: number | undefined, role: string) => {
 
 export const updateUserStatus = (id: number | undefined, status: string) => {
   return authInstance.put(`users/${id}/status`, { status });
+};
+
+export const getUser = (id: string | undefined | string[]) => {
+  return authInstance.get<IUser>(`users/${id}`);
 };
