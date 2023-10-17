@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getUser } from '@/modules/users-modules/api/users-api';
 
-export const useUser = (id: number | null) => {
+export const useUser = (id: string | undefined | string[]) => {
   const {
     data: user,
     isLoading,
