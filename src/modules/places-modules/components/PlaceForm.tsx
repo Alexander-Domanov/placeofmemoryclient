@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Divider, Form, Input, message, Space } from 'antd';
-import AutoCompleteMapComponent, {
-  PlaceResult,
-} from '@/modules/maps/components/AutoCompleteMap';
+import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
+import AutoCompleteMapComponent from '@/modules/maps/components/AutoCompleteMap';
 
 const layout = {
   labelCol: { span: 8 },
@@ -20,14 +19,12 @@ const validateMessages = {
   },
 };
 const PlaceForm = () => {
-  const [foundPlace, setFoundPlace] = useState<PlaceResult | null>(null);
   const [form] = Form.useForm();
 
-  const onPlaceSelected = (place: PlaceResult) => {
-    setFoundPlace(place);
-    form.setFieldValue(['place', 'country'], foundPlace?.country);
-    form.setFieldValue(['place', 'city'], foundPlace?.city);
-    form.setFieldValue(['place', 'nameCemetery'], foundPlace?.formattedAddress);
+  const onPlaceSelected = (place: IPlaceResultAfterExtract) => {
+    form.setFieldValue(['place', 'country'], place?.country);
+    form.setFieldValue(['place', 'city'], place?.city);
+    form.setFieldValue(['place', 'nameCemetery'], place?.formattedAddress);
   };
 
   const onFinish = (values: any) => {
