@@ -6,8 +6,8 @@ import {
   useLoadScript,
 } from '@react-google-maps/api';
 import { Button, Input, message, Space } from 'antd';
-import { containerStyle } from '@/modules/maps/components/MapOptions';
-import { AutoCompleteMapComponentProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
+import { containerStyle } from '@/modules/maps/components/options/MapOptions';
+import { MapLocationProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
 
 const initialCenter = {
   lat: 52.2296756,
@@ -21,8 +21,8 @@ const styleButton = {
   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
 };
 
-const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
-  onExecuteGeoCoder,
+const MapWithAutoComplete: React.FC<MapLocationProps> = ({
+  onDefineLocation,
 }) => {
   const { isLoaded } = useLoadScript({
     libraries: ['places'],
@@ -71,7 +71,7 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
       setMarkerPosition(clickedLocation);
       setCenter(clickedLocation);
       setMarkerVisible(true);
-      onExecuteGeoCoder(clickedLocation);
+      onDefineLocation(clickedLocation);
     }
   };
 
@@ -85,7 +85,7 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
       setMarkerPosition(position);
       setCenter(position);
       setMarkerVisible(true);
-      onExecuteGeoCoder(position);
+      onDefineLocation(position);
     } else {
       message.error('Please enter text');
     }
@@ -107,7 +107,7 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         setMarkerVisible(true);
         map?.panTo(userLocation);
         map?.setZoom(maxZoomLevel);
-        onExecuteGeoCoder(userLocation);
+        onDefineLocation(userLocation);
       });
     }
   };
@@ -127,7 +127,11 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         />
       </Autocomplete>
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        mapContainerStyle={{
+          ...containerStyle,
+          height: '400px',
+          width: '450px',
+        }}
         center={center}
         onLoad={onLoad}
         onUnmount={onUnmount}

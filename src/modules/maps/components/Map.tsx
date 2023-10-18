@@ -4,7 +4,7 @@ import { message } from 'antd';
 import {
   containerStyle,
   mapOptions,
-} from '@/modules/maps/components/MapOptions';
+} from '@/modules/maps/components/options/MapOptions';
 import { extractPlaceData } from '@/modules/maps/components/helpers/placeUtils';
 
 import { AutoCompleteMapComponentProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
@@ -47,12 +47,13 @@ const MapComponent: React.FC<AutoCompleteMapComponentProps> = ({
 
     if (clickedLocation.lat && clickedLocation.lng) {
       const geocoder = new google.maps.Geocoder();
+      // @ts-ignore
       geocoder.geocode({ location: clickedLocation }, (results, status) => {
         if (status === 'OK' && results?.[0]) {
           const place = results[0] as google.maps.GeocoderResult;
           const filteredPlace = extractPlaceData(place);
           const newMarker = new google.maps.Marker({
-            position: clickedLocation,
+            position: clickedLocation as google.maps.LatLngLiteral,
             map,
             title: filteredPlace.formattedAddress,
           });

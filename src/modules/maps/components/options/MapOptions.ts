@@ -1,6 +1,6 @@
 export const containerStyle = {
-  height: '400px',
-  width: '450px',
+  height: '70%',
+  width: '70%',
   borderRadius: '10px',
   // position: 'absolute',
   // overflow: 'none',
