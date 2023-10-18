@@ -93,6 +93,7 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
 
   const handleSearchTypeChange = () => {
     setMarkerVisible(false);
+    onDefineLocation(null);
   };
 
   const requestUserLocation = () => {

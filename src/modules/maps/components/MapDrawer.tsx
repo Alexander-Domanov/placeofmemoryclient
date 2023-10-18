@@ -42,7 +42,9 @@ const MapDrawer: React.FC = () => {
     form.setFieldValue(['location', 'lat'], place?.location?.lat);
     form.setFieldValue(['location', 'lng'], place?.location?.lng);
   };
-  const handleExecuteGeoCoder = (location: google.maps.LatLngLiteral) => {
+  const handleExecuteGeoCoder = (
+    location: google.maps.LatLngLiteral | null
+  ) => {
     setMarkerPosition(location);
   };
 
