@@ -1,41 +1,91 @@
 import { FC } from 'react';
-import { message, Modal, Upload, UploadProps } from 'antd';
+import { message, Modal, notification, Upload, UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
+import { IGalleryFile } from '@/types';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  refetch: () => void;
 }
+
+const MAX_UPLOAD_FILES = 5;
+const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
 
 const { Dragger } = Upload;
 
-const props: UploadProps = {
-  name: 'file',
-  multiple: true,
-  action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery`,
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-  withCredentials: true,
-  headers: {
-    Authorization: `Bearer ${
-      typeof window !== 'undefined' ? localStorage?.getItem('accessToken') : ''
-    }`,
-  },
-};
+export const UploadGalleryModal: FC<Props> = ({
+  isOpen,
+  setIsOpen,
+  refetch,
+}) => {
+  const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
 
-export const UploadGalleryModal: FC<Props> = ({ isOpen, setIsOpen }) => {
+  const onAllFilesUploaded = () => {
+    notification.success({
+      message: 'Файлы загружены',
+      description: 'Все ваши файлы успешно загружены!',
+    });
+
+    refetch();
+  };
+
+  const props: UploadProps = {
+    name: 'file',
+    listType: 'picture',
+    multiple: true,
+    action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery`,
+    beforeUpload(file) {
+      const isImage = IMAGE_FORMATS.includes(file.type);
+      const isLT10MB = file.size <= 10 * 1024 * 1024;
+
+      if (!isImage) {
+        message.error(`${file.name} is not a image`);
+      }
+
+      if (!isLT10MB) {
+        message.error(`${file.name} is greater then 10MB`);
+      }
+
+      return (isImage && isLT10MB) || Upload.LIST_IGNORE;
+    },
+    onChange(info) {
+      const { status } = info.file;
+
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+
+        if (info.fileList.every((f) => f.status === 'done')) {
+          onAllFilesUploaded();
+        }
+      }
+
+      if (status === 'removed') {
+        message.success(`${info.file.name} file removed successfully.`);
+      }
+
+      if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    async onRemove(file) {
+      if (file.status !== 'error') {
+        const response = file.response as IGalleryFile;
+        await deleteGalleryFileMutateAsync(response.uploadId);
+      }
+    },
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${
+        typeof window !== 'undefined'
+          ? localStorage?.getItem('accessToken')
+          : ''
+      }`,
+    },
+    maxCount: MAX_UPLOAD_FILES,
+  };
+
   return (
     <>
       <Modal
@@ -44,6 +94,7 @@ export const UploadGalleryModal: FC<Props> = ({ isOpen, setIsOpen }) => {
         title="Upload Media"
         onCancel={() => setIsOpen(false)}
         footer={null}
+        destroyOnClose
       >
         <Dragger {...props}>
           <p className="ant-upload-drag-icon">
@@ -54,7 +105,8 @@ export const UploadGalleryModal: FC<Props> = ({ isOpen, setIsOpen }) => {
           </p>
           <p className="ant-upload-hint">
             Support for a single or bulk upload. Strictly prohibited from
-            uploading company data or other banned files.
+            uploading company data or other banned files. Max {MAX_UPLOAD_FILES}{' '}
+            files. Only images & {`<10MB`}
           </p>
         </Dragger>
       </Modal>

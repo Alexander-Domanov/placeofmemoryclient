@@ -4,7 +4,11 @@ import { deleteGalleryFile } from '@/modules/gallery-module/api/gallery-api';
 export const useDeleteGalleryFile = () => {
   const client = useQueryClient();
 
-  const { mutateAsync, isLoading: isDeleting } = useMutation({
+  const {
+    mutateAsync: deleteGalleryFileMutateAsync,
+    mutate,
+    isLoading: isDeleting,
+  } = useMutation({
     mutationKey: ['delete-gallery-file'],
     mutationFn: (id: string | undefined) => deleteGalleryFile(id),
     onSuccess: () => {
@@ -12,5 +16,5 @@ export const useDeleteGalleryFile = () => {
     },
   });
 
-  return { mutateAsync, isDeleting };
+  return { deleteGalleryFileMutateAsync, mutate, isDeleting };
 };
