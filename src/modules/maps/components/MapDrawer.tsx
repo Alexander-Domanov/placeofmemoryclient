@@ -69,7 +69,6 @@ const MapDrawer: React.FC = () => {
   const onClearForm = () => {
     form.resetFields();
     setSelectedPlace(null);
-    setMarkerPosition(null);
   };
 
   const onClose = () => {
@@ -147,7 +146,11 @@ const MapDrawer: React.FC = () => {
             <Form.Item name={['streetNumber']} label="Street Number">
               <Input placeholder="Input Street Number" allowClear />
             </Form.Item>
-            <Form.Item name={['formattedAddress']} label="Formatted Address">
+            <Form.Item
+              name={['formattedAddress']}
+              label="Formatted Address"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="Input Street Number" allowClear />
             </Form.Item>
             <Form.Item

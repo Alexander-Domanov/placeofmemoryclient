@@ -5,7 +5,7 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api';
-import { Button, Form, Input, message, Space } from 'antd';
+import { Button, Input, message, Space } from 'antd';
 import { containerStyle } from '@/modules/maps/components/MapOptions';
 import { AutoCompleteMapComponentProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
 
@@ -39,8 +39,6 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
   const [markerVisible, setMarkerVisible] = useState(false);
   const [allowMapClick, setAllowMapClick] = useState(true);
 
-  const [form] = Form.useForm();
-
   useEffect(() => {
     if (map && markerPosition) {
       const bounds = new google.maps.LatLngBounds();
@@ -71,9 +69,9 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         lng: event.latLng?.lng() || 0,
       };
       setMarkerPosition(clickedLocation);
-      onExecuteGeoCoder(clickedLocation);
       setCenter(clickedLocation);
       setMarkerVisible(true);
+      onExecuteGeoCoder(clickedLocation);
     }
   };
 
@@ -85,10 +83,9 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         lng: place.geometry?.location?.lng() || 0,
       };
       setMarkerPosition(position);
-      onExecuteGeoCoder(position);
       setCenter(position);
       setMarkerVisible(true);
-      // message.success(`Found place: ${place.formatted_address}`);
+      onExecuteGeoCoder(position);
     } else {
       message.error('Please enter text');
     }
@@ -96,7 +93,6 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
 
   const handleSearchTypeChange = () => {
     setMarkerVisible(false);
-    form.resetFields();
   };
 
   const requestUserLocation = () => {
@@ -107,11 +103,11 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
           lng: position.coords.longitude,
         };
         setMarkerPosition(userLocation);
-        onExecuteGeoCoder(userLocation);
         setCenter(userLocation);
         setMarkerVisible(true);
         map?.panTo(userLocation);
         map?.setZoom(maxZoomLevel);
+        onExecuteGeoCoder(userLocation);
       });
     }
   };
