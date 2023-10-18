@@ -1,11 +1,12 @@
 export const containerStyle = {
-  width: '600px',
-  height: '600px',
-  // height: '70%',
-  // width: '70%',
+  height: '400px',
+  width: '450px',
   borderRadius: '10px',
   // position: 'absolute',
   // overflow: 'none',
+  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+  textOverflow: `ellipses`,
+  marginBottom: '20px',
 };
 export const mapOptions = {
   styles: [

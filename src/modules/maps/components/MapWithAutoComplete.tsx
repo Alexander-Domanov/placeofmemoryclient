@@ -5,21 +5,15 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api';
-import { Button, Divider, Form, Input, message, Space } from 'antd';
+import { Button, Form, Input, message, Space } from 'antd';
 import { containerStyle } from '@/modules/maps/components/MapOptions';
-import { extractPlaceData } from '@/modules/maps/components/helpers/placeUtils';
 import { AutoCompleteMapComponentProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
-import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 
 const initialCenter = {
   lat: 52.2296756,
   lng: 21.0122287,
 };
 const maxZoomLevel = 18;
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
 
 const styleButton = {
   cursor: 'pointer',
@@ -28,7 +22,7 @@ const styleButton = {
 };
 
 const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
-  onPlaceSelected,
+  onExecuteGeoCoder,
 }) => {
   const { isLoaded } = useLoadScript({
     libraries: ['places'],
@@ -77,31 +71,10 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         lng: event.latLng?.lng() || 0,
       };
       setMarkerPosition(clickedLocation);
+      onExecuteGeoCoder(clickedLocation);
       setCenter(clickedLocation);
       setMarkerVisible(true);
     }
-  };
-  const onPlaceSelectedToForm = (place: IPlaceResultAfterExtract): void => {
-    form.setFieldValue(['country'], place?.country);
-    form.setFieldValue(['city'], place?.city);
-    form.setFieldValue(
-      ['administrativeAreaLevel1'],
-      place?.administrativeAreaLevel1
-    );
-    form.setFieldValue(
-      ['administrativeAreaLevel2'],
-      place?.administrativeAreaLevel2
-    );
-    form.setFieldValue(['street'], place?.street);
-    form.setFieldValue(['streetNumber'], place?.streetNumber);
-    form.setFieldValue(['postalCode'], place?.postalCode);
-    form.setFieldValue(['formattedAddress'], place?.formattedAddress);
-    form.setFieldValue(
-      ['location', 'name'],
-      place?.formattedAddress.split(',')[0]
-    );
-    form.setFieldValue(['location', 'lat'], place?.location?.lat);
-    form.setFieldValue(['location', 'lng'], place?.location?.lng);
   };
 
   const onPlaceChanged = () => {
@@ -112,6 +85,7 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         lng: place.geometry?.location?.lng() || 0,
       };
       setMarkerPosition(position);
+      onExecuteGeoCoder(position);
       setCenter(position);
       setMarkerVisible(true);
       // message.success(`Found place: ${place.formatted_address}`);
@@ -133,6 +107,7 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
           lng: position.coords.longitude,
         };
         setMarkerPosition(userLocation);
+        onExecuteGeoCoder(userLocation);
         setCenter(userLocation);
         setMarkerVisible(true);
         map?.panTo(userLocation);
@@ -141,27 +116,8 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
     }
   };
 
-  const onFinish = (values: any) => {
-    // message.info(`fin ===+_===== ${JSON.stringify(values)}`);
-    onPlaceSelected(values);
-  };
-
-  const onExecuteGeoCoder = () => {
-    if (markerPosition?.lat && markerPosition?.lng) {
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ location: markerPosition }, (results, status) => {
-        if (status === 'OK' && results?.[0]) {
-          const place = results[0] as google.maps.GeocoderResult;
-          const filteredPlace = extractPlaceData(place);
-          onPlaceSelectedToForm(filteredPlace);
-        }
-      });
-    }
-  };
-
   return isLoaded ? (
     <Space direction="vertical" align="center">
-      <Button onClick={onExecuteGeoCoder}>Define Location</Button>
       <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoadAutoComplete}>
         <Input
           placeholder="Search location…"
@@ -185,8 +141,11 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
           <Marker position={markerPosition} />
         )}
       </GoogleMap>
-      <Space direction="horizontal">
-        <Button onClick={handleSearchTypeChange} style={styleButton}>
+      <Space direction="horizontal" style={{ marginBottom: '10px' }}>
+        <Button
+          onClick={handleSearchTypeChange}
+          style={{ ...styleButton, color: '#f66321' }}
+        >
           Remove marker
         </Button>
         <Button
@@ -198,70 +157,6 @@ const MapWithAutoComplete: React.FC<AutoCompleteMapComponentProps> = ({
         <Button onClick={requestUserLocation} style={styleButton}>
           Request My Location
         </Button>
-      </Space>
-      <Divider />
-      <Space direction="vertical">
-        <Form
-          {...layout}
-          form={form}
-          // size="small"
-          name="nest-messages"
-          onFinish={onFinish}
-          style={{ maxWidth: 600 }}
-          // validateMessages={validateMessages}
-        >
-          <Form.Item
-            name={['country']}
-            label="Country"
-            rules={[{ required: true, whitespace: true }]}
-          >
-            <Input placeholder="Input Country" allowClear />
-          </Form.Item>
-          <Form.Item name={['city']} label="City" rules={[{ required: true }]}>
-            <Input placeholder="Input City" allowClear />
-          </Form.Item>
-          <Form.Item name={['administrativeAreaLevel1']} label="State">
-            <Input placeholder="Input State" allowClear />
-          </Form.Item>
-          <Form.Item name={['administrativeAreaLevel2']} label="District">
-            <Input placeholder="Input District" allowClear />
-          </Form.Item>
-          <Form.Item name={['street']} label="Street">
-            <Input placeholder="Input Street" allowClear />
-          </Form.Item>
-          <Form.Item name={['streetNumber']} label="Street Number">
-            <Input placeholder="Input Street Number" allowClear />
-          </Form.Item>
-          <Form.Item name={['formattedAddress']} label="Formatted Address">
-            <Input placeholder="Input Street Number" allowClear />
-          </Form.Item>
-          <Form.Item
-            name={['location', 'name']}
-            label="Location Name"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Input Longtitude" allowClear />
-          </Form.Item>
-          <Form.Item
-            name={['location', 'lng']}
-            label="Longtitude"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Input Longtitude" allowClear />
-          </Form.Item>
-          <Form.Item
-            name={['location', 'lat']}
-            label="Latitude"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Input Longtitude" allowClear />
-          </Form.Item>
-          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
       </Space>
     </Space>
   ) : (
