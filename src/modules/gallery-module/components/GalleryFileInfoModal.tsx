@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Button,
   Col,
@@ -22,6 +22,8 @@ import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
 
 const { Option } = Select;
 
+const { confirm } = Modal;
+
 type FormValues = {
   alt: string;
   status: GalleryFileStatuses;
@@ -34,17 +36,14 @@ export const GalleryFileInfoModal: FC = () => {
 
   const { file, isLoading, isSuccess } = useGalleryFile(uploadId);
 
-  const { mutateAsync, isDeleting } = useDeleteGalleryFile();
   const { updateGalleryFileMutateAsync, isUpdating } =
     useUpdateGalleryFile(uploadId);
+  const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    console.log('change file');
-
     if (file) {
-      console.log('set default alt');
       form.setFieldValue('alt', file?.alt);
       form.setFieldValue('status', file?.status.toLowerCase());
     }
@@ -56,21 +55,34 @@ export const GalleryFileInfoModal: FC = () => {
   };
 
   const onDelete = () => {
-    notification.success({
-      message: 'File was deleted successfully',
-      placement: 'topRight',
+    confirm({
+      title: 'Do you want to delete these image?',
+      onOk() {
+        return deleteGalleryFileMutateAsync(file?.uploadId, {
+          onSuccess() {
+            notification.success({
+              message: 'File was deleted successfully',
+              placement: 'topRight',
+            });
+
+            setIsOpen(false);
+            setUploadId(null);
+          },
+        });
+      },
+      onCancel() {},
     });
-    // mutateAsync(file?.uploadId);
   };
 
-  const onFinish = (values: FormValues) => {
-    console.log('Success:', values);
-
+  const onSubmit = (values: FormValues) => {
     updateGalleryFileMutateAsync({
       alt: values.alt,
       status: values.status.toUpperCase(),
     }).then(() => {
-      console.log('successful update');
+      notification.success({
+        message: 'File was updated successfully',
+        placement: 'topRight',
+      });
     });
   };
 
@@ -102,7 +114,7 @@ export const GalleryFileInfoModal: FC = () => {
           {isSuccess && (
             <Row gutter={16}>
               <Col span={12}>
-                <Form form={form} layout="vertical" onFinish={onFinish}>
+                <Form form={form} layout="vertical" onFinish={onSubmit}>
                   <Space
                     direction="vertical"
                     size="large"

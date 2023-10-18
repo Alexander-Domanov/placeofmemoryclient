@@ -76,7 +76,4 @@ module.exports = {
     require('tailwindcss-animate'),
     require('tailwindcss-debug-screens'),
   ],
-  corePlugins: {
-    preflight: false,
-  },
 };

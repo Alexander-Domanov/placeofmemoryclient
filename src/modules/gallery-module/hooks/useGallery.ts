@@ -8,6 +8,7 @@ export const useGallery = (page: number, pageSize: number, status: string) => {
     isLoading,
     isFetching,
     isSuccess,
+    refetch,
   } = useQuery({
     queryKey: ['gallery', { page, pageSize, status }],
     queryFn: () => getGallery(page, pageSize, status),
@@ -16,5 +17,5 @@ export const useGallery = (page: number, pageSize: number, status: string) => {
     ...noRefetch,
   });
 
-  return { gallery, isLoading, isFetching, isSuccess };
+  return { gallery, isLoading, isFetching, isSuccess, refetch };
 };

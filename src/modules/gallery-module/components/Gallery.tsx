@@ -24,7 +24,11 @@ export const Gallery: FC = () => {
   const [status, setStatus] = useState<string>(
     GalleryFileStatuses.ALL.toLowerCase()
   );
-  const { gallery, isFetching, isSuccess } = useGallery(page, pageSize, status);
+  const { gallery, isFetching, isSuccess, refetch } = useGallery(
+    page,
+    pageSize,
+    status
+  );
 
   const [isUploadGalleryOpen, setIsUploadGalleryOpen] = useState(false);
 
@@ -98,6 +102,7 @@ export const Gallery: FC = () => {
       <UploadGalleryModal
         isOpen={isUploadGalleryOpen}
         setIsOpen={setIsUploadGalleryOpen}
+        refetch={refetch}
       />
     </div>
   );
