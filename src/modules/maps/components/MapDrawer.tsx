@@ -11,7 +11,11 @@ const styleButton = {
   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
 };
 
-const MapDrawer: React.FC = () => {
+interface MapDrawerProps {
+  onPlaceSelected: (place: IPlaceResultAfterExtract) => void;
+}
+
+const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] =
     useState<IPlaceResultAfterExtract | null>(null);
@@ -77,6 +81,7 @@ const MapDrawer: React.FC = () => {
     setSelectedPlace(place);
     setOpen(false);
     message.success(`Place: ${place?.formattedAddress} is selected`);
+    onPlaceSelected(place);
   };
 
   return (
