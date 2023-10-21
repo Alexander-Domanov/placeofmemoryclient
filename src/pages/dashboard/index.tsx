@@ -1,6 +1,6 @@
-import { Button } from 'antd';
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
+import { ChooseGalleryFiles } from '@/modules/gallery-module';
 
 const DashboardPage = () => {
   return (
@@ -8,7 +8,8 @@ const DashboardPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <Button>a12</Button>
+
+      <ChooseGalleryFiles />
     </>
   );
 };

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getGallery } from '../api/gallery-api';
 import { noRefetch } from '@/common/helpers/noRefetch';
 
-export const useGallery = (page: number, pageSize: number, status: string) => {
+export const useGallery = (page: number, pageSize: number, status = 'all') => {
   const {
     data: gallery,
     isLoading,
