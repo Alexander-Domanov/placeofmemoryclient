@@ -1,20 +1,13 @@
 import React, { FC, useState } from 'react';
-import { Input, Select, Space, Table, Tooltip, Typography } from 'antd';
+import { Input, Select, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
-import Link from 'next/link';
-import { ColumnsType } from 'antd/es/table';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
 import { tagRender } from '@/modules/users-modules/components/helpers/TagRender';
 import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
-import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
-import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
-import DeleteUserComponent from '@/modules/users-modules/components/DeleteUser';
-import { ColorRoleTag } from '@/modules/users-modules/components/helpers/ColorRoleTag';
-import { ColorStatusUserTag } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
-import UpdateUserComponent from '@/modules/users-modules/components/UpdateUser';
+import { columnsTableUser } from '@/modules/users-modules/components/ColumnsTableUser';
 
 export const Users: FC = () => {
   const [pagination, setPagination] = useState({
@@ -80,89 +73,6 @@ export const Users: FC = () => {
     setExtensions(value);
   };
 
-  const columns: ColumnsType<IUserWithShortExtensions> = [
-    {
-      dataIndex: 'id',
-      key: 'id',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      render: (text, record) => (
-        <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
-          <Typography.Text>
-            {RenderAvatarImage(record.avatars?.thumbnail.url, 20, record)}
-          </Typography.Text>
-        </Tooltip>
-      ),
-    },
-    {
-      title: 'Name',
-      dataIndex: 'userName',
-      key: 'userName',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      render: (text, record) => (
-        <Link
-          href={{
-            pathname: '/dashboard/users/[id]',
-            query: { id: record.id },
-          }}
-        >
-          <Typography.Text
-            ellipsis
-            style={{ cursor: 'pointer', color: '#1087f6' }}
-          >
-            {text}
-          </Typography.Text>
-        </Link>
-      ),
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      render: (text) => <Typography.Text>{text}</Typography.Text>,
-    },
-    {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text: string) => ColorStatusUserTag(text),
-    },
-    {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
-      render: (text: string) => ColorRoleTag(text),
-    },
-    {
-      title: 'View Profile',
-      dataIndex: 'view profile',
-      key: 'view profile',
-      render: (text, record) => <UserDrawer onUserSelected={record} />,
-    },
-    {
-      title: 'Edit',
-      dataIndex: 'edit',
-      key: 'edit',
-      render: (text, record) => <UpdateUserComponent user={record} />,
-    },
-    {
-      title: 'Delete',
-      dataIndex: 'delete',
-      key: 'delete',
-      render: (text, record) => <DeleteUserComponent user={record} />,
-    },
-  ];
-
   return (
     <div>
       <Space direction="vertical" size="large" style={{ display: 'flex' }}>
@@ -223,7 +133,7 @@ export const Users: FC = () => {
         <Table
           // bordered
           size="small"
-          columns={columns}
+          columns={columnsTableUser}
           dataSource={users?.items}
           loading={isLoading}
           pagination={{
