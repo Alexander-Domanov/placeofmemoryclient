@@ -16,8 +16,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
     defaultValue={defaultValue}
     style={{
       width: 120,
-      boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+      // boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
       borderRadius: '7px',
+      marginLeft: '10px',
     }}
     onChange={onChange}
     options={options}

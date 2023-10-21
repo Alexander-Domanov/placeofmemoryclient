@@ -1,11 +1,10 @@
 import React, { FC, useState } from 'react';
-import { Input, Select, Space, Table } from 'antd';
+import { Flex, Input, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
-import { tagRender } from '@/modules/users-modules/components/helpers/TagRender';
 import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
 import { columnsTableUser } from '@/modules/users-modules/components/ColumnsTableUser';
 
@@ -19,11 +18,11 @@ export const Users: FC = () => {
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-  const [extensions, setExtensions] = useState<string[]>([
-    'places',
-    'persons',
-    'articles',
-  ]);
+  // const [extensions, setExtensions] = useState<string[]>([
+  //   'places',
+  //   'persons',
+  //   'articles',
+  // ]);
 
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
@@ -36,8 +35,8 @@ export const Users: FC = () => {
     status,
     role,
     search,
-    sorting,
-    extensions
+    sorting
+    // extensions
   );
 
   const onPageChange = (_page: number) => {
@@ -69,21 +68,26 @@ export const Users: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
-  const handleExtensionsChange = (value: string[]) => {
-    setExtensions(value);
-  };
+  // const handleExtensionsChange = (value: string[]) => {
+  //   setExtensions(value);
+  // };
 
   return (
     <div>
-      <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-        <Space direction="horizontal" align="end">
+      <Space direction="vertical" style={{ display: 'flex' }}>
+        <Flex
+          justify="end"
+          align="center"
+          gap="middle"
+          style={{ marginBottom: '15px' }}
+        >
           <Input
             placeholder="Search by name"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
             }
-            style={{ width: 200, boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)` }}
+            style={{ width: 200 }}
           />
           <div>
             <SelectInput
@@ -111,27 +115,27 @@ export const Users: FC = () => {
               onChange={onRoleChange}
             />
           </div>
-          <div>
-            <Select
-              mode="multiple"
-              tagRender={tagRender}
-              defaultValue={['places', 'persons', 'articles']}
-              style={{
-                width: '300px',
-                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                borderRadius: '7px',
-              }}
-              options={[
-                { value: 'places', label: 'Places' },
-                { value: 'persons', label: 'Persons' },
-                { value: 'articles', label: 'Articles' },
-              ]}
-              onChange={handleExtensionsChange}
-            />
-          </div>
-        </Space>
+          {/* <div> */}
+          {/*  <Select */}
+          {/*    mode="multiple" */}
+          {/*    tagRender={tagRender} */}
+          {/*    defaultValue={['places', 'persons', 'articles']} */}
+          {/*    style={{ */}
+          {/*      width: '300px', */}
+          {/*      boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`, */}
+          {/*      borderRadius: '7px', */}
+          {/*    }} */}
+          {/*    options={[ */}
+          {/*      { value: 'places', label: 'Places' }, */}
+          {/*      { value: 'persons', label: 'Persons' }, */}
+          {/*      { value: 'articles', label: 'Articles' }, */}
+          {/*    ]} */}
+          {/*    onChange={handleExtensionsChange} */}
+          {/*  /> */}
+          {/* </div> */}
+        </Flex>
         <Table
-          // bordered
+          bordered
           size="small"
           columns={columnsTableUser}
           dataSource={users?.items}
