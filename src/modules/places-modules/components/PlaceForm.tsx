@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Divider, Form, Input, message, Space } from 'antd';
+import { Button, Form, Input, message, Space, Typography } from 'antd';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import AutoCompleteMapComponent from '@/modules/maps/components/AutoCompleteMap';
 
 const layout = {
   labelCol: { span: 8 },
@@ -18,14 +17,32 @@ const validateMessages = {
     range: `$\{label} must be between $\{min} and $\{max}`,
   },
 };
-const PlaceForm = () => {
+
+interface MapDrawerProps {
+  onPlaceSelected: IPlaceResultAfterExtract | null;
+}
+
+const PlaceForm: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   const [form] = Form.useForm();
 
-  const onPlaceSelected = (place: IPlaceResultAfterExtract) => {
-    form.setFieldValue(['place', 'country'], place?.country);
-    form.setFieldValue(['place', 'city'], place?.city);
-    form.setFieldValue(['place', 'nameCemetery'], place?.formattedAddress);
-  };
+  form.setFieldValue(['place', 'country'], onPlaceSelected?.country);
+  form.setFieldValue(['place', 'city'], onPlaceSelected?.city);
+  form.setFieldValue(
+    ['place', 'nameCemetery'],
+    onPlaceSelected?.formattedAddress
+  );
+  form.setFieldValue(
+    ['place', 'location', 'name'],
+    onPlaceSelected?.location.name
+  );
+  form.setFieldValue(
+    ['place', 'location', 'longitude'],
+    onPlaceSelected?.location.lng
+  );
+  form.setFieldValue(
+    ['place', 'location', 'latitude'],
+    onPlaceSelected?.location.lat
+  );
 
   const onFinish = (values: any) => {
     message.info(`fin ======== ${JSON.stringify(values)}`);
@@ -33,14 +50,12 @@ const PlaceForm = () => {
 
   return (
     <Space direction="vertical">
-      <AutoCompleteMapComponent onPlaceSelected={onPlaceSelected} />
-      <Divider />
       <Form
         {...layout}
         form={form}
         name="nest-messages"
         onFinish={onFinish}
-        style={{ maxWidth: 600 }}
+        // style={{ maxWidth: 1000 }}
         validateMessages={validateMessages}
       >
         <Form.Item
@@ -63,6 +78,33 @@ const PlaceForm = () => {
           rules={[{ required: true }]}
         >
           <Input placeholder="Input Name Cemetery" allowClear />
+        </Form.Item>
+        <Form.Item
+          name={['place', 'location', 'name']}
+          label="Location Name"
+          rules={[{ required: true }]}
+        >
+          <Typography.Text>
+            {onPlaceSelected?.location.name || ''}
+          </Typography.Text>
+        </Form.Item>
+        <Form.Item
+          name={['place', 'location', 'longitude']}
+          label="Longtitude"
+          rules={[{ required: true }]}
+        >
+          <Typography.Text>
+            {onPlaceSelected?.location.lng || ''}
+          </Typography.Text>
+        </Form.Item>
+        <Form.Item
+          name={['place', 'location', 'latitude']}
+          label="Latitude"
+          rules={[{ required: true }]}
+        >
+          <Typography.Text>
+            {onPlaceSelected?.location.lat || ''}
+          </Typography.Text>
         </Form.Item>
         <Form.Item
           name={['place', 'shortDescription']}

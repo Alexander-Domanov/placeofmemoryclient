@@ -13,6 +13,8 @@ export * from './images/get-gallery-response.type';
 export * from './locations/location.type';
 export * from './persons/person.type';
 export * from './places/place.type';
+export * from './places/create-place.type';
+export * from './places/get-places-response.type';
 export * from './users/user.type';
 export * from './users/get-users-response.type';
 export * from './users/avatar.type';

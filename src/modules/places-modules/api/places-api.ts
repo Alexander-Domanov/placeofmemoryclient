@@ -1,6 +1,7 @@
 import { authInstance } from '@/services';
 import { IGetPlacesResponse } from '@/types/places/get-places-response.type';
 import { IPlace } from '@/types';
+import { ICreatePlace } from '@/types/places/create-place.type';
 
 export const getPlaces = (
   page: number,
@@ -19,6 +20,10 @@ export const getPlaces = (
       sortDirection: sorting.order,
     },
   });
+};
+
+export const createPlace = (placeData: ICreatePlace) => {
+  return authInstance.post<IPlace>('places', placeData);
 };
 
 export const deletePlace = (id: number | null) => {
