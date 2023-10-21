@@ -2,16 +2,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { deleteUser } from '@/modules/users-modules/api/users-api';
 
-export const useDeleteUser = (id: number | null) => {
+export const useDeleteUser = () => {
   const client = useQueryClient();
-  const { mutate, isLoading, isSuccess } = useMutation({
-    mutationKey: ['deleteUser', { id }],
-    mutationFn: () => deleteUser(id),
+  const { mutate: deleteUserMutation, isLoading: isDeleting } = useMutation({
+    mutationKey: ['delete-user'],
+    mutationFn: (id: number | null) => deleteUser(id),
     onSuccess: () => {
-      client.invalidateQueries(['users']);
+      client.invalidateQueries({ queryKey: ['users'] });
     },
     ...noRefetch,
   });
 
-  return { mutate, isLoading, isSuccess };
+  return { deleteUserMutation, isDeleting };
 };
