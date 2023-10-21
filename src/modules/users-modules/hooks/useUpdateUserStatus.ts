@@ -6,7 +6,7 @@ export const useUpdateUserStatus = () => {
   const client = useQueryClient();
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ['updateUserStatus'],
-    mutationFn: ({ id, status }: { id: number | undefined; status: string }) =>
+    mutationFn: ({ id, status }: { id: number | null; status: string }) =>
       updateUserStatus(id, status),
     ...noRefetch,
     onSuccess: () => {

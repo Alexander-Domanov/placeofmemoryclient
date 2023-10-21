@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Button, Input, List, Select, Space, Table, Typography } from 'antd';
+import { Input, Select, Space, Table, Tooltip, Typography } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import Link from 'next/link';
 import { ColumnsType } from 'antd/es/table';
@@ -7,16 +7,21 @@ import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
-import { tagRender } from '@/modules/users-modules/components/TagRender';
-import { renderAvatarImage } from '@/modules/users-modules/components/RenderAvatar';
-import SelectInput from '@/modules/users-modules/components/SelectInput';
+import { tagRender } from '@/modules/users-modules/components/helpers/TagRender';
+import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
 import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
-import { RoleDropdown } from '@/modules/users-modules/components/RoleDropdown';
-import { StatusDropdown } from '@/modules/users-modules/components/StatusDropdown';
+import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
+import DeleteUserComponent from '@/modules/users-modules/components/DeleteUser';
+import { ColorRoleTag } from '@/modules/users-modules/components/helpers/ColorRoleTag';
+import { ColorStatusUserTag } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
+import UpdateUserComponent from '@/modules/users-modules/components/UpdateUser';
 
 export const Users: FC = () => {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 11,
+    searchTerm: '',
+  });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
     order: string | null;
@@ -26,27 +31,18 @@ export const Users: FC = () => {
     'persons',
     'articles',
   ]);
+
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [open, setOpen] = useState(false);
+
   const [selectedUser, setSelectedUser] =
     useState<IUserWithShortExtensions | null>(null);
 
-  const showDrawer = (user: IUserWithShortExtensions) => {
-    setSelectedUser(user);
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const search = useDebounce(searchTerm, 500);
+  const search = useDebounce(pagination.searchTerm, 500);
 
   const { users, isLoading } = useUsers(
-    page,
-    pageSize,
+    pagination.page,
+    pagination.pageSize,
     status,
     role,
     search,
@@ -55,20 +51,19 @@ export const Users: FC = () => {
   );
 
   const onPageChange = (_page: number) => {
-    setPage(_page);
+    setPagination({ ...pagination, page: _page });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPage(1);
-    setPageSize(size);
+    setPagination({ ...pagination, page: 1, pageSize: size });
   };
 
   const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
-    setPage(1);
+    setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
   };
   const onRoleChange = (value: { value: string; label: React.ReactNode }) => {
-    setPage(1);
+    setPagination({ ...pagination, page: 1 });
     setRole(value.value);
   };
 
@@ -90,24 +85,24 @@ export const Users: FC = () => {
 
   const columns: ColumnsType<IUserWithShortExtensions> = [
     {
-      title: 'ID',
       dataIndex: 'id',
       key: 'id',
       sorter: true,
       sortDirections: ['ascend', 'descend'],
-      render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
-    },
-    {
-      title: 'Avatar',
-      dataIndex: 'avatars',
-      key: 'avatar',
-      render: (avatars, record) =>
-        renderAvatarImage(avatars?.thumbnail.url, 30, record),
+      render: (text, record) => (
+        <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
+          <Typography.Text>
+            {RenderAvatarImage(record.avatars?.thumbnail.url, 20, record)}
+          </Typography.Text>
+        </Tooltip>
+      ),
     },
     {
       title: 'Name',
       dataIndex: 'userName',
       key: 'userName',
+      sorter: true,
+      sortDirections: ['ascend', 'descend'],
       render: (text, record) => (
         <Link
           href={{
@@ -123,14 +118,14 @@ export const Users: FC = () => {
           </Typography.Text>
         </Link>
       ),
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
+      sorter: true,
+      sortDirections: ['ascend', 'descend'],
+      render: (text) => <Typography.Text>{text}</Typography.Text>,
     },
     {
       title: 'Created At',
@@ -143,77 +138,44 @@ export const Users: FC = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      render: (text, record) => <StatusDropdown {...record} />,
+      render: (text: string) => ColorStatusUserTag(text),
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
-      sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      render: (text, record) => <RoleDropdown {...record} />,
-    },
-    {
-      title: 'Pending to review',
-      dataIndex: 'pendingToReview',
-      key: 'pendingToReview',
-      render: (text, record) => {
-        const countAll =
-          (record?.places?.pendingReview.length || 0) +
-          (record?.persons?.pendingReview.length || 0) +
-          (record?.articles?.pendingReview.length || 0);
-        return <Typography.Text ellipsis>{countAll}</Typography.Text>;
-      },
-    },
-    {
-      title: 'Published',
-      dataIndex: 'published',
-      key: 'published',
-      render: (text, record) => {
-        const countAll =
-          (record?.places?.publications.length || 0) +
-          (record?.persons?.publications.length || 0) +
-          (record?.articles?.publications.length || 0);
-        return <Typography.Text ellipsis>{countAll}</Typography.Text>;
-      },
+      render: (text: string) => ColorRoleTag(text),
     },
     {
       title: 'View Profile',
       dataIndex: 'view profile',
       key: 'view profile',
-      render: (text, record) => (
-        <List.Item
-          actions={[
-            <Button
-              key={0}
-              style={{ cursor: 'pointer', color: '#1890ff' }}
-              onClick={() => showDrawer(record)}
-              ghost
-            >
-              more…
-            </Button>,
-          ]}
-        />
-      ),
+      render: (text, record) => <UserDrawer onUserSelected={record} />,
+    },
+    {
+      title: 'Edit',
+      dataIndex: 'edit',
+      key: 'edit',
+      render: (text, record) => <UpdateUserComponent user={record} />,
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete',
+      render: (text, record) => <DeleteUserComponent user={record} />,
     },
   ];
 
   return (
     <div>
       <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <Space direction="horizontal" align="end">
           <Input
             placeholder="Search by name"
             allowClear
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) =>
+              setPagination({ ...pagination, searchTerm: e.target.value })
+            }
             style={{ width: 200, boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)` }}
           />
           <div>
@@ -260,10 +222,9 @@ export const Users: FC = () => {
               onChange={handleExtensionsChange}
             />
           </div>
-        </div>
-
+        </Space>
         <Table
-          bordered
+          // bordered
           size="small"
           columns={columns}
           dataSource={users?.items}
@@ -271,30 +232,17 @@ export const Users: FC = () => {
           pagination={{
             position: ['bottomCenter'],
             total: users?.totalCount || 1,
-            current: page,
+            current: pagination.page,
             onChange: onPageChange,
             defaultCurrent: 1,
-            defaultPageSize: 10,
+            defaultPageSize: 11,
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          scroll={{ y: 800 }}
+          scroll={{ x: 1000 }}
           onChange={handleTableChange}
         />
-        <UserDrawer open={open} onClose={onClose} selectedUser={selectedUser} />
       </Space>
-
-      {/* <Modal */}
-      {/*  title="User Details" */}
-      {/*  open={isModalVisible} */}
-      {/*  onOk={closeModal} */}
-      {/*  onCancel={closeModal} */}
-      {/*  width={700} */}
-      {/*  style={{ top: 20 }} */}
-      {/* > */}
-      {/*  {selectedUser && <UserItem user={selectedUser} />} */}
-      {/* </Modal> */}
-      {/* <GalleryUserInfoModal /> */}
     </div>
   );
 };

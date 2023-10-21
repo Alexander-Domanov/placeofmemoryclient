@@ -2,7 +2,7 @@ import { Avatar, Badge, Image, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { IUserWithShortExtensions } from '@/types';
 
-export const renderAvatarImage = (
+export const RenderAvatarImage = (
   url: string | null | undefined,
   size: number,
   record: IUserWithShortExtensions | null,
