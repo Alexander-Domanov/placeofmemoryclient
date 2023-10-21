@@ -35,9 +35,6 @@ export const Users: FC = () => {
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
 
-  const [selectedUser, setSelectedUser] =
-    useState<IUserWithShortExtensions | null>(null);
-
   const search = useDebounce(pagination.searchTerm, 500);
 
   const { users, isLoading } = useUsers(
