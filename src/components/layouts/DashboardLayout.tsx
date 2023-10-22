@@ -4,8 +4,12 @@ import { Layout, Menu } from 'antd';
 import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
 import { FaPlaceOfWorship, FaUsers } from 'react-icons/fa';
 import Link from 'next/link';
+import type { MenuProps } from 'antd/es/menu';
+import { useRouter } from 'next/router';
 import { routes } from '@/common/routing/routes';
 import { DashboardModals } from '@/components';
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 const siderStyle: React.CSSProperties = {
   minHeight: '100vh',
@@ -18,24 +22,41 @@ const contentStyle: React.CSSProperties = {
 };
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+
+  const items: MenuItem[] = [
+    {
+      key: routes.dashboard.index,
+      label: <Link href={routes.dashboard.index}>Dashboard</Link>,
+      icon: <LaptopOutlined />,
+    },
+    {
+      key: routes.dashboard.gallery,
+      label: <Link href={routes.dashboard.gallery}>Gallery</Link>,
+      icon: <FolderOpenOutlined />,
+    },
+    {
+      key: routes.dashboard.users,
+      label: <Link href={routes.dashboard.users}>Users</Link>,
+      icon: <FaUsers />,
+    },
+    {
+      key: routes.dashboard.places,
+      label: <Link href={routes.dashboard.places}>Places</Link>,
+      icon: <FaPlaceOfWorship />,
+    },
+  ];
+
   return (
     <>
       <Layout>
         <Layout.Sider width={200} style={siderStyle}>
-          <Menu mode="inline" style={{ height: '100%' }}>
-            <Menu.Item key="dashboard" icon={<LaptopOutlined />}>
-              <Link href={routes.dashboard.index}>Dashboard</Link>
-            </Menu.Item>
-            <Menu.Item key="gallery" icon={<FolderOpenOutlined />}>
-              <Link href={routes.dashboard.gallery}>Gallery</Link>
-            </Menu.Item>
-            <Menu.Item key="users" icon={<FaUsers />}>
-              <Link href={routes.dashboard.users}>Users</Link>
-            </Menu.Item>
-            <Menu.Item key="places" icon={<FaPlaceOfWorship />}>
-              <Link href={routes.dashboard.places}>Places</Link>
-            </Menu.Item>
-          </Menu>
+          <Menu
+            mode="inline"
+            style={{ height: '100%' }}
+            items={items}
+            selectedKeys={[router.asPath]}
+          />
         </Layout.Sider>
 
         <Layout>
