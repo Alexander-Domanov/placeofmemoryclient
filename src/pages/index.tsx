@@ -1,13 +1,23 @@
-import { Inter } from 'next/font/google';
 import Head from 'next/head';
+import { Roboto } from '@next/font/google';
+import localFont from '@next/font/local';
 import { getGlobalLayout } from '@/components';
-
-const inter = Inter({ subsets: ['latin'] });
-
+// main font
+const roboto = Roboto({
+  weight: ['100', '300', '400', '700'],
+  subsets: ['latin'],
+  variable: '--font-roboto',
+});
+// font for header
+const fontKelSi = localFont({
+  src: '../assets/font/kelsi/Kelsi-Regular.otf',
+  variable: '--font-kelsi',
+});
+// className={``}
 export function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${roboto.variable} ${fontKelSi.variable} font-sans`}
     >
       <Head>
         <title>Minsk</title>
@@ -16,7 +26,7 @@ export function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col justify-center align-middle">
-        <span>Content</span>
+        <span className="font-fontHeader">Content</span>
       </div>
     </main>
   );
