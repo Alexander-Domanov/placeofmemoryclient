@@ -53,17 +53,17 @@ export const Footer = () => {
             <span className="text-base font-semibold">Сацыяльныя сеткі</span>
             <ul className="flex gap-10 cursor-pointer">
               <li>
-                <Link href="https://www.facebook.com/">
+                <Link href="https://www.facebook.com/" aria-label="Facebook">
                   <BiLogoFacebook size={24} />
                 </Link>
               </li>
               <li>
-                <Link href="https://twitter.com/">
+                <Link href="https://twitter.com/" aria-label="Twitter">
                   <FaTwitter size={24} />
                 </Link>
               </li>
               <li>
-                <Link href="https://www.linkedin.com/">
+                <Link href="https://www.linkedin.com/" aria-label="LinkedIn">
                   <BiLogoLinkedinSquare size={24} />
                 </Link>
               </li>

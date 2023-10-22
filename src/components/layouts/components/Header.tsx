@@ -35,7 +35,9 @@ export function Header() {
                   </li>
                 </>
               ) : (
-                <DropdownMenuHeader />
+                <li>
+                  <DropdownMenuHeader />
+                </li>
               )}
             </ul>
           </nav>

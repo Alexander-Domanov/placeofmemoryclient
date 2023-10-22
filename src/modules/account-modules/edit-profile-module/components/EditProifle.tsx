@@ -37,7 +37,7 @@ export const EditProfile = () => {
     <section className="flex flex-col items-center">
       <span>Edit Profile</span>
       <div className="flex pt-3 items-center gap-3">
-        <AvatarComponent src={urlAvatar} />
+        <AvatarComponent src={urlAvatar} alt="user-avatar" />
         <Button
           disabled={isLoadingUploadAvatar}
           type="button"
