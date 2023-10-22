@@ -6,7 +6,7 @@ const MyDocument = () => {
   return (
     <Html lang="en">
       <Head />
-      <body className="debug-screens">
+      <body className="debug-screens w-full">
         <Main />
         <NextScript />
       </body>
