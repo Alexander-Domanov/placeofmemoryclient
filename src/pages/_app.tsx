@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode, useState } from 'react';
+import { StyleProvider } from '@ant-design/cssinjs';
 import '@/styles/globals.css';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
@@ -8,7 +9,9 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ConfigProvider } from 'antd';
 import AuthProtection from '@/components/auth-protection/AuthProtection';
+import theme from '@/theme/themeConfig';
 
 export type NextPageWithLayout<P = NonNullable<unknown>, IP = P> = NextPage<
   P,
@@ -29,7 +32,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <AuthProtection>
-          {getLayout(<Component {...pageProps} />)}
+          <ConfigProvider theme={theme}>
+            <StyleProvider hashPriority="high">
+              {getLayout(<Component {...pageProps} />)}
+            </StyleProvider>
+          </ConfigProvider>
         </AuthProtection>
       </Hydrate>
 

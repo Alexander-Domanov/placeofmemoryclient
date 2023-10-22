@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 
@@ -8,7 +7,6 @@ const DashboardPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <Button>a12</Button>
     </>
   );
 };

@@ -39,5 +39,6 @@ export const routes = {
     index: '/dashboard',
     gallery: '/dashboard/gallery',
     users: '/dashboard/users',
+    places: '/dashboard/places',
   },
 };

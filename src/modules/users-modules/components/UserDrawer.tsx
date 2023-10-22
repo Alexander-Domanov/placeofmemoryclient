@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import { Col, Divider, Drawer, Row, Space } from 'antd';
-import { IUser } from '@/types';
-import { RoleDropdown } from '@/modules/users-modules/components/RoleDropdown';
-import { renderAvatar } from '@/modules/users-modules/components/RenderAvatar';
-import { StatusDropdown } from '@/modules/users-modules/components/StatusDropdown';
+import React, { FC, useState } from 'react';
+import { Button, Col, Divider, Drawer, List, Row, Space } from 'antd';
+import { IUserWithShortExtensions } from '@/types';
+import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
+import { ColorRoleTag } from '@/modules/users-modules/components/helpers/ColorRoleTag';
+import { ColorStatusUserTag } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
 
 interface DescriptionItemProps {
   title: string;
@@ -12,129 +12,169 @@ interface DescriptionItemProps {
 
 const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
   <div className="site-description-item-profile-wrapper">
-    <span className="font-normal">{title}: </span>
-    <span className="font-bold text-base">{content}</span>
+    <span className="font-normal text-neutral-400">{title}: </span>
+    <span className="font-normal text-start">{content}</span>
   </div>
 );
 
 interface UserDrawerProps {
-  open: boolean;
-  onClose: () => void;
-  selectedUser: IUser | null;
+  onUserSelected: IUserWithShortExtensions | null;
 }
 
-export const UserDrawer: FC<UserDrawerProps> = ({
-  open,
-  onClose,
-  selectedUser,
-}) => {
-  return (
-    <Drawer
-      width={680}
-      placement="right"
-      closable={false}
-      onClose={onClose}
-      open={open}
-    >
-      <Space
-        direction="horizontal"
-        size="large"
-        style={{ display: 'flex', justifyContent: 'flex-start' }}
-      >
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          {renderAvatar(selectedUser?.avatars, 120)}
-        </Space>
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          <Row style={{ marginBottom: 4 }}>
-            <Col span={30}>
-              <DescriptionItem
-                title="User Name"
-                content={selectedUser?.userName}
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: 4 }}>
-            <Col span={30}>
-              <DescriptionItem
-                title="First Name"
-                content={selectedUser?.firstName || 'N/A'}
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: 4 }}>
-            <Col span={30}>
-              <DescriptionItem title="Email" content={selectedUser?.email} />
-            </Col>
-          </Row>
-        </Space>
-        <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-          <Row style={{ marginBottom: 4 }}>
-            <Col span={30}>
-              <div
-                style={{
-                  textAlign: 'right',
-                  position: 'fixed',
-                  top: '20px',
-                  right: '60px',
-                  padding: '4px',
-                  border: '1px solid #e8e8e8',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
-                }}
-              >
-                <DescriptionItem title="ID" content={selectedUser?.id} />
-              </div>
-            </Col>
-          </Row>
-        </Space>
-      </Space>
+export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedUser, setSelectedUser] =
+    useState<IUserWithShortExtensions | null>(null);
 
-      <Divider />
-      <Row>
-        <Col span={12}>
-          <DescriptionItem
-            title="Role"
-            content={<RoleDropdown {...selectedUser} />}
-          />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem
-            title="Status"
-            content={<StatusDropdown {...selectedUser} />}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title="Added" content={selectedUser?.createdAt} />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem
-            title="Last Updated"
-            content={selectedUser?.updatedAt}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <p className="site-description-item-profile-p">Content</p>
-      <Row style={{ marginTop: 16 }}>
-        <Col span={12}>
-          <DescriptionItem
-            title="Places"
-            content={selectedUser?.places.length}
-          />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem
-            title="Persons"
-            content={selectedUser?.persons.length}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <p className="site-description-item-profile-p">Content</p>
-    </Drawer>
+  const showDrawer = (user: IUserWithShortExtensions) => {
+    setSelectedUser(user);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <List.Item
+        actions={[
+          <Button
+            key={0}
+            style={{ cursor: 'pointer', color: '#1890ff' }}
+            onClick={() =>
+              showDrawer(onUserSelected as IUserWithShortExtensions)
+            }
+            ghost
+          >
+            more…
+          </Button>,
+        ]}
+      />
+      <Drawer
+        width={510}
+        placement="right"
+        onClose={onClose}
+        open={open}
+        extra={
+          <Space direction="vertical">
+            <Row>
+              <Col>
+                <DescriptionItem title="ID" content={selectedUser?.id} />
+              </Col>
+            </Row>
+          </Space>
+        }
+      >
+        <Space
+          direction="horizontal"
+          size="large"
+          style={{ display: 'flex', justifyContent: 'flex-start' }}
+        >
+          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            {RenderAvatarImage(selectedUser?.avatars?.medium.url, 120, true)}
+          </Space>
+          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            <Row style={{ marginBottom: 4 }}>
+              <Col span={30}>
+                <DescriptionItem
+                  title="User Name"
+                  content={selectedUser?.userName}
+                />
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: 4 }}>
+              <Col span={30}>
+                <DescriptionItem
+                  title="First Name"
+                  content={selectedUser?.firstName || 'N/A'}
+                />
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: 4 }}>
+              <Col span={30}>
+                <DescriptionItem title="Email" content={selectedUser?.email} />
+              </Col>
+            </Row>
+          </Space>
+        </Space>
+
+        <Divider orientation="left">User Information</Divider>
+        <Row>
+          <Col span={10}>
+            <DescriptionItem
+              title="Role"
+              content={ColorRoleTag(selectedUser?.role as string)}
+            />
+          </Col>
+          <Col span={10}>
+            <DescriptionItem
+              title="Status"
+              content={ColorStatusUserTag(selectedUser?.status as string)}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <Divider orientation="right">Places</Divider>
+            <DescriptionItem
+              title="Draft"
+              content={selectedUser?.places?.drafts.length}
+            />
+            <DescriptionItem
+              title="Pending to review"
+              content={selectedUser?.places?.pendingReview.length}
+            />
+            <DescriptionItem
+              title="Published"
+              content={selectedUser?.places?.publications.length}
+            />
+          </Col>
+          <Col span={12}>
+            <Divider orientation="right">Persons</Divider>
+            <DescriptionItem
+              title="Draft"
+              content={selectedUser?.persons?.drafts.length}
+            />
+            <DescriptionItem
+              title="Pending to review"
+              content={selectedUser?.persons?.pendingReview.length}
+            />
+            <DescriptionItem
+              title="Published"
+              content={selectedUser?.persons?.publications.length}
+            />
+          </Col>
+          <Col span={12}>
+            <Divider orientation="right">Articles</Divider>
+            <DescriptionItem
+              title="Draft"
+              content={selectedUser?.articles?.drafts.length}
+            />
+            <DescriptionItem
+              title="Pending to review"
+              content={selectedUser?.articles?.pendingReview.length}
+            />
+            <DescriptionItem
+              title="Published"
+              content={selectedUser?.articles?.publications.length}
+            />
+          </Col>
+        </Row>
+        <Divider orientation="left">Other Information</Divider>
+        <Row>
+          <Col span={12}>
+            <DescriptionItem title="Added" content={selectedUser?.createdAt} />
+          </Col>
+          <Col span={12}>
+            <DescriptionItem
+              title="Last Updated"
+              content={selectedUser?.updatedAt}
+            />
+          </Col>
+        </Row>
+        <Divider />
+      </Drawer>
+    </>
   );
 };

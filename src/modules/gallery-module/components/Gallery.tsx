@@ -1,16 +1,34 @@
 import { FC, useState } from 'react';
-import { Button, Card, Col, Pagination, Row, Space, Select } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Empty,
+  Flex,
+  Pagination,
+  Row,
+  Select,
+  Space,
+  Spin,
+} from 'antd';
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
+import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
 
 const { Option } = Select;
 
 export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
-  const [status, setStatus] = useState('all');
-  const { gallery, isLoading } = useGallery(page, pageSize, status);
+  const [status, setStatus] = useState<string>(
+    GalleryFileStatuses.ALL.toLowerCase()
+  );
+  const { gallery, isFetching, isSuccess, refetch } = useGallery(
+    page,
+    pageSize,
+    status
+  );
 
   const [isUploadGalleryOpen, setIsUploadGalleryOpen] = useState(false);
 
@@ -31,32 +49,27 @@ export const Gallery: FC = () => {
   return (
     <div>
       <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <Flex justify="space-between" align="center" gap="middle">
           <div>
             <Button type="primary" onClick={() => setIsUploadGalleryOpen(true)}>
               Add File
             </Button>
           </div>
-          <div>
+
+          <Space size="middle">
             <Select
               value={status}
-              style={{ width: 120 }}
+              style={{ width: 150 }}
               onChange={onStatusChange}
             >
-              <Option value="all">All</Option>
-              <Option value="draft">Draft</Option>
-              <Option value="pendingReview">Pending Review</Option>
-              <Option value="published">Published</Option>
+              <Option value={GalleryFileStatuses.ALL}>All</Option>
+              <Option value={GalleryFileStatuses.DRAFT}>Draft</Option>
+              <Option value={GalleryFileStatuses.PENDING_REVIEW}>
+                Pending Review
+              </Option>
+              <Option value={GalleryFileStatuses.PUBLISHED}>Published</Option>
             </Select>
-          </div>
 
-          <div>
             <Pagination
               total={gallery?.totalCount || 1}
               current={page}
@@ -66,23 +79,30 @@ export const Gallery: FC = () => {
               pageSizeOptions={[18, 24, 36, 48, 96]}
               onShowSizeChange={onPageSizeChange}
             />
-          </div>
-        </div>
+          </Space>
+        </Flex>
 
-        <Card>
-          <Row gutter={[16, 16]}>
-            {gallery?.items.map((item) => (
-              <Col span={4} key={item.uploadId}>
-                <GalleryItem file={item} />
-              </Col>
-            ))}
-          </Row>
-        </Card>
+        <Spin spinning={isFetching} size="large">
+          <Card>
+            {isSuccess && !gallery?.items.length ? (
+              <Empty />
+            ) : (
+              <Row gutter={[16, 16]}>
+                {gallery?.items.map((item) => (
+                  <Col span={4} key={item.uploadId}>
+                    <GalleryItem file={item} />
+                  </Col>
+                ))}
+              </Row>
+            )}
+          </Card>
+        </Spin>
       </Space>
 
       <UploadGalleryModal
         isOpen={isUploadGalleryOpen}
         setIsOpen={setIsUploadGalleryOpen}
+        refetch={refetch}
       />
     </div>
   );
