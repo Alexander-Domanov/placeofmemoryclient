@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button, Form, Input, message, Space, Typography } from 'antd';
+import { Button, Form, Input } from 'antd';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
+import { ICreatePlace } from '@/types';
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  labelCol: { span: 4 },
+  wrapperCol: { span: 'auto' },
 };
 
 const validateMessages = {
@@ -19,109 +21,89 @@ const validateMessages = {
 };
 
 interface MapDrawerProps {
-  onPlaceSelected: IPlaceResultAfterExtract | null;
+  onPlaceSelectedFromMap: IPlaceResultAfterExtract | null;
+  onFinish: (values: ICreatePlace) => void;
 }
 
-const PlaceForm: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
+const PlaceForm: React.FC<MapDrawerProps> = ({
+  onPlaceSelectedFromMap,
+  onFinish,
+}) => {
   const [form] = Form.useForm();
 
-  form.setFieldValue(['place', 'country'], onPlaceSelected?.country);
-  form.setFieldValue(['place', 'city'], onPlaceSelected?.city);
+  form.setFieldValue(['country'], onPlaceSelectedFromMap?.country);
+  form.setFieldValue(['city'], onPlaceSelectedFromMap?.city);
   form.setFieldValue(
-    ['place', 'nameCemetery'],
-    onPlaceSelected?.formattedAddress
+    ['nameCemetery'],
+    onPlaceSelectedFromMap?.formattedAddress
   );
   form.setFieldValue(
-    ['place', 'location', 'name'],
-    onPlaceSelected?.location.name
+    ['location', 'name'],
+    onPlaceSelectedFromMap?.location.name
   );
   form.setFieldValue(
-    ['place', 'location', 'longitude'],
-    onPlaceSelected?.location.lng
+    ['location', 'longitude'],
+    onPlaceSelectedFromMap?.location.lng
   );
   form.setFieldValue(
-    ['place', 'location', 'latitude'],
-    onPlaceSelected?.location.lat
+    ['location', 'latitude'],
+    onPlaceSelectedFromMap?.location.lat
   );
-
-  const onFinish = (values: any) => {
-    message.info(`fin ======== ${JSON.stringify(values)}`);
-  };
 
   return (
-    <Space direction="vertical">
-      <Form
-        {...layout}
-        form={form}
-        name="nest-messages"
-        onFinish={onFinish}
-        // style={{ maxWidth: 1000 }}
-        validateMessages={validateMessages}
+    <Form
+      layout="vertical"
+      form={form}
+      name="nest-messages"
+      onFinish={(values) => {
+        onFinish({
+          ...values,
+          location: {
+            name: onPlaceSelectedFromMap?.location.name || null,
+            longitude: onPlaceSelectedFromMap?.location.lng || null,
+            latitude: onPlaceSelectedFromMap?.location.lat || null,
+          },
+        });
+      }}
+      validateMessages={validateMessages}
+    >
+      <Form.Item
+        name={['country']}
+        label="Country"
+        rules={[{ required: true, whitespace: true }]}
       >
-        <Form.Item
-          name={['place', 'country']}
-          label="Country"
-          rules={[{ required: true, whitespace: true }]}
-        >
-          <Input placeholder="Input Country" allowClear />
-        </Form.Item>
-        <Form.Item
-          name={['place', 'city']}
-          label="City"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Input City" allowClear />
-        </Form.Item>
-        <Form.Item
-          name={['place', 'nameCemetery']}
-          label="Name Cemetery"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Input Name Cemetery" allowClear />
-        </Form.Item>
-        <Form.Item
-          name={['place', 'location', 'name']}
-          label="Location Name"
-          rules={[{ required: true }]}
-        >
-          <Typography.Text>
-            {onPlaceSelected?.location.name || ''}
-          </Typography.Text>
-        </Form.Item>
-        <Form.Item
-          name={['place', 'location', 'longitude']}
-          label="Longtitude"
-          rules={[{ required: true }]}
-        >
-          <Typography.Text>
-            {onPlaceSelected?.location.lng || ''}
-          </Typography.Text>
-        </Form.Item>
-        <Form.Item
-          name={['place', 'location', 'latitude']}
-          label="Latitude"
-          rules={[{ required: true }]}
-        >
-          <Typography.Text>
-            {onPlaceSelected?.location.lat || ''}
-          </Typography.Text>
-        </Form.Item>
-        <Form.Item
-          name={['place', 'shortDescription']}
-          label="Short Description"
-        >
-          <Input.TextArea showCount maxLength={100} />
-        </Form.Item>
-        <Form.Item name={['place', 'description']} label="Description">
-          <Input.TextArea showCount maxLength={300} />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </Space>
+        <Input placeholder="Input Country" allowClear disabled />
+      </Form.Item>
+      <Form.Item name={['city']} label="City" rules={[{ required: true }]}>
+        <Input placeholder="Input City" allowClear disabled />
+      </Form.Item>
+      <Form.Item
+        name={['nameCemetery']}
+        label="Name Cemetery"
+        rules={[{ required: true }]}
+      >
+        <Input placeholder="Input Name Cemetery" allowClear disabled />
+      </Form.Item>
+      <Form.Item
+        name={['shortDescription']}
+        label="Short Description"
+        rules={[{ required: true }]}
+      >
+        <Input.TextArea showCount maxLength={100} />
+      </Form.Item>
+      <Form.Item
+        name={['description']}
+        label="Description"
+        rules={[{ required: true }]}
+      >
+        <Input.TextArea showCount maxLength={300} />
+      </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+          Save
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 

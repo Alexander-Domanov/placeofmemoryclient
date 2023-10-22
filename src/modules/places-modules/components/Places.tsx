@@ -3,11 +3,11 @@ import { Button, Flex, Input, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
+import Link from 'next/link';
 import { IPlace } from '@/types';
 import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-modules/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-modules/components/ColumnsTablePlaces';
-import { AddPlaceModal } from '@/modules/places-modules/components/AddPlaceModal';
 
 export const Places: FC = () => {
   const [pagination, setPagination] = useState({
@@ -69,9 +69,18 @@ export const Places: FC = () => {
           style={{ marginBottom: '15px' }}
         >
           <div>
-            <Button type="primary" onClick={() => setIsAddPlaceModalOpen(true)}>
-              Add Place
-            </Button>
+            <Link
+              href={{
+                pathname: '/dashboard/places/create',
+              }}
+            >
+              <Button
+                type="primary"
+                // onClick={() => setIsAddPlaceModalOpen(true)}
+              >
+                Add Place
+              </Button>
+            </Link>
           </div>
           <Input
             placeholder="Search by name"
@@ -114,11 +123,11 @@ export const Places: FC = () => {
           onChange={handleTableChange}
         />
       </Space>
-      <AddPlaceModal
-        isOpen={isAddPlaceModalOpen}
-        setIsOpen={() => setIsAddPlaceModalOpen(false)}
-        refetch={refetch}
-      />
+      {/* <AddPlaceModal */}
+      {/*  isOpen={isAddPlaceModalOpen} */}
+      {/*  setIsOpen={() => setIsAddPlaceModalOpen(false)} */}
+      {/*  refetch={refetch} */}
+      {/* /> */}
     </div>
   );
 };

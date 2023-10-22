@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Divider, Drawer, Form, message, Space } from 'antd';
-import { FaMapLocationDot } from 'react-icons/fa6';
+import { FaLocationDot } from 'react-icons/fa6';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapWithAutoComplete from '@/modules/maps/components/MapWithAutoComplete';
 import { extractPlaceData } from '@/modules/maps/components/helpers/placeUtils';
@@ -88,12 +88,16 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   return (
     <>
       <Space>
-        <Button type="primary" onClick={showDrawer} icon={<FaMapLocationDot />}>
-          Open Map
+        <Button
+          type="primary"
+          onClick={showDrawer}
+          icon={<FaLocationDot />}
+          style={{ marginBottom: 12 }}
+        >
+          Find Location
         </Button>
       </Space>
       <Drawer
-        // title="Search the Location…"
         placement="right"
         width={520}
         onClose={onClose}
