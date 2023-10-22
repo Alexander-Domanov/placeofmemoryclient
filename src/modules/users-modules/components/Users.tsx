@@ -6,7 +6,7 @@ import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-modules/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
 import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
-import { columnsTableUser } from '@/modules/users-modules/components/ColumnsTableUser';
+import { columnsTableUsers } from '@/modules/users-modules/components/ColumnsTableUsers';
 
 export const Users: FC = () => {
   const [pagination, setPagination] = useState({
@@ -137,7 +137,7 @@ export const Users: FC = () => {
         <Table
           bordered
           size="small"
-          columns={columnsTableUser}
+          columns={columnsTableUsers}
           dataSource={users?.items}
           loading={isLoading}
           pagination={{

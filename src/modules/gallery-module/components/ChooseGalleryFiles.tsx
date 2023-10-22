@@ -7,18 +7,28 @@ import {
   Flex,
   Image,
   Modal,
+  notification,
   Pagination,
   Row,
   Space,
   Spin,
 } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useGallery } from '@/modules/gallery-module/hooks/useGallery';
 import { UploadGalleryModal } from '@/modules/gallery-module/components/UploadGalleryModal';
 import { GalleryItemChoose } from '@/modules/gallery-module/components/GalleryItemChoose';
 import { IGalleryFile } from '@/types';
 import styles from './ChooseGalleryFiles.module.scss';
 
-export const ChooseGalleryFiles: FC = () => {
+interface ChooseGalleryFilesProps {
+  onFilesSelected: (files: IGalleryFile[]) => void;
+  maxFileLimit: number;
+}
+
+export const ChooseGalleryFiles: FC<ChooseGalleryFilesProps> = ({
+  onFilesSelected,
+  maxFileLimit,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
@@ -33,9 +43,15 @@ export const ChooseGalleryFiles: FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
 
   const addFileToSelectedFiles = (file: IGalleryFile) => {
-    setSelectedFiles((prev) => [...prev, file]);
+    if (selectedFiles.length < maxFileLimit) {
+      setSelectedFiles((prev) => [...prev, file]);
+    } else {
+      notification.error({
+        message: 'File Limit Exceeded',
+        description: `You can select a maximum of ${maxFileLimit} files.`,
+      });
+    }
   };
-
   const removeFileFromSelectedFiles = (id: string) => {
     setSelectedFiles((prev) => prev.filter((file) => file.uploadId !== id));
   };
@@ -49,11 +65,22 @@ export const ChooseGalleryFiles: FC = () => {
     setPageSize(size);
   };
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    onFilesSelected(selectedFiles);
+  };
+
   return (
     <div>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Choose
-      </Button>
+      <Row justify="start" style={{ marginBottom: 12 }}>
+        <Button
+          type="primary"
+          onClick={() => setIsModalOpen(true)}
+          icon={<PlusOutlined />}
+        >
+          Choose
+        </Button>
+      </Row>
 
       <Card title="Selected Files">
         <Row gutter={[12, 12]}>
@@ -71,14 +98,12 @@ export const ChooseGalleryFiles: FC = () => {
         </Row>
       </Card>
 
-      <pre>{JSON.stringify(selectedFiles, null, 2)}</pre>
-
       <Modal
         open={isModalOpen}
         width={1000}
         title="Choose media"
         footer={null}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={handleModalClose}
       >
         <Space direction="vertical" size="large" style={{ display: 'flex' }}>
           <Flex justify="space-between" align="center" gap="middle">

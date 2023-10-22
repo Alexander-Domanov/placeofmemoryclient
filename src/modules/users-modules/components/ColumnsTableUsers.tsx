@@ -10,7 +10,7 @@ import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
 import UpdateUserComponent from '@/modules/users-modules/components/UpdateUser';
 import DeleteUserComponent from '@/modules/users-modules/components/DeleteUser';
 
-export const columnsTableUser: ColumnsType<IUserWithShortExtensions> = [
+export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
   {
     dataIndex: 'id',
     key: 'id',
@@ -19,7 +19,7 @@ export const columnsTableUser: ColumnsType<IUserWithShortExtensions> = [
     render: (text, record) => (
       <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
         <Typography.Text>
-          {RenderAvatarImage(record.avatars?.thumbnail.url, 20, record)}
+          {RenderAvatarImage(record.avatars?.thumbnail.url, 20)}
         </Typography.Text>
       </Tooltip>
     ),

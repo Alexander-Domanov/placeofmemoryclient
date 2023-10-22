@@ -5,8 +5,8 @@ import { IUserWithShortExtensions } from '@/types';
 export const RenderAvatarImage = (
   url: string | null | undefined,
   size: number,
-  record: IUserWithShortExtensions | null,
-  isPreview = false
+  isPreview = false,
+  record?: IUserWithShortExtensions | null
   // openModal: (record: IUser) => void
 ) => {
   const countAll =

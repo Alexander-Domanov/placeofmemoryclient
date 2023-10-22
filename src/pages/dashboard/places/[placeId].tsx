@@ -1,16 +1,15 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 
-const DashboardPage = () => {
+const PlaceList = () => {
   return (
     <>
       <Head>
-        <title>Dashboard</title>
+        <title>Place List</title>
       </Head>
     </>
   );
 };
 
-DashboardPage.getLayout = getDashboardLayout;
-
-export default DashboardPage;
+PlaceList.getLayout = getDashboardLayout;
+export default PlaceList;
