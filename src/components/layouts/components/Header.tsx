@@ -8,9 +8,9 @@ import { INavigationLinks, NAVIGATION_LINK } from '@/common/constants';
 export function Header() {
   const { userName } = useUserStore();
   return (
-    <header className="h-[65px] bg-dark-900 flex items-center border-b ">
-      <Container>
-        <section className="flex justify-between font-normal leading-3 text-sm text-light-300">
+    <header className="h-[65px] bg-dark-900 flex items-center border-b border-dark-900 ">
+      <Container className="bg-dark-900">
+        <section className="flex justify-between items-center font-normal leading-3 text-sm text-light-300">
           <div className="flex items-center font-kelsi text-xl">
             <Link href={routes.main}>MOGILKI</Link>
           </div>

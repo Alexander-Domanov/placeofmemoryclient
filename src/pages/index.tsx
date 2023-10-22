@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Roboto } from '@next/font/google';
 import { getGlobalLayout } from '@/components';
+import { HomePage } from '@/modules/home-module';
 // main font
 const roboto = Roboto({
   weight: ['100', '300', '400', '700'],
@@ -19,9 +20,7 @@ export function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <span className=" bg-dark-light">Content</span>
-      </div>
+      <HomePage />
     </main>
   );
 }
