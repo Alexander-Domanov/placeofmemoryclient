@@ -46,5 +46,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 0,
     'react/no-array-index-key': 0,
     '@typescript-eslint/no-empty-interface': 0,
+    'react/no-danger': 0,
   },
 };
