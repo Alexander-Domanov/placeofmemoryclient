@@ -31,7 +31,10 @@ export const SignUp = () => {
       <h1 className="font-bold text-xl mb-10">Sign up to Minsk</h1>
       {!showOrHiddenForm && (
         <>
-          <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
+          <Button
+            className="font-fontHeader"
+            onClick={OAUTH_AUTHORIZATION.registrationGoogle}
+          >
             Sign up with Google
           </Button>
 

@@ -50,11 +50,17 @@
 }
 
 @layer base {
+  @font-face {
+    font-family: 'kelsi';
+    src: url("../assets/font/kelsi/Kelsi-Regular.otf");
+  }
+
   * {
     @apply border-border;
+    @apply text-light-100
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground ;
   }
 }

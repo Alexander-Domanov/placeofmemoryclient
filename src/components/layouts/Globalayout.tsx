@@ -1,13 +1,15 @@
 import { NextPage } from 'next';
 import { PropsWithChildren, ReactElement } from 'react';
-import { LayoutWithHeader } from '@/components';
+import { Container, LayoutWithHeader } from '@/components';
 
 export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <LayoutWithHeader>
-      <div className="min-h-[calc(100vh-60px)]">
-        <div>{children}</div>
-      </div>
+      <Container>
+        <div className="min-h-[calc(100vh-65px)] pt-[197px] pb-[130px]">
+          <div>{children}</div>
+        </div>
+      </Container>
     </LayoutWithHeader>
   );
 };
