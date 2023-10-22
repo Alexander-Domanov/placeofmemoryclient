@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Image } from 'antd';
+import { Image, Tooltip } from 'antd';
 import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
 import { IGalleryFile } from '@/types/images/gallery-file.type';
@@ -11,11 +11,24 @@ interface Props {
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'PUBLISHED':
-      return <BsEyeFill color="green" size={32} />;
+      return (
+        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+          <BsEyeFill color="green" size={32} />
+        </Tooltip>
+      );
     case 'DRAFT':
-      return <BsEyeSlashFill color="red" size={32} />;
+      return (
+        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+          <BsEyeSlashFill color="red" size={32} />
+        </Tooltip>
+      );
     case 'PENDING_REVIEW':
-      return <BsEye color="orange" size={32} />;
+      return (
+        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+          <BsEye color="orange" size={32} />
+          );
+        </Tooltip>
+      );
     default:
       return null;
   }
