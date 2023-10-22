@@ -88,7 +88,12 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   return (
     <>
       <Space>
-        <Button type="primary" onClick={showDrawer} icon={<FaMapLocationDot />}>
+        <Button
+          type="primary"
+          onClick={showDrawer}
+          icon={<FaMapLocationDot />}
+          style={{ marginBottom: 12 }}
+        >
           Open Map
         </Button>
       </Space>
