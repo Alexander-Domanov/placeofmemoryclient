@@ -18,25 +18,48 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
+    title: 'Owner',
+    dataIndex: 'owner',
+    key: 'ownerId',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
+    render: (text, record) => (
+      <Tooltip
+        title={`name: ${record.owner.userName}`}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{text.id}</Typography.Text>
+      </Tooltip>
+    ),
+  },
+
+  {
     title: 'Name',
     dataIndex: 'nameCemetery',
     key: 'nameCemetery',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Link
-        href={{
-          pathname: '/dashboard/places/[id]',
-          query: { id: record.id },
-        }}
+      <Tooltip
+        title={`${record.shortDescription}`}
+        placement="leftBottom"
+        color="#1087f6"
       >
-        <Typography.Text
-          ellipsis
-          style={{ cursor: 'pointer', color: '#1087f6' }}
+        <Link
+          href={{
+            pathname: '/dashboard/places/[id]',
+            query: { id: record.id },
+          }}
         >
-          {text}
-        </Typography.Text>
-      </Link>
+          <Typography.Text
+            ellipsis
+            style={{ cursor: 'pointer', color: '#1087f6' }}
+          >
+            {text}
+          </Typography.Text>
+        </Link>
+      </Tooltip>
     ),
   },
   {

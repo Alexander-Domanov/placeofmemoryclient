@@ -1,8 +1,9 @@
 import { ILocation } from '@/types/locations/location.type';
 import { IGalleryFile } from '@/types/images/gallery-file.type';
 import { IBaseDateType } from '@/types/common/base-date.type';
+import { IBaseOwnerInfo } from '@/types/common/owner-info.type';
 
-export interface IPlace extends ILocation, IBaseDateType {
+export interface IPlace extends ILocation, IBaseDateType, IBaseOwnerInfo {
   id: number;
   status: string;
   country: string;
