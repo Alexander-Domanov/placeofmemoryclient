@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 import { Gallery } from '@/modules/gallery-module';
+import { NextPageWithLayout } from '@/pages/_app';
 
-const DashboardGalleryPage = () => {
+const DashboardGalleryPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>

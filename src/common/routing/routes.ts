@@ -25,5 +25,9 @@ export const routes = {
     gallery: '/dashboard/gallery',
     users: '/dashboard/users',
     places: '/dashboard/places',
+    articles: {
+      index: '/dashboard/articles',
+      create: '/dashboard/articles/create',
+    },
   },
 };

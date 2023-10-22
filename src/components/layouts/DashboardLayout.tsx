@@ -6,6 +6,7 @@ import { FaPlaceOfWorship, FaUsers } from 'react-icons/fa';
 import Link from 'next/link';
 import type { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
+import { FaNewspaper } from 'react-icons/fa6';
 import { routes } from '@/common/routing/routes';
 import { DashboardModals } from '@/components';
 
@@ -44,6 +45,11 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       key: routes.dashboard.places,
       label: <Link href={routes.dashboard.places}>Places</Link>,
       icon: <FaPlaceOfWorship />,
+    },
+    {
+      key: routes.dashboard.articles.index,
+      label: <Link href={routes.dashboard.articles.index}>Articles</Link>,
+      icon: <FaNewspaper />,
     },
   ];
 
