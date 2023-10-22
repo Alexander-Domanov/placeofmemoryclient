@@ -1,2 +1,3 @@
 export { HomePage } from './components/HomePage';
-export { GravesArchive } from './components/pages-block/GravesArchive';
+export { GravesArchiveBlock } from './components/pages-block/GravesArchiveBlock';
+export { ArticlesBlock } from './components/pages-block/ArticlesBlock';

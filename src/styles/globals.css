@@ -57,7 +57,7 @@
 
   * {
     @apply border-border;
-    @apply text-light-100;
+    @apply text-light-100
   }
 
   body {

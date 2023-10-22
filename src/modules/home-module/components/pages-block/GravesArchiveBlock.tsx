@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@/ui';
 import { routes } from '@/common/routing/routes';
 
-export const GravesArchive = () => {
+export const GravesArchiveBlock = () => {
   const { push } = useRouter();
   return (
     <div className="flex flex-col ">

@@ -1,9 +1,10 @@
-import { GravesArchive } from '@/modules/home-module';
+import { GravesArchiveBlock } from '@/modules/home-module';
 
 export const HomePage = () => {
   return (
     <>
-      <GravesArchive />
+      <GravesArchiveBlock />
+      {/* <ArticlesBlock /> */}
     </>
   );
 };
