@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Col, Divider, Form, message, Row } from 'antd';
+import { Col, Divider, Form, message, notification, Row } from 'antd';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import PlaceForm from '@/modules/places-modules/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
@@ -24,7 +24,11 @@ export const AddPlacePage: FC = () => {
     };
     createPlace(place, {
       onSuccess: (data) => {
-        message.success('Place created successfully');
+        notification.success({
+          message: 'Place created successfully',
+          description: 'You will be redirected to the place page',
+          placement: 'bottomLeft',
+        });
         router.push(`/dashboard/places/${data.data.id}`);
       },
       onError: (data: any) => {
