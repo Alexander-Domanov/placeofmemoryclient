@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace } from '@/types';
 
@@ -30,22 +31,22 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
 }) => {
   const [form] = Form.useForm();
 
-  form.setFieldValue(['place', 'country'], onPlaceSelectedFromMap?.country);
-  form.setFieldValue(['place', 'city'], onPlaceSelectedFromMap?.city);
+  form.setFieldValue(['country'], onPlaceSelectedFromMap?.country);
+  form.setFieldValue(['city'], onPlaceSelectedFromMap?.city);
   form.setFieldValue(
-    ['place', 'nameCemetery'],
+    ['nameCemetery'],
     onPlaceSelectedFromMap?.formattedAddress
   );
   form.setFieldValue(
-    ['place', 'location', 'name'],
+    ['location', 'name'],
     onPlaceSelectedFromMap?.location.name
   );
   form.setFieldValue(
-    ['place', 'location', 'longitude'],
+    ['location', 'longitude'],
     onPlaceSelectedFromMap?.location.lng
   );
   form.setFieldValue(
-    ['place', 'location', 'latitude'],
+    ['location', 'latitude'],
     onPlaceSelectedFromMap?.location.lat
   );
 
@@ -67,35 +68,39 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
       validateMessages={validateMessages}
     >
       <Form.Item
-        name={['place', 'country']}
+        name={['country']}
         label="Country"
         rules={[{ required: true, whitespace: true }]}
       >
-        <Input placeholder="Input Country" allowClear />
+        <Input placeholder="Input Country" allowClear disabled />
+      </Form.Item>
+      <Form.Item name={['city']} label="City" rules={[{ required: true }]}>
+        <Input placeholder="Input City" allowClear disabled />
       </Form.Item>
       <Form.Item
-        name={['place', 'city']}
-        label="City"
-        rules={[{ required: true }]}
-      >
-        <Input placeholder="Input City" allowClear />
-      </Form.Item>
-      <Form.Item
-        name={['place', 'nameCemetery']}
+        name={['nameCemetery']}
         label="Name Cemetery"
         rules={[{ required: true }]}
       >
-        <Input placeholder="Input Name Cemetery" allowClear />
+        <Input placeholder="Input Name Cemetery" allowClear disabled />
       </Form.Item>
-      <Form.Item name={['place', 'shortDescription']} label="Short Description">
+      <Form.Item
+        name={['shortDescription']}
+        label="Short Description"
+        rules={[{ required: true }]}
+      >
         <Input.TextArea showCount maxLength={100} />
       </Form.Item>
-      <Form.Item name={['place', 'description']} label="Description">
+      <Form.Item
+        name={['description']}
+        label="Description"
+        rules={[{ required: true }]}
+      >
         <Input.TextArea showCount maxLength={300} />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+          Save
         </Button>
       </Form.Item>
     </Form>

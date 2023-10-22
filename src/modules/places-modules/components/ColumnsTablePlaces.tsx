@@ -22,8 +22,8 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
   },
   {
     title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'nameCemetery',
+    key: 'nameCemetery',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
