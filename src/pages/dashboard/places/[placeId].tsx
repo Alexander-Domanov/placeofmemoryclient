@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
+import { PlacePage } from '@/modules/places-modules/components/Place';
 
 const PlaceList = () => {
   return (
@@ -7,6 +8,7 @@ const PlaceList = () => {
       <Head>
         <title>Place List</title>
       </Head>
+      <PlacePage />
     </>
   );
 };

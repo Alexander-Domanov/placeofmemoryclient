@@ -1,4 +1,4 @@
-import { Space, Tag } from 'antd';
+import { Tag } from 'antd';
 import {
   ClockCircleOutlined,
   EyeInvisibleOutlined,
@@ -17,14 +17,14 @@ export const getColorStatusPlace = (status: string | null) => {
     icon = <EyeInvisibleOutlined />;
   } else if (status === 'PENDING_REVIEW') {
     color = 'geekblue';
-    text = 'Pending';
+    text = 'Sent for review';
     icon = <ClockCircleOutlined />;
   } else if (status === 'PUBLISHED') {
     color = 'green';
     text = 'Published';
     icon = <EyeOutlined />;
   } else if (status === 'ARCHIVED') {
-    color = 'default-color';
+    color = 'lightgrey';
     text = 'Archived';
     icon = <InboxOutlined />;
   }
@@ -35,9 +35,7 @@ export const ColorStatusPlaceTag = (status: string | null) => {
   const statusTagProps = getColorStatusPlace(status);
   return (
     <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      <Space size={2} align="center">
-        {statusTagProps.icon} {statusTagProps.text}
-      </Space>
+      {statusTagProps.icon} {statusTagProps.text}
     </Tag>
   );
 };

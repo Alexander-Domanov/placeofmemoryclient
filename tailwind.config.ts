@@ -8,6 +8,10 @@ module.exports = {
     './src/**/*.{ts,tsx}',
   ],
   theme: {
+    fontFamily: {
+      // sans: ['var(--font-roboto)'],
+      kelsi: 'kelsi',
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -17,6 +21,21 @@ module.exports = {
     },
     extend: {
       colors: {
+        dark: {
+          100: '#bdbdbd',
+          200: '#333333',
+          300: '#565656',
+          500: '#565656',
+          700: '#404040',
+          900: '#2C2C2C',
+        },
+        light: {
+          100: '#ffffff',
+          300: '#fafafa',
+          500: '#edf3fa',
+          700: '#d5dae0',
+          900: '#bdc1c7',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -20,6 +20,21 @@ export const routes = {
     dashboard: '/dashboard',
   },
   main: '/',
+  articles: {
+    index: '/articles',
+  },
+  place: {
+    index: '/place',
+  },
+  people: {
+    index: '/people',
+  },
+  aboutTheProject: {
+    index: 'about-the-project',
+  },
+  map: {
+    index: 'map',
+  },
   dashboard: {
     index: '/dashboard',
     gallery: '/dashboard/gallery',

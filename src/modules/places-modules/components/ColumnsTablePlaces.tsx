@@ -1,5 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
-import { Tooltip, Typography } from 'antd';
+import { Row, Space, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
@@ -24,13 +24,15 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Tooltip
-        title={`name: ${record.owner.userName}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
-        <Typography.Text>{text.id}</Typography.Text>
-      </Tooltip>
+      <Row justify="space-around">
+        <Tooltip
+          title={`name: ${record.owner.userName}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
+          <Typography.Text>{text.id}</Typography.Text>
+        </Tooltip>
+      </Row>
     ),
   },
 
@@ -100,16 +102,21 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'Photos',
     dataIndex: 'photos',
     key: 'photos',
-    render: (text, record) => (
-      <Tooltip
-        title={`ID: ${record.photos[0]?.uploadId}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
-        <Typography.Text>
-          {RenderAvatarImage(record.photos[0]?.versions.huge.url, 30, true)}
-        </Typography.Text>
-      </Tooltip>
+    render: (text, record: IPlace) => (
+      <Space size={8}>
+        {record.photos.map((photo, index) => (
+          <Tooltip
+            title={`ID: ${photo.uploadId}`}
+            placement="leftBottom"
+            color="#1087f6"
+            key={index}
+          >
+            <Typography.Text key={index}>
+              {RenderAvatarImage(photo.versions.huge.url, 30, true)}
+            </Typography.Text>
+          </Tooltip>
+        ))}
+      </Space>
     ),
   },
   {
@@ -117,19 +124,20 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'persons',
     key: 'persons',
     render: (text, record) => (
-      <Typography.Text>{record.personsLocation.length}</Typography.Text>
+      <Row justify="space-around">
+        <Typography.Text>{record.personsLocation.length}</Typography.Text>
+      </Row>
     ),
   },
   {
-    title: 'Edit',
-    dataIndex: 'edit',
-    key: 'edit',
-    render: (text, record) => <UpdatePlaceStatusComponent place={record} />,
-  },
-  {
-    title: 'Delete',
-    dataIndex: 'delete',
-    key: 'delete',
-    render: (text, record) => <DeletePlaceComponent place={record} />,
+    title: 'Edit/Delete',
+    dataIndex: 'actions',
+    key: 'actions',
+    render: (text, record) => (
+      <Row justify="space-evenly">
+        <UpdatePlaceStatusComponent place={record} />
+        <DeletePlaceComponent place={record} />
+      </Row>
+    ),
   },
 ];

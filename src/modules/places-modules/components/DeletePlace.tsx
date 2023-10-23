@@ -23,12 +23,24 @@ const DeletePlaceComponent: React.FC<DeletePlaceComponentProps> = ({
   };
 
   const deletePlace = () => {
-    deletePlaceMutation(selectedPlace?.id || null);
-    setDeleteModalVisible(false);
-    notification.success({
-      message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
-      placement: 'bottomLeft',
+    deletePlaceMutation(selectedPlace?.id || null, {
+      onSuccess: () => {
+        notification.success({
+          message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
+          placement: 'bottomLeft',
+        });
+      },
+      onError: (data: any) => {
+        const errors = data.response.data.messages as any[];
+        if (errors.length > 0) {
+          notification.error({
+            message: `Error: ${errors[0].message}`,
+            placement: 'bottomLeft',
+          });
+        }
+      },
     });
+    setDeleteModalVisible(false);
   };
 
   return (

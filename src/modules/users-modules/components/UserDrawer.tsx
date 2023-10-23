@@ -110,7 +110,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           <Col span={10}>
             <DescriptionItem
               title="Status"
-              content={ColorStatusUserTag(selectedUser?.status as string)}
+              content={ColorStatusUserTag(selectedUser?.status as string, true)}
             />
           </Col>
         </Row>

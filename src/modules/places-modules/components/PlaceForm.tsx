@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, message } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { ICreatePlace } from '@/types';
+import { ICreatePlace, IPlace } from '@/types';
 
 const layout = {
   labelCol: { span: 4 },
@@ -23,32 +23,41 @@ const validateMessages = {
 interface MapDrawerProps {
   onPlaceSelectedFromMap: IPlaceResultAfterExtract | null;
   onFinish: (values: ICreatePlace) => void;
+  place?: IPlace;
 }
 
 const PlaceForm: React.FC<MapDrawerProps> = ({
   onPlaceSelectedFromMap,
   onFinish,
+  place,
 }) => {
+  const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(
+    place || null
+  );
+  const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
+    useState<IPlaceResultAfterExtract | null>(onPlaceSelectedFromMap);
+
+  useEffect(() => {
+    setSelectedPlaceFromMap(onPlaceSelectedFromMap);
+    setSelectedPlace(place || null);
+  }, [onPlaceSelectedFromMap]);
+
   const [form] = Form.useForm();
 
-  form.setFieldValue(['country'], onPlaceSelectedFromMap?.country);
-  form.setFieldValue(['city'], onPlaceSelectedFromMap?.city);
-  form.setFieldValue(
-    ['nameCemetery'],
-    onPlaceSelectedFromMap?.formattedAddress
-  );
-  form.setFieldValue(
-    ['location', 'name'],
-    onPlaceSelectedFromMap?.location.name
-  );
+  form.setFieldValue(['country'], selectedPlaceFromMap?.country);
+  form.setFieldValue(['city'], selectedPlaceFromMap?.city);
+  form.setFieldValue(['nameCemetery'], selectedPlaceFromMap?.formattedAddress);
+  form.setFieldValue(['location', 'name'], selectedPlaceFromMap?.location.name);
   form.setFieldValue(
     ['location', 'longitude'],
-    onPlaceSelectedFromMap?.location.lng
+    selectedPlaceFromMap?.location.lng
   );
   form.setFieldValue(
     ['location', 'latitude'],
-    onPlaceSelectedFromMap?.location.lat
+    selectedPlaceFromMap?.location.lat
   );
+  form.setFieldValue(['shortDescription'], place?.shortDescription);
+  form.setFieldValue(['description'], place?.description);
 
   return (
     <Form
@@ -56,13 +65,16 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
       form={form}
       name="nest-messages"
       onFinish={(values) => {
+        message.info(`${JSON.stringify(values)}`);
         onFinish({
           ...values,
           location: {
-            name: onPlaceSelectedFromMap?.location.name || null,
-            longitude: onPlaceSelectedFromMap?.location.lng || null,
-            latitude: onPlaceSelectedFromMap?.location.lat || null,
+            name: selectedPlaceFromMap?.location.name || null,
+            longitude: selectedPlaceFromMap?.location.lng || null,
+            latitude: selectedPlaceFromMap?.location.lat || null,
           },
+          shortDescription: values.shortDescription || null,
+          description: values.description || null,
         });
       }}
       validateMessages={validateMessages}
@@ -89,14 +101,14 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
         label="Short Description"
         rules={[{ required: true }]}
       >
-        <Input.TextArea showCount maxLength={100} />
+        <Input.TextArea showCount maxLength={300} />
       </Form.Item>
       <Form.Item
         name={['description']}
         label="Description"
         rules={[{ required: true }]}
       >
-        <Input.TextArea showCount maxLength={300} />
+        <Input.TextArea showCount maxLength={4000} />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>

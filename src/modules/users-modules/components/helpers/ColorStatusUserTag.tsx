@@ -1,7 +1,7 @@
-import { Space, Tag } from 'antd';
+import { Row, Tag, Tooltip } from 'antd';
 import {
-  CheckCircleOutlined,
-  LockOutlined,
+  CheckCircleTwoTone,
+  LockTwoTone,
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
@@ -14,11 +14,11 @@ export const getColorStatusUser = (status: string | null) => {
   if (status === 'ACTIVE') {
     color = 'green';
     text = 'Active';
-    icon = <CheckCircleOutlined />;
+    icon = <CheckCircleTwoTone twoToneColor="#74c782" />;
   } else if (status === 'BANNED') {
     color = 'red';
     text = 'Banned';
-    icon = <LockOutlined />;
+    icon = <LockTwoTone twoToneColor="#f5222d" />;
   } else if (status === 'PENDING') {
     color = 'geekblue';
     text = 'Pending';
@@ -28,13 +28,20 @@ export const getColorStatusUser = (status: string | null) => {
   return { color, text, icon };
 };
 
-export const ColorStatusUserTag = (status: string | null) => {
+export const ColorStatusUserTag = (
+  status: string | null,
+  isStatus: boolean
+) => {
   const statusTagProps = getColorStatusUser(status);
-  return (
-    <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      <Space size={2} align="center">
+  return isStatus ? (
+    <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+      <Tag color={statusTagProps.color} className="ant-dropdown-link">
         {statusTagProps.icon} {statusTagProps.text}
-      </Space>
-    </Tag>
+      </Tag>
+    </Tooltip>
+  ) : (
+    <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+      <Row justify="space-around">{statusTagProps.icon}</Row>
+    </Tooltip>
   );
 };

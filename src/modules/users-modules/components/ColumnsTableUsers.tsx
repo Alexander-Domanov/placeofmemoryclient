@@ -1,5 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
-import { Tooltip, Typography } from 'antd';
+import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IUserWithShortExtensions } from '@/types';
@@ -19,7 +19,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text, record) => (
       <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
         <Typography.Text>
-          {RenderAvatarImage(record.avatars?.thumbnail.url, 20)}
+          {RenderAvatarImage(record.avatars?.thumbnail.url, 25)}
         </Typography.Text>
       </Tooltip>
     ),
@@ -65,7 +65,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (text: string) => ColorStatusUserTag(text),
+    render: (text: string) => ColorStatusUserTag(text, false),
   },
   {
     title: 'Role',
@@ -77,18 +77,21 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'View Profile',
     dataIndex: 'view profile',
     key: 'view profile',
-    render: (text, record) => <UserDrawer onUserSelected={record} />,
+    render: (text, record) => (
+      <Row justify="space-around">
+        <UserDrawer onUserSelected={record} />
+      </Row>
+    ),
   },
   {
-    title: 'Edit',
-    dataIndex: 'edit',
-    key: 'edit',
-    render: (text, record) => <UpdateUserComponent user={record} />,
-  },
-  {
-    title: 'Delete',
-    dataIndex: 'delete',
-    key: 'delete',
-    render: (text, record) => <DeleteUserComponent user={record} />,
+    title: 'Edit/Delete',
+    dataIndex: 'actions',
+    key: 'actions',
+    render: (text, record) => (
+      <Row justify="space-evenly">
+        <UpdateUserComponent user={record} />
+        <DeleteUserComponent user={record} />
+      </Row>
+    ),
   },
 ];
