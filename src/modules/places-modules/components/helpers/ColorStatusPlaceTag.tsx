@@ -17,7 +17,7 @@ export const getColorStatusPlace = (status: string | null) => {
     icon = <EyeInvisibleOutlined />;
   } else if (status === 'PENDING_REVIEW') {
     color = 'geekblue';
-    text = 'Pending';
+    text = 'Sent for review';
     icon = <ClockCircleOutlined />;
   } else if (status === 'PUBLISHED') {
     color = 'green';
