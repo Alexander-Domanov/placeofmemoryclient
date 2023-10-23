@@ -34,6 +34,13 @@ export const updatePlaceStatus = (id: number | null, status: string) => {
   return authInstance.put(`places/${id}/status`, { status });
 };
 
+export const updatePlace = (
+  id: string | string[] | undefined,
+  data: ICreatePlace
+) => {
+  return authInstance.put(`places/${id}`, { ...data });
+};
+
 export const getPlace = (id: string | undefined | string[]) => {
   return authInstance.get<IPlace>(`places/${id}`);
 };
