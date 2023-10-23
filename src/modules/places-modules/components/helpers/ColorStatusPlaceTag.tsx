@@ -24,7 +24,7 @@ export const getColorStatusPlace = (status: string | null) => {
     text = 'Published';
     icon = <EyeOutlined />;
   } else if (status === 'ARCHIVED') {
-    color = 'default-color';
+    color = 'lightgrey';
     text = 'Archived';
     icon = <InboxOutlined />;
   }
