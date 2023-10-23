@@ -1,7 +1,7 @@
-import { Row, Space, Tag } from 'antd';
+import { Row, Tag } from 'antd';
 import {
-  CheckCircleOutlined,
-  LockOutlined,
+  CheckCircleTwoTone,
+  LockTwoTone,
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
@@ -14,11 +14,11 @@ export const getColorStatusUser = (status: string | null) => {
   if (status === 'ACTIVE') {
     color = 'green';
     text = 'Active';
-    icon = <CheckCircleOutlined />;
+    icon = <CheckCircleTwoTone twoToneColor="#74c782" />;
   } else if (status === 'BANNED') {
     color = 'red';
     text = 'Banned';
-    icon = <LockOutlined />;
+    icon = <LockTwoTone twoToneColor="#f5222d" />;
   } else if (status === 'PENDING') {
     color = 'geekblue';
     text = 'Pending';
@@ -28,15 +28,16 @@ export const getColorStatusUser = (status: string | null) => {
   return { color, text, icon };
 };
 
-export const ColorStatusUserTag = (status: string | null) => {
+export const ColorStatusUserTag = (
+  status: string | null,
+  isStatus: boolean
+) => {
   const statusTagProps = getColorStatusUser(status);
-  return (
-    <Row justify="space-around">
-      <Tag color={statusTagProps.color} className="ant-dropdown-link">
-        <Space size={2} align="center">
-          {statusTagProps.icon}
-        </Space>
-      </Tag>
-    </Row>
+  return isStatus ? (
+    <Tag color={statusTagProps.color} className="ant-dropdown-link">
+      {statusTagProps.icon} {statusTagProps.text}
+    </Tag>
+  ) : (
+    <Row justify="space-around">{statusTagProps.icon}</Row>
   );
 };

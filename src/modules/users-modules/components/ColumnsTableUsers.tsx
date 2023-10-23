@@ -65,7 +65,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (text: string) => ColorStatusUserTag(text),
+    render: (text: string) => ColorStatusUserTag(text, false),
   },
   {
     title: 'Role',
@@ -84,7 +84,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'actions',
     key: 'actions',
     render: (text, record) => (
-      <Row justify="space-around">
+      <Row justify="space-evenly">
         <UpdateUserComponent user={record} />
         <DeleteUserComponent user={record} />
       </Row>
