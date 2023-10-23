@@ -12,7 +12,7 @@ export const ContainerHomeBlock = ({
   return (
     <section
       className={twMerge(
-        'flex bg-amber-800 justify-center items-center h-screen text-base w-full',
+        'flex justify-center items-center h-screen text-base w-full',
         className
       )}
     >
