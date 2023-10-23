@@ -68,6 +68,7 @@ export const Gallery: FC = () => {
                 Pending Review
               </Option>
               <Option value={GalleryFileStatuses.PUBLISHED}>Published</Option>
+              <Option value={GalleryFileStatuses.ARCHIVED}>Archived</Option>
             </Select>
 
             <Pagination
