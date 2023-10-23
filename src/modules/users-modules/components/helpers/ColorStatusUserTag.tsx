@@ -33,7 +33,7 @@ export const ColorStatusUserTag = (status: string | null) => {
   return (
     <Tag color={statusTagProps.color} className="ant-dropdown-link">
       <Space size={2} align="center">
-        {statusTagProps.icon} {statusTagProps.text}
+        {statusTagProps.icon}
       </Space>
     </Tag>
   );
