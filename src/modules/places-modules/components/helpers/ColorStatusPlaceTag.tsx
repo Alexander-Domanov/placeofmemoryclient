@@ -1,4 +1,4 @@
-import { Space, Tag } from 'antd';
+import { Tag } from 'antd';
 import {
   ClockCircleOutlined,
   EyeInvisibleOutlined,
@@ -35,9 +35,7 @@ export const ColorStatusPlaceTag = (status: string | null) => {
   const statusTagProps = getColorStatusPlace(status);
   return (
     <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      <Space size={2} align="center">
-        {statusTagProps.icon} {statusTagProps.text}
-      </Space>
+      {statusTagProps.icon} {statusTagProps.text}
     </Tag>
   );
 };
