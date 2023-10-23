@@ -15,7 +15,7 @@ export const HomePage = () => {
         <ArticlesBlock />
       </ContainerHomeBlock>
       <ContainerHomeBlock className="bg-light-100 text-dark-900">
-        InteractiveMapBlock
+        <InteractiveMapBlock />
       </ContainerHomeBlock>
     </>
   );
