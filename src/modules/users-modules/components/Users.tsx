@@ -136,7 +136,7 @@ export const Users: FC = () => {
         </Flex>
         <Table
           bordered
-          // size="small"
+          size="small"
           columns={columnsTableUsers}
           dataSource={users?.items}
           loading={isLoading}

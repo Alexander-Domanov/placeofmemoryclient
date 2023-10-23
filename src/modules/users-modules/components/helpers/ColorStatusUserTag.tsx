@@ -1,4 +1,4 @@
-import { Space, Tag } from 'antd';
+import { Row, Space, Tag } from 'antd';
 import {
   CheckCircleOutlined,
   LockOutlined,
@@ -31,10 +31,12 @@ export const getColorStatusUser = (status: string | null) => {
 export const ColorStatusUserTag = (status: string | null) => {
   const statusTagProps = getColorStatusUser(status);
   return (
-    <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      <Space size={2} align="center">
-        {statusTagProps.icon}
-      </Space>
-    </Tag>
+    <Row justify="space-around">
+      <Tag color={statusTagProps.color} className="ant-dropdown-link">
+        <Space size={2} align="center">
+          {statusTagProps.icon}
+        </Space>
+      </Tag>
+    </Row>
   );
 };
