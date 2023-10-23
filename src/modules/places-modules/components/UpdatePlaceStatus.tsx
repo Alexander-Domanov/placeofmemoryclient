@@ -46,11 +46,29 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
   const handleMenuStatusClick = (status: string) => {
     setStatusMenuOpen(false);
     setNewStatus(status);
-    updateStatusPlace({ id, status });
-    notification.success({
-      message: `Changed status to: ${status} for place: ${place?.nameCemetery}`,
-      placement: 'bottomLeft',
-    });
+    updateStatusPlace(
+      { id, status },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: `Changed status to: ${status} for place: ${place?.nameCemetery}`,
+            placement: 'bottomLeft',
+          });
+        },
+        onError: (data: any) => {
+          const errors = data.response.data.messages as any[];
+          if (errors.length > 0) {
+            const notificationErrors = errors.map((m) => m.message);
+            for (const i in notificationErrors) {
+              notification.error({
+                message: `Error: ${notificationErrors[i]}`,
+                placement: 'bottomLeft',
+              });
+            }
+          }
+        },
+      }
+    );
   };
 
   const statusMenu = (
@@ -59,13 +77,13 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
         <EyeInvisibleOutlined /> Draft
       </Menu.Item>
       <Menu.Item key="PENDING_REVIEW">
-        <ClockCircleOutlined /> Pending
+        <ClockCircleOutlined /> Send for review
       </Menu.Item>
       <Menu.Item key="PUBLISHED">
-        <EyeOutlined /> Published
+        <EyeOutlined /> Publish
       </Menu.Item>
       <Menu.Item key="ARCHIVED">
-        <InboxOutlined /> Archived
+        <InboxOutlined /> Archive
       </Menu.Item>
     </Menu>
   );
