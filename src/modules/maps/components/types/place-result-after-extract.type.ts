@@ -8,8 +8,8 @@ export interface IPlaceResultAfterExtract {
   postalCode: string;
   formattedAddress: string;
   location: {
-    name: string;
-    lat: number;
-    lng: number;
+    name: string | null;
+    lat: number | null;
+    lng: number | null;
   };
 }
