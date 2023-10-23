@@ -18,7 +18,7 @@ export const EditProfile = () => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
 
-      if (file.size <= 800 * 1024) {
+      if (file.size <= 2 * 1024 * 1024) {
         setShowErrorSizeImage(false);
         const formData = new FormData();
         formData.append('file', file);
@@ -63,9 +63,9 @@ export const EditProfile = () => {
         </Button>
       </div>
       <div className="flex gap-3 flex-col align-middle items-center text-sm pt-3">
-        <span>JPG, GIF or PNG. Max size of 800K</span>
+        <span>JPG, GIF or PNG. Max size of 2Mb</span>
         {showErrorSizeImage && (
-          <span className="text-red-500">File size exceeds 800 kilobytes</span>
+          <span className="text-red-500">File size exceeds 2 megabytes</span>
         )}
       </div>
       <form className="flex flex-col align-middle w-[416px] pt-3 gap-3">
