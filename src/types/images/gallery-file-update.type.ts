@@ -3,4 +3,5 @@ export enum GalleryFileStatuses {
   DRAFT = 'draft',
   PENDING_REVIEW = 'pendingReview',
   PUBLISHED = 'published',
+  ARCHIVED = 'archived',
 }
