@@ -1,4 +1,4 @@
-import { Row, Tag } from 'antd';
+import { Row, Tag, Tooltip } from 'antd';
 import {
   CheckCircleTwoTone,
   LockTwoTone,
@@ -34,10 +34,14 @@ export const ColorStatusUserTag = (
 ) => {
   const statusTagProps = getColorStatusUser(status);
   return isStatus ? (
-    <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      {statusTagProps.icon} {statusTagProps.text}
-    </Tag>
+    <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+      <Tag color={statusTagProps.color} className="ant-dropdown-link">
+        {statusTagProps.icon} {statusTagProps.text}
+      </Tag>
+    </Tooltip>
   ) : (
-    <Row justify="space-around">{statusTagProps.icon}</Row>
+    <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+      <Row justify="space-around">{statusTagProps.icon}</Row>
+    </Tooltip>
   );
 };

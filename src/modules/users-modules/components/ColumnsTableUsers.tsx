@@ -77,7 +77,11 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'View Profile',
     dataIndex: 'view profile',
     key: 'view profile',
-    render: (text, record) => <UserDrawer onUserSelected={record} />,
+    render: (text, record) => (
+      <Row justify="space-around">
+        <UserDrawer onUserSelected={record} />
+      </Row>
+    ),
   },
   {
     title: 'Edit/Delete',
