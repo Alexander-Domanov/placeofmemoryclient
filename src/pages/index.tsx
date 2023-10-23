@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Roboto } from '@next/font/google';
-import { getGlobalLayout } from '@/components';
+import { getGlobalLayout, getHomeLayout } from '@/components';
 import { HomePage } from '@/modules/home-module';
 // main font
 const roboto = Roboto({
@@ -25,6 +25,6 @@ export function Home() {
   );
 }
 
-Home.getLayout = getGlobalLayout;
+Home.getLayout = getHomeLayout;
 
 export default Home;
