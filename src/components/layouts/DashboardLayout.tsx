@@ -18,7 +18,7 @@ const siderStyle: React.CSSProperties = {
 };
 
 const contentStyle: React.CSSProperties = {
-  backgroundColor: '#fff',
+  backgroundColor: '#F0F2F5',
   padding: 24,
 };
 
