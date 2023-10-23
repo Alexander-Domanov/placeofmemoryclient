@@ -19,7 +19,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text, record) => (
       <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
         <Typography.Text>
-          {RenderAvatarImage(record.avatars?.thumbnail.url, 20)}
+          {RenderAvatarImage(record.avatars?.thumbnail.url, 25)}
         </Typography.Text>
       </Tooltip>
     ),
