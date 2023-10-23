@@ -1,5 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
-import { Tooltip, Typography } from 'antd';
+import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
@@ -24,13 +24,15 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Tooltip
-        title={`name: ${record.owner.userName}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
-        <Typography.Text>{text.id}</Typography.Text>
-      </Tooltip>
+      <Row justify="space-around">
+        <Tooltip
+          title={`name: ${record.owner.userName}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
+          <Typography.Text>{text.id}</Typography.Text>
+        </Tooltip>
+      </Row>
     ),
   },
 
@@ -117,19 +119,20 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'persons',
     key: 'persons',
     render: (text, record) => (
-      <Typography.Text>{record.personsLocation.length}</Typography.Text>
+      <Row justify="space-around">
+        <Typography.Text>{record.personsLocation.length}</Typography.Text>
+      </Row>
     ),
   },
   {
-    title: 'Edit',
-    dataIndex: 'edit',
-    key: 'edit',
-    render: (text, record) => <UpdatePlaceStatusComponent place={record} />,
-  },
-  {
-    title: 'Delete',
-    dataIndex: 'delete',
-    key: 'delete',
-    render: (text, record) => <DeletePlaceComponent place={record} />,
+    title: 'Edit/Delete',
+    dataIndex: 'actions',
+    key: 'actions',
+    render: (text, record) => (
+      <Row justify="space-around">
+        <UpdatePlaceStatusComponent place={record} />
+        <DeletePlaceComponent place={record} />
+      </Row>
+    ),
   },
 ];

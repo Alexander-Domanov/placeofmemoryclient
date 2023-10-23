@@ -31,7 +31,6 @@ export const Places: FC = () => {
     search,
     sorting
   );
-  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false);
 
   const onPageChange = (_page: number) => {
     setPagination({ ...pagination, page: _page });
@@ -74,12 +73,7 @@ export const Places: FC = () => {
                 pathname: '/dashboard/places/create',
               }}
             >
-              <Button
-                type="primary"
-                // onClick={() => setIsAddPlaceModalOpen(true)}
-              >
-                Add Place
-              </Button>
+              <Button type="primary">Add Place</Button>
             </Link>
           </div>
           <Input
@@ -98,6 +92,7 @@ export const Places: FC = () => {
                 { label: 'Draft', value: 'draft' },
                 { label: 'PendingReview', value: 'pendingReview' },
                 { label: 'Published', value: 'published' },
+                { label: 'Archived', value: 'archived' },
               ]}
               onChange={onStatusChange}
             />
@@ -119,15 +114,10 @@ export const Places: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          scroll={{ x: 1000 }}
+          scroll={{ x: 1200 }}
           onChange={handleTableChange}
         />
       </Space>
-      {/* <AddPlaceModal */}
-      {/*  isOpen={isAddPlaceModalOpen} */}
-      {/*  setIsOpen={() => setIsAddPlaceModalOpen(false)} */}
-      {/*  refetch={refetch} */}
-      {/* /> */}
     </div>
   );
 };
