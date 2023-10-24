@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Button, Col, Divider, Drawer, List, Row, Space } from 'antd';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 

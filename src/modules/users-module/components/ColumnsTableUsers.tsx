@@ -3,7 +3,7 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
@@ -65,18 +65,21 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+    align: 'center',
     render: (text: string) => ColorStatusUserTag(text, false),
   },
   {
     title: 'Role',
     dataIndex: 'role',
     key: 'role',
+    align: 'center',
     render: (text: string) => ColorRoleTag(text),
   },
   {
     title: 'View Profile',
     dataIndex: 'view profile',
     key: 'view profile',
+    align: 'center',
     render: (text, record) => (
       <Row justify="space-around">
         <UserDrawer onUserSelected={record} />
@@ -84,9 +87,10 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     ),
   },
   {
-    title: 'Edit/Delete',
+    title: 'Actions',
     dataIndex: 'actions',
     key: 'actions',
+    align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateUserComponent user={record} />

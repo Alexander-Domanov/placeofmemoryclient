@@ -1,4 +1,4 @@
-import { Row, Tag, Tooltip } from 'antd';
+import { Tag, Tooltip } from 'antd';
 import {
   CheckCircleTwoTone,
   LockTwoTone,
@@ -41,7 +41,7 @@ export const ColorStatusUserTag = (
     </Tooltip>
   ) : (
     <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
-      <Row justify="space-around">{statusTagProps.icon}</Row>
+      {statusTagProps.icon}
     </Tooltip>
   );
 };
