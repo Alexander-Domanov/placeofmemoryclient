@@ -37,13 +37,13 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       icon: <FolderOpenOutlined />,
     },
     {
-      key: routes.dashboard.users,
-      label: <Link href={routes.dashboard.users}>Users</Link>,
+      key: routes.dashboard.users.index,
+      label: <Link href={routes.dashboard.users.index}>Users</Link>,
       icon: <FaUsers />,
     },
     {
-      key: routes.dashboard.places,
-      label: <Link href={routes.dashboard.places}>Places</Link>,
+      key: routes.dashboard.places.index,
+      label: <Link href={routes.dashboard.places.index}>Places</Link>,
       icon: <FaPlaceOfWorship />,
     },
     {
