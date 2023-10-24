@@ -17,11 +17,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
-    render: (text) => (
-      <Row justify="space-around">
-        <Typography.Text>{text}</Typography.Text>
-      </Row>
-    ),
+    render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
     title: 'Owner',
@@ -31,15 +27,13 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Row justify="space-around">
-        <Tooltip
-          title={`name: ${record.owner.userName}`}
-          placement="leftBottom"
-          color="#1087f6"
-        >
-          <Typography.Text>{text.id}</Typography.Text>
-        </Tooltip>
-      </Row>
+      <Tooltip
+        title={`name: ${record.owner.userName}`}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{text.id}</Typography.Text>
+      </Tooltip>
     ),
   },
 
@@ -134,9 +128,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     key: 'persons',
     align: 'center',
     render: (text, record) => (
-      <Row justify="space-around">
-        <Typography.Text>{record.personsLocation.length}</Typography.Text>
-      </Row>
+      <Typography.Text>{record.personsLocation.length}</Typography.Text>
     ),
   },
   {
