@@ -16,7 +16,11 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     key: 'id',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
-    render: (text) => <Typography.Text>{text}</Typography.Text>,
+    render: (text) => (
+      <Row justify="space-around">
+        <Typography.Text>{text}</Typography.Text>
+      </Row>
+    ),
   },
   {
     title: 'Owner',
