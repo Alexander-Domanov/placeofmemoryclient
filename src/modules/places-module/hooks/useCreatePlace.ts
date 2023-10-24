@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createPlace } from '@/modules/places-modules/api/places-api';
+import { notification } from 'antd';
+import { createPlace } from '@/modules/places-module/api/places-api';
 import { ICreatePlace } from '@/types/places/create-place.type';
+import { IResponseError } from '@/types/response-error-message.type';
 
 export const useCreatePlace = () => {
   const client = useQueryClient();
@@ -11,6 +13,15 @@ export const useCreatePlace = () => {
     // ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['places']);
+    },
+    onError: (error: IResponseError) => {
+      const messages = error?.response?.data?.messages;
+      messages?.forEach(({ message }) => {
+        notification.error({
+          message: `Error: ${message}`,
+          placement: 'bottomLeft',
+        });
+      });
     },
   });
 

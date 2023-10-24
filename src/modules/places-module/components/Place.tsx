@@ -1,14 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Col, Divider, Form, message, notification, Row } from 'antd';
+import { Col, Divider, Form, notification, Row } from 'antd';
 import { useRouter } from 'next/router';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import PlaceForm from '@/modules/places-modules/components/PlaceForm';
+import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePlace, IGalleryFile, IPlace } from '@/types';
 import { CardLocationPreview } from '@/modules/maps/components/CardLocationPreview';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
-import { usePlace } from '@/modules/places-modules/hooks/usePlace';
-import { useUpdatePlace } from '@/modules/places-modules/hooks/useUpdatePlace';
+import { usePlace } from '@/modules/places-module/hooks/usePlace';
+import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
+import { IResponseError } from '@/types/response-error-message.type';
 
 export const PlacePage: FC = () => {
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
@@ -53,16 +54,15 @@ export const PlacePage: FC = () => {
             description: 'You will be redirected to the place page',
             placement: 'bottomLeft',
           });
-          // router.push(`/dashboard/places/${placeId}`);
         },
-        onError: (data: any) => {
-          const errors = data.response.data.messages as any[];
-          if (errors.length > 0) {
-            const notificationErrors = errors.map((m) => m.message);
-            for (const i in notificationErrors) {
-              message.error(`Error: ${notificationErrors[i]}`);
-            }
-          }
+        onError: (error: IResponseError) => {
+          const messages = error?.response?.data?.messages;
+          messages?.forEach(({ message }) => {
+            notification.error({
+              message: `Error: ${message}`,
+              placement: 'bottomLeft',
+            });
+          });
         },
       }
     );

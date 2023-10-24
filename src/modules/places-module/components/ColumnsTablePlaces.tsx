@@ -1,12 +1,13 @@
 import { ColumnsType } from 'antd/es/table';
-import { Row, Space, Tooltip, Typography } from 'antd';
+import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
-import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
-import DeletePlaceComponent from '@/modules/places-modules/components/DeletePlace';
-import UpdatePlaceStatusComponent from '@/modules/places-modules/components/UpdatePlaceStatus';
-import { ColorStatusPlaceTag } from '@/modules/places-modules/components/helpers/ColorStatusPlaceTag';
+import { RenderImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
+import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
+import UpdatePlaceStatusComponent from '@/modules/places-module/components/UpdatePlaceStatus';
+import { ColorStatusPlaceTag } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
+import { routes } from '@/common/routing/routes';
 
 export const columnsTablePlaces: ColumnsType<IPlace> = [
   {
@@ -50,7 +51,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
       >
         <Link
           href={{
-            pathname: '/dashboard/places/[id]',
+            pathname: routes.dashboard.places.place('[id]'),
             query: { id: record.id },
           }}
         >
@@ -103,7 +104,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'photos',
     key: 'photos',
     render: (text, record: IPlace) => (
-      <Space size={8}>
+      <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
           <Tooltip
             title={`ID: ${photo.uploadId}`}
@@ -112,11 +113,11 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
             key={index}
           >
             <Typography.Text key={index}>
-              {RenderAvatarImage(photo.versions.huge.url, 30, true)}
+              {RenderImage(photo.versions.huge.url, 30, true)}
             </Typography.Text>
           </Tooltip>
         ))}
-      </Space>
+      </Row>
     ),
   },
   {

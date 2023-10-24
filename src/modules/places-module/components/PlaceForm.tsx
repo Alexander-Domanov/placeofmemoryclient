@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace, IPlace } from '@/types';
@@ -65,7 +65,6 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
       form={form}
       name="nest-messages"
       onFinish={(values) => {
-        message.info(`${JSON.stringify(values)}`);
         onFinish({
           ...values,
           location: {

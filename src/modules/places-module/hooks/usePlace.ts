@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { noRefetch } from '@/common/helpers/noRefetch';
-import { getPlace } from '@/modules/places-modules/api/places-api';
+import { getPlace } from '@/modules/places-module/api/places-api';
 
 export const usePlace = (id: string | undefined | string[]) => {
   const {

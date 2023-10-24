@@ -19,8 +19,8 @@ import {
   InboxOutlined,
 } from '@ant-design/icons';
 import { IPlace } from '@/types';
-import { useUpdatePlaceStatus } from '@/modules/places-modules/hooks/useUpdatePlaceStatus';
-import { getColorStatusPlace } from '@/modules/places-modules/components/helpers/ColorStatusPlaceTag';
+import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
+import { getColorStatusPlace } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
@@ -54,18 +54,6 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
             message: `Changed status to: ${status} for place: ${place?.nameCemetery}`,
             placement: 'bottomLeft',
           });
-        },
-        onError: (data: any) => {
-          const errors = data.response.data.messages as any[];
-          if (errors.length > 0) {
-            const notificationErrors = errors.map((m) => m.message);
-            for (const i in notificationErrors) {
-              notification.error({
-                message: `Error: ${notificationErrors[i]}`,
-                placement: 'bottomLeft',
-              });
-            }
-          }
         },
       }
     );

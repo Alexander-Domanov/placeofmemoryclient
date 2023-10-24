@@ -1,13 +1,14 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Col, Divider, Form, message, notification, Row } from 'antd';
+import { Col, Divider, Form, notification, Row } from 'antd';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import PlaceForm from '@/modules/places-modules/components/PlaceForm';
+import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePlace, IGalleryFile } from '@/types';
 import { CardLocationPreview } from '@/modules/maps/components/CardLocationPreview';
-import { useCreatePlace } from '@/modules/places-modules/hooks/userCreatePlace';
+import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
+import { routes } from '@/common/routing/routes';
 
 export const AddPlacePage: FC = () => {
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
@@ -29,16 +30,7 @@ export const AddPlacePage: FC = () => {
           description: 'You will be redirected to the place page',
           placement: 'bottomLeft',
         });
-        router.push(`/dashboard/places/${data.data.id}`);
-      },
-      onError: (data: any) => {
-        const errors = data.response.data.messages as any[];
-        if (errors.length > 0) {
-          const notificationErrors = errors.map((m) => m.message);
-          for (let i = 0; i < notificationErrors.length; i++) {
-            message.error(`Error: ${notificationErrors[i]}`);
-          }
-        }
+        router.push(routes.dashboard.places.place(data.data.id));
       },
     });
   };

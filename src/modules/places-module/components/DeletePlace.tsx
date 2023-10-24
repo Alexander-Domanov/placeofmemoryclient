@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { IPlace } from '@/types';
-import { useDeletePlace } from '@/modules/places-modules/hooks/useDeletePlace';
+import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
 
 interface DeletePlaceComponentProps {
   place: IPlace | null;
@@ -29,15 +29,6 @@ const DeletePlaceComponent: React.FC<DeletePlaceComponentProps> = ({
           message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
           placement: 'bottomLeft',
         });
-      },
-      onError: (data: any) => {
-        const errors = data.response.data.messages as any[];
-        if (errors.length > 0) {
-          notification.error({
-            message: `Error: ${errors[0].message}`,
-            placement: 'bottomLeft',
-          });
-        }
       },
     });
     setDeleteModalVisible(false);

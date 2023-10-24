@@ -3,13 +3,15 @@ import { Button, Flex, Input, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
 import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
-import { usePlaces } from '@/modules/places-modules/hooks/usePlaces';
-import { columnsTablePlaces } from '@/modules/places-modules/components/ColumnsTablePlaces';
+import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
+import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
+import { routes } from '@/common/routing/routes';
 
 export const Places: FC = () => {
+  const router = useRouter();
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: 18,
@@ -68,13 +70,12 @@ export const Places: FC = () => {
           style={{ marginBottom: '15px' }}
         >
           <div>
-            <Link
-              href={{
-                pathname: '/dashboard/places/create',
-              }}
+            <Button
+              type="primary"
+              onClick={() => router.push(routes.dashboard.places.create)}
             >
-              <Button type="primary">Add Place</Button>
-            </Link>
+              Add Place
+            </Button>
           </div>
           <Input
             placeholder="Search by name"
