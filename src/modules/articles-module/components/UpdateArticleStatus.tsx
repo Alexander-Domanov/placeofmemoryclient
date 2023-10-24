@@ -18,7 +18,7 @@ import {
   EyeOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
-import { getColorStatusPlace } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
+import { getColorStatus } from '@/common-dashboard/helpers/ColorStatusTag';
 import { IArticle } from '@/types/articles/article.type';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 
@@ -76,7 +76,7 @@ const UpdateArticleStatusComponent: React.FC<
     </Menu>
   );
 
-  const statusTagProps = getColorStatusPlace(newStatus);
+  const statusTagProps = getColorStatus(newStatus);
 
   return (
     <>

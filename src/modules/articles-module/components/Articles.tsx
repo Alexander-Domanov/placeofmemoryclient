@@ -28,7 +28,7 @@ import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
-import SelectInput from '@/modules/users-module/components/helpers/SelectInput';
+import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { routes } from '@/common/routing/routes';

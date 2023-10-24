@@ -2,9 +2,9 @@ import { ColumnsType } from 'antd/es/table';
 import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
-import { ColorStatusPlaceTag } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
+import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { IArticle } from '@/types/articles/article.type';
-import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticle';
 import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
@@ -16,11 +16,8 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     key: 'id',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
-    render: (text) => (
-      <Row justify="space-evenly">
-        <Typography.Text>{text}</Typography.Text>
-      </Row>
-    ),
+    align: 'center',
+    render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
     title: 'Owner',
@@ -28,16 +25,15 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     key: 'ownerId',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    align: 'center',
     render: (text, record) => (
-      <Row justify="space-around">
-        <Tooltip
-          title={`name: ${record.owner.userName}`}
-          placement="leftBottom"
-          color="#1087f6"
-        >
-          <Typography.Text>{text.id}</Typography.Text>
-        </Tooltip>
-      </Row>
+      <Tooltip
+        title={`name: ${record.owner.userName}`}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{text.id}</Typography.Text>
+      </Tooltip>
     ),
   },
   {
@@ -84,12 +80,14 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (text: string) => ColorStatusPlaceTag(text),
+    align: 'center',
+    render: (text: string) => ColorStatusTag(text),
   },
   {
     title: 'Photos',
     dataIndex: 'photos',
     key: 'photos',
+    align: 'center',
     render: (text, record: IArticle) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
@@ -108,9 +106,10 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Edit/Delete',
+    title: 'Actions',
     dataIndex: 'actions',
     key: 'actions',
+    align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateArticleStatusComponent article={record} />
