@@ -38,11 +38,24 @@ export const routes = {
   dashboard: {
     index: '/dashboard',
     gallery: '/dashboard/gallery',
-    users: '/dashboard/users',
-    places: '/dashboard/places',
+    users: {
+      index: '/dashboard/users',
+      user: (id: string | number) => `/dashboard/users/${id}`,
+    },
+    places: {
+      index: '/dashboard/places',
+      create: '/dashboard/places/create',
+      place: (id: string | number) => `/dashboard/places/${id}`,
+    },
+    persons: {
+      index: '/dashboard/persons',
+      create: '/dashboard/persons/create',
+      person: (id: string | number) => `/dashboard/persons/${id}`,
+    },
     articles: {
       index: '/dashboard/articles',
       create: '/dashboard/articles/create',
+      article: (id: string | number) => `/dashboard/articles/${id}`,
     },
   },
 };
