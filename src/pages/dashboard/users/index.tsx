@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { Users } from '@/modules/users-modules/components/Users';
+import { Users } from '@/modules/users-module/components/Users';
 
 const DashboardGalleryPage = () => {
   return (
