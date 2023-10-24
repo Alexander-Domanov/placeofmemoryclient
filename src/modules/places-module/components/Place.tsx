@@ -1,6 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Col, Divider, Form, notification, Row } from 'antd';
+import { Breadcrumb, Col, Divider, Flex, Form, notification, Row } from 'antd';
 import { useRouter } from 'next/router';
+import {
+  BreadcrumbItemType,
+  BreadcrumbSeparatorType,
+} from 'antd/es/breadcrumb/Breadcrumb';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
@@ -10,7 +15,28 @@ import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { IResponseError } from '@/types/response-error-message.type';
+import { routes } from '@/common/routing/routes';
 
+function breadcrumbs(
+  id: string | string[] | undefined
+): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+  return [
+    {
+      key: routes.dashboard.index,
+      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
+    },
+    {
+      key: routes.dashboard.places.index,
+      title: <Link href={routes.dashboard.places.index}>Places</Link>,
+    },
+    {
+      key: routes.dashboard.places.place(id as string),
+      title: (
+        <Link href={routes.dashboard.places.place(id as string)}>{id}</Link>
+      ),
+    },
+  ];
+}
 export const PlacePage: FC = () => {
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
@@ -69,7 +95,10 @@ export const PlacePage: FC = () => {
   };
 
   return (
-    <div>
+    <Flex gap="large" vertical>
+      <div>
+        <Breadcrumb items={breadcrumbs(placeId)} />
+      </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
           <Divider orientation="left">Place Preview</Divider>
@@ -95,6 +124,6 @@ export const PlacePage: FC = () => {
           </Form>
         </Col>
       </Row>
-    </div>
+    </Flex>
   );
 };

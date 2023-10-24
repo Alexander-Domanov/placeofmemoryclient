@@ -1,14 +1,30 @@
 import React, { FC, useState } from 'react';
-import { Button, Flex, Input, Space, Table } from 'antd';
+import { Breadcrumb, Button, Flex, Input, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
+import {
+  BreadcrumbItemType,
+  BreadcrumbSeparatorType,
+} from 'antd/es/breadcrumb/Breadcrumb';
+import Link from 'next/link';
 import { IPlace } from '@/types';
-import SelectInput from '@/modules/users-module/components/helpers/SelectInput';
+import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
+
+const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
+  {
+    key: routes.dashboard.index,
+    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
+  },
+  {
+    key: routes.dashboard.places.index,
+    title: <Link href={routes.dashboard.places.index}>Places</Link>,
+  },
+];
 
 export const Places: FC = () => {
   const router = useRouter();
@@ -61,7 +77,10 @@ export const Places: FC = () => {
   };
 
   return (
-    <div>
+    <Flex gap="large" vertical>
+      <div>
+        <Breadcrumb items={breadcrumbs} />
+      </div>
       <Space direction="vertical" style={{ display: 'flex' }}>
         <Flex
           justify="space-between"
@@ -119,6 +138,6 @@ export const Places: FC = () => {
           onChange={handleTableChange}
         />
       </Space>
-    </div>
+    </Flex>
   );
 };

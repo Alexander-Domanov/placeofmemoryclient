@@ -20,7 +20,7 @@ import {
 } from '@ant-design/icons';
 import { IPlace } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
-import { getColorStatusPlace } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
+import { getColorStatus } from '@/common-dashboard/helpers/ColorStatusTag';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
@@ -76,7 +76,7 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
     </Menu>
   );
 
-  const statusTagProps = getColorStatusPlace(newStatus);
+  const statusTagProps = getColorStatus(newStatus);
 
   return (
     <>

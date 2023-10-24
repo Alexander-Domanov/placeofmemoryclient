@@ -3,10 +3,10 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
-import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
 import UpdatePlaceStatusComponent from '@/modules/places-module/components/UpdatePlaceStatus';
-import { ColorStatusPlaceTag } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
+import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
 
 export const columnsTablePlaces: ColumnsType<IPlace> = [
@@ -16,6 +16,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     key: 'id',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    align: 'center',
     render: (text) => (
       <Row justify="space-around">
         <Typography.Text>{text}</Typography.Text>
@@ -26,6 +27,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'Owner',
     dataIndex: 'owner',
     key: 'ownerId',
+    align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -101,12 +103,14 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (text: string) => ColorStatusPlaceTag(text),
+    align: 'center',
+    render: (text: string) => ColorStatusTag(text),
   },
   {
     title: 'Photos',
     dataIndex: 'photos',
     key: 'photos',
+    align: 'center',
     render: (text, record: IPlace) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
@@ -128,6 +132,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'Persons',
     dataIndex: 'persons',
     key: 'persons',
+    align: 'center',
     render: (text, record) => (
       <Row justify="space-around">
         <Typography.Text>{record.personsLocation.length}</Typography.Text>
@@ -135,9 +140,10 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     ),
   },
   {
-    title: 'Edit/Delete',
+    title: 'Actions',
     dataIndex: 'actions',
     key: 'actions',
+    align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePlaceStatusComponent place={record} />

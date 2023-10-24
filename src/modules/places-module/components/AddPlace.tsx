@@ -1,6 +1,11 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Col, Divider, Form, notification, Row } from 'antd';
+import { Breadcrumb, Col, Divider, Flex, Form, notification, Row } from 'antd';
+import {
+  BreadcrumbItemType,
+  BreadcrumbSeparatorType,
+} from 'antd/es/breadcrumb/Breadcrumb';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
@@ -9,6 +14,21 @@ import { CardLocationPreview } from '@/modules/maps/components/CardLocationPrevi
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { routes } from '@/common/routing/routes';
+
+const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
+  {
+    key: routes.dashboard.index,
+    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
+  },
+  {
+    key: routes.dashboard.places.index,
+    title: <Link href={routes.dashboard.places.index}>Places</Link>,
+  },
+  {
+    key: routes.dashboard.places.create,
+    title: 'Create Place',
+  },
+];
 
 export const AddPlacePage: FC = () => {
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
@@ -36,7 +56,10 @@ export const AddPlacePage: FC = () => {
   };
 
   return (
-    <div>
+    <Flex gap="large" vertical>
+      <div>
+        <Breadcrumb items={breadcrumbs} />
+      </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
           <Divider orientation="left">Place Preview</Divider>
@@ -60,6 +83,6 @@ export const AddPlacePage: FC = () => {
           </Form>
         </Col>
       </Row>
-    </div>
+    </Flex>
   );
 };
