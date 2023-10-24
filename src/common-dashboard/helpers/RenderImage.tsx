@@ -1,5 +1,6 @@
 import { Avatar, Badge, Image, Row } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 export const RenderImage = (
   url: string | null | undefined,
@@ -14,6 +15,7 @@ export const RenderImage = (
           width={size}
           preview={isPreview}
           style={{ borderRadius: 4 }}
+          fallback={pictureBackup}
         />
       </Badge>
     </Row>

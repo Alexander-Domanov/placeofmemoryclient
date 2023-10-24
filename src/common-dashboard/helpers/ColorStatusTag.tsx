@@ -7,7 +7,7 @@ import {
   MinusCircleOutlined,
 } from '@ant-design/icons';
 
-export const getColorStatusPlace = (status: string | null) => {
+export const getColorStatus = (status: string | null) => {
   let color = 'default-color';
   let text = 'Unknown Status';
   let icon = <MinusCircleOutlined />;
@@ -31,8 +31,8 @@ export const getColorStatusPlace = (status: string | null) => {
   return { color, text, icon };
 };
 
-export const ColorStatusPlaceTag = (status: string | null) => {
-  const statusTagProps = getColorStatusPlace(status);
+export const ColorStatusTag = (status: string | null) => {
+  const statusTagProps = getColorStatus(status);
   return (
     <Tag color={statusTagProps.color} className="ant-dropdown-link">
       {statusTagProps.icon} {statusTagProps.text}
