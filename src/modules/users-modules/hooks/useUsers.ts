@@ -21,6 +21,7 @@ export const useUsers = (
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    refetchOnMount: 'always',
   });
 
   return { users, isLoading };

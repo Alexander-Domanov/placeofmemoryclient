@@ -8,6 +8,9 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { routes } from '@/common/routing/routes';
 import 'react-quill/dist/quill.snow.css';
+import { ChooseGalleryFiles } from '@/modules/gallery-module';
+import { IGalleryFile } from '@/types';
+import { useCreateArticle } from '../hooks/useCreateArticle';
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -33,9 +36,23 @@ export const ArticleCreate: FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
+  const [photos, setPhotos] = useState<IGalleryFile[]>([]);
+
+  const { mutate, isCreating } = useCreateArticle();
 
   const onSubmit = () => {
-    console.log('on submit');
+    const form = {
+      title,
+      description,
+      content,
+      ids: photos.map((file) => file.uploadId),
+    };
+
+    mutate(form, {
+      onSuccess: (data) => {
+        console.log(data.data);
+      },
+    });
   };
 
   return (
@@ -65,11 +82,12 @@ export const ArticleCreate: FC = () => {
                 name="description"
                 rules={[{ required: true }]}
               >
-                <Input.TextArea autoSize placeholder="Short Description" />
-              </Form.Item>
-
-              <Form.Item>
-                <pre>{JSON.stringify(content, null, 2)}</pre>
+                <Input.TextArea
+                  autoSize
+                  placeholder="Short Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
               </Form.Item>
 
               <Form.Item
@@ -81,6 +99,13 @@ export const ArticleCreate: FC = () => {
                   theme="snow"
                   value={content}
                   onChange={setContent}
+                />
+              </Form.Item>
+
+              <Form.Item label="Photos">
+                <ChooseGalleryFiles
+                  onFilesSelected={setPhotos}
+                  maxFileLimit={10}
                 />
               </Form.Item>
 
