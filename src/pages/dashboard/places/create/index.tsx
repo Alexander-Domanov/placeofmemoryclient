@@ -3,17 +3,18 @@ import React from 'react';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 import { AddPlacePage } from '@/modules/places-module/components/AddPlace';
 
-const DashboardGalleryPage = () => {
+const DashboardPlaceCreate = () => {
   return (
     <>
       <Head>
-        <title>Add Place</title>
+        <title>Create Place</title>
       </Head>
+
       <AddPlacePage />
     </>
   );
 };
 
-DashboardGalleryPage.getLayout = getDashboardLayout;
+DashboardPlaceCreate.getLayout = getDashboardLayout;
 
-export default DashboardGalleryPage;
+export default DashboardPlaceCreate;
