@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Breadcrumb, Col, Divider, Flex, Form, notification, Row } from 'antd';
+import { Breadcrumb, Card, Col, Flex, notification, Row } from 'antd';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
@@ -62,25 +62,24 @@ export const AddPlacePage: FC = () => {
       </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
-          <Divider orientation="left">Place Preview</Divider>
-          <PlaceForm
-            onPlaceSelectedFromMap={selectedPlaceFromMap}
-            onFinish={onFinish}
-          />
+          <Card>
+            <PlaceForm
+              onPlaceSelectedFromMap={selectedPlaceFromMap}
+              onFinish={onFinish}
+            />
+          </Card>
         </Col>
-        <Col span={10}>
-          <Form layout="vertical">
-            <Divider orientation="center">Image Preview</Divider>
+        <Col span={10} style={{ width: '100%' }}>
+          <Card style={{ width: '100%', marginBottom: '32px' }}>
             <ChooseGalleryFiles
               onFilesSelected={setSelectedFiles}
               maxFileLimit={1}
             />
-          </Form>
-          <Form layout="vertical">
-            <Divider orientation="center">Location</Divider>
+          </Card>
+          <Card>
             <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
             <CardLocationPreview onPlaceSelected={selectedPlaceFromMap} />
-          </Form>
+          </Card>
         </Col>
       </Row>
     </Flex>

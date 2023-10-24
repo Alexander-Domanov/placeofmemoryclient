@@ -56,26 +56,28 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
     ['location', 'latitude'],
     selectedPlaceFromMap?.location.lat
   );
-  form.setFieldValue(['shortDescription'], place?.shortDescription);
-  form.setFieldValue(['description'], place?.description);
+  form.setFieldValue(['shortDescription'], selectedPlace?.shortDescription);
+  form.setFieldValue(['description'], selectedPlace?.description);
+
+  const onSubmit = (values: any) => {
+    onFinish({
+      ...values,
+      location: {
+        name: selectedPlaceFromMap?.location.name || null,
+        longitude: selectedPlaceFromMap?.location.lng || null,
+        latitude: selectedPlaceFromMap?.location.lat || null,
+      },
+      shortDescription: values.shortDescription || null,
+      description: values.description || null,
+    });
+  };
 
   return (
     <Form
       layout="vertical"
       form={form}
       name="nest-messages"
-      onFinish={(values) => {
-        onFinish({
-          ...values,
-          location: {
-            name: selectedPlaceFromMap?.location.name || null,
-            longitude: selectedPlaceFromMap?.location.lng || null,
-            latitude: selectedPlaceFromMap?.location.lat || null,
-          },
-          shortDescription: values.shortDescription || null,
-          description: values.description || null,
-        });
-      }}
+      onFinish={onSubmit}
       validateMessages={validateMessages}
     >
       <Form.Item
@@ -100,14 +102,14 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
         label="Short Description"
         rules={[{ required: true }]}
       >
-        <Input.TextArea showCount maxLength={300} />
+        <Input.TextArea showCount maxLength={300} autoSize={{ minRows: 6 }} />
       </Form.Item>
       <Form.Item
         name={['description']}
         label="Description"
         rules={[{ required: true }]}
       >
-        <Input.TextArea showCount maxLength={4000} />
+        <Input.TextArea showCount maxLength={4000} autoSize={{ minRows: 17 }} />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>

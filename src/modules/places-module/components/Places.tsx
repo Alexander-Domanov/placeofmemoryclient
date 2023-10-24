@@ -22,7 +22,7 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   },
   {
     key: routes.dashboard.places.index,
-    title: <Link href={routes.dashboard.places.index}>Places</Link>,
+    title: 'Places',
   },
 ];
 
