@@ -5,7 +5,7 @@ import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
-import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
+import SelectInput from '@/modules/users-module/components/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';

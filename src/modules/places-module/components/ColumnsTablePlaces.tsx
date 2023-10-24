@@ -3,7 +3,7 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
-import { RenderImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
+import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
 import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
 import UpdatePlaceStatusComponent from '@/modules/places-module/components/UpdatePlaceStatus';
 import { ColorStatusPlaceTag } from '@/modules/places-module/components/helpers/ColorStatusPlaceTag';
