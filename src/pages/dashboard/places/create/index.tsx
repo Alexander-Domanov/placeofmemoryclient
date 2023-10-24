@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { AddPlacePage } from '@/modules/places-modules/components/AddPlace';
+import { AddPlacePage } from '@/modules/places-module/components/AddPlace';
 
 const DashboardGalleryPage = () => {
   return (

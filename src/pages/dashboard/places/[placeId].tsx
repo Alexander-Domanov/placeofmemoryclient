@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { PlacePage } from '@/modules/places-modules/components/Place';
+import { PlacePage } from '@/modules/places-module/components/Place';
 
 const PlaceList = () => {
   return (

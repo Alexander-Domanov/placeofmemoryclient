@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { Places } from '@/modules/places-modules/components/Places';
+import { Places } from '@/modules/places-module/components/Places';
 
 const DashboardGalleryPage = () => {
   return (
