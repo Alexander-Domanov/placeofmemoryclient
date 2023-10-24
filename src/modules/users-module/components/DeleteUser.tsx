@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { useDeleteUser } from '@/modules/users-modules/hooks/useDeleteUser';
+import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
 import { IUserWithShortExtensions } from '@/types';
 
 interface DeleteUserComponentProps {
@@ -22,12 +22,15 @@ const DeleteUserComponent: React.FC<DeleteUserComponentProps> = ({ user }) => {
   };
 
   const deleteUser = () => {
-    deleteUserMutation(selectedUser?.id || null);
-    setDeleteModalVisible(false);
-    notification.success({
-      message: `User: ${selectedUser?.userName} deleted successfully`,
-      placement: 'bottomLeft',
+    deleteUserMutation(selectedUser?.id || null, {
+      onSuccess: () => {
+        notification.success({
+          message: `User: ${selectedUser?.userName} deleted successfully`,
+          placement: 'bottomLeft',
+        });
+      },
     });
+    setDeleteModalVisible(false);
   };
 
   return (

@@ -3,10 +3,10 @@ import { Flex, Input, Space, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
-import { useUsers } from '@/modules/users-modules/hooks/useUsers';
+import { useUsers } from '@/modules/users-module/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
-import SelectInput from '@/modules/users-modules/components/helpers/SelectInput';
-import { columnsTableUsers } from '@/modules/users-modules/components/ColumnsTableUsers';
+import SelectInput from '@/modules/users-module/components/helpers/SelectInput';
+import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
 
 export const Users: FC = () => {
   const [pagination, setPagination] = useState({

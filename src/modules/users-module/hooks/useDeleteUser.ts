@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { notification } from 'antd';
 import { noRefetch } from '@/common/helpers/noRefetch';
-import { deleteUser } from '@/modules/users-modules/api/users-api';
+import { deleteUser } from '@/modules/users-module/api/users-api';
+import { IResponseError } from '@/types/response-error-message.type';
 
 export const useDeleteUser = () => {
   const client = useQueryClient();
@@ -11,6 +13,15 @@ export const useDeleteUser = () => {
       client.invalidateQueries({ queryKey: ['users'] });
     },
     ...noRefetch,
+    onError: (error: IResponseError) => {
+      const messages = error?.response?.data?.messages;
+      messages?.forEach(({ message }) => {
+        notification.error({
+          message: `Error: ${message}`,
+          placement: 'bottomLeft',
+        });
+      });
+    },
   });
 
   return { deleteUserMutation, isDeleting };

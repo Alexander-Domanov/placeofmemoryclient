@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import { Button, Col, Divider, Drawer, List, Row, Space } from 'antd';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
-import { ColorRoleTag } from '@/modules/users-modules/components/helpers/ColorRoleTag';
-import { ColorStatusUserTag } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
+import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
+import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 
 interface DescriptionItemProps {
   title: string;
@@ -72,7 +72,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           style={{ display: 'flex', justifyContent: 'flex-start' }}
         >
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-            {RenderAvatarImage(selectedUser?.avatars?.medium.url, 120, true)}
+            {RenderImage(selectedUser?.avatars?.medium.url, 120, true)}
           </Space>
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             <Row style={{ marginBottom: 4 }}>

@@ -20,10 +20,10 @@ import {
   UpOutlined,
 } from '@ant-design/icons';
 import { IUserWithShortExtensions } from '@/types';
-import { useUpdateUserRole } from '@/modules/users-modules/hooks/useUpdateUserRole';
-import { getColorRole } from '@/modules/users-modules/components/helpers/ColorRoleTag';
-import { getColorStatusUser } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
-import { useUpdateUserStatus } from '@/modules/users-modules/hooks/useUpdateUserStatus';
+import { useUpdateUserRole } from '@/modules/users-module/hooks/useUpdateUserRole';
+import { getColorRole } from '@/modules/users-module/components/helpers/ColorRoleTag';
+import { getColorStatusUser } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
+import { useUpdateUserStatus } from '@/modules/users-module/hooks/useUpdateUserStatus';
 
 interface DeleteUserComponentProps {
   user: IUserWithShortExtensions | null;
@@ -60,11 +60,17 @@ const UpdateUserComponent: React.FC<DeleteUserComponentProps> = ({ user }) => {
   const handleMenuStatusClick = (status: string) => {
     setStatusMenuOpen(false);
     setNewStatus(status);
-    updateUserStatus({ id, status });
-    notification.success({
-      message: `Changed status to: ${status} for user: ${user?.userName}`,
-      placement: 'bottomLeft',
-    });
+    updateUserStatus(
+      { id, status },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: `Changed status to: ${status} for user: ${user?.userName}`,
+            placement: 'bottomLeft',
+          });
+        },
+      }
+    );
   };
 
   const menuRole = (

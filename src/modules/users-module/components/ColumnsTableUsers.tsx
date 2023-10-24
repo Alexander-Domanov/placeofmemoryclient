@@ -3,12 +3,12 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderAvatarImage } from '@/modules/users-modules/components/helpers/RenderAvatar';
-import { ColorStatusUserTag } from '@/modules/users-modules/components/helpers/ColorStatusUserTag';
-import { ColorRoleTag } from '@/modules/users-modules/components/helpers/ColorRoleTag';
-import { UserDrawer } from '@/modules/users-modules/components/UserDrawer';
-import UpdateUserComponent from '@/modules/users-modules/components/UpdateUser';
-import DeleteUserComponent from '@/modules/users-modules/components/DeleteUser';
+import { RenderImage } from '@/modules/users-module/components/helpers/RenderAvatar';
+import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
+import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
+import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
+import UpdateUserComponent from '@/modules/users-module/components/UpdateUser';
+import DeleteUserComponent from '@/modules/users-module/components/DeleteUser';
 
 export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
   {
@@ -19,7 +19,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text, record) => (
       <Tooltip title={`ID: ${text}`} placement="leftBottom" color="#1087f6">
         <Typography.Text>
-          {RenderAvatarImage(record.avatars?.thumbnail.url, 25)}
+          {RenderImage(record.avatars?.thumbnail.url, 25)}
         </Typography.Text>
       </Tooltip>
     ),

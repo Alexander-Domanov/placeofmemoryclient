@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { noRefetch } from '@/common/helpers/noRefetch';
-import { getUsers } from '@/modules/users-modules/api/users-api';
+import { getUsers } from '@/modules/users-module/api/users-api';
 
 export const useUsers = (
   page: number,
