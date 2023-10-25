@@ -122,7 +122,7 @@ export const PlacePage: FC = () => {
     updatePlaceById(
       { id: placeId, place: newPlace },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           notification.success({
             message: 'Place updated successfully',
             description: 'You will be redirected to the place page',
