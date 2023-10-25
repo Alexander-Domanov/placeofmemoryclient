@@ -6,6 +6,7 @@ import {
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { routes } from '@/common/routing/routes';
 import 'react-quill/dist/quill.snow.css';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
@@ -28,6 +29,8 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
 ];
 
 export const ArticleCreate: FC = () => {
+  const router = useRouter();
+
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
@@ -50,7 +53,9 @@ export const ArticleCreate: FC = () => {
 
     mutate(form, {
       onSuccess: (data) => {
-        console.log(data.data);
+        if (data.data.id) {
+          router.push(routes.dashboard.articles.article(data.data.id));
+        }
       },
     });
   };
