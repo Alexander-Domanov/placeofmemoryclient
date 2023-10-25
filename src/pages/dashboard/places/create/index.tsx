@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { AddPlacePage } from '@/modules/places-module/components/AddPlace';
+import { CreatePlace } from '@/modules/places-module/components/CreatePlace';
 
 const DashboardPlaceCreate = () => {
   return (
@@ -10,7 +10,7 @@ const DashboardPlaceCreate = () => {
         <title>Create Place</title>
       </Head>
 
-      <AddPlacePage />
+      <CreatePlace />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Alert,
   Breadcrumb,
@@ -13,43 +14,36 @@ import {
   Row,
   Typography,
 } from 'antd';
-import { useRouter } from 'next/router';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
-import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
+import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
+import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
-import { usePlace } from '@/modules/places-module/hooks/usePlace';
-import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
-import { IResponseError } from '@/types/response-error-message.type';
 import { validateMessages } from '@/common-dashboard/validations/ValidateMessages';
 
 const { Panel } = Collapse;
 
-function breadcrumbs(
-  id: string | string[] | undefined
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
-  return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.places.index,
-      title: <Link href={routes.dashboard.places.index}>Places</Link>,
-    },
-    {
-      key: routes.dashboard.places.place(id as string),
-      title: `${id}`,
-    },
-  ];
-}
+const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
+  {
+    key: routes.dashboard.index,
+    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
+  },
+  {
+    key: routes.dashboard.places.index,
+    title: <Link href={routes.dashboard.places.index}>Places</Link>,
+  },
+  {
+    key: routes.dashboard.places.create,
+    title: 'Create Place',
+  },
+];
 
 const panels = [
   {
@@ -68,39 +62,19 @@ const panels = [
   },
 ];
 
-export const PlacePage: FC = () => {
+export const CreatePlace: FC = () => {
   const router = useRouter();
-
-  const { placeId } = router.query;
 
   const [form] = Form.useForm();
 
-  const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
-    useState<IPlaceResultAfterExtract | null>(null);
-  const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
+  const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
+    useState<IPlaceResultAfterExtract | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
 
-  const { place } = usePlace(placeId);
-
-  const { updatePlaceById } = useUpdatePlace();
-
-  useEffect(() => {
-    if (place) {
-      setSelectedPlace(place);
-      form.setFieldsValue({
-        country: place.country,
-        city: place.city,
-        nameCemetery: place.nameCemetery,
-        shortDescription: place.shortDescription,
-        description: place.description,
-      });
-      setSelectedLocation(place.location);
-      setSelectedFiles(place.photos);
-    }
-  }, [place]);
+  const { createPlace } = useCreatePlace();
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
@@ -114,38 +88,27 @@ export const PlacePage: FC = () => {
   }, [selectedPlaceFromMap]);
 
   const onFinish = (values: ICreatePlace) => {
-    const newPlace: ICreatePlace = {
+    const place: ICreatePlace = {
       ...values,
       location: selectedLocation as ILocation,
       ids: selectedFiles.map((file) => file.uploadId),
     };
-    updatePlaceById(
-      { id: placeId, place: newPlace },
-      {
-        onSuccess: (data) => {
-          notification.success({
-            message: 'Place updated successfully',
-            description: 'You will be redirected to the place page',
-            placement: 'bottomLeft',
-          });
-        },
-        onError: (error: IResponseError) => {
-          const messages = error?.response?.data?.messages;
-          messages?.forEach(({ message }) => {
-            notification.error({
-              message: `Error: ${message}`,
-              placement: 'bottomLeft',
-            });
-          });
-        },
-      }
-    );
+    createPlace(place, {
+      onSuccess: (data) => {
+        notification.success({
+          message: 'Place created successfully',
+          description: 'You will be redirected to the place page',
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.places.place(data.data.id));
+      },
+    });
   };
 
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(placeId)} />
+        <Breadcrumb items={breadcrumbs} />
       </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
@@ -210,20 +173,17 @@ export const PlacePage: FC = () => {
         <Col span={10} style={{ width: '100%' }}>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
             <Alert
-              message={`Status: ${selectedPlace?.status}`}
+              message="Status: n/a"
               description={
                 <div>
                   <div>
-                    <Typography.Text>{`Persons: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.personsLocation.length}`}</Typography.Text>
+                    <Typography.Text>{`Persons:  0 `}</Typography.Text>
                   </div>
                   <div>
-                    <Typography.Text>{`Created at: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.createdAt}`}</Typography.Text>
+                    <Typography.Text>Created at: n/a</Typography.Text>
                   </div>
                   <div>
-                    <Typography.Text>{`Updated at: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.updatedAt}`}</Typography.Text>
+                    <Typography.Text>Updated at: n/a</Typography.Text>
                   </div>
                 </div>
               }
@@ -238,16 +198,12 @@ export const PlacePage: FC = () => {
               >
                 Save
               </Button>
-              <Button type="primary" danger icon={<DeleteOutlined />}>
-                Delete
-              </Button>
             </Row>
           </Card>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
             <ChooseGalleryFiles
               onFilesSelected={setSelectedFiles}
               maxFileLimit={1}
-              inputFiles={selectedFiles}
             />
           </Card>
           <Card>
