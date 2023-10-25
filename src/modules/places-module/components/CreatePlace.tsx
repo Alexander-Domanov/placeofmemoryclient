@@ -26,6 +26,7 @@ import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { routes } from '@/common/routing/routes';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
+import LocationPreview from '@/modules/maps/components/CardLocationPreview';
 
 const { Panel } = Collapse;
 
@@ -41,23 +42,6 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
     key: routes.dashboard.places.create,
     title: 'Create Place',
-  },
-];
-
-const panels = [
-  {
-    key: '1',
-    header: 'Longitude',
-    content: (selectedLocation: ILocation | null) => (
-      <Typography.Text>{selectedLocation?.lng || ''}</Typography.Text>
-    ),
-  },
-  {
-    key: '2',
-    header: 'Latitude',
-    content: (selectedLocation: ILocation | null) => (
-      <Typography.Text>{selectedLocation?.lat || ''}</Typography.Text>
-    ),
   },
 ];
 
@@ -161,17 +145,7 @@ export const CreatePlace: FC = () => {
           </Card>
           <Card>
             <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            <Collapse ghost>
-              {panels.map((panel) => (
-                <Panel
-                  header={panel.header}
-                  key={panel.key}
-                  className="card-location-preview-panel"
-                >
-                  {panel.content(selectedLocation)}
-                </Panel>
-              ))}
-            </Collapse>
+            <LocationPreview selectedLocation={selectedLocation} />
           </Card>
         </Col>
       </Row>

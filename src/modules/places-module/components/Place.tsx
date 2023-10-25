@@ -28,6 +28,7 @@ import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import { IResponseError } from '@/types/response-error-message.type';
+import LocationPreview from '@/modules/maps/components/CardLocationPreview';
 
 const { Panel } = Collapse;
 
@@ -205,17 +206,7 @@ export const PlacePage: FC = () => {
           </Card>
           <Card>
             <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            <Collapse ghost>
-              {panels.map((panel) => (
-                <Panel
-                  header={panel.header}
-                  key={panel.key}
-                  className="card-location-preview-panel"
-                >
-                  {panel.content(selectedLocation)}
-                </Panel>
-              ))}
-            </Collapse>
+            <LocationPreview selectedLocation={selectedLocation} />
           </Card>
         </Col>
       </Row>
