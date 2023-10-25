@@ -8,7 +8,7 @@ export interface IPlaceResultAfterExtract {
   postalCode: string;
   formattedAddress: string;
   location: {
-    name: string | null;
+    place: string | null;
     lat: number | null;
     lng: number | null;
   };

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -23,11 +23,13 @@ import styles from './ChooseGalleryFiles.module.scss';
 interface ChooseGalleryFilesProps {
   onFilesSelected: (files: IGalleryFile[]) => void;
   maxFileLimit: number;
+  inputFiles?: IGalleryFile[];
 }
 
 export const ChooseGalleryFiles: FC<ChooseGalleryFilesProps> = ({
   onFilesSelected,
   maxFileLimit,
+  inputFiles,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -41,6 +43,12 @@ export const ChooseGalleryFiles: FC<ChooseGalleryFilesProps> = ({
   );
 
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
+
+  useEffect(() => {
+    if (inputFiles) {
+      setSelectedFiles(inputFiles);
+    }
+  }, [inputFiles]);
 
   const addFileToSelectedFiles = (file: IGalleryFile) => {
     if (selectedFiles.length < maxFileLimit) {

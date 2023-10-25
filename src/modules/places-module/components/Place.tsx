@@ -1,21 +1,35 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Breadcrumb, Col, Divider, Flex, Form, notification, Row } from 'antd';
+import {
+  Alert,
+  Breadcrumb,
+  Button,
+  Card,
+  Col,
+  Flex,
+  Form,
+  notification,
+  Row,
+  Space,
+  Typography,
+} from 'antd';
 import { useRouter } from 'next/router';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePlace, IGalleryFile, IPlace } from '@/types';
-import { CardLocationPreview } from '@/modules/maps/components/CardLocationPreview';
+import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
-import { IResponseError } from '@/types/response-error-message.type';
 import { routes } from '@/common/routing/routes';
+import PlaceForm from '@/modules/places-module/components/PlaceForm';
+import { IResponseError } from '@/types/response-error-message.type';
+import LocationPreview from '@/modules/maps/components/CardLocationPreview';
+import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
 
 function breadcrumbs(
   id: string | string[] | undefined
@@ -31,67 +45,91 @@ function breadcrumbs(
     },
     {
       key: routes.dashboard.places.place(id as string),
-      title: (
-        <Link href={routes.dashboard.places.place(id as string)}>{id}</Link>
-      ),
+      title: `${id}`,
     },
   ];
 }
+
 export const PlacePage: FC = () => {
+  const router = useRouter();
+
+  const { placeId } = router.query;
+
+  const [form] = Form.useForm();
+
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
+    null
+  );
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
-  const router = useRouter();
-  const { placeId } = router.query;
 
-  const { place, isSuccess, isLoading } = usePlace(placeId);
+  const { place } = usePlace(placeId);
+
   const { updatePlaceById } = useUpdatePlace();
 
   useEffect(() => {
-    const inputPlace: Partial<IPlaceResultAfterExtract> = {
-      country: place?.country,
-      city: place?.city,
-      formattedAddress: place?.nameCemetery,
-      location: {
-        name: place?.location?.place as string,
-        lat: place?.location?.latitude as number,
-        lng: place?.location?.longitude as number,
-      },
-    };
     if (place) {
       setSelectedPlace(place);
-      setSelectedPlaceFromMap(inputPlace as IPlaceResultAfterExtract);
-      selectedFiles.length === 0 && setSelectedFiles(place.photos);
+      form.setFieldsValue({
+        country: place.country,
+        city: place.city,
+        nameCemetery: place.nameCemetery,
+        shortDescription: place.shortDescription,
+        description: place.description,
+      });
+      setSelectedLocation(place.location);
+      setSelectedFiles(place.photos);
     }
   }, [place]);
+
+  useEffect(() => {
+    if (selectedPlaceFromMap) {
+      form.setFieldsValue({
+        country: selectedPlaceFromMap.country,
+        city: selectedPlaceFromMap.city,
+        nameCemetery: selectedPlaceFromMap.formattedAddress,
+      });
+      setSelectedLocation(selectedPlaceFromMap.location as ILocation);
+    }
+  }, [selectedPlaceFromMap]);
 
   const onFinish = (values: ICreatePlace) => {
     const newPlace: ICreatePlace = {
       ...values,
+      location: selectedLocation as ILocation,
       ids: selectedFiles.map((file) => file.uploadId),
     };
-    updatePlaceById(
-      { id: placeId, place: newPlace },
-      {
-        onSuccess: (data) => {
-          notification.success({
-            message: 'Place updated successfully',
-            description: 'You will be redirected to the place page',
-            placement: 'bottomLeft',
-          });
-        },
-        onError: (error: IResponseError) => {
-          const messages = error?.response?.data?.messages;
-          messages?.forEach(({ message }) => {
-            notification.error({
-              message: `Error: ${message}`,
+    if (newPlace.ids.length === 0) {
+      notification.error({
+        message: 'Gallery is empty',
+        description: 'Please, upload at least one image',
+        placement: 'bottomLeft',
+      });
+    } else {
+      updatePlaceById(
+        { id: placeId, place: newPlace },
+        {
+          onSuccess: () => {
+            notification.success({
+              message: 'Place updated successfully',
+              description: 'You will be redirected to the place page',
               placement: 'bottomLeft',
             });
-          });
-        },
-      }
-    );
+          },
+          onError: (error: IResponseError) => {
+            const messages = error?.response?.data?.messages;
+            messages?.forEach(({ message }) => {
+              notification.error({
+                message: `Error: ${message}`,
+                placement: 'bottomLeft',
+              });
+            });
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -99,29 +137,58 @@ export const PlacePage: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs(placeId)} />
       </div>
-      <Row gutter={32}>
-        <Col span={14} style={{ width: '100%' }}>
-          <Divider orientation="left">Place Preview</Divider>
-          <PlaceForm
-            onPlaceSelectedFromMap={selectedPlaceFromMap}
-            onFinish={onFinish}
-            place={place}
-          />
+      <Row gutter={[16, 16]}>
+        <Col span={16} style={{ width: '100%' }}>
+          <Card>
+            <PlaceForm form={form} onFinish={onFinish} />
+          </Card>
         </Col>
-        <Col span={10}>
-          <Form layout="vertical">
-            <Divider orientation="center">Image Preview</Divider>
+        <Col span={8} style={{ width: '100%' }}>
+          <Card style={{ width: '100%', marginBottom: '16px' }}>
+            <Alert
+              message={`Status: ${selectedPlace?.status}`}
+              description={
+                <div>
+                  <div>
+                    <Typography.Text>{`Persons: `}</Typography.Text>
+                    <Typography.Text>{`${selectedPlace?.personsLocation.length}`}</Typography.Text>
+                  </div>
+                  <div>
+                    <Typography.Text>{`Created at: `}</Typography.Text>
+                    <Typography.Text>{`${selectedPlace?.createdAt}`}</Typography.Text>
+                  </div>
+                  <div>
+                    <Typography.Text>{`Updated at: `}</Typography.Text>
+                    <Typography.Text>{`${selectedPlace?.updatedAt}`}</Typography.Text>
+                  </div>
+                </div>
+              }
+              type="warning"
+              style={{ width: '100%', marginBottom: '32px' }}
+            />
+            <Space size={16}>
+              <Button
+                type="primary"
+                title="Save"
+                onClick={() => onFinish(form.getFieldsValue())}
+                icon={<SaveOutlined />}
+              >
+                Save
+              </Button>
+              <DeletePlaceModal place={selectedPlace} showButton />
+            </Space>
+          </Card>
+          <Card style={{ width: '100%', marginBottom: '16px' }}>
             <ChooseGalleryFiles
               onFilesSelected={setSelectedFiles}
               maxFileLimit={1}
-              // inputFiles={place?.photos || []}
+              inputFiles={selectedFiles}
             />
-          </Form>
-          <Form layout="vertical">
-            <Divider orientation="center">Location</Divider>
+          </Card>
+          <Card>
             <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            <CardLocationPreview onPlaceSelected={selectedPlaceFromMap} />
-          </Form>
+            <LocationPreview selectedLocation={selectedLocation} />
+          </Card>
         </Col>
       </Row>
     </Flex>

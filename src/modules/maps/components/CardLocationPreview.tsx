@@ -1,34 +1,44 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Collapse, Typography } from 'antd';
-import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
+import { ILocation } from '@/types';
 
 const { Panel } = Collapse;
 
-interface CardLocationPreviewProps {
-  onPlaceSelected: IPlaceResultAfterExtract | null;
+const panels = [
+  {
+    key: '1',
+    header: 'Longitude',
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lng || ''}</Typography.Text>
+    ),
+  },
+  {
+    key: '2',
+    header: 'Latitude',
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lat || ''}</Typography.Text>
+    ),
+  },
+];
+
+interface LocationPreviewProps {
+  selectedLocation: ILocation | null;
 }
-export const CardLocationPreview: FC<CardLocationPreviewProps> = ({
-  onPlaceSelected,
-}) => {
+
+const LocationPreview: FC<LocationPreviewProps> = ({ selectedLocation }) => {
   return (
-    <div>
-      <Collapse accordion>
-        <Panel header="Name location" key="1">
-          <Typography.Text>
-            {onPlaceSelected?.location.name || ''}
-          </Typography.Text>
+    <Collapse ghost>
+      {panels.map((panel) => (
+        <Panel
+          header={panel.header}
+          key={panel.key}
+          className="card-location-preview-panel"
+        >
+          {panel.content(selectedLocation)}
         </Panel>
-        <Panel header="Longitude" key="2">
-          <Typography.Text>
-            {onPlaceSelected?.location.lng || ''}
-          </Typography.Text>
-        </Panel>
-        <Panel header="Latitude" key="3">
-          <Typography.Text>
-            {onPlaceSelected?.location.lat || ''}
-          </Typography.Text>
-        </Panel>
-      </Collapse>
-    </div>
+      ))}
+    </Collapse>
   );
 };
+
+export default LocationPreview;

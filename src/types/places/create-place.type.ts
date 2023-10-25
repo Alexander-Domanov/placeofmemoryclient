@@ -6,8 +6,8 @@ export interface ICreatePlace {
   description: string;
   ids: string[];
   location: {
-    name: string | null;
-    longitude: number | null;
-    latitude: number | null;
+    place: string | null;
+    lng: number | null;
+    lat: number | null;
   };
 }
