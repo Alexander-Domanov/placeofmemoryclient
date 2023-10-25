@@ -17,7 +17,7 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
-import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
@@ -28,6 +28,7 @@ import { routes } from '@/common/routing/routes';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import { IResponseError } from '@/types/response-error-message.type';
 import LocationPreview from '@/modules/maps/components/CardLocationPreview';
+import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
 
 function breadcrumbs(
   id: string | string[] | undefined
@@ -167,14 +168,13 @@ export const PlacePage: FC = () => {
             <Row justify="space-around">
               <Button
                 type="primary"
+                title="Save"
                 onClick={() => onFinish(form.getFieldsValue())}
                 icon={<SaveOutlined />}
               >
                 Save
               </Button>
-              <Button type="primary" danger icon={<DeleteOutlined />}>
-                Delete
-              </Button>
+              <DeletePlaceModal place={selectedPlace} showButton />
             </Row>
           </Card>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
