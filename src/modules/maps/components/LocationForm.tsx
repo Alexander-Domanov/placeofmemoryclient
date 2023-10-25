@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
+import { validateMessages } from '@/common-dashboard/validations/ValidateMessages';
 
 const layout = {
   labelCol: { span: 6 },
@@ -11,16 +12,6 @@ interface LocationFormProps {
   form: any;
   onFinish: (place: IPlaceResultAfterExtract) => void;
 }
-
-const validateMessages = {
-  required: `$\{label} is required!`,
-  types: {
-    number: `$\{label} is not a valid number!`,
-  },
-  number: {
-    range: `$\{label} must be between $\{min} and $\{max}`,
-  },
-};
 
 const LocationForm: React.FC<LocationFormProps> = ({ form, onFinish }) => {
   return (

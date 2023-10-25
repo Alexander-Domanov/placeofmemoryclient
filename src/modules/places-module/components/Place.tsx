@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
+  Alert,
   Breadcrumb,
   Button,
   Card,
@@ -18,7 +19,7 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
-import { SaveOutlined } from '@ant-design/icons';
+import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
@@ -26,20 +27,10 @@ import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
-import { CardActionsPreview } from '@/modules/places-module/components/CardActions';
 import { IResponseError } from '@/types/response-error-message.type';
+import { validateMessages } from '@/common-dashboard/validations/ValidateMessages';
 
 const { Panel } = Collapse;
-
-const validateMessages = {
-  required: `$\{label} is required!`,
-  types: {
-    number: `$\{label} is not a valid number!`,
-  },
-  number: {
-    range: `$\{label} must be between $\{min} and $\{max}`,
-  },
-};
 
 function breadcrumbs(
   id: string | string[] | undefined
@@ -158,13 +149,6 @@ export const PlacePage: FC = () => {
       </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
-          <Button
-            type="primary"
-            onClick={() => onFinish(form.getFieldsValue())}
-            icon={<SaveOutlined />}
-          >
-            Save
-          </Button>
           <Card>
             <Form
               layout="vertical"
@@ -192,7 +176,8 @@ export const PlacePage: FC = () => {
               <Form.Item
                 name={['nameCemetery']}
                 label="Name Cemetery"
-                rules={[{ required: true }]}
+                validateDebounce={500}
+                rules={[{ required: true, min: 2, max: 100 }]}
                 hasFeedback
               >
                 <Input placeholder="Input Name Cemetery" allowClear />
@@ -224,8 +209,50 @@ export const PlacePage: FC = () => {
         </Col>
         <Col span={10} style={{ width: '100%' }}>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
-            <CardActionsPreview onPlaceSelected={selectedPlace} />
+            <Form
+              name="trigger"
+              style={{ maxWidth: 600 }}
+              layout="vertical"
+              autoComplete="off"
+            >
+              <Alert
+                message={`Status: ${selectedPlace?.status}`}
+                description={
+                  <div>
+                    <div>
+                      <Typography.Text>{`Persons: `}</Typography.Text>
+                      <Typography.Text>{`${selectedPlace?.personsLocation.length}`}</Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text>{`Created at: `}</Typography.Text>
+                      <Typography.Text>{`${selectedPlace?.createdAt}`}</Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text>{`Updated at: `}</Typography.Text>
+                      <Typography.Text>{`${selectedPlace?.updatedAt}`}</Typography.Text>
+                    </div>
+                  </div>
+                }
+                type="warning"
+                style={{ width: '100%', marginBottom: '32px' }}
+              />
+              <Row justify="space-around">
+                <Button
+                  type="primary"
+                  onClick={() => onFinish(form.getFieldsValue())}
+                  icon={<SaveOutlined />}
+                >
+                  Save
+                </Button>
+                <Button type="primary" danger icon={<DeleteOutlined />}>
+                  Delete
+                </Button>
+              </Row>
+            </Form>
           </Card>
+          {/* <Card style={{ width: '100%', marginBottom: '32px' }}> */}
+          {/*  <CardActionsPreview onPlaceSelected={selectedPlace} /> */}
+          {/* </Card> */}
           <Card style={{ width: '100%', marginBottom: '32px' }}>
             <ChooseGalleryFiles
               onFilesSelected={setSelectedFiles}
@@ -246,7 +273,6 @@ export const PlacePage: FC = () => {
                 </Panel>
               ))}
             </Collapse>
-            {/* <CardLocationPreview onLocationSelected={selectedLocation} /> */}
           </Card>
         </Col>
       </Row>
