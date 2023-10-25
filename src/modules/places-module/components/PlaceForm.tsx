@@ -47,15 +47,12 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
   form.setFieldValue(['country'], selectedPlaceFromMap?.country);
   form.setFieldValue(['city'], selectedPlaceFromMap?.city);
   form.setFieldValue(['nameCemetery'], selectedPlaceFromMap?.formattedAddress);
-  form.setFieldValue(['location', 'name'], selectedPlaceFromMap?.location.name);
   form.setFieldValue(
-    ['location', 'longitude'],
-    selectedPlaceFromMap?.location.lng
+    ['location', 'place'],
+    selectedPlaceFromMap?.location.place
   );
-  form.setFieldValue(
-    ['location', 'latitude'],
-    selectedPlaceFromMap?.location.lat
-  );
+  form.setFieldValue(['location', 'lng'], selectedPlaceFromMap?.location.lng);
+  form.setFieldValue(['location', 'lat'], selectedPlaceFromMap?.location.lat);
   form.setFieldValue(['shortDescription'], selectedPlace?.shortDescription);
   form.setFieldValue(['description'], selectedPlace?.description);
 
@@ -63,9 +60,9 @@ const PlaceForm: React.FC<MapDrawerProps> = ({
     onFinish({
       ...values,
       location: {
-        name: selectedPlaceFromMap?.location.name || null,
-        longitude: selectedPlaceFromMap?.location.lng || null,
-        latitude: selectedPlaceFromMap?.location.lat || null,
+        place: selectedPlaceFromMap?.location.place || null,
+        lng: selectedPlaceFromMap?.location.lng || null,
+        lat: selectedPlaceFromMap?.location.lat || null,
       },
       shortDescription: values.shortDescription || null,
       description: values.description || null,
