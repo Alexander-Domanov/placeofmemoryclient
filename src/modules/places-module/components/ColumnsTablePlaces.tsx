@@ -114,7 +114,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
             color="#1087f6"
             key={index}
           >
-            <Typography.Text key={index}>
+            <Typography.Text>
               {RenderImage(photo.versions.huge.url, 30, true)}
             </Typography.Text>
           </Tooltip>

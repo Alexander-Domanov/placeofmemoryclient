@@ -10,6 +10,7 @@ import {
   Form,
   notification,
   Row,
+  Space,
   Typography,
 } from 'antd';
 import {
@@ -98,14 +99,14 @@ export const CreatePlace: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
-      <Row gutter={32}>
-        <Col span={14} style={{ width: '100%' }}>
+      <Row gutter={[16, 16]}>
+        <Col span={16} style={{ width: '100%' }}>
           <Card>
             <PlaceForm form={form} onFinish={onFinish} />
           </Card>
         </Col>
-        <Col span={10} style={{ width: '100%' }}>
-          <Card style={{ width: '100%', marginBottom: '32px' }}>
+        <Col span={8} style={{ width: '100%' }}>
+          <Card style={{ width: '100%', marginBottom: '16px' }}>
             <Alert
               message="Status: n/a"
               description={
@@ -122,17 +123,18 @@ export const CreatePlace: FC = () => {
                 </div>
               }
               type="warning"
-              style={{ width: '100%', marginBottom: '32px' }}
+              style={{ width: '100%', marginBottom: '16px' }}
             />
-            <Row justify="space-around">
+            <Space size={16}>
               <Button
                 type="primary"
+                title="Save"
                 onClick={() => onFinish(form.getFieldsValue())}
                 icon={<SaveOutlined />}
               >
                 Save
               </Button>
-            </Row>
+            </Space>
           </Card>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
             <ChooseGalleryFiles
