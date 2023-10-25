@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Col,
-  Collapse,
   Flex,
   Form,
   notification,
@@ -30,8 +29,6 @@ import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import { IResponseError } from '@/types/response-error-message.type';
 import LocationPreview from '@/modules/maps/components/CardLocationPreview';
 
-const { Panel } = Collapse;
-
 function breadcrumbs(
   id: string | string[] | undefined
 ): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
@@ -50,23 +47,6 @@ function breadcrumbs(
     },
   ];
 }
-
-const panels = [
-  {
-    key: '1',
-    header: 'Longitude',
-    content: (selectedLocation: ILocation | null) => (
-      <Typography.Text>{selectedLocation?.lng || ''}</Typography.Text>
-    ),
-  },
-  {
-    key: '2',
-    header: 'Latitude',
-    content: (selectedLocation: ILocation | null) => (
-      <Typography.Text>{selectedLocation?.lat || ''}</Typography.Text>
-    ),
-  },
-];
 
 export const PlacePage: FC = () => {
   const router = useRouter();

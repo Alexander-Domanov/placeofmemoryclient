@@ -6,7 +6,6 @@ import {
   Button,
   Card,
   Col,
-  Collapse,
   Flex,
   Form,
   notification,
@@ -27,8 +26,6 @@ import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { routes } from '@/common/routing/routes';
 import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import LocationPreview from '@/modules/maps/components/CardLocationPreview';
-
-const { Panel } = Collapse;
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
