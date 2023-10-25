@@ -9,7 +9,6 @@ import {
   Collapse,
   Flex,
   Form,
-  Input,
   notification,
   Row,
   Typography,
@@ -26,7 +25,7 @@ import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { routes } from '@/common/routing/routes';
-import { validateMessages } from '@/common-dashboard/validations/ValidateMessages';
+import PlaceForm from '@/modules/places-module/components/PlaceForm';
 
 const { Panel } = Collapse;
 
@@ -93,16 +92,24 @@ export const CreatePlace: FC = () => {
       location: selectedLocation as ILocation,
       ids: selectedFiles.map((file) => file.uploadId),
     };
-    createPlace(place, {
-      onSuccess: (data) => {
-        notification.success({
-          message: 'Place created successfully',
-          description: 'You will be redirected to the place page',
-          placement: 'bottomLeft',
-        });
-        router.push(routes.dashboard.places.place(data.data.id));
-      },
-    });
+    if (place.ids.length === 0) {
+      notification.error({
+        message: 'Gallery is empty',
+        description: 'Please, upload at least one image',
+        placement: 'bottomLeft',
+      });
+    } else {
+      createPlace(place, {
+        onSuccess: (data) => {
+          notification.success({
+            message: 'Place created successfully',
+            description: 'You will be redirected to the place page',
+            placement: 'bottomLeft',
+          });
+          router.push(routes.dashboard.places.place(data.data.id));
+        },
+      });
+    }
   };
 
   return (
@@ -113,61 +120,7 @@ export const CreatePlace: FC = () => {
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
           <Card>
-            <Form
-              layout="vertical"
-              form={form}
-              name="nest-messages"
-              onFinish={onFinish}
-              validateMessages={validateMessages}
-            >
-              <Form.Item
-                name={['country']}
-                label="Country"
-                rules={[{ required: true, whitespace: true }]}
-                hasFeedback
-              >
-                <Input placeholder="Input Country" allowClear />
-              </Form.Item>
-              <Form.Item
-                name={['city']}
-                label="City"
-                rules={[{ required: true, whitespace: true }]}
-                hasFeedback
-              >
-                <Input placeholder="Input City" allowClear />
-              </Form.Item>
-              <Form.Item
-                name={['nameCemetery']}
-                label="Name Cemetery"
-                validateDebounce={500}
-                rules={[{ required: true, min: 2, max: 100 }]}
-                hasFeedback
-              >
-                <Input placeholder="Input Name Cemetery" allowClear />
-              </Form.Item>
-              <Form.Item
-                name={['shortDescription']}
-                label="Short Description"
-                rules={[{ required: true }]}
-              >
-                <Input.TextArea
-                  showCount
-                  maxLength={300}
-                  autoSize={{ minRows: 6 }}
-                />
-              </Form.Item>
-              <Form.Item
-                name={['description']}
-                label="Description"
-                rules={[{ required: true }]}
-              >
-                <Input.TextArea
-                  showCount
-                  maxLength={4000}
-                  autoSize={{ minRows: 17 }}
-                />
-              </Form.Item>
-            </Form>
+            <PlaceForm form={form} onFinish={onFinish} />
           </Card>
         </Col>
         <Col span={10} style={{ width: '100%' }}>
