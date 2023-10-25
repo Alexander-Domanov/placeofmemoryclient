@@ -1,21 +1,45 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Breadcrumb, Card, Col, Flex, notification, Row } from 'antd';
+import {
+  Breadcrumb,
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Flex,
+  Form,
+  Input,
+  notification,
+  Row,
+  Typography,
+} from 'antd';
 import { useRouter } from 'next/router';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
+import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import PlaceForm from '@/modules/places-module/components/PlaceForm';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePlace, IGalleryFile, IPlace } from '@/types';
+import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
+import { CardActionsPreview } from '@/modules/places-module/components/CardActions';
 import { IResponseError } from '@/types/response-error-message.type';
-import { CardLocationPreview } from '@/modules/maps/components/CardLocationPreview';
+
+const { Panel } = Collapse;
+
+const validateMessages = {
+  required: `$\{label} is required!`,
+  types: {
+    number: `$\{label} is not a valid number!`,
+  },
+  number: {
+    range: `$\{label} must be between $\{min} and $\{max}`,
+  },
+};
 
 function breadcrumbs(
   id: string | string[] | undefined
@@ -35,38 +59,73 @@ function breadcrumbs(
     },
   ];
 }
+
+const panels = [
+  {
+    key: '1',
+    header: 'Longitude',
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lng || ''}</Typography.Text>
+    ),
+  },
+  {
+    key: '2',
+    header: 'Latitude',
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lat || ''}</Typography.Text>
+    ),
+  },
+];
+
 export const PlacePage: FC = () => {
+  const router = useRouter();
+
+  const { placeId } = router.query;
+
+  const [form] = Form.useForm();
+
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
+    null
+  );
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
-  const router = useRouter();
-  const { placeId } = router.query;
 
-  const { place, isSuccess, isLoading } = usePlace(placeId);
+  const { place } = usePlace(placeId);
+
   const { updatePlaceById } = useUpdatePlace();
 
   useEffect(() => {
-    const inputPlace: Partial<IPlaceResultAfterExtract> = {
-      country: place?.country,
-      city: place?.city,
-      formattedAddress: place?.nameCemetery,
-      location: {
-        name: place?.location?.place as string,
-        lat: place?.location?.latitude as number,
-        lng: place?.location?.longitude as number,
-      },
-    };
     if (place) {
       setSelectedPlace(place);
-      setSelectedPlaceFromMap(inputPlace as IPlaceResultAfterExtract);
-      selectedFiles.length === 0 && setSelectedFiles(place.photos);
+      form.setFieldsValue({
+        country: place.country,
+        city: place.city,
+        nameCemetery: place.nameCemetery,
+        shortDescription: place.shortDescription,
+        description: place.description,
+      });
+      setSelectedLocation(place.location);
+      setSelectedFiles(place.photos);
     }
   }, [place]);
+
+  useEffect(() => {
+    if (selectedPlaceFromMap) {
+      form.setFieldsValue({
+        country: selectedPlaceFromMap.country,
+        city: selectedPlaceFromMap.city,
+        nameCemetery: selectedPlaceFromMap.formattedAddress,
+      });
+      setSelectedLocation(selectedPlaceFromMap.location as ILocation);
+    }
+  }, [selectedPlaceFromMap]);
 
   const onFinish = (values: ICreatePlace) => {
     const newPlace: ICreatePlace = {
       ...values,
+      location: selectedLocation as ILocation,
       ids: selectedFiles.map((file) => file.uploadId),
     };
     updatePlaceById(
@@ -99,25 +158,95 @@ export const PlacePage: FC = () => {
       </div>
       <Row gutter={32}>
         <Col span={14} style={{ width: '100%' }}>
+          <Button
+            type="primary"
+            onClick={() => onFinish(form.getFieldsValue())}
+            icon={<SaveOutlined />}
+          >
+            Save
+          </Button>
           <Card>
-            <PlaceForm
-              onPlaceSelectedFromMap={selectedPlaceFromMap}
+            <Form
+              layout="vertical"
+              form={form}
+              name="nest-messages"
               onFinish={onFinish}
-              place={place}
-            />
+              validateMessages={validateMessages}
+            >
+              <Form.Item
+                name={['country']}
+                label="Country"
+                rules={[{ required: true, whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="Input Country" allowClear />
+              </Form.Item>
+              <Form.Item
+                name={['city']}
+                label="City"
+                rules={[{ required: true, whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="Input City" allowClear />
+              </Form.Item>
+              <Form.Item
+                name={['nameCemetery']}
+                label="Name Cemetery"
+                rules={[{ required: true }]}
+                hasFeedback
+              >
+                <Input placeholder="Input Name Cemetery" allowClear />
+              </Form.Item>
+              <Form.Item
+                name={['shortDescription']}
+                label="Short Description"
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea
+                  showCount
+                  maxLength={300}
+                  autoSize={{ minRows: 6 }}
+                />
+              </Form.Item>
+              <Form.Item
+                name={['description']}
+                label="Description"
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea
+                  showCount
+                  maxLength={4000}
+                  autoSize={{ minRows: 17 }}
+                />
+              </Form.Item>
+            </Form>
           </Card>
         </Col>
         <Col span={10} style={{ width: '100%' }}>
           <Card style={{ width: '100%', marginBottom: '32px' }}>
+            <CardActionsPreview onPlaceSelected={selectedPlace} />
+          </Card>
+          <Card style={{ width: '100%', marginBottom: '32px' }}>
             <ChooseGalleryFiles
               onFilesSelected={setSelectedFiles}
               maxFileLimit={1}
-              // inputFiles={place?.photos || []}
+              inputFiles={selectedFiles}
             />
           </Card>
           <Card>
             <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            <CardLocationPreview onPlaceSelected={selectedPlaceFromMap} />
+            <Collapse ghost>
+              {panels.map((panel) => (
+                <Panel
+                  header={panel.header}
+                  key={panel.key}
+                  className="card-location-preview-panel"
+                >
+                  {panel.content(selectedLocation)}
+                </Panel>
+              ))}
+            </Collapse>
+            {/* <CardLocationPreview onLocationSelected={selectedLocation} /> */}
           </Card>
         </Col>
       </Row>
