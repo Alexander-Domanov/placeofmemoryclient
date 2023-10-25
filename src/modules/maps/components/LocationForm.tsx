@@ -12,13 +12,30 @@ interface LocationFormProps {
   onFinish: (place: IPlaceResultAfterExtract) => void;
 }
 
+const validateMessages = {
+  required: `$\{label} is required!`,
+  types: {
+    number: `$\{label} is not a valid number!`,
+  },
+  number: {
+    range: `$\{label} must be between $\{min} and $\{max}`,
+  },
+};
+
 const LocationForm: React.FC<LocationFormProps> = ({ form, onFinish }) => {
   return (
-    <Form {...layout} form={form} name="nest-messages" onFinish={onFinish}>
+    <Form
+      {...layout}
+      form={form}
+      name="nest-messages"
+      onFinish={onFinish}
+      validateMessages={validateMessages}
+    >
       <Form.Item
         name={['formattedAddress']}
         label="Name Location"
         rules={[{ required: true }]}
+        hasFeedback
       >
         <Input placeholder="Input Name" allowClear status="warning" />
       </Form.Item>
@@ -26,10 +43,16 @@ const LocationForm: React.FC<LocationFormProps> = ({ form, onFinish }) => {
         name={['country']}
         label="Country"
         rules={[{ required: true, whitespace: true }]}
+        hasFeedback
       >
         <Input placeholder="Input Country" allowClear status="warning" />
       </Form.Item>
-      <Form.Item name={['city']} label="City" rules={[{ required: true }]}>
+      <Form.Item
+        name={['city']}
+        label="City"
+        rules={[{ required: true }]}
+        hasFeedback
+      >
         <Input placeholder="Input City" allowClear status="warning" />
       </Form.Item>
       <Form.Item name={['administrativeAreaLevel1']} label="State">
@@ -45,23 +68,26 @@ const LocationForm: React.FC<LocationFormProps> = ({ form, onFinish }) => {
         <Input placeholder="Input Street Number" allowClear />
       </Form.Item>
       <Form.Item
-        name={['location', 'name']}
+        name={['location', 'place']}
         label="Location Name"
         rules={[{ required: true }]}
+        hasFeedback
       >
         <Input placeholder="Input Longtitude" allowClear status="warning" />
       </Form.Item>
       <Form.Item
         name={['location', 'lng']}
         label="Longtitude"
-        rules={[{ required: true }]}
+        rules={[{ type: 'number', min: -180, max: 180 }]}
+        hasFeedback
       >
         <Input placeholder="Input Longtitude" allowClear status="warning" />
       </Form.Item>
       <Form.Item
         name={['location', 'lat']}
         label="Latitude"
-        rules={[{ required: true }]}
+        rules={[{ type: 'number', min: -90, max: 90 }]}
+        hasFeedback
       >
         <Input placeholder="Input Longtitude" allowClear status="warning" />
       </Form.Item>

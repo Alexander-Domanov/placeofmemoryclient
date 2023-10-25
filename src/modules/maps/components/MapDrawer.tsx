@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Divider, Drawer, Form, message, Space } from 'antd';
+import { Button, Divider, Drawer, Form, Space } from 'antd';
 import { FaLocationDot } from 'react-icons/fa6';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapWithAutoComplete from '@/modules/maps/components/MapWithAutoComplete';
@@ -26,26 +26,21 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   const [form] = Form.useForm();
 
   const onFillToForm = (place: IPlaceResultAfterExtract): void => {
-    form.setFieldValue(['country'], place?.country);
-    form.setFieldValue(['city'], place?.city);
-    form.setFieldValue(
-      ['administrativeAreaLevel1'],
-      place?.administrativeAreaLevel1
-    );
-    form.setFieldValue(
-      ['administrativeAreaLevel2'],
-      place?.administrativeAreaLevel2
-    );
-    form.setFieldValue(['street'], place?.street);
-    form.setFieldValue(['streetNumber'], place?.streetNumber);
-    form.setFieldValue(['postalCode'], place?.postalCode);
-    form.setFieldValue(['formattedAddress'], place?.formattedAddress);
-    form.setFieldValue(
-      ['location', 'name'],
-      place?.formattedAddress.split(',')[0]
-    );
-    form.setFieldValue(['location', 'lat'], place?.location?.lat);
-    form.setFieldValue(['location', 'lng'], place?.location?.lng);
+    form.setFieldsValue({
+      country: place?.country,
+      city: place?.city,
+      administrativeAreaLevel1: place?.administrativeAreaLevel1,
+      administrativeAreaLevel2: place?.administrativeAreaLevel2,
+      street: place?.street,
+      streetNumber: place?.streetNumber,
+      postalCode: place?.postalCode,
+      formattedAddress: place?.formattedAddress,
+      location: {
+        place: place?.formattedAddress.split(',')[0],
+        lat: place?.location?.lat,
+        lng: place?.location?.lng,
+      },
+    });
   };
   const handleExecuteGeoCoder = (
     location: google.maps.LatLngLiteral | null
@@ -81,7 +76,6 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
   const onFinish = (place: IPlaceResultAfterExtract) => {
     setSelectedPlace(place);
     setOpen(false);
-    message.success(`Place: ${place?.formattedAddress} is selected`);
     onPlaceSelected(place);
   };
 

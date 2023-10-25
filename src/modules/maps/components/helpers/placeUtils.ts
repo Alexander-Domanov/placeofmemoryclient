@@ -28,7 +28,7 @@ export function extractPlaceData(
       place.address_components?.find((c) => c.types.includes('postal_code'))
         ?.long_name || '',
     location: {
-      name: place.formatted_address?.split(',')[0] || '',
+      place: place.formatted_address?.split(',')[0] || '',
       lat: place.geometry?.location?.lat() || 0,
       lng: place.geometry?.location?.lng() || 0,
     },

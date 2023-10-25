@@ -1,46 +1,47 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Collapse, Typography } from 'antd';
-import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
+import { ILocation } from '@/types';
 
 const { Panel } = Collapse;
 
-interface CardLocationPreviewProps {
-  onPlaceSelected: IPlaceResultAfterExtract | null;
-}
-
 const panels = [
+  // {
+  //   key: '1',
+  //   header: 'Name location',
+  //   content: (selectedLocation: ILocation | null) => (
+  //     <Typography.Text>{selectedLocation?.place || ''}</Typography.Text>
+  //   ),
+  // },
   {
     key: '1',
-    header: 'Name location',
-    content: (selectedPlace: IPlaceResultAfterExtract | null) => (
-      <Typography.Text>{selectedPlace?.location.name || ''}</Typography.Text>
+    header: 'Longitude',
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lng || ''}</Typography.Text>
     ),
   },
   {
     key: '2',
-    header: 'Longitude',
-    content: (selectedPlace: IPlaceResultAfterExtract | null) => (
-      <Typography.Text>{selectedPlace?.location.lng || ''}</Typography.Text>
-    ),
-  },
-  {
-    key: '3',
     header: 'Latitude',
-    content: (selectedPlace: IPlaceResultAfterExtract | null) => (
-      <Typography.Text>{selectedPlace?.location.lat || ''}</Typography.Text>
+    content: (selectedLocation: ILocation | null) => (
+      <Typography.Text>{selectedLocation?.lat || ''}</Typography.Text>
     ),
   },
 ];
 
+interface CardLocationPreviewProps {
+  onLocationSelected: ILocation | null;
+}
+
 export const CardLocationPreview: FC<CardLocationPreviewProps> = ({
-  onPlaceSelected,
+  onLocationSelected,
 }) => {
-  const [selectedPlace, setSelectedPlace] =
-    useState<IPlaceResultAfterExtract | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
+    null
+  );
 
   useEffect(() => {
-    setSelectedPlace(onPlaceSelected);
-  }, [onPlaceSelected]);
+    setSelectedLocation(onLocationSelected);
+  }, [selectedLocation]);
 
   return (
     <div>
@@ -51,7 +52,7 @@ export const CardLocationPreview: FC<CardLocationPreviewProps> = ({
             key={panel.key}
             className="card-location-preview-panel"
           >
-            {panel.content(selectedPlace)}
+            {panel.content(selectedLocation)}
           </Panel>
         ))}
       </Collapse>
