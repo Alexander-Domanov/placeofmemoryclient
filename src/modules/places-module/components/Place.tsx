@@ -78,6 +78,7 @@ export const PlacePage: FC = () => {
         nameCemetery: place.nameCemetery,
         shortDescription: place.shortDescription,
         description: place.description,
+        slug: place.slug,
       });
       setSelectedLocation(place.location);
       setSelectedFiles(place.photos);
