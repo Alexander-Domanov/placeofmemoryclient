@@ -19,3 +19,4 @@ export * from './users/user.type';
 export * from './users/get-users-response.type';
 export * from './users/avatar.type';
 export * from './users/user-update.type';
+export * from './language/language.type';
