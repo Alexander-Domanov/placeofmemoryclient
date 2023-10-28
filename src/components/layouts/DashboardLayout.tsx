@@ -10,9 +10,11 @@ import { FaNewspaper } from 'react-icons/fa6';
 import { routes } from '@/common/routing/routes';
 import { DashboardModals } from '@/components';
 
+const { Header, Content, Sider } = Layout;
+
 type MenuItem = Required<MenuProps>['items'][number];
 
-const siderStyle: React.CSSProperties = {
+const sliderStyle: React.CSSProperties = {
   minHeight: '100vh',
   backgroundColor: '#fff',
 };
@@ -52,21 +54,34 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       icon: <FaNewspaper />,
     },
   ];
-
+  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
   return (
     <>
       <Layout>
-        <Layout.Sider width={200} style={siderStyle}>
+        <Header style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="demo-logo" />
           <Menu
-            mode="inline"
-            style={{ height: '100%' }}
-            items={items}
-            selectedKeys={[router.asPath]}
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={['2']}
+            items={items1}
           />
-        </Layout.Sider>
-
+        </Header>
         <Layout>
-          <Layout.Content style={contentStyle}>{children}</Layout.Content>
+          <Sider width={200} style={sliderStyle}>
+            <Menu
+              mode="inline"
+              style={{ height: '100%' }}
+              items={items}
+              selectedKeys={[router.asPath]}
+            />
+          </Sider>
+          <Layout style={{ padding: '0 24px 24px' }}>
+            <Content style={contentStyle}>{children}</Content>
+          </Layout>
         </Layout>
       </Layout>
 
