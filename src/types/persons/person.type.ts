@@ -9,6 +9,7 @@ export interface IPerson extends ILocation {
   birthDate: string;
   deathDate: string;
   description: string;
+  slug: string;
   photos: IGalleryFile[];
   createdAt: string;
 }

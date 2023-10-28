@@ -39,6 +39,7 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
     useState<google.maps.places.Autocomplete | null>(null);
   const [markerVisible, setMarkerVisible] = useState(false);
   const [allowMapClick, setAllowMapClick] = useState(true);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     if (map && markerPosition) {
@@ -87,6 +88,7 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
       setCenter(position);
       setMarkerVisible(true);
       onDefineLocation(position);
+      setInputValue(place.formatted_address || '');
     } else {
       message.error('Please enter text');
     }
@@ -120,12 +122,15 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
         <Input
           placeholder="Search location…"
           allowClear
+          title={inputValue}
           style={{
             width: 400,
             boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
             textOverflow: `ellipses`,
             marginBottom: '16px',
           }}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </Autocomplete>
       <GoogleMap

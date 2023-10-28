@@ -107,6 +107,12 @@ export const PlacePage: FC = () => {
         description: 'Please, upload at least one image',
         placement: 'bottomLeft',
       });
+    } else if (newPlace.location === null || newPlace.location === undefined) {
+      notification.error({
+        message: 'Location is empty',
+        description: 'Please, select location',
+        placement: 'bottomLeft',
+      });
     } else {
       updatePlaceById(
         { id: placeId, place: newPlace },

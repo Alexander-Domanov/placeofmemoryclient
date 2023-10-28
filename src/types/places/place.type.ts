@@ -11,6 +11,7 @@ export interface IPlace extends IBaseLocation, IBaseDateType, IBaseOwnerInfo {
   nameCemetery: string;
   shortDescription: string;
   description: string;
+  slug: string;
   photos: IGalleryFile[];
   personsLocation: IGalleryFile[];
 }
