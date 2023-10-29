@@ -56,6 +56,13 @@ const PlaceForm: FC<PlaceFormProps> = ({ form, onFinish }) => {
       >
         <Input.TextArea showCount maxLength={4000} autoSize={{ minRows: 17 }} />
       </Form.Item>
+      <Form.Item
+        name={['slug']}
+        label="Slug"
+        rules={[{ required: true, whitespace: true }]}
+      >
+        <Input placeholder="This field is auto generated" allowClear />
+      </Form.Item>
     </Form>
   );
 };

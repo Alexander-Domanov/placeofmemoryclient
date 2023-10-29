@@ -3,6 +3,7 @@ import React, { PropsWithChildren, ReactElement } from 'react';
 import { Layout, Menu } from 'antd';
 import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
 import { FaPlaceOfWorship, FaUsers } from 'react-icons/fa';
+import { GoPeople } from 'react-icons/go';
 import Link from 'next/link';
 import type { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
@@ -45,6 +46,11 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       key: routes.dashboard.places.index,
       label: <Link href={routes.dashboard.places.index}>Places</Link>,
       icon: <FaPlaceOfWorship />,
+    },
+    {
+      key: routes.dashboard.persons.index,
+      label: <Link href={routes.dashboard.persons.index}>Persons</Link>,
+      icon: <GoPeople />,
     },
     {
       key: routes.dashboard.articles.index,

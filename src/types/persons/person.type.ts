@@ -1,14 +1,20 @@
-import { ILocation } from '@/types/locations/location.type';
-import { IGalleryFile } from '@/types/images/gallery-file.type';
+import { IBaseLocation } from '@/types/locations/location.type';
+import { IBaseOwnerInfo } from '@/types/common/owner-info.type';
+import { IBaseDateType } from '@/types';
+import { IBasePhotos } from '@/types/common/base-photos.type';
 
-export interface IPerson extends ILocation {
+export interface IPerson
+  extends IBaseLocation,
+    IBaseDateType,
+    IBaseOwnerInfo,
+    IBasePhotos {
   status: string;
   id: number;
-  ownerId: number;
-  fillName: string;
+  firstName: string;
+  lastName: string;
+  patronymic: string;
+  biography: string;
   birthDate: string;
   deathDate: string;
-  description: string;
-  photos: IGalleryFile[];
-  createdAt: string;
+  slug: string;
 }

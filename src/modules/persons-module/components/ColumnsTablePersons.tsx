@@ -2,14 +2,14 @@ import { ColumnsType } from 'antd/es/table';
 import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
-import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
-import { IArticle } from '@/types/articles/article.type';
+import { IPerson } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
-import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticle';
-import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';
+import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
+import UpdatePersonStatusComponent from '@/modules/persons-module/components/UpdatePersonStatus';
+import DeletePersonComponent from '@/modules/persons-module/components/DeletePerson';
 
-export const columnsTableArticles: ColumnsType<IArticle> = [
+export const columnsTablePersons: ColumnsType<IPerson> = [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -23,9 +23,9 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Owner',
     dataIndex: 'owner',
     key: 'ownerId',
+    align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
-    align: 'center',
     render: (text, record) => (
       <Tooltip
         title={`name: ${record.owner.userName}`}
@@ -36,15 +36,18 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
       </Tooltip>
     ),
   },
+
   {
-    title: 'Title',
-    dataIndex: 'title',
-    key: 'title',
+    title: 'First Name',
+    dataIndex: 'firstName',
+    key: 'firstName',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link
           href={{
-            pathname: routes.dashboard.articles.article('[id]'),
+            pathname: routes.dashboard.persons.person('[id]'),
             query: { id: record.id },
           }}
         >
@@ -57,6 +60,27 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
         </Link>
       </Tooltip>
     ),
+  },
+  {
+    title: 'Last Name',
+    dataIndex: 'lastName',
+    key: 'lastName',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: 'Birth Date',
+    dataIndex: 'birthDate',
+    key: 'birthDate',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: 'Death Date',
+    dataIndex: 'deathDate',
+    key: 'deathDate',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
   },
   {
     title: 'Created At',
@@ -84,7 +108,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     dataIndex: 'photos',
     key: 'photos',
     align: 'center',
-    render: (text, record: IArticle) => (
+    render: (text, record: IPerson) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
           <Tooltip
@@ -93,7 +117,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
             color="#1087f6"
             key={index}
           >
-            <Typography.Text key={index}>
+            <Typography.Text>
               {RenderImage(photo.versions.huge.url, 30, true)}
             </Typography.Text>
           </Tooltip>
@@ -108,8 +132,8 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
-        <UpdateArticleStatusComponent article={record} />
-        <DeleteArticleComponent article={record} />
+        <UpdatePersonStatusComponent person={record} />
+        <DeletePersonComponent person={record} />
       </Row>
     ),
   },

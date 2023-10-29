@@ -44,11 +44,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Tooltip
-        title={`${record.shortDescription}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
+      <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link
           href={{
             pathname: routes.dashboard.places.place('[id]'),

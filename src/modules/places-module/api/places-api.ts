@@ -2,6 +2,7 @@ import { authInstance } from '@/services';
 import { IGetPlacesResponse } from '@/types/places/get-places-response.type';
 import { IPlace } from '@/types';
 import { ICreatePlace } from '@/types/places/create-place.type';
+import { IGetTitlePlacesResponse } from '@/types/places/get-title-places-response.type';
 
 export const getPlaces = (
   page: number,
@@ -18,6 +19,20 @@ export const getPlaces = (
       name,
       sortBy: sorting.field,
       sortDirection: sorting.order,
+    },
+  });
+};
+
+export const getTitlePlaces = (
+  page: number,
+  pageSize: number,
+  name: string
+) => {
+  return authInstance.get<IGetTitlePlacesResponse>('places/country/titles', {
+    params: {
+      pageNumber: page,
+      pageSize,
+      name,
     },
   });
 };

@@ -7,6 +7,7 @@ import {
   Col,
   Flex,
   Form,
+  message,
   notification,
   Row,
   Space,
@@ -21,15 +22,16 @@ import Link from 'next/link';
 import { SaveOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
+import { ICreatePerson, IGalleryFile, ILocation, IPerson } from '@/types';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
-import { usePlace } from '@/modules/places-module/hooks/usePlace';
-import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
-import PlaceForm from '@/modules/places-module/components/PlaceForm';
-import { IResponseError } from '@/types/response-error-message.type';
 import LocationPreview from '@/modules/maps/components/CardLocationPreview';
-import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
+import { usePerson } from '@/modules/persons-module/hooks/usePerson';
+import { useUpdatePerson } from '@/modules/persons-module/hooks/useUpdatePerson';
+import PersonForm from '@/modules/persons-module/components/PersonForm';
+import DeletePersonModal from '@/modules/persons-module/components/DeletePersonModal';
+import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
+import { IResponseError } from '@/types/response-error-message.type';
 
 function breadcrumbs(
   id: string | string[] | undefined
@@ -40,83 +42,92 @@ function breadcrumbs(
       title: <Link href={routes.dashboard.index}>Dashboard</Link>,
     },
     {
-      key: routes.dashboard.places.index,
-      title: <Link href={routes.dashboard.places.index}>Places</Link>,
+      key: routes.dashboard.persons.index,
+      title: <Link href={routes.dashboard.persons.index}>Persons</Link>,
     },
     {
-      key: routes.dashboard.places.place(id as string),
+      key: routes.dashboard.persons.person(id as string),
       title: `${id}`,
     },
   ];
 }
 
-export const PlacePage: FC = () => {
+export const PersonPage: FC = () => {
   const router = useRouter();
 
-  const { placeId } = router.query;
+  const { personId } = router.query;
 
   const [form] = Form.useForm();
 
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
-  const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
+  const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
   const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
+  const [selectedPlace, setSelectedPlace] = useState<{
+    value: string;
+    id: number;
+  } | null>(null);
 
-  const { place } = usePlace(placeId);
+  const { person } = usePerson(personId);
 
-  const { updatePlaceById } = useUpdatePlace();
+  const { updatePersonMutation } = useUpdatePerson();
 
   useEffect(() => {
-    if (place) {
-      setSelectedPlace(place);
+    if (person) {
+      message.success(`Person ${new Date(person.birthDate)} loaded`);
+
+      setSelectedPerson(person);
       form.setFieldsValue({
-        country: place.country,
-        city: place.city,
-        nameCemetery: place.nameCemetery,
-        shortDescription: place.shortDescription,
-        description: place.description,
-        slug: place.slug,
+        name: person.firstName,
+        lastName: person.lastName,
+        patronymic: person.patronymic,
+        biography: person.biography,
+        // birthDate: person.birthDate.split('T')[0],
+        // deathDate: person.deathDate.split('T')[0],
+        slug: person.slug,
       });
-      setSelectedLocation(place.location);
-      setSelectedFiles(place.photos);
+      setSelectedLocation(person.location);
+      setSelectedFiles(person.photos);
     }
-  }, [place]);
+  }, [person]);
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
-      form.setFieldsValue({
-        country: selectedPlaceFromMap.country,
-        city: selectedPlaceFromMap.city,
-        nameCemetery: selectedPlaceFromMap.formattedAddress,
-      });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
 
-  const onFinish = (values: ICreatePlace) => {
-    const newPlace: ICreatePlace = {
+  const onFinish = (values: ICreatePerson) => {
+    const newPerson: ICreatePerson = {
       ...values,
-      location: selectedLocation as ILocation,
+      // location: selectedLocation as ILocation,
+      location: {
+        place: selectedPlace?.value as string,
+        ...selectedLocation,
+      } as ILocation,
       ids: selectedFiles.map((file) => file.uploadId),
     };
-    if (newPlace.ids.length === 0) {
+    if (newPerson.ids.length === 0) {
       notification.error({
         message: 'Gallery is empty',
         description: 'Please, upload at least one image',
         placement: 'bottomLeft',
       });
-    } else if (newPlace.location === null || newPlace.location === undefined) {
+    } else if (
+      newPerson.location === null ||
+      newPerson.location === undefined
+    ) {
       notification.error({
         message: 'Location is empty',
         description: 'Please, select location',
         placement: 'bottomLeft',
       });
     } else {
-      updatePlaceById(
-        { id: placeId, place: newPlace },
+      updatePersonMutation(
+        { id: personId, person: newPerson },
         {
           onSuccess: () => {
             notification.success({
@@ -142,31 +153,36 @@ export const PlacePage: FC = () => {
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(placeId)} />
+        <Breadcrumb items={breadcrumbs(personId)} />
       </div>
       <Row gutter={[16, 16]}>
-        <Col span={16} style={{ width: '100%' }}>
+        <Col span={12} style={{ width: '100%', minWidth: 300 }}>
           <Card>
-            <PlaceForm form={form} onFinish={onFinish} />
+            <PersonForm form={form} onFinish={onFinish} />
           </Card>
         </Col>
-        <Col span={8} style={{ width: '100%' }}>
+        <Col span={8} style={{ width: '100%', minWidth: 300 }}>
+          <Card style={{ width: '100%', marginBottom: '16px' }}>
+            <Row justify="start" style={{ width: '100%' }}>
+              <TitlePlaces onFinishValue={setSelectedPlace} />
+            </Row>
+          </Card>
           <Card style={{ width: '100%', marginBottom: '16px' }}>
             <Alert
-              message={`Status: ${selectedPlace?.status}`}
+              message={`Status: ${selectedPerson?.status}`}
               description={
                 <div>
                   <div>
                     <Typography.Text>{`Persons: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.personsLocation.length}`}</Typography.Text>
+                    <Typography.Text>{`${selectedPerson?.location.place}`}</Typography.Text>
                   </div>
                   <div>
                     <Typography.Text>{`Created at: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.createdAt}`}</Typography.Text>
+                    <Typography.Text>{`${selectedPerson?.createdAt}`}</Typography.Text>
                   </div>
                   <div>
                     <Typography.Text>{`Updated at: `}</Typography.Text>
-                    <Typography.Text>{`${selectedPlace?.updatedAt}`}</Typography.Text>
+                    <Typography.Text>{`${selectedPerson?.updatedAt}`}</Typography.Text>
                   </div>
                 </div>
               }
@@ -182,7 +198,7 @@ export const PlacePage: FC = () => {
               >
                 Save
               </Button>
-              <DeletePlaceModal place={selectedPlace} showButton />
+              <DeletePersonModal person={selectedPerson} showButton />
             </Space>
           </Card>
           <Card style={{ width: '100%', marginBottom: '16px' }}>
