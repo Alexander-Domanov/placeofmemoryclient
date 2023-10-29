@@ -13,6 +13,9 @@ export const useArticle = (id: string) => {
     ...noRefetch,
     select: (response) => response.data,
     enabled: !!id,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   return { article, isLoading, isSuccess };

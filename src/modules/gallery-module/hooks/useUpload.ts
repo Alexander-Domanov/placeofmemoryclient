@@ -4,7 +4,7 @@ import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGa
 import { IGalleryFile } from '@/types';
 import { IMAGE_FORMATS } from '@/common/constants';
 
-export const useDraggerProps = (
+export const useUpload = (
   setFileList: (fileList: UploadFile[]) => void,
   multiple = false,
   maxCount = 1
@@ -20,7 +20,7 @@ export const useDraggerProps = (
     // refetch();
   };
 
-  const draggerProps: UploadProps = {
+  const uploadProps: UploadProps = {
     name: 'file',
     listType: 'picture',
     multiple,
@@ -59,7 +59,7 @@ export const useDraggerProps = (
       }
     },
     async onRemove(file) {
-      console.log('remove', file);
+      // console.log('remove', file);
 
       if (file.status !== 'error') {
         const response = file.response as IGalleryFile;
@@ -77,5 +77,5 @@ export const useDraggerProps = (
     maxCount,
   };
 
-  return { draggerProps };
+  return { uploadProps };
 };

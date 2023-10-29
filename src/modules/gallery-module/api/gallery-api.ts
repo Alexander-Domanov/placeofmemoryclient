@@ -21,11 +21,5 @@ export const updateGalleryFile = (id: string | null, form: any) => {
 };
 
 export const deleteGalleryFile = async (id: string | undefined) => {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(1337);
-    }, 2000);
-  });
-
   return authInstance.delete(`gallery/${id}`);
 };

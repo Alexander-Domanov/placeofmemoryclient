@@ -1,6 +1,7 @@
 import { authInstance } from '@/services';
-import { IArticle, IArticleCreate } from '@/types/articles/article.type';
+import { IArticle } from '@/types/articles/article.type';
 import { IGetArticlesResponse } from '@/types/articles/get-articles-response.type';
+import { IArticleCreate } from '@/types/articles/create-articles.type';
 
 export const createArticle = (form: IArticleCreate) => {
   return authInstance.post<IArticle>('articles', form);
@@ -26,13 +27,11 @@ export const getArticles = (
 };
 
 export const getArticle = async (id: string) => {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(1337);
-    }, 2000);
-  });
-
   return authInstance.get<IArticle>(`articles/${id}`);
+};
+
+export const updateArticle = (id: string, form: IArticleCreate) => {
+  return authInstance.put<IArticle>(`articles/${id}`, form);
 };
 
 export const updateArticleStatus = (id: number | null, status: string) => {

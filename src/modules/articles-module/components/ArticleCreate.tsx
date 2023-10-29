@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import {
   Breadcrumb,
   Button,
@@ -7,11 +7,8 @@ import {
   Flex,
   Form,
   Input,
-  message,
-  notification,
   Row,
   Upload,
-  UploadProps,
 } from 'antd';
 import {
   BreadcrumbItemType,
@@ -20,17 +17,13 @@ import {
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { routes } from '@/common/routing/routes';
 import 'react-quill/dist/quill.snow.css';
-import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
-import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
-import { useArticle } from '@/modules/articles-module/hooks/useArticle';
-import { useDraggerProps } from '@/modules/gallery-module/hooks/useDraggerProps';
-import { TextEditor } from '@/modules/articles-module/components/TextEditor';
+import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -76,7 +69,7 @@ export const ArticleCreate: FC = () => {
   const content = Form.useWatch('content', form);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { draggerProps } = useDraggerProps(setFileList);
+  const { uploadProps } = useUpload(setFileList);
 
   const normFile = (e: any) => {
     console.log('Upload event:', e);
@@ -85,33 +78,6 @@ export const ArticleCreate: FC = () => {
     }
     return e?.fileList;
   };
-
-  // const [fileList, setFileList] = useState<UploadFile[]>([
-  //   {
-  //     uid: '-1',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-2',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-3',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-4',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  // ]);
 
   const onSubmit = (values: ArticleForm) => {
     console.log(values);
@@ -125,9 +91,9 @@ export const ArticleCreate: FC = () => {
 
     mutate(form, {
       onSuccess: (data) => {
-        // if (data.data.id) {
-        //   router.push(routes.dashboard.articles.article(data.data.id));
-        // }
+        if (data.data.id) {
+          router.push(routes.dashboard.articles.article(data.data.id));
+        }
       },
     });
   };
@@ -205,7 +171,7 @@ export const ArticleCreate: FC = () => {
                 rules={[{ required: true }]}
                 shouldUpdate
               >
-                <Upload {...draggerProps}>
+                <Upload {...uploadProps}>
                   <Button
                     icon={<UploadOutlined />}
                     disabled={fileList.length > 0}
@@ -216,8 +182,8 @@ export const ArticleCreate: FC = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Submit
+                <Button type="primary" htmlType="submit" loading={isCreating}>
+                  Save
                 </Button>
               </Form.Item>
             </Form>

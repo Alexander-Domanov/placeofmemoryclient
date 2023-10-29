@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   BreadcrumbItemType,
@@ -13,18 +13,28 @@ import {
   Flex,
   Form,
   Input,
+  List,
+  notification,
   Row,
+  Select,
+  Space,
   Spin,
+  Typography,
   Upload,
 } from 'antd';
 import dynamic from 'next/dynamic';
-import { UploadOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  SaveOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import { UploadFile } from 'antd/es/upload/interface';
 import { useArticle } from '@/modules/articles-module/hooks/useArticle';
 import { routes } from '@/common/routing/routes';
-import { ChooseGalleryFiles } from '@/modules/gallery-module';
-import { IGalleryFile } from '@/types';
-import { useDraggerProps } from '@/modules/gallery-module/hooks/useDraggerProps';
+import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
+import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
+
+const { Option } = Select;
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -42,26 +52,27 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
 ];
 
 export const ArticleEdit: FC = () => {
-  const router = useRouter();
-  const id = router.query.id as string;
-
-  const { article, isLoading, isSuccess } = useArticle(id);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { draggerProps } = useDraggerProps(setFileList);
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
   );
+
+  const router = useRouter();
+  const id = router.query.id as string;
+
+  const { article, isLoading, isSuccess } = useArticle(id);
+  const { mutate, isUpdating } = useUpdateArticle(id);
+
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { uploadProps } = useUpload(setFileList);
+
   const [form] = Form.useForm();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  // const [content, setContent] = useState('');
-  const [photos, setPhotos] = useState<IGalleryFile[]>([]);
+  const [status, setStatus] = useState('DRAFT');
 
   const content = Form.useWatch('content', form);
 
   const normFile = (e: any) => {
-    console.log('Upload event:', e);
+    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -70,10 +81,8 @@ export const ArticleEdit: FC = () => {
 
   useEffect(() => {
     if (article) {
-      console.log('use effect', article);
-
-      // setTitle(article.title);
       form.setFieldValue('title', article.title);
+      form.setFieldValue('slug', article.slug);
       form.setFieldValue('description', article.description);
       form.setFieldValue('content', article.content);
       form.setFieldValue(
@@ -86,41 +95,29 @@ export const ArticleEdit: FC = () => {
           response: { ...f },
         }))
       );
-      // form.setFieldValue('photo', [
-      //   {
-      //     uid: '-1',
-      //     name: 'image.png',
-      //     status: 'done',
-      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      //   },
-      //   {
-      //     uid: '-2',
-      //     name: 'image.png',
-      //     status: 'done',
-      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      //   },
-      //   {
-      //     uid: '-3',
-      //     name: 'image.png',
-      //     status: 'done',
-      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      //   },
-      //   {
-      //     uid: '-4',
-      //     name: 'image.png',
-      //     status: 'done',
-      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      //   },
-      // ]);
-      // setContent(article.content);
-      // setDescription(article.description);
-      // setContent(article.content);
-      // setPhotos(article.photos);
+
+      setStatus(article.status);
     }
   }, [article]);
 
   const onSubmit = (values: any) => {
-    console.log(values);
+    const data = {
+      title: values.title,
+      slug: values.slug,
+      description: values.description,
+      content: values.content,
+      ids: values.photo.map((f: any) => f.response.uploadId),
+    };
+
+    mutate(data, {
+      onSuccess: () => {
+        notification.success({
+          message: 'Article updated successfully',
+          // description: 'You will be redirected to the place page',
+          placement: 'bottomLeft',
+        });
+      },
+    });
   };
 
   return (
@@ -129,19 +126,25 @@ export const ArticleEdit: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col span={18}>
-          <Spin spinning={isLoading}>
-            <Card>
-              <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
-
-              <Form layout="vertical" form={form} onFinish={onSubmit}>
+      <Spin spinning={isLoading}>
+        <Form layout="vertical" form={form} onFinish={onSubmit}>
+          <Row gutter={[16, 16]}>
+            <Col span={18}>
+              <Card>
                 <Form.Item
                   label="Title"
                   name="title"
                   rules={[{ required: true }]}
                 >
                   <Input placeholder="Title" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Slug"
+                  name="slug"
+                  rules={[{ required: true }]}
+                >
+                  <Input placeholder="Slug" />
                 </Form.Item>
 
                 <Form.Item
@@ -160,43 +163,83 @@ export const ArticleEdit: FC = () => {
                   <ReactQuill
                     theme="snow"
                     value={content}
-                    onChange={(value) => {
-                      form.setFieldValue('content', value);
-                      // form.
-                    }}
+                    onChange={(value) => form.setFieldValue('content', value)}
                   />
                 </Form.Item>
+              </Card>
+            </Col>
 
-                <Form.Item
-                  label="Photo"
-                  name="photo"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  rules={[{ required: true }]}
-                  shouldUpdate
-                >
-                  <Upload {...draggerProps}>
+            <Col span={6}>
+              <Flex vertical gap={16}>
+                <Card>
+                  <Form.Item label="Status">
+                    <Select value={status} onChange={setStatus}>
+                      <Option value="DRAFT">Draft</Option>
+                      <Option value="PENDING_REVIEW">Pending Review</Option>
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item>
+                    <List split={false}>
+                      <List.Item>
+                        <Typography.Text>
+                          Created At: {article?.createdAt}
+                        </Typography.Text>
+                      </List.Item>
+
+                      <List.Item>
+                        <Typography.Text>
+                          Updated At: {article?.updatedAt}
+                        </Typography.Text>
+                      </List.Item>
+                    </List>
+                  </Form.Item>
+
+                  <Space size="middle">
                     <Button
-                      icon={<UploadOutlined />}
-                      disabled={fileList.length > 0}
+                      type="primary"
+                      htmlType="submit"
+                      title="Save"
+                      icon={<SaveOutlined />}
+                      loading={isUpdating}
                     >
-                      Click to upload
+                      Save
                     </Button>
-                  </Upload>
-                </Form.Item>
 
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form>
-            </Card>
-          </Spin>
-        </Col>
+                    <Button
+                      type="primary"
+                      title="Delete"
+                      danger
+                      icon={<DeleteOutlined />}
+                    >
+                      Delete
+                    </Button>
+                  </Space>
+                </Card>
 
-        <Col span={6}>
-          <Card />
-        </Col>
-      </Row>
+                <Card>
+                  <Form.Item
+                    label="Photo"
+                    name="photo"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    rules={[{ required: true }]}
+                  >
+                    <Upload {...uploadProps}>
+                      <Button
+                        icon={<UploadOutlined />}
+                        disabled={fileList.length > 0}
+                      >
+                        Click to upload
+                      </Button>
+                    </Upload>
+                  </Form.Item>
+                </Card>
+              </Flex>
+            </Col>
+          </Row>
+        </Form>
+      </Spin>
     </Flex>
   );
 };
