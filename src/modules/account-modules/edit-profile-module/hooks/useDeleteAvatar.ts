@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar } from '@/modules/account-modules/edit-profile-module';
 
 export const useDeleteAvatar = () => {

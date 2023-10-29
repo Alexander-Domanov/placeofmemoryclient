@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ILanguage, ILanguageID } from '@/types';
+import { ILanguage } from '@/types';
 import { languageApi } from '@/services';
 
 export const useCreateLanguage = () => {

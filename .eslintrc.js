@@ -48,6 +48,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 0,
     'react/no-unused-prop-types': 0,
     'react/no-danger': 0,
+    '@typescript-eslint/return-await': 0,
     'prettier/prettier': [
       'error',
       {

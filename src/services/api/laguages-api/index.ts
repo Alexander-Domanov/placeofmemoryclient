@@ -42,7 +42,7 @@ export const languageApi = {
     return res.data;
   },
   async deleteLanguage({ languageID }: ILanguageID) {
-    const res = await authInstance.delete(`languages/${languageID}`);
+    return await authInstance.delete(`languages/${languageID}`);
   },
 
   async getListLanguages() {
