@@ -4,7 +4,7 @@ import { useDebounce } from 'usehooks-ts';
 import { useTitlePlaces } from '@/modules/places-module/hooks/useTtitlePlaces';
 
 interface TitlePlacesFormProps {
-  onFinishValue: (id: number) => void;
+  onFinishValue: (placeDetail: { value: string; id: number }) => void;
 }
 export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
   const [pagination, setPagination] = useState({
@@ -36,7 +36,7 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
     );
 
     if (selectedOption) {
-      return selectedOption.id;
+      return selectedOption;
     }
     return null;
   };
@@ -49,9 +49,9 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
       options={options}
       allowClear
       onSelect={(value) => {
-        const id = findIdFromOption(value);
-        if (id !== null) {
-          onFinishValue(id);
+        const placeDetail = findIdFromOption(value);
+        if (placeDetail !== null) {
+          onFinishValue(placeDetail);
         }
       }}
     />
