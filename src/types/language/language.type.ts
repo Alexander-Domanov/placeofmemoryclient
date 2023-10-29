@@ -1,3 +1,9 @@
+interface ILanguageSwitcher {
+  lang: string;
+}
+interface ILanguageID {
+  languageID: string;
+}
 interface ILanguage {
   name: string;
   code: string;
@@ -19,4 +25,10 @@ interface ILanguageListItem extends ILanguage {
   updatedAt: string;
 }
 
-export type { ILanguage, ILanguageListItem, ILanguageList };
+export type {
+  ILanguage,
+  ILanguageListItem,
+  ILanguageList,
+  ILanguageID,
+  ILanguageSwitcher,
+};
