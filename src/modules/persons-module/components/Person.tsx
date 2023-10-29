@@ -127,7 +127,7 @@ export const PersonPage: FC = () => {
       });
     } else {
       updatePersonMutation(
-        { id: person, person: newPerson },
+        { id: personId, person: newPerson },
         {
           onSuccess: () => {
             notification.success({
