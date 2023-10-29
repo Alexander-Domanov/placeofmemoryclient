@@ -15,12 +15,16 @@ import {
   Input,
   Row,
   Spin,
+  Upload,
 } from 'antd';
 import dynamic from 'next/dynamic';
+import { UploadOutlined } from '@ant-design/icons';
+import { UploadFile } from 'antd/es/upload/interface';
 import { useArticle } from '@/modules/articles-module/hooks/useArticle';
 import { routes } from '@/common/routing/routes';
 import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { IGalleryFile } from '@/types';
+import { useDraggerProps } from '@/modules/gallery-module/hooks/useDraggerProps';
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -42,7 +46,8 @@ export const ArticleEdit: FC = () => {
   const id = router.query.id as string;
 
   const { article, isLoading, isSuccess } = useArticle(id);
-
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { draggerProps } = useDraggerProps(setFileList);
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
@@ -55,6 +60,14 @@ export const ArticleEdit: FC = () => {
 
   const content = Form.useWatch('content', form);
 
+  const normFile = (e: any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
   useEffect(() => {
     if (article) {
       console.log('use effect', article);
@@ -63,6 +76,42 @@ export const ArticleEdit: FC = () => {
       form.setFieldValue('title', article.title);
       form.setFieldValue('description', article.description);
       form.setFieldValue('content', article.content);
+      form.setFieldValue(
+        'photo',
+        article.photos.map((f) => ({
+          uid: f.uploadId,
+          name: 'random.name',
+          status: 'done',
+          url: f.versions.huge.url,
+          response: { ...f },
+        }))
+      );
+      // form.setFieldValue('photo', [
+      //   {
+      //     uid: '-1',
+      //     name: 'image.png',
+      //     status: 'done',
+      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      //   },
+      //   {
+      //     uid: '-2',
+      //     name: 'image.png',
+      //     status: 'done',
+      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      //   },
+      //   {
+      //     uid: '-3',
+      //     name: 'image.png',
+      //     status: 'done',
+      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      //   },
+      //   {
+      //     uid: '-4',
+      //     name: 'image.png',
+      //     status: 'done',
+      //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      //   },
+      // ]);
       // setContent(article.content);
       // setDescription(article.description);
       // setContent(article.content);
@@ -71,7 +120,6 @@ export const ArticleEdit: FC = () => {
   }, [article]);
 
   const onSubmit = (values: any) => {
-    console.log('submit');
     console.log(values);
   };
 
@@ -119,11 +167,22 @@ export const ArticleEdit: FC = () => {
                   />
                 </Form.Item>
 
-                <Form.Item label="Photos">
-                  <ChooseGalleryFiles
-                    onFilesSelected={setPhotos}
-                    maxFileLimit={10}
-                  />
+                <Form.Item
+                  label="Photo"
+                  name="photo"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
+                  shouldUpdate
+                >
+                  <Upload {...draggerProps}>
+                    <Button
+                      icon={<UploadOutlined />}
+                      disabled={fileList.length > 0}
+                    >
+                      Click to upload
+                    </Button>
+                  </Upload>
                 </Form.Item>
 
                 <Button type="primary" htmlType="submit">
