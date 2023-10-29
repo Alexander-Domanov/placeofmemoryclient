@@ -1,5 +1,4 @@
 import { Select, Space, Spin } from 'antd';
-import React from 'react';
 import { useGetListLanguages, useLangSwitcher } from '@/services';
 
 export const DashboardSelectLanguage = () => {
@@ -27,7 +26,7 @@ export const DashboardSelectLanguage = () => {
 
   return (
     <>
-      <Spin spinning={isFetchingDataListLanguagesLanguages} delay={500}>
+      {!isFetchingDataListLanguagesLanguages ? (
         <Space wrap>
           <Select
             onChange={handleChange}
@@ -37,7 +36,9 @@ export const DashboardSelectLanguage = () => {
             loading={isFetchingDataListLanguagesLanguages}
           />
         </Space>
-      </Spin>
+      ) : (
+        <Spin className="w-[120px]" />
+      )}
     </>
   );
 };
