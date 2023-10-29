@@ -45,15 +45,16 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
     <AutoComplete
       style={{ width: '100%' }}
       onSearch={handleSearch}
+      status="warning"
       placeholder="Search place by name"
       options={options}
-      allowClear
       onSelect={(value) => {
         const placeDetail = findIdFromOption(value);
         if (placeDetail !== null) {
           onFinishValue(placeDetail);
         }
       }}
+      allowClear
     />
   );
 };
