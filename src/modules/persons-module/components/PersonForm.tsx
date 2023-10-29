@@ -80,16 +80,16 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
         >
           <DatePicker placeholder="Select Birth Date" />
         </Form.Item>
-        <span
-          style={{
-            display: 'inline-block',
-            width: '24px',
-            lineHeight: '32px',
-            textAlign: 'center',
-          }}
-        >
-          -
-        </span>
+        {/* <span */}
+        {/*  style={{ */}
+        {/*    display: 'inline-block', */}
+        {/*    width: '24px', */}
+        {/*    lineHeight: '32px', */}
+        {/*    textAlign: 'center', */}
+        {/*  }} */}
+        {/* > */}
+        {/*  -*/}
+        {/* </span> */}
         <Form.Item
           name={['deathDate']}
           style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
@@ -103,7 +103,7 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
         label="Biography"
         rules={[{ required: true }]}
       >
-        <Input.TextArea showCount maxLength={1000} autoSize={{ minRows: 10 }} />
+        <Input.TextArea showCount maxLength={1000} autoSize={{ minRows: 9 }} />
       </Form.Item>
       <Form.Item
         name={['slug']}
