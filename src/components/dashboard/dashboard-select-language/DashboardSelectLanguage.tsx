@@ -1,7 +1,6 @@
 import { Select, Space, Spin } from 'antd';
 import React from 'react';
 import { useGetListLanguages, useLangSwitcher } from '@/services';
-import { AddLanguageForm } from '@/modules/language-module';
 
 export const DashboardSelectLanguage = () => {
   const {
