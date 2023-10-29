@@ -7,8 +7,10 @@ import Link from 'next/link';
 import type { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
 import { FaNewspaper } from 'react-icons/fa6';
+import { BsPencilSquare } from 'react-icons/bs';
 import { routes } from '@/common/routing/routes';
-import { DashboardModals } from '@/components';
+import { DashboardModals, DashboardSelectLanguage } from '@/components';
+import { LinkComponent } from '@/ui';
 
 const { Header, Content, Sider } = Layout;
 
@@ -53,20 +55,30 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       label: <Link href={routes.dashboard.articles.index}>Articles</Link>,
       icon: <FaNewspaper />,
     },
+    {
+      key: routes.dashboard.addLanguage.index,
+      label: (
+        <LinkComponent
+          href={routes.dashboard.addLanguage.index}
+          title="Add Language"
+        />
+      ),
+      icon: <BsPencilSquare />,
+    },
   ];
-  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+  const items1: MenuProps['items'] = ['1'].map((key) => ({
     key,
-    label: `nav ${key}`,
+    label: <DashboardSelectLanguage />,
   }));
   return (
     <>
       <Layout>
-        <Header style={{ display: 'flex', alignItems: 'center' }}>
+        <Header className="flex justify-end align-middle text-sm">
           <div className="demo-logo" />
           <Menu
-            theme="dark"
+            theme="light"
             mode="horizontal"
-            defaultSelectedKeys={['2']}
+            defaultSelectedKeys={['1']}
             items={items1}
           />
         </Header>

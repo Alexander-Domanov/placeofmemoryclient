@@ -1,21 +1,32 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { message } from 'antd';
+import { AxiosError } from 'axios';
+import { useEffect } from 'react';
+import { query } from 'express';
 import { ILanguage } from '@/types';
 import { languageApi } from '@/services';
 
 export const useCreateLanguage = () => {
+  const client = useQueryClient();
   const {
     isSuccess: isSuccessCreateLanguage,
     isError: isErrorCreateLanguage,
     mutate: mutateCreateLanguage,
+    isLoading: isLoadingCreateLanguage,
+    error: errorCreateLanguage,
   } = useMutation(
-    ['languages-list'],
+    ['languages-create'],
     ({ native, name, order, code }: ILanguage) =>
-      languageApi.createLanguage({ native, name, order, code })
+      languageApi.createLanguage({ native, name, order, code }),
+    {
+      onSuccess: () => client.invalidateQueries(['languages-list']),
+    }
   );
-
   return {
     mutateCreateLanguage,
     isErrorCreateLanguage,
     isSuccessCreateLanguage,
+    isLoadingCreateLanguage,
+    errorCreateLanguage,
   };
 };

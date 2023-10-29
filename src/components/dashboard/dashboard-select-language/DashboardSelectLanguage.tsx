@@ -1,0 +1,44 @@
+import { Select, Space, Spin } from 'antd';
+import React from 'react';
+import { useGetListLanguages, useLangSwitcher } from '@/services';
+import { AddLanguageForm } from '@/modules/language-module';
+
+export const DashboardSelectLanguage = () => {
+  const {
+    dataListLanguages,
+    isSuccessDataListLanguagesLanguages,
+    isErrorDataListLanguagesLanguages,
+    isFetchingDataListLanguagesLanguages,
+  } = useGetListLanguages();
+  const { mutateLangSwitcher, isErrorLangSwitcher, isSuccessLangSwitcher } =
+    useLangSwitcher();
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  const optionsLanguagesList = dataListLanguages?.items.map(
+    (language, index) => ({
+      value: language.name + index,
+      label: language.name,
+    })
+  );
+  const defaultValueLanguage = optionsLanguagesList
+    ? optionsLanguagesList[0].value
+    : 'no language';
+
+  return (
+    <>
+      <Spin spinning={isFetchingDataListLanguagesLanguages} delay={500}>
+        <Space wrap>
+          <Select
+            onChange={handleChange}
+            defaultValue={defaultValueLanguage}
+            style={{ width: 120 }}
+            options={optionsLanguagesList}
+            loading={isFetchingDataListLanguagesLanguages}
+          />
+        </Space>
+      </Spin>
+    </>
+  );
+};
