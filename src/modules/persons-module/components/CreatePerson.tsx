@@ -64,11 +64,6 @@ export const CreatePerson: FC = () => {
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
-      form.setFieldsValue({
-        country: selectedPlaceFromMap.country,
-        city: selectedPlaceFromMap.city,
-        nameCemetery: selectedPlaceFromMap.formattedAddress,
-      });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
@@ -79,7 +74,10 @@ export const CreatePerson: FC = () => {
       birthDate: values.birthDate.format('YYYY-MM-DD'),
       deathDate: values.deathDate.format('YYYY-MM-DD'),
       placeId: selectedPlaceId?.id as number,
-      location: selectedLocation as ILocation,
+      location: {
+        placeId: selectedPlaceId?.value,
+        ...selectedLocation,
+      },
       ids: selectedFiles.map((file) => file.uploadId),
     };
     if (person.ids.length === 0) {
@@ -108,7 +106,7 @@ export const CreatePerson: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
       <Row gutter={[16, 16]}>
-        <Col span={10} style={{ width: '100%' }}>
+        <Col span={12} style={{ width: '100%' }}>
           <Card>
             <PersonForm form={form} onFinish={onFinish} />
           </Card>

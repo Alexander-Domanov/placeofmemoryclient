@@ -9,32 +9,32 @@ interface PersonFormProps {
 }
 
 const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
-  const currentDate = new Date();
-
-  const validateDate = (
-    rule: any,
-    value: any,
-    callback: (error?: string) => void
-  ) => {
-    if (value && value > currentDate) {
-      callback('Date cannot be in the future');
-    } else {
-      callback();
-    }
-  };
-
-  const validateBirthDate = (
-    rule: any,
-    value: any,
-    callback: (error?: string) => void
-  ) => {
-    const deathDate = form.getFieldValue(['deathDate']);
-    if (value && deathDate && value > deathDate) {
-      callback('Birth Date cannot be greater than Death Date');
-    } else {
-      callback();
-    }
-  };
+  // const currentDate = new Date();
+  //
+  // const validateDate = (
+  //   rule: any,
+  //   value: any,
+  //   callback: (error?: string) => void
+  // ) => {
+  //   if (value && value > currentDate) {
+  //     callback('Date cannot be in the future');
+  //   } else {
+  //     callback();
+  //   }
+  // };
+  //
+  // const validateBirthDate = (
+  //   rule: any,
+  //   value: any,
+  //   callback: (error?: string) => void
+  // ) => {
+  //   const deathDate = form.getFieldValue(['deathDate']);
+  //   if (value && deathDate && value > deathDate) {
+  //     callback('Birth Date cannot be greater than Death Date');
+  //   } else {
+  //     callback();
+  //   }
+  // };
 
   return (
     <Form
@@ -43,6 +43,9 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
       name="nest-messages"
       onFinish={onFinish}
       validateMessages={validateMessages}
+      // initialValues={{
+      //   birthDate: form.getFieldValue(['birthDate']),
+      // }}
     >
       <Form.Item
         name={['name']}
@@ -71,14 +74,25 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
       <Form.Item label="Date of birth and death">
         <Form.Item
           name={['birthDate']}
-          style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
+          style={{ display: 'inline-block', width: 'calc(25% - 2px)' }}
+          // initialValue={form.getFieldValue(['birthDate'])}
           rules={[{ required: true, message: 'Birth Date is required' }]}
         >
           <DatePicker placeholder="Select Birth Date" />
         </Form.Item>
+        <span
+          style={{
+            display: 'inline-block',
+            width: '24px',
+            lineHeight: '32px',
+            textAlign: 'center',
+          }}
+        >
+          -
+        </span>
         <Form.Item
           name={['deathDate']}
-          style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
+          style={{ display: 'inline-block', width: 'calc(50% - 2px)' }}
           rules={[{ required: true, message: 'Death Date is required' }]}
         >
           <DatePicker placeholder="Select Death Date" />
