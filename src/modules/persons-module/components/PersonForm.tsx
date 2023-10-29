@@ -74,7 +74,7 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
       <Form.Item label="Date of birth and death">
         <Form.Item
           name={['birthDate']}
-          style={{ display: 'inline-block', width: 'calc(25% - 2px)' }}
+          style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
           // initialValue={form.getFieldValue(['birthDate'])}
           rules={[{ required: true, message: 'Birth Date is required' }]}
         >
@@ -92,7 +92,7 @@ const PersonForm: FC<PersonFormProps> = ({ form, onFinish }) => {
         </span>
         <Form.Item
           name={['deathDate']}
-          style={{ display: 'inline-block', width: 'calc(50% - 2px)' }}
+          style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
           rules={[{ required: true, message: 'Death Date is required' }]}
         >
           <DatePicker placeholder="Select Death Date" />

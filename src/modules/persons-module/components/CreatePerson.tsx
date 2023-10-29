@@ -106,12 +106,12 @@ export const CreatePerson: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
       <Row gutter={[16, 16]}>
-        <Col span={12} style={{ width: '100%' }}>
+        <Col span={12} style={{ width: '100%', minWidth: 300 }}>
           <Card>
             <PersonForm form={form} onFinish={onFinish} />
           </Card>
         </Col>
-        <Col span={8} style={{ width: '100%' }}>
+        <Col span={8} style={{ width: '100%', minWidth: 300 }}>
           <Card style={{ width: '100%', marginBottom: '16px' }}>
             <Row justify="start" style={{ width: '100%' }}>
               <TitlePlaces onFinishValue={setSelectedPlace} />
