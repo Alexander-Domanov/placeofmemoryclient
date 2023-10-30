@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routes } from '@/common/routing/routes';
 import {
   AddLanguageForm,
+  LanguageListTable,
   ModalLanguage,
   useCloseModal,
   useCreateLanguage,
@@ -17,7 +18,9 @@ import { ILanguage } from '@/types';
 
 const { Title } = Typography;
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
+const breadcrumbsLanguage: Partial<
+  BreadcrumbItemType & BreadcrumbSeparatorType
+>[] = [
   {
     key: routes.dashboard.index,
     title: <Link href={routes.dashboard.index}>Dashboard</Link>,
@@ -49,7 +52,7 @@ export const AddLanguage = () => {
   return (
     <>
       {contextHolder}
-      <Breadcrumb items={breadcrumbs} />
+      <Breadcrumb items={breadcrumbsLanguage} />
       <div className="flex justify-center">
         <Title level={4}>Add Language or Update Language</Title>
       </div>
@@ -73,6 +76,9 @@ export const AddLanguage = () => {
             </div>
           </Spin>
         </ModalLanguage>
+      </>
+      <>
+        <LanguageListTable />
       </>
     </>
   );

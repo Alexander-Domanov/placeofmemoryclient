@@ -8,3 +8,4 @@ export { FORM_ITEMS } from './constants/FORM_ITEMS';
 export { useMessage } from './hooks/useEffect/useMessage';
 export { ModalLanguage } from './components/form-list/ModalLanguage';
 export { useCloseModal } from './hooks/useEffect/useCloseModal';
+export { LanguageListTable } from './components/form-list/LanguageListTable';
