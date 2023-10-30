@@ -6,3 +6,4 @@ export { AddLanguage } from './components/AddLanguage';
 export { AddLanguageForm } from './components/form-list/AddLanguageForm';
 export { FORM_ITEMS } from './constants/FORM_ITEMS';
 export { useMessage } from './hooks/useEffect/useMessage';
+export { ModalLanguage } from './components/form-list/ModalLanguage';

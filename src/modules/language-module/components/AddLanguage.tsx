@@ -1,5 +1,5 @@
-import { Breadcrumb, Spin, Typography } from 'antd';
-import React from 'react';
+import { Breadcrumb, Button, Form, Spin, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routes } from '@/common/routing/routes';
 import {
   AddLanguageForm,
+  ModalLanguage,
   useCreateLanguage,
   useMessage,
 } from '@/modules/language-module';
@@ -26,6 +27,8 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   },
 ];
 export const AddLanguage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = Form.useForm();
   const {
     mutateCreateLanguage,
     isSuccessCreateLanguage,
@@ -36,7 +39,16 @@ export const AddLanguage = () => {
     error: errorCreateLanguage,
     isSuccess: isSuccessCreateLanguage,
   });
-  const onFinishSubmit = (data: ILanguage) => mutateCreateLanguage({ ...data });
+  const onFinishSubmit = (data: ILanguage) => {
+    mutateCreateLanguage({ ...data });
+  };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+    }
+  }, [isSuccessCreateLanguage]);
+
   return (
     <>
       {contextHolder}
@@ -44,12 +56,27 @@ export const AddLanguage = () => {
       <div className="flex justify-center">
         <Title level={4}>Add Language or Update Language</Title>
       </div>
-      <Spin spinning={isLoadingCreateLanguage} delay={500}>
-        <AddLanguageForm
-          onFinishSubmit={onFinishSubmit}
-          isSuccess={isSuccessCreateLanguage}
-        />
-      </Spin>
+      <>
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+          Add Language
+        </Button>
+        <ModalLanguage
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
+          title="Add Language"
+          handleCancelCallBack={() => form.resetFields()}
+        >
+          <Spin spinning={isLoadingCreateLanguage} delay={500}>
+            <div className="flex justify-center w-full pt-3">
+              <AddLanguageForm
+                onFinishSubmit={onFinishSubmit}
+                isSuccess={isSuccessCreateLanguage}
+                useForm={form}
+              />
+            </div>
+          </Spin>
+        </ModalLanguage>
+      </>
     </>
   );
 };

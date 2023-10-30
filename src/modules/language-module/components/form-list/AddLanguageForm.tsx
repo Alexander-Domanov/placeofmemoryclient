@@ -1,5 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
+import { FormInstance } from 'antd/es/form/hooks/useForm';
 import { ILanguage } from '@/types';
 import { FORM_ITEMS } from '@/modules/language-module';
 
@@ -7,23 +8,24 @@ interface IFieldType extends ILanguage {}
 interface IAddLanguageForm {
   onFinishSubmit: (values: IFieldType) => void;
   isSuccess: boolean;
+  useForm: FormInstance;
 }
 
 export const AddLanguageForm = ({
   onFinishSubmit,
   isSuccess,
+  useForm,
 }: IAddLanguageForm) => {
-  const [form] = Form.useForm();
   const onFinish = (values: IFieldType) => {
     onFinishSubmit(values);
-    if (isSuccess) form.resetFields();
+    if (isSuccess) useForm.resetFields();
   };
   return (
     <Form
       layout="vertical"
-      form={form}
+      form={useForm}
       onFinish={onFinish}
-      style={{ maxWidth: 300 }}
+      style={{ width: 400 }}
     >
       {FORM_ITEMS.map((item) => (
         <Form.Item
@@ -35,7 +37,7 @@ export const AddLanguageForm = ({
           <Input placeholder={item.placeholder} />
         </Form.Item>
       ))}
-      <Form.Item>
+      <Form.Item className="flex justify-end">
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
