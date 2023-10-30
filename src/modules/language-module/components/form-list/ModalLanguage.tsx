@@ -1,8 +1,8 @@
 import { Button, Modal } from 'antd';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface IModalLanguage {
-  setIsModalOpen: (isModalOpen: boolean) => void;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
   children: ReactNode;
   title: string;

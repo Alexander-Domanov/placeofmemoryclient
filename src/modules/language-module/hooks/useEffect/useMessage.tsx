@@ -13,7 +13,8 @@ export const useMessage = ({
 
   useEffect(() => {
     if (error || isSuccess) {
-      const messageType = error ? 'error' : 'success';
+      const messageType =
+        (error && 'error') || (isSuccess && 'success') || null;
       const contentMessage = error ? error.message : 'Success';
 
       messageApi.open({

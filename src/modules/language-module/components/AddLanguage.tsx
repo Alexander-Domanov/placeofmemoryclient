@@ -9,6 +9,7 @@ import { routes } from '@/common/routing/routes';
 import {
   AddLanguageForm,
   ModalLanguage,
+  useCloseModal,
   useCreateLanguage,
   useMessage,
 } from '@/modules/language-module';
@@ -43,11 +44,7 @@ export const AddLanguage = () => {
     mutateCreateLanguage({ ...data });
   };
 
-  useEffect(() => {
-    if (isModalOpen) {
-      setIsModalOpen(false);
-    }
-  }, [isSuccessCreateLanguage]);
+  useCloseModal({ isSuccessCreateLanguage, setIsModalOpen, isModalOpen });
 
   return (
     <>
