@@ -7,7 +7,7 @@ import { ICreatePerson } from '@/types';
 export const useCreatePerson = () => {
   const client = useQueryClient();
 
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading: isCreating } = useMutation({
     mutationKey: ['createPerson'],
     mutationFn: (personData: ICreatePerson) => createPerson(personData),
     // ...noRefetch,
@@ -25,5 +25,5 @@ export const useCreatePerson = () => {
     },
   });
 
-  return { createPerson: mutate, isLoading, isSuccess };
+  return { createPerson: mutate, isCreating };
 };

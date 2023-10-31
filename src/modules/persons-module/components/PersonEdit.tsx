@@ -139,6 +139,7 @@ export const PersonEdit: FC = () => {
           response: { ...f },
         })),
         slug: person.slug,
+        location: person.location.place,
       });
       setBiographyText(person.biography);
       setSelectedLocation(person.location);
@@ -148,6 +149,9 @@ export const PersonEdit: FC = () => {
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
+      form.setFieldsValue({
+        location: selectedPlaceFromMap.location.place,
+      });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
@@ -249,6 +253,7 @@ export const PersonEdit: FC = () => {
                 >
                   <Input placeholder="Input First Name" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name="lastName"
                   label="Last Name"
@@ -257,51 +262,27 @@ export const PersonEdit: FC = () => {
                 >
                   <Input placeholder="Input Last Name" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name="patronymic"
                   label="Patronymic"
-                  rules={[{ required: true, whitespace: true }]}
+                  rules={[{ whitespace: true }]}
                   hasFeedback
                 >
                   <Input placeholder="Input Patronymic" allowClear />
                 </Form.Item>
-                <Form.Item label="Date of birth and death">
-                  <Form.Item
-                    name="birthDate"
-                    style={{
-                      display: 'inline-block',
-                      width: 'calc(50% - 16px)',
-                    }}
-                    rules={[
-                      { required: true, message: 'Birth Date is required' },
-                    ]}
-                  >
-                    <DatePicker
-                      placeholder="Select Birth Date"
-                      format="YYYY-MM-DD"
-                    />
+
+                <Flex gap="large">
+                  <Form.Item name="birthDate" label="Birth Date">
+                    <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                   </Form.Item>
-                  <Form.Item
-                    name="deathDate"
-                    style={{
-                      display: 'inline-block',
-                      width: 'calc(50% - 16px)',
-                    }}
-                    rules={[
-                      { required: true, message: 'Death Date is required' },
-                    ]}
-                  >
-                    <DatePicker
-                      placeholder="Select Death Date"
-                      format="YYYY-MM-DD"
-                    />
+
+                  <Form.Item name="deathDate" label="Death Date">
+                    <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                   </Form.Item>
-                </Form.Item>
-                <Form.Item
-                  name="biography"
-                  label="Biography"
-                  rules={[{ required: true }]}
-                >
+                </Flex>
+
+                <Form.Item name="biography" label="Biography">
                   <ReactQuill
                     theme="snow"
                     value={biographyText}
@@ -320,25 +301,6 @@ export const PersonEdit: FC = () => {
 
             <Col span={8}>
               <Flex vertical gap={16}>
-                <Card>
-                  <TitlePlaces onFinishValue={setSelectedPlace} />
-                  <Form.Item style={{ marginBottom: 0 }}>
-                    <List split={false}>
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="font-normal text-neutral-400">
-                            Selected place: &nbsp;
-                          </span>
-                          {selectedPlace?.value}
-                        </Typography.Text>
-                        <Button type="dashed" onClick={clearSelectedPlace}>
-                          Clear
-                        </Button>
-                      </List.Item>
-                    </List>
-                  </Form.Item>
-                </Card>
-
                 <Card>
                   <Form.Item label="Status">
                     <Select value={status} onChange={handleStatusChange}>
@@ -368,33 +330,11 @@ export const PersonEdit: FC = () => {
                     />
                   </Form.Item>
 
-                  <Form.Item>
-                    <List split={false}>
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="font-normal text-neutral-400">
-                            Longitude: &nbsp;
-                          </span>
-                          {selectedLocation?.lng}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="font-normal text-neutral-400">
-                            Latitude: &nbsp;
-                          </span>
-                          {selectedLocation?.lat}
-                        </Typography.Text>
-                      </List.Item>
-                    </List>
-                  </Form.Item>
-
                   <Space size={16}>
                     <Button
                       type="primary"
+                      htmlType="submit"
                       title="Save"
-                      onClick={() => onFinish(form.getFieldsValue())}
                       icon={<SaveOutlined />}
                       loading={isUpdating}
                     >
@@ -405,7 +345,58 @@ export const PersonEdit: FC = () => {
                 </Card>
 
                 <Card>
-                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  <Form.Item label="Place">
+                    <TitlePlaces onFinishValue={setSelectedPlace} />
+
+                    <Form.Item style={{ marginBottom: 0 }}>
+                      <List split={false}>
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Selected place: &nbsp;
+                            </span>
+                            {selectedPlace?.value}
+                          </Typography.Text>
+                          <Button type="dashed" onClick={clearSelectedPlace}>
+                            Clear
+                          </Button>
+                        </List.Item>
+                      </List>
+                    </Form.Item>
+                  </Form.Item>
+                </Card>
+
+                <Card>
+                  <Form.Item
+                    label="Location"
+                    name="location"
+                    rules={[{ required: true }]}
+                    hasFeedback
+                  >
+                    <Form.Item>
+                      <List split={false}>
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Longitude: &nbsp;
+                            </span>
+                            {selectedLocation?.lng}
+                          </Typography.Text>
+                        </List.Item>
+
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Latitude: &nbsp;
+                            </span>
+                            {selectedLocation?.lat}
+                          </Typography.Text>
+                        </List.Item>
+                      </List>
+                    </Form.Item>
+
+                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  </Form.Item>
                 </Card>
 
                 <Card>

@@ -89,13 +89,16 @@ export const CreatePerson: FC = () => {
   const [biographyText, setBiographyText] = useState('');
   const [biographyCount, setBiographyCount] = useState(0);
 
-  const { createPerson } = useCreatePerson();
+  const { createPerson, isCreating } = useCreatePerson();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
+      form.setFieldsValue({
+        location: selectedPlaceFromMap.location.place,
+      });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
@@ -124,7 +127,7 @@ export const CreatePerson: FC = () => {
         place: selectedPlace?.value as string,
         ...selectedLocation,
       } as ILocation,
-      ids: values.photo.map((file) => file.response?.uploadId || ''),
+      ids: values.photo?.map((file) => file.response?.uploadId || ''),
     };
     if (form.ids.length === 0) {
       notification.error({
@@ -172,6 +175,7 @@ export const CreatePerson: FC = () => {
               >
                 <Input placeholder="Input First Name" allowClear />
               </Form.Item>
+
               <Form.Item
                 name="lastName"
                 label="Last Name"
@@ -180,55 +184,27 @@ export const CreatePerson: FC = () => {
               >
                 <Input placeholder="Input Last Name" allowClear />
               </Form.Item>
+
               <Form.Item
                 name="patronymic"
                 label="Patronymic"
-                rules={[{ required: true, whitespace: true }]}
+                rules={[{ whitespace: true }]}
                 hasFeedback
               >
                 <Input placeholder="Input Patronymic" allowClear />
               </Form.Item>
-              <Form.Item label="Date of birth and death">
-                <Form.Item
-                  name="birthDate"
-                  style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
-                  rules={[
-                    { required: true, message: 'Birth Date is required' },
-                  ]}
-                >
-                  <DatePicker
-                    placeholder="Select Birth Date"
-                    format="YYYY-MM-DD"
-                  />
+
+              <Flex gap="large">
+                <Form.Item name="birthDate" label="Birth Date">
+                  <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                 </Form.Item>
-                {/* <span */}
-                {/*  style={{ */}
-                {/*    display: 'inline-block', */}
-                {/*    width: '24px', */}
-                {/*    lineHeight: '32px', */}
-                {/*    textAlign: 'center', */}
-                {/*  }} */}
-                {/* > */}
-                {/*  -*/}
-                {/* </span> */}
-                <Form.Item
-                  name="deathDate"
-                  style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
-                  rules={[
-                    { required: true, message: 'Death Date is required' },
-                  ]}
-                >
-                  <DatePicker
-                    placeholder="Select Death Date"
-                    format="YYYY-MM-DD"
-                  />
+
+                <Form.Item name="deathDate" label="Death Date">
+                  <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                 </Form.Item>
-              </Form.Item>
-              <Form.Item
-                name="biography"
-                label="Biography"
-                rules={[{ required: true }]}
-              >
+              </Flex>
+
+              <Form.Item name="biography" label="Biography">
                 <ReactQuill
                   theme="snow"
                   value={biographyText}
@@ -248,26 +224,48 @@ export const CreatePerson: FC = () => {
           <Col span={8}>
             <Flex vertical gap={16}>
               <Card>
-                <TitlePlaces onFinishValue={setSelectedPlace} />
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <List split={false}>
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="font-normal text-neutral-400">
-                          Selected place: &nbsp;
-                        </span>
-                        {selectedPlace?.value}
-                      </Typography.Text>
-                      <Button type="dashed" onClick={clearSelectedPlace}>
-                        Clear
-                      </Button>
-                    </List.Item>
-                  </List>
+                <Space size={16}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={isCreating}
+                    // onClick={() => onFinish(form.getFieldsValue())}
+                    icon={<SaveOutlined />}
+                  >
+                    Save
+                  </Button>
+                </Space>
+              </Card>
+
+              <Card>
+                <Form.Item label="Place">
+                  <TitlePlaces onFinishValue={setSelectedPlace} />
+
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <List split={false}>
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Selected place: &nbsp;
+                          </span>
+                          {selectedPlace?.value}
+                        </Typography.Text>
+                        <Button type="dashed" onClick={clearSelectedPlace}>
+                          Clear
+                        </Button>
+                      </List.Item>
+                    </List>
+                  </Form.Item>
                 </Form.Item>
               </Card>
 
               <Card>
-                <Form.Item>
+                <Form.Item
+                  label="Location"
+                  name="location"
+                  rules={[{ required: true }]}
+                  hasFeedback
+                >
                   <List split={false}>
                     <List.Item>
                       <Typography.Text>
@@ -287,19 +285,11 @@ export const CreatePerson: FC = () => {
                       </Typography.Text>
                     </List.Item>
                   </List>
-                </Form.Item>
 
-                <Space size={16}>
-                  <Button
-                    type="primary"
-                    title="Save"
-                    onClick={() => onFinish(form.getFieldsValue())}
-                    icon={<SaveOutlined />}
-                  >
-                    Save
-                  </Button>
-                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-                </Space>
+                  <Space size={16}>
+                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  </Space>
+                </Form.Item>
               </Card>
 
               <Card>

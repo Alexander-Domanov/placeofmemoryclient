@@ -96,6 +96,21 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     sortDirections: ['ascend', 'descend'],
   },
   {
+    title: 'PlaceId',
+    dataIndex: 'place',
+    key: 'place',
+    align: 'center',
+    render: (text, record) => (
+      <Tooltip
+        title={`name: ${record.place.name}`}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{text.id}</Typography.Text>
+      </Tooltip>
+    ),
+  },
+  {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
