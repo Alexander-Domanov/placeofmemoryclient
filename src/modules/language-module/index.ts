@@ -1,7 +1,7 @@
 // components
 export { AddLanguage } from './components/AddLanguage';
-export { AddLanguageForm } from '@/modules/language-module/components/form/AddLanguageForm';
-export { ModalLanguage } from '@/modules/language-module/components/form/ModalLanguage';
+export { AddLanguageForm } from '@/modules/language-module/components/add-form-language/AddLanguageForm';
+export { ModalLanguage } from '@/modules/language-module/components/add-form-language/ModalLanguage';
 export { LanguageListTable } from './components/languages-table-list/LanguageListTable';
 export { ActionTableLanguagesButtons } from './components/languages-table-list/ActionTableLanguagesButtons';
 
