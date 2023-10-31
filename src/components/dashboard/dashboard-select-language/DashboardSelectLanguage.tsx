@@ -1,34 +1,30 @@
 import { Select, Space, Spin } from 'antd';
 import { useGetListLanguages, useLangSwitcher } from '@/services';
+import { useUserStore } from '@/store/userStore';
 
 export const DashboardSelectLanguage = () => {
-  const {
-    dataListLanguages,
-    isSuccessDataListLanguagesLanguages,
-    isErrorDataListLanguagesLanguages,
-    isFetchingDataListLanguagesLanguages,
-  } = useGetListLanguages();
-  const { mutateLangSwitcher, isErrorLangSwitcher, isSuccessLangSwitcher } =
-    useLangSwitcher();
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+  const { lang } = useUserStore();
+  const { dataListLanguages, isFetchingDataListLanguagesLanguages } =
+    useGetListLanguages();
+  const { mutateLangSwitcher, isSuccessLangSwitcher } = useLangSwitcher();
+  const handleChange = (option: any) => {
+    mutateLangSwitcher({ lang: option.label });
   };
 
-  const optionsLanguagesList = dataListLanguages?.items.map(
-    (language, index) => ({
-      value: language.name + index,
-      label: language.name,
-    })
-  );
+  const optionsLanguagesList = dataListLanguages?.items.map((language) => ({
+    value: language.id,
+    label: language.code,
+  }));
 
   return (
     <>
-      {!isFetchingDataListLanguagesLanguages ? (
+      {!isFetchingDataListLanguagesLanguages && lang ? (
         <Space wrap>
           <Select
-            onChange={handleChange}
-            // defaultValue={defaultValueLanguage}
-            style={{ width: 120 }}
+            disabled={!isSuccessLangSwitcher}
+            onChange={(value, option) => handleChange(option)}
+            defaultValue={lang}
+            style={{ width: 60 }}
             options={optionsLanguagesList}
             loading={isFetchingDataListLanguagesLanguages}
           />

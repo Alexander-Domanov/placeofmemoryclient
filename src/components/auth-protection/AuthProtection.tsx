@@ -6,7 +6,7 @@ import { routes } from '@/common/routing/routes';
 
 const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   const { pathname, replace } = useRouter();
-  const { setUserId, setUserName, setUrlAvatar } = useUserStore();
+  const { setUserId, setUserName, setUrlAvatar, setLang } = useUserStore();
 
   const { isSuccess, isError, fetchStatus } = useMeQuery(
     (userId) => {
@@ -17,6 +17,9 @@ const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
     },
     (urlAvatar) => {
       setUrlAvatar(urlAvatar);
+    },
+    (lang) => {
+      setLang(lang);
     }
   );
 

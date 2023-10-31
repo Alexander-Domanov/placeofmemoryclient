@@ -9,8 +9,14 @@ import { useRouter } from 'next/router';
 import { FaNewspaper } from 'react-icons/fa6';
 import { BsPencilSquare } from 'react-icons/bs';
 import { routes } from '@/common/routing/routes';
-import { DashboardModals, DashboardSelectLanguage } from '@/components';
+import {
+  AvatarMenuHeader,
+  DashboardModals,
+  DashboardSelectLanguage,
+  DropdownMenuHeader,
+} from '@/components';
 import { LinkComponent } from '@/ui';
+import { useUserStore } from '@/store/userStore';
 
 const { Header, Content, Sider } = Layout;
 
@@ -28,7 +34,7 @@ const contentStyle: React.CSSProperties = {
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-
+  const { userName } = useUserStore();
   const items: MenuItem[] = [
     {
       key: routes.dashboard.index,
@@ -66,20 +72,34 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       icon: <BsPencilSquare />,
     },
   ];
-  const items1: MenuProps['items'] = ['1'].map((key) => ({
-    key,
-    label: <DashboardSelectLanguage />,
-  }));
+  const headerItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <DashboardSelectLanguage />,
+    },
+    {
+      key: '2',
+      label: userName ? (
+        <div className="w-[150px]">
+          <DropdownMenuHeader />
+        </div>
+      ) : null,
+    },
+  ];
+
   return (
     <>
       <Layout>
-        <Header className="flex justify-end align-middle text-sm">
-          <div className="demo-logo" />
+        <Header className="flex justify-between align-middle text-sm">
+          <div className="flex items-center font-kelsi text-xl">
+            <Link href={routes.main}>MOGILKI</Link>
+          </div>
           <Menu
             theme="light"
             mode="horizontal"
             defaultSelectedKeys={['1']}
-            items={items1}
+            items={headerItems}
+            inlineCollapsed={false}
           />
         </Header>
         <Layout>

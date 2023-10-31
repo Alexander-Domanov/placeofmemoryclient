@@ -29,6 +29,8 @@ export const Languages = () => {
     mutateCreateLanguage({ ...data });
   };
 
+  if (isSuccessCreateLanguage) form.resetFields();
+
   return (
     <>
       {contextHolder}
