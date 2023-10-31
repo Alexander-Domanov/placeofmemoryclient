@@ -52,6 +52,7 @@ export const routes = {
       index: '/dashboard/persons',
       create: '/dashboard/persons/create',
       person: (id: string | number) => `/dashboard/persons/${id}`,
+      breadcrumbs: (fillName: string) => `/dashboard/persons/${fillName}`,
     },
     articles: {
       index: '/dashboard/articles',

@@ -13,6 +13,9 @@ export const usePerson = (id: string | undefined | string[]) => {
     enabled: !!id,
     select: (response) => response.data,
     ...noRefetch,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   return { person, isLoading, isSuccess };

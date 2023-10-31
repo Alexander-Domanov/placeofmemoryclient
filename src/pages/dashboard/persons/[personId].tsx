@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { PersonPage } from '@/modules/persons-module/components/Person';
+import { PersonEdit } from '@/modules/persons-module/components/PersonEdit';
 
 const DashboardPersonList = () => {
   return (
@@ -9,7 +9,7 @@ const DashboardPersonList = () => {
         <title>Person List</title>
       </Head>
 
-      <PersonPage />
+      <PersonEdit />
     </>
   );
 };

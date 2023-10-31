@@ -12,7 +12,7 @@ export const useUpdatePersonStatus = () => {
     isSuccess,
   } = useMutation({
     mutationKey: ['updatePersonStatus'],
-    mutationFn: ({ id, status }: { id: number | null; status: string }) =>
+    mutationFn: ({ id, status }: { id: string | null; status: string }) =>
       updatePersonStatus(id, status),
     ...noRefetch,
     onSuccess: () => {

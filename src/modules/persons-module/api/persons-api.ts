@@ -28,14 +28,11 @@ export const deletePerson = (id: number | null) => {
   return authInstance.delete(`persons/${id}`);
 };
 
-export const updatePersonStatus = (id: number | null, status: string) => {
+export const updatePersonStatus = (id: string | null, status: string) => {
   return authInstance.put(`persons/${id}/status`, { status });
 };
 
-export const updatePerson = (
-  id: string | string[] | undefined,
-  data: ICreatePerson
-) => {
+export const updatePerson = (id: string, data: ICreatePerson) => {
   return authInstance.put(`persons/${id}`, { ...data });
 };
 

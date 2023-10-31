@@ -9,7 +9,7 @@ interface TitlePlacesFormProps {
 export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
   const [pagination, setPagination] = useState({
     page: 1,
-    pageSize: 3,
+    pageSize: 10,
     searchTerm: '',
   });
 

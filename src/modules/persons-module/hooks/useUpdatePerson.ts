@@ -7,19 +7,10 @@ import { updatePerson } from '@/modules/persons-module/api/persons-api';
 
 export const useUpdatePerson = () => {
   const client = useQueryClient();
-  const {
-    mutate: updatePersonMutation,
-    isLoading,
-    isSuccess,
-  } = useMutation({
+  const { mutate: updatePersonMutation, isLoading: isUpdating } = useMutation({
     mutationKey: ['updatePerson'],
-    mutationFn: ({
-      id,
-      person,
-    }: {
-      id: string | string[] | undefined;
-      person: ICreatePerson;
-    }) => updatePerson(id, person),
+    mutationFn: ({ id, person }: { id: string; person: ICreatePerson }) =>
+      updatePerson(id, person),
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['persons']);
@@ -34,5 +25,5 @@ export const useUpdatePerson = () => {
       });
     },
   });
-  return { updatePersonMutation, isLoading, isSuccess };
+  return { updatePersonMutation, isUpdating };
 };

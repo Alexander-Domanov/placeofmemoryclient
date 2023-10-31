@@ -47,8 +47,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link
           href={{
-            pathname: routes.dashboard.persons.person('[id]'),
-            query: { id: record.id },
+            pathname: routes.dashboard.persons.person(record.id),
           }}
         >
           <Typography.Text

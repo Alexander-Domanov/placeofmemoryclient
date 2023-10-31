@@ -33,8 +33,6 @@ import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson'
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 
-const { Dragger } = Upload;
-
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
     key: routes.dashboard.index,
@@ -57,8 +55,6 @@ interface IPersonForm {
   biography: string;
   birthDate: Date;
   deathDate: Date;
-  location: ILocation;
-  placeId: number;
   photo: UploadFile<IGalleryFile>[];
 }
 
@@ -86,7 +82,7 @@ export const CreatePerson: FC = () => {
   );
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
-  const [selectedPlaceId, setSelectedPlace] = useState<{
+  const [selectedPlace, setSelectedPlace] = useState<{
     value: string;
     id: number;
   } | null>(null);
@@ -111,16 +107,23 @@ export const CreatePerson: FC = () => {
     return e?.fileList;
   };
 
+  const clearSelectedPlace = () => {
+    setSelectedPlace(null);
+  };
+
   const onFinish = (values: IPersonForm) => {
     const form: ICreatePerson = {
-      name: values.firstName,
+      firstName: values.firstName,
       lastName: values.lastName,
       patronymic: values.patronymic,
       biography: values.biography,
       birthDate: values.birthDate,
       deathDate: values.deathDate,
-      placeId: selectedPlaceId?.id as number,
-      location: selectedLocation as ILocation,
+      placeId: selectedPlace?.id as number,
+      location: {
+        place: selectedPlace?.value as string,
+        ...selectedLocation,
+      } as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
     if (form.ids.length === 0) {
@@ -149,20 +152,20 @@ export const CreatePerson: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col span={16}>
-          <Card>
-            <Form
-              layout="vertical"
-              fields={fields}
-              form={form}
-              onFieldsChange={(_, allFields) => {
-                setFields(allFields);
-              }}
-              onFinish={onFinish}
-            >
+      <Form
+        layout="vertical"
+        fields={fields}
+        form={form}
+        onFieldsChange={(_, allFields) => {
+          setFields(allFields);
+        }}
+        onFinish={onFinish}
+      >
+        <Row gutter={[16, 16]}>
+          <Col span={16}>
+            <Card>
               <Form.Item
-                name={['name']}
+                name="firstName"
                 label="First Name"
                 rules={[{ required: true, whitespace: true }]}
                 hasFeedback
@@ -170,7 +173,7 @@ export const CreatePerson: FC = () => {
                 <Input placeholder="Input First Name" allowClear />
               </Form.Item>
               <Form.Item
-                name={['lastName']}
+                name="lastName"
                 label="Last Name"
                 rules={[{ required: true, whitespace: true }]}
                 hasFeedback
@@ -178,7 +181,7 @@ export const CreatePerson: FC = () => {
                 <Input placeholder="Input Last Name" allowClear />
               </Form.Item>
               <Form.Item
-                name={['patronymic']}
+                name="patronymic"
                 label="Patronymic"
                 rules={[{ required: true, whitespace: true }]}
                 hasFeedback
@@ -187,13 +190,16 @@ export const CreatePerson: FC = () => {
               </Form.Item>
               <Form.Item label="Date of birth and death">
                 <Form.Item
-                  name={['birthDate']}
+                  name="birthDate"
                   style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
                   rules={[
                     { required: true, message: 'Birth Date is required' },
                   ]}
                 >
-                  <DatePicker placeholder="Select Birth Date" />
+                  <DatePicker
+                    placeholder="Select Birth Date"
+                    format="YYYY-MM-DD"
+                  />
                 </Form.Item>
                 {/* <span */}
                 {/*  style={{ */}
@@ -206,17 +212,20 @@ export const CreatePerson: FC = () => {
                 {/*  -*/}
                 {/* </span> */}
                 <Form.Item
-                  name={['deathDate']}
+                  name="deathDate"
                   style={{ display: 'inline-block', width: 'calc(50% - 16px)' }}
                   rules={[
                     { required: true, message: 'Death Date is required' },
                   ]}
                 >
-                  <DatePicker placeholder="Select Death Date" />
+                  <DatePicker
+                    placeholder="Select Death Date"
+                    format="YYYY-MM-DD"
+                  />
                 </Form.Item>
               </Form.Item>
               <Form.Item
-                name={['biography']}
+                name="biography"
                 label="Biography"
                 rules={[{ required: true }]}
               >
@@ -226,76 +235,97 @@ export const CreatePerson: FC = () => {
                   onChange={(value) => {
                     setBiographyText(value);
                     setBiographyCount(value.length);
-                    form.setFieldValue('description', value);
+                    form.setFieldValue('biography', value);
                   }}
                 />
                 <span className="font-normal text-neutral-400">
                   Characters: {biographyCount}
                 </span>
               </Form.Item>
-            </Form>
-          </Card>
-        </Col>
+            </Card>
+          </Col>
 
-        <Col span={8}>
-          <Card style={{ width: '100%', marginBottom: '16px' }}>
-            <Row justify="start" style={{ width: '100%' }}>
-              <TitlePlaces onFinishValue={setSelectedPlace} />
-            </Row>
-          </Card>
+          <Col span={8}>
+            <Flex vertical gap={16}>
+              <Card>
+                <TitlePlaces onFinishValue={setSelectedPlace} />
+                <Form.Item style={{ marginBottom: 0 }}>
+                  <List split={false}>
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Selected place: &nbsp;
+                        </span>
+                        {selectedPlace?.value}
+                      </Typography.Text>
+                      <Button type="dashed" onClick={clearSelectedPlace}>
+                        Clear
+                      </Button>
+                    </List.Item>
+                  </List>
+                </Form.Item>
+              </Card>
 
-          <Card style={{ width: '100%', marginBottom: '16px' }}>
-            <Form.Item>
-              <List split={false}>
-                <List.Item>
-                  <Typography.Text>
-                    Longitude: {selectedLocation?.lng}
-                  </Typography.Text>
-                </List.Item>
+              <Card>
+                <Form.Item>
+                  <List split={false}>
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Longitude: &nbsp;
+                        </span>
+                        {selectedLocation?.lng}
+                      </Typography.Text>
+                    </List.Item>
 
-                <List.Item>
-                  <Typography.Text>
-                    Latitude: {selectedLocation?.lat}
-                  </Typography.Text>
-                </List.Item>
-              </List>
-            </Form.Item>
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Latitude: &nbsp;
+                        </span>
+                        {selectedLocation?.lat}
+                      </Typography.Text>
+                    </List.Item>
+                  </List>
+                </Form.Item>
 
-            <Space size={16}>
-              <Button
-                type="primary"
-                title="Save"
-                onClick={() => onFinish(form.getFieldsValue())}
-                icon={<SaveOutlined />}
-              >
-                Save
-              </Button>
-              <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            </Space>
-          </Card>
+                <Space size={16}>
+                  <Button
+                    type="primary"
+                    title="Save"
+                    onClick={() => onFinish(form.getFieldsValue())}
+                    icon={<SaveOutlined />}
+                  >
+                    Save
+                  </Button>
+                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                </Space>
+              </Card>
 
-          <Card>
-            <Form.Item
-              label="Photos"
-              name="photo"
-              hasFeedback
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[{ required: true }]}
-              shouldUpdate
-            >
-              <Upload {...uploadProps} maxCount={3} multiple>
-                <Button
-                  icon={<UploadOutlined />}
-                  disabled={fileList.length > 2}
+              <Card>
+                <Form.Item
+                  label="Photos"
+                  name="photo"
+                  hasFeedback
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
+                  shouldUpdate
                 >
-                  Click to upload
-                </Button>
-              </Upload>
-            </Form.Item>
-          </Card>
-        </Col>
-      </Row>
+                  <Upload {...uploadProps} maxCount={3} multiple>
+                    <Button
+                      icon={<UploadOutlined />}
+                      disabled={fileList.length > 2}
+                    >
+                      Click to upload
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Card>
+            </Flex>
+          </Col>
+        </Row>
+      </Form>
     </Flex>
   );
 };
