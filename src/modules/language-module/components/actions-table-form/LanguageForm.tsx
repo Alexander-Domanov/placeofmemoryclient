@@ -2,21 +2,14 @@ import { Button, Form, Input } from 'antd';
 import React from 'react';
 import { FormInstance } from 'antd/es/form/hooks/useForm';
 import { ILanguage } from '@/types';
-import { FORM_ITEMS } from '@/modules/language-module';
+import { FORM_ITEMS, IAddLanguageForm } from '@/modules/language-module';
 
-interface IFieldType extends ILanguage {}
-interface IAddLanguageForm {
-  onFinishSubmit: (values: IFieldType) => void;
-  isSuccess: boolean;
-  useForm: FormInstance;
-}
-
-export const AddLanguageForm = ({
+export const LanguageForm = ({
   onFinishSubmit,
   isSuccess,
   useForm,
 }: IAddLanguageForm) => {
-  const onFinish = (values: IFieldType) => {
+  const onFinish = (values: ILanguage) => {
     onFinishSubmit(values);
     if (isSuccess) useForm.resetFields();
   };

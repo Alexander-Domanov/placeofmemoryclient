@@ -13,10 +13,16 @@ export const ActionTableLanguagesButtons = ({
   recordName,
   recordId,
   currentID,
+  handlerUpdateLanguage,
 }: IActionTableLanguagesButtons) => {
   return (
     <Space size="middle">
-      <Button className="w-[175px]">Update {recordName}</Button>
+      <Button
+        className="w-[175px]"
+        onClick={() => handlerUpdateLanguage(recordId)}
+      >
+        Update {recordName}
+      </Button>
       <Popconfirm
         title="Delete the language"
         description={`Are you sure to delete this language ${recordName}?`}

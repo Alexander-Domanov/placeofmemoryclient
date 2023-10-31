@@ -1,15 +1,8 @@
 import { Button, Modal } from 'antd';
 import React, { ReactNode } from 'react';
+import { IModalLanguage } from '@/modules/language-module';
 
-interface IModalLanguage {
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isModalOpen: boolean;
-  children: ReactNode;
-  title: string;
-  showButtonFooter?: boolean;
-  handleCancelCallBack: () => void;
-}
-export const ModalLanguage = ({
+export const LanguageModal = ({
   setIsModalOpen,
   isModalOpen,
   children,

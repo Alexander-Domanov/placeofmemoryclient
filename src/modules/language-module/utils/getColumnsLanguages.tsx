@@ -9,6 +9,7 @@ export const getColumnsLanguages = ({
   handlerDeleteLanguage,
   isLoadingDeleteLanguage,
   currentID,
+  handlerUpdateLanguage,
 }: IGetColumnsLanguage): ColumnsType<ILanguageListItem> => [
   {
     title: 'Id',
@@ -60,6 +61,7 @@ export const getColumnsLanguages = ({
       <ActionTableLanguagesButtons
         currentID={currentID}
         handlerDeleteLanguage={handlerDeleteLanguage}
+        handlerUpdateLanguage={handlerUpdateLanguage}
         isLoadingDeleteLanguage={isLoadingDeleteLanguage}
         recordId={record.id}
         recordName={record.name}

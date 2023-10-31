@@ -51,8 +51,8 @@ export const FORM_ITEMS = [
         message: 'Code must contain only lowercase letters!',
       },
       {
-        max: 3,
-        message: 'Code must be 3 characters or less!',
+        max: 2,
+        message: 'Code must be 2 characters or less!',
       },
     ],
 

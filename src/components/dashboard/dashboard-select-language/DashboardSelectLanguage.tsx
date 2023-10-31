@@ -20,9 +20,6 @@ export const DashboardSelectLanguage = () => {
       label: language.name,
     })
   );
-  const defaultValueLanguage = optionsLanguagesList
-    ? optionsLanguagesList[0].value
-    : 'no language';
 
   return (
     <>
@@ -30,7 +27,7 @@ export const DashboardSelectLanguage = () => {
         <Space wrap>
           <Select
             onChange={handleChange}
-            defaultValue={defaultValueLanguage}
+            // defaultValue={defaultValueLanguage}
             style={{ width: 120 }}
             options={optionsLanguagesList}
             loading={isFetchingDataListLanguagesLanguages}

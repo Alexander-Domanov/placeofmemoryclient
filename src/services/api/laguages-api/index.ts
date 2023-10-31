@@ -54,7 +54,7 @@ export const languageApi = {
   },
   async getLanguage({ languageID }: ILanguageID) {
     const res: AxiosResponse<ILanguageListItem> = await authInstance.get(
-      `languages/${languageID}`
+      `languagess/${languageID}`
     );
 
     return res.data;

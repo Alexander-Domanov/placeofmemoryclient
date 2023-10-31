@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { AddLanguage } from '@/modules/language-module';
+import { Languages } from '@/modules/language-module';
 
 const AddLanguagePage = () => {
   return (
@@ -8,7 +8,7 @@ const AddLanguagePage = () => {
       <Head>
         <title>Add Language</title>
       </Head>
-      <AddLanguage />
+      <Languages />
     </>
   );
 };
