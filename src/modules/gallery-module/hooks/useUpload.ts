@@ -13,8 +13,9 @@ export const useUpload = (
 
   const onAllFilesUploaded = () => {
     notification.success({
-      message: 'Файлы загружены',
-      description: 'Все ваши файлы успешно загружены!',
+      message: 'File upload',
+      description: 'All files uploaded successfully',
+      placement: 'bottomLeft',
     });
 
     // refetch();

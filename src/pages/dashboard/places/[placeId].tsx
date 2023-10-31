@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
-import { PlacePage } from '@/modules/places-module/components/Place';
+import { PlaceEdit } from '@/modules/places-module/components/PlaceEdit';
 
-const DashboardPlaceList = () => {
+const DashboardEditPlace = () => {
   return (
     <>
       <Head>
-        <title>Place List</title>
+        <title>Edit Place</title>
       </Head>
 
-      <PlacePage />
+      <PlaceEdit />
     </>
   );
 };
 
-DashboardPlaceList.getLayout = getDashboardLayout;
-export default DashboardPlaceList;
+DashboardEditPlace.getLayout = getDashboardLayout;
+export default DashboardEditPlace;

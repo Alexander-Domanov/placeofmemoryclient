@@ -5,7 +5,6 @@ export interface ICreatePlace {
   shortDescription: string;
   description: string;
   ids: string[];
-  slug: string;
   location: {
     place: string | null;
     lng: number | null;

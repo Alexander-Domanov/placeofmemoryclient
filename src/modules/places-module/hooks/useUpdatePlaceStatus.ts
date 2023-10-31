@@ -12,11 +12,12 @@ export const useUpdatePlaceStatus = () => {
     isSuccess,
   } = useMutation({
     mutationKey: ['updatePlaceStatus'],
-    mutationFn: ({ id, status }: { id: number | null; status: string }) =>
+    mutationFn: ({ id, status }: { id: string | null; status: string }) =>
       updatePlaceStatus(id, status),
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['places']);
+      client.invalidateQueries(['persons']);
     },
     onError: (error: IResponseError) => {
       const messages = error?.response?.data?.messages;

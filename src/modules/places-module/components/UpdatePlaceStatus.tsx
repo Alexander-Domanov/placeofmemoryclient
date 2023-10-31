@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Divider,
-  Dropdown,
-  List,
-  Menu,
-  Modal,
-  notification,
-  Space,
-  Tag,
-} from 'antd';
+import { Button, Form, List, Modal, notification, Select } from 'antd';
 import {
   ClockCircleOutlined,
-  DownOutlined,
   EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
@@ -20,17 +9,21 @@ import {
 } from '@ant-design/icons';
 import { IPlace } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
-import { getColorStatus } from '@/common-dashboard/helpers/ColorStatusTag';
+
+const { Option } = Select;
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
 }
-const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
+const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
   place,
 }) => {
-  const { id, status } = place || { id: null, status: null };
+  const { id, status } = place || {
+    id: null,
+    status: null,
+  };
+  const stringId = id !== null ? id.toString() : null;
   const [isModalVisible, setModalVisible] = useState(false);
-  const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
   const [newStatus, setNewStatus] = useState(status);
 
   const { updateStatusPlace } = useUpdatePlaceStatus();
@@ -44,10 +37,9 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
   };
 
   const handleMenuStatusClick = (status: string) => {
-    setStatusMenuOpen(false);
     setNewStatus(status);
     updateStatusPlace(
-      { id, status },
+      { id: stringId, status },
       {
         onSuccess: () => {
           notification.success({
@@ -59,30 +51,12 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
     );
   };
 
-  const statusMenu = (
-    <Menu onClick={({ key }) => handleMenuStatusClick(key)}>
-      <Menu.Item key="DRAFT">
-        <EyeInvisibleOutlined /> Draft
-      </Menu.Item>
-      <Menu.Item key="PENDING_REVIEW">
-        <ClockCircleOutlined /> Send for review
-      </Menu.Item>
-      <Menu.Item key="PUBLISHED">
-        <EyeOutlined /> Publish
-      </Menu.Item>
-      <Menu.Item key="ARCHIVED">
-        <InboxOutlined /> Archive
-      </Menu.Item>
-    </Menu>
-  );
-
-  const statusTagProps = getColorStatus(newStatus);
-
   return (
     <>
       <List.Item
         actions={[
           <Button
+            title="Change status"
             key={0}
             icon={<EditOutlined />}
             style={{ cursor: 'pointer', color: '#2c332c' }}
@@ -92,31 +66,30 @@ const UpdatePlaceStatusComponent: React.FC<UpdatePlaceStatusComponentProps> = ({
         ]}
       />
       <Modal
-        title="Change status"
+        title="Set new status"
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
-        <Divider orientation="center">
-          Status:{' '}
-          <Dropdown
-            overlay={statusMenu}
-            trigger={['hover']}
-            open={isStatusMenuOpen}
-            arrow
-            onOpenChange={setStatusMenuOpen}
-          >
-            <Tag color={statusTagProps.color} className="ant-dropdown-link">
-              <Space size={2} align="center">
-                {statusTagProps.text}
-                <DownOutlined />
-              </Space>
-            </Tag>
-          </Dropdown>
-        </Divider>
+        <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+          <Select value={newStatus} onChange={handleMenuStatusClick}>
+            <Option value="DRAFT">
+              <EyeInvisibleOutlined /> Draft
+            </Option>
+            <Option value="PENDING_REVIEW">
+              <ClockCircleOutlined /> Send for review
+            </Option>
+            <Option value="PUBLISHED">
+              <EyeOutlined /> Publish
+            </Option>
+            <Option value="ARCHIVED">
+              <InboxOutlined /> Archive
+            </Option>
+          </Select>
+        </Form.Item>
       </Modal>
     </>
   );
 };
 
-export default UpdatePlaceStatusComponent;
+export default UpdatePlaceStatus;

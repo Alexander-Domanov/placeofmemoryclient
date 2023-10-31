@@ -1,32 +1,35 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/router';
 import {
-  Alert,
   Breadcrumb,
   Button,
   Card,
   Col,
   Flex,
   Form,
+  Input,
+  List,
   notification,
   Row,
   Space,
   Typography,
+  Upload,
 } from 'antd';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import Link from 'next/link';
-import { SaveOutlined } from '@ant-design/icons';
+import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
+import dynamic from 'next/dynamic';
+import { UploadFile } from 'antd/es/upload/interface';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
-import { ChooseGalleryFiles } from '@/modules/gallery-module';
 import { routes } from '@/common/routing/routes';
-import PlaceForm from '@/modules/places-module/components/PlaceForm';
-import LocationPreview from '@/modules/maps/components/CardLocationPreview';
+import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -43,19 +46,47 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   },
 ];
 
+interface IPlaceForm {
+  country: string;
+  city: string;
+  nameCemetery: string;
+  shortDescription: string;
+  description: string;
+  photo: UploadFile<IGalleryFile>[];
+}
+
+interface FieldData {
+  name: string | number | (string | number)[];
+  value?: any;
+  touched?: boolean;
+  validating?: boolean;
+  errors?: string[];
+}
+
 export const CreatePlace: FC = () => {
   const router = useRouter();
 
+  const ReactQuill = useMemo(
+    () => dynamic(() => import('react-quill'), { ssr: false }),
+    []
+  );
   const [form] = Form.useForm();
+  const [fields, setFields] = useState<FieldData[]>([]);
 
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
-  const [selectedFiles, setSelectedFiles] = useState<IGalleryFile[]>([]);
+  const [shortDescriptionText, setShortDescriptionText] = useState('');
+  const [descriptionText, setDescriptionText] = useState('');
+  const [shortDescriptionCount, setShortDescriptionCount] = useState(0);
+  const [descriptionCount, setDescriptionCount] = useState(0);
 
-  const { createPlace } = useCreatePlace();
+  const { createPlaceMutate } = useCreatePlace();
+
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { uploadProps } = useUpload(setFileList);
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
@@ -68,20 +99,31 @@ export const CreatePlace: FC = () => {
     }
   }, [selectedPlaceFromMap]);
 
-  const onFinish = (values: ICreatePlace) => {
-    const place: ICreatePlace = {
-      ...values,
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  const onFinish = (values: IPlaceForm) => {
+    const form: ICreatePlace = {
+      country: values.country,
+      city: values.city,
+      nameCemetery: values.nameCemetery,
+      shortDescription: values.shortDescription,
+      description: values.description,
       location: selectedLocation as ILocation,
-      ids: selectedFiles.map((file) => file.uploadId),
+      ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
-    if (place.ids.length === 0) {
+    if (form.ids.length === 0) {
       notification.error({
         message: 'Gallery is empty',
         description: 'Please, upload at least one image',
         placement: 'bottomLeft',
       });
     } else {
-      createPlace(place, {
+      createPlaceMutate(form, {
         onSuccess: (data) => {
           notification.success({
             message: 'Place created successfully',
@@ -99,32 +141,102 @@ export const CreatePlace: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
+
       <Row gutter={[16, 16]}>
-        <Col span={16} style={{ width: '100%' }}>
+        <Col span={16}>
           <Card>
-            <PlaceForm form={form} onFinish={onFinish} />
+            <Form
+              layout="vertical"
+              fields={fields}
+              form={form}
+              onFieldsChange={(_, allFields) => {
+                setFields(allFields);
+              }}
+              onFinish={onFinish}
+            >
+              <Form.Item
+                name="country"
+                label="Country"
+                rules={[{ required: true, whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="Input Country" allowClear />
+              </Form.Item>
+              <Form.Item
+                name="city"
+                label="City"
+                rules={[{ required: true, whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="Input City" allowClear />
+              </Form.Item>
+              <Form.Item
+                name="nameCemetery"
+                label="Name Cemetery"
+                validateDebounce={500}
+                rules={[{ required: true, min: 2, max: 100 }]}
+                hasFeedback
+              >
+                <Input placeholder="Input Name Cemetery" allowClear />
+              </Form.Item>
+              <Form.Item
+                name="shortDescription"
+                label="Short Description"
+                rules={[{ required: true }]}
+              >
+                <ReactQuill
+                  theme="snow"
+                  value={shortDescriptionText}
+                  // value={shortDescription}
+                  onChange={(value) => {
+                    setShortDescriptionText(value);
+                    setShortDescriptionCount(value.length);
+                    form.setFieldValue('shortDescription', value);
+                  }}
+                />
+                <span className="font-normal text-neutral-400">
+                  Characters: {shortDescriptionCount}
+                </span>
+              </Form.Item>
+              <Form.Item
+                name="description"
+                label="Description"
+                rules={[{ required: true }]}
+              >
+                <ReactQuill
+                  theme="snow"
+                  value={descriptionText}
+                  onChange={(value) => {
+                    setDescriptionText(value);
+                    setDescriptionCount(value.length);
+                    form.setFieldValue('description', value);
+                  }}
+                />
+                <span className="font-normal text-neutral-400">
+                  Characters: {descriptionCount}
+                </span>
+              </Form.Item>
+            </Form>
           </Card>
         </Col>
-        <Col span={8} style={{ width: '100%' }}>
+
+        <Col span={8}>
           <Card style={{ width: '100%', marginBottom: '16px' }}>
-            <Alert
-              message="Status: n/a"
-              description={
-                <div>
-                  <div>
-                    <Typography.Text>{`Persons:  0 `}</Typography.Text>
-                  </div>
-                  <div>
-                    <Typography.Text>Created at: n/a</Typography.Text>
-                  </div>
-                  <div>
-                    <Typography.Text>Updated at: n/a</Typography.Text>
-                  </div>
-                </div>
-              }
-              type="warning"
-              style={{ width: '100%', marginBottom: '16px' }}
-            />
+            <Form.Item>
+              <List split={false}>
+                <List.Item>
+                  <Typography.Text>
+                    Longitude: {selectedLocation?.lng}
+                  </Typography.Text>
+                </List.Item>
+
+                <List.Item>
+                  <Typography.Text>
+                    Latitude: {selectedLocation?.lat}
+                  </Typography.Text>
+                </List.Item>
+              </List>
+            </Form.Item>
             <Space size={16}>
               <Button
                 type="primary"
@@ -134,17 +246,29 @@ export const CreatePlace: FC = () => {
               >
                 Save
               </Button>
+              <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
             </Space>
           </Card>
-          <Card style={{ width: '100%', marginBottom: '32px' }}>
-            <ChooseGalleryFiles
-              onFilesSelected={setSelectedFiles}
-              maxFileLimit={1}
-            />
-          </Card>
+
           <Card>
-            <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            <LocationPreview selectedLocation={selectedLocation} />
+            <Form.Item
+              label="Photo"
+              name="photo"
+              hasFeedback
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              rules={[{ required: true }]}
+              shouldUpdate
+            >
+              <Upload {...uploadProps}>
+                <Button
+                  icon={<UploadOutlined />}
+                  disabled={fileList.length > 0}
+                >
+                  Click to upload
+                </Button>
+              </Upload>
+            </Form.Item>
           </Card>
         </Col>
       </Row>

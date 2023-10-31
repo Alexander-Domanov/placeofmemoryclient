@@ -7,19 +7,10 @@ import { IResponseError } from '@/types/response-error-message.type';
 
 export const useUpdatePlace = () => {
   const client = useQueryClient();
-  const {
-    mutate: updatePlaceById,
-    isLoading,
-    isSuccess,
-  } = useMutation({
+  const { mutate: updatePlaceMutate, isLoading: isUpdating } = useMutation({
     mutationKey: ['updatePlace'],
-    mutationFn: ({
-      id,
-      place,
-    }: {
-      id: string | string[] | undefined;
-      place: ICreatePlace;
-    }) => updatePlace(id, place),
+    mutationFn: ({ id, place }: { id: string; place: ICreatePlace }) =>
+      updatePlace(id, place),
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['places']);
@@ -34,5 +25,5 @@ export const useUpdatePlace = () => {
       });
     },
   });
-  return { updatePlaceById, isLoading, isSuccess };
+  return { updatePlaceMutate, isUpdating };
 };

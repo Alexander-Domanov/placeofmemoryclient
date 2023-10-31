@@ -25,5 +25,5 @@ export const useCreatePlace = () => {
     },
   });
 
-  return { createPlace: mutate, isLoading, isSuccess };
+  return { createPlaceMutate: mutate, isLoading, isSuccess };
 };

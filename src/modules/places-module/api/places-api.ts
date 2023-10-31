@@ -45,17 +45,14 @@ export const deletePlace = (id: number | null) => {
   return authInstance.delete(`places/${id}`);
 };
 
-export const updatePlaceStatus = (id: number | null, status: string) => {
+export const updatePlaceStatus = (id: string | null, status: string) => {
   return authInstance.put(`places/${id}/status`, { status });
 };
 
-export const updatePlace = (
-  id: string | string[] | undefined,
-  data: ICreatePlace
-) => {
+export const updatePlace = (id: string, data: ICreatePlace) => {
   return authInstance.put(`places/${id}`, { ...data });
 };
 
-export const getPlace = (id: string | undefined | string[]) => {
+export const getPlace = (id: string) => {
   return authInstance.get<IPlace>(`places/${id}`);
 };
