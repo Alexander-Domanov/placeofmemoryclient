@@ -10,7 +10,6 @@ import { FaNewspaper } from 'react-icons/fa6';
 import { BsPencilSquare } from 'react-icons/bs';
 import { routes } from '@/common/routing/routes';
 import {
-  AvatarMenuHeader,
   DashboardModals,
   DashboardSelectLanguage,
   DropdownMenuHeader,
