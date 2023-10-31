@@ -48,7 +48,6 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
         <Link
           href={{
             pathname: routes.dashboard.places.place(record.id),
-            // query: { id: record.id },
           }}
         >
           <Typography.Text

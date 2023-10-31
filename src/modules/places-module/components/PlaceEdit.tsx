@@ -119,7 +119,7 @@ export const PlaceEdit: FC = () => {
         nameCemetery: place.nameCemetery,
         photo: place.photos.map((f) => ({
           uid: f.uploadId,
-          name: f.updatedAt,
+          name: f.uploadId,
           status: 'done',
           url: f.versions.huge.url,
           response: { ...f },

@@ -142,18 +142,18 @@ export const CreatePlace: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col span={16}>
-          <Card>
-            <Form
-              layout="vertical"
-              fields={fields}
-              form={form}
-              onFieldsChange={(_, allFields) => {
-                setFields(allFields);
-              }}
-              onFinish={onFinish}
-            >
+      <Form
+        layout="vertical"
+        fields={fields}
+        form={form}
+        onFieldsChange={(_, allFields) => {
+          setFields(allFields);
+        }}
+        onFinish={onFinish}
+      >
+        <Row gutter={[16, 16]}>
+          <Col span={16}>
+            <Card>
               <Form.Item
                 name="country"
                 label="Country"
@@ -216,62 +216,62 @@ export const CreatePlace: FC = () => {
                   Characters: {descriptionCount}
                 </span>
               </Form.Item>
-            </Form>
-          </Card>
-        </Col>
+            </Card>
+          </Col>
 
-        <Col span={8}>
-          <Card style={{ width: '100%', marginBottom: '16px' }}>
-            <Form.Item>
-              <List split={false}>
-                <List.Item>
-                  <Typography.Text>
-                    Longitude: {selectedLocation?.lng}
-                  </Typography.Text>
-                </List.Item>
+          <Col span={8}>
+            <Card style={{ width: '100%', marginBottom: '16px' }}>
+              <Form.Item>
+                <List split={false}>
+                  <List.Item>
+                    <Typography.Text>
+                      Longitude: {selectedLocation?.lng}
+                    </Typography.Text>
+                  </List.Item>
 
-                <List.Item>
-                  <Typography.Text>
-                    Latitude: {selectedLocation?.lat}
-                  </Typography.Text>
-                </List.Item>
-              </List>
-            </Form.Item>
-            <Space size={16}>
-              <Button
-                type="primary"
-                title="Save"
-                onClick={() => onFinish(form.getFieldsValue())}
-                icon={<SaveOutlined />}
-              >
-                Save
-              </Button>
-              <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-            </Space>
-          </Card>
-
-          <Card>
-            <Form.Item
-              label="Photo"
-              name="photo"
-              hasFeedback
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[{ required: true }]}
-              shouldUpdate
-            >
-              <Upload {...uploadProps}>
+                  <List.Item>
+                    <Typography.Text>
+                      Latitude: {selectedLocation?.lat}
+                    </Typography.Text>
+                  </List.Item>
+                </List>
+              </Form.Item>
+              <Space size={16}>
                 <Button
-                  icon={<UploadOutlined />}
-                  disabled={fileList.length > 0}
+                  type="primary"
+                  title="Save"
+                  onClick={() => onFinish(form.getFieldsValue())}
+                  icon={<SaveOutlined />}
                 >
-                  Click to upload
+                  Save
                 </Button>
-              </Upload>
-            </Form.Item>
-          </Card>
-        </Col>
-      </Row>
+                <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+              </Space>
+            </Card>
+
+            <Card>
+              <Form.Item
+                label="Photo"
+                name="photo"
+                hasFeedback
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                rules={[{ required: true }]}
+                shouldUpdate
+              >
+                <Upload {...uploadProps}>
+                  <Button
+                    icon={<UploadOutlined />}
+                    disabled={fileList.length > 0}
+                  >
+                    Click to upload
+                  </Button>
+                </Upload>
+              </Form.Item>
+            </Card>
+          </Col>
+        </Row>
+      </Form>
     </Flex>
   );
 };
