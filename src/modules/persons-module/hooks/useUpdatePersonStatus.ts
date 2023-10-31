@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { notification } from 'antd';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { IResponseError } from '@/types/response-error-message.type';
 import { updatePersonStatus } from '@/modules/persons-module/api/persons-api';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useUpdatePersonStatus = () => {
   const client = useQueryClient();
@@ -19,13 +19,7 @@ export const useUpdatePersonStatus = () => {
       client.invalidateQueries(['persons']);
     },
     onError: (error: IResponseError) => {
-      const messages = error?.response?.data?.messages;
-      messages?.forEach(({ message }) => {
-        notification.error({
-          message: `Error: ${message}`,
-          placement: 'bottomLeft',
-        });
-      });
+      ErrorNotification(error);
     },
   });
   return { updateStatusPerson, isLoading, isSuccess };

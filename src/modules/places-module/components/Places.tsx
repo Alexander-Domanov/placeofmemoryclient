@@ -42,7 +42,7 @@ export const Places: FC = () => {
 
   const search = useDebounce(pagination.searchTerm, 500);
 
-  const { places, isLoading, refetch } = usePlaces(
+  const { places, isLoading } = usePlaces(
     pagination.page,
     pagination.pageSize,
     status,

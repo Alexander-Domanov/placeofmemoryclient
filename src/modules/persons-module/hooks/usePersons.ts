@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPersons } from '@/modules/persons-module/api/persons-api';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const usePersons = (
   page: number,
@@ -13,6 +15,7 @@ export const usePersons = (
     data: persons,
     isLoading,
     refetch,
+    error,
   } = useQuery({
     queryKey: ['persons', { page, pageSize, status, name, sorting }],
     queryFn: () => getPersons(page, pageSize, status, name, sorting),
@@ -23,6 +26,12 @@ export const usePersons = (
     staleTime: 0,
     refetchOnMount: 'always',
   });
+
+  useEffect(() => {
+    if (error) {
+      ErrorNotification(error);
+    }
+  }, [error]);
 
   return { persons, isLoading, refetch };
 };

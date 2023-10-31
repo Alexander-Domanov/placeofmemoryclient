@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { notification } from 'antd';
 import { ICreatePerson } from '@/types';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { IResponseError } from '@/types/response-error-message.type';
 import { updatePerson } from '@/modules/persons-module/api/persons-api';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useUpdatePerson = () => {
   const client = useQueryClient();
@@ -16,13 +16,7 @@ export const useUpdatePerson = () => {
       client.invalidateQueries(['persons']);
     },
     onError: (error: IResponseError) => {
-      const messages = error?.response?.data?.messages;
-      messages?.forEach(({ message }) => {
-        notification.error({
-          message: `Error: ${message}`,
-          placement: 'bottomLeft',
-        });
-      });
+      ErrorNotification(error);
     },
   });
   return { updatePersonMutation, isUpdating };
