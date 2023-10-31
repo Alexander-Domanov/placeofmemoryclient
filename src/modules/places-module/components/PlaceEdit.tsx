@@ -46,12 +46,13 @@ import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePla
 
 const { Option } = Select;
 
-interface IPlaceForm {
+interface IPlaceEditForm {
   country: string;
   city: string;
   nameCemetery: string;
   shortDescription: string;
   description: string;
+  slug: string;
   photo: UploadFile<IGalleryFile>[];
 }
 
@@ -166,38 +167,31 @@ export const PlaceEdit: FC = () => {
     );
   };
 
-  const onFinish = (values: IPlaceForm) => {
+  const onFinish = (values: IPlaceEditForm) => {
     const newPlace: ICreatePlace = {
-      ...values,
+      // ...values,
+      country: values.country,
+      city: values.city,
+      nameCemetery: values.nameCemetery,
+      shortDescription: values.shortDescription,
+      description: values.description,
+      slug: values.slug,
       location: selectedLocation as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
-    if (newPlace.ids.length === 0) {
-      notification.error({
-        message: 'Gallery is empty',
-        description: 'Please, upload at least one image',
-        placement: 'bottomLeft',
-      });
-    } else if (newPlace.location === null || newPlace.location === undefined) {
-      notification.error({
-        message: 'Location is empty',
-        description: 'Please, select location',
-        placement: 'bottomLeft',
-      });
-    } else {
-      updatePlaceMutate(
-        { id: placeId, place: newPlace },
-        {
-          onSuccess: () => {
-            notification.success({
-              message: 'Place updated successfully',
-              description: 'You will be redirected to the place page',
-              placement: 'bottomLeft',
-            });
-          },
-        }
-      );
-    }
+
+    updatePlaceMutate(
+      { id: placeId, place: newPlace },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: 'Place updated successfully',
+            description: 'You will be redirected to the place page',
+            placement: 'bottomLeft',
+          });
+        },
+      }
+    );
   };
 
   return (

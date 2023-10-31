@@ -10,4 +10,5 @@ export interface ICreatePlace {
     lng: number | null;
     lat: number | null;
   };
+  slug?: string;
 }

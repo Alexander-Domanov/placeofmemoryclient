@@ -42,7 +42,6 @@ import { usePerson } from '@/modules/persons-module/hooks/usePerson';
 import { useUpdatePerson } from '@/modules/persons-module/hooks/useUpdatePerson';
 import DeletePersonModal from '@/modules/persons-module/components/DeletePersonModal';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
-import { IResponseError } from '@/types/response-error-message.type';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
@@ -68,7 +67,7 @@ function breadcrumbs(
   ];
 }
 
-interface IPersonForm {
+interface IPersonEditForm {
   firstName: string;
   lastName: string;
   patronymic: string;
@@ -176,7 +175,7 @@ export const PersonEdit: FC = () => {
     setSelectedPlace(null);
   };
 
-  const onFinish = (values: IPersonForm) => {
+  const onFinish = (values: IPersonEditForm) => {
     const newPerson: ICreatePerson = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -192,44 +191,18 @@ export const PersonEdit: FC = () => {
       } as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
-    if (newPerson.ids.length === 0) {
-      notification.error({
-        message: 'Gallery is empty',
-        description: 'Please, upload at least one image',
-        placement: 'bottomLeft',
-      });
-    } else if (
-      newPerson.location === null ||
-      newPerson.location === undefined
-    ) {
-      notification.error({
-        message: 'Location is empty',
-        description: 'Please, select location',
-        placement: 'bottomLeft',
-      });
-    } else {
-      updatePersonMutation(
-        { id: personId, person: newPerson },
-        {
-          onSuccess: () => {
-            notification.success({
-              message: 'Place updated successfully',
-              description: 'You will be redirected to the place page',
-              placement: 'bottomLeft',
-            });
-          },
-          onError: (error: IResponseError) => {
-            const messages = error?.response?.data?.messages;
-            messages?.forEach(({ message }) => {
-              notification.error({
-                message: `Error: ${message}`,
-                placement: 'bottomLeft',
-              });
-            });
-          },
-        }
-      );
-    }
+    updatePersonMutation(
+      { id: personId, person: newPerson },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: 'Place updated successfully',
+            description: 'You will be redirected to the place page',
+            placement: 'bottomLeft',
+          });
+        },
+      }
+    );
   };
 
   return (
