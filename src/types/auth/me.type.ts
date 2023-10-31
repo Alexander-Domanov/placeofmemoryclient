@@ -4,4 +4,5 @@ export interface IMeType {
   email: string;
   hasBusinessAccount: boolean;
   urlAvatar: string | null;
+  lang: string;
 }

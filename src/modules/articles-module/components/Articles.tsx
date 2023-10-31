@@ -11,7 +11,7 @@
 //       <Flex justify="space-between" align="center" gap="middle">
 //         <div>
 //           <Button
-//             type="primary"
+//             types="primary"
 //             onClick={() => router.push(routes.dashboard.articles.create)}
 //           >
 //             Add Article

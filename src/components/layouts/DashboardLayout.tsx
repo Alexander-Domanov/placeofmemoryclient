@@ -9,12 +9,21 @@ import Link from 'next/link';
 import type { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
 import { FaNewspaper } from 'react-icons/fa6';
+import { BsPencilSquare } from 'react-icons/bs';
 import { routes } from '@/common/routing/routes';
-import { DashboardModals } from '@/components';
+import {
+  DashboardModals,
+  DashboardSelectLanguage,
+  DropdownMenuHeader,
+} from '@/components';
+import { LinkComponent } from '@/ui';
+import { useUserStore } from '@/store/userStore';
+
+const { Header, Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-const siderStyle: React.CSSProperties = {
+const sliderStyle: React.CSSProperties = {
   minHeight: '100vh',
   backgroundColor: '#fff',
 };
@@ -26,7 +35,7 @@ const contentStyle: React.CSSProperties = {
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-
+  const { userName } = useUserStore();
   const items: MenuItem[] = [
     {
       key: routes.dashboard.index,
@@ -58,22 +67,59 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       label: <Link href={routes.dashboard.articles.index}>Articles</Link>,
       icon: <FaNewspaper />,
     },
+    {
+      key: routes.dashboard.addLanguage.index,
+      label: (
+        <LinkComponent
+          href={routes.dashboard.addLanguage.index}
+          title="Add Language"
+        />
+      ),
+      icon: <BsPencilSquare />,
+    },
+  ];
+  const headerItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <DashboardSelectLanguage />,
+    },
+    {
+      key: '2',
+      label: userName ? (
+        <div className="w-[150px]">
+          <DropdownMenuHeader />
+        </div>
+      ) : null,
+    },
   ];
 
   return (
     <>
       <Layout>
-        <Layout.Sider width={200} style={siderStyle}>
+        <Header className="flex justify-between align-middle text-sm">
+          <div className="flex items-center font-kelsi text-xl">
+            <Link href={routes.main}>MOGILKI</Link>
+          </div>
           <Menu
-            mode="inline"
-            style={{ height: '100%' }}
-            items={items}
-            selectedKeys={[router.asPath]}
+            theme="light"
+            mode="horizontal"
+            defaultSelectedKeys={['1']}
+            items={headerItems}
+            inlineCollapsed={false}
           />
-        </Layout.Sider>
-
+        </Header>
         <Layout>
-          <Layout.Content style={contentStyle}>{children}</Layout.Content>
+          <Sider width={200} style={sliderStyle}>
+            <Menu
+              mode="inline"
+              style={{ height: '100%' }}
+              items={items}
+              selectedKeys={[router.asPath]}
+            />
+          </Sider>
+          <Layout style={{ padding: '0 24px 24px' }}>
+            <Content style={contentStyle}>{children}</Content>
+          </Layout>
         </Layout>
       </Layout>
 
