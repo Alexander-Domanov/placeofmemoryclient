@@ -41,11 +41,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     dataIndex: 'title',
     key: 'title',
     render: (text, record) => (
-      <Tooltip
-        title={`${record.description}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
+      <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link
           href={{
             pathname: routes.dashboard.articles.article('[id]'),

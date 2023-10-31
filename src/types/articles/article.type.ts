@@ -6,14 +6,8 @@ export interface IArticle extends IBaseDateType, IBaseOwnerInfo {
   status: string;
   id: number;
   title: string;
+  slug: string;
   description: string;
   content: string;
   photos: IGalleryFile[];
-}
-
-export interface IArticleCreate {
-  title: string;
-  description: string;
-  content: string;
-  ids: string[];
 }

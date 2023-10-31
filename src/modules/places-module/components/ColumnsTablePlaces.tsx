@@ -5,7 +5,7 @@ import React from 'react';
 import { IPlace } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
-import UpdatePlaceStatusComponent from '@/modules/places-module/components/UpdatePlaceStatus';
+import UpdatePlaceStatus from '@/modules/places-module/components/UpdatePlaceStatus';
 import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
 
@@ -44,15 +44,10 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Tooltip
-        title={`${record.shortDescription}`}
-        placement="leftBottom"
-        color="#1087f6"
-      >
+      <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link
           href={{
-            pathname: routes.dashboard.places.place('[id]'),
-            query: { id: record.id },
+            pathname: routes.dashboard.places.place(record.id),
           }}
         >
           <Typography.Text
@@ -138,7 +133,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
-        <UpdatePlaceStatusComponent place={record} />
+        <UpdatePlaceStatus place={record} />
         <DeletePlaceComponent place={record} />
       </Row>
     ),

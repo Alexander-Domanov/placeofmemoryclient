@@ -83,12 +83,12 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
     <>
       <Space>
         <Button
-          type="primary"
+          type="default"
           onClick={showDrawer}
           icon={<FaLocationDot />}
-          style={{ marginBottom: 12 }}
+          // style={{ cursor: 'pointer', color: '#74c782' }}
         >
-          Find Location
+          Open Map
         </Button>
       </Space>
       <Drawer

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { notification } from 'antd';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { deletePlace } from '@/modules/places-module/api/places-api';
 import { IResponseError } from '@/types/response-error-message.type';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useDeletePlace = () => {
   const client = useQueryClient();
@@ -14,13 +14,7 @@ export const useDeletePlace = () => {
     },
     ...noRefetch,
     onError: (error: IResponseError) => {
-      const messages = error?.response?.data?.messages;
-      messages?.forEach(({ message }) => {
-        notification.error({
-          message: `Error: ${message}`,
-          placement: 'bottomLeft',
-        });
-      });
+      ErrorNotification(error);
     },
   });
 

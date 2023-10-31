@@ -19,6 +19,9 @@ export const useArticles = (
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   return { articles, isLoading, refetch };

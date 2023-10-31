@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPlaces } from '@/modules/places-module/api/places-api';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const usePlaces = (
   page: number,
@@ -12,14 +14,21 @@ export const usePlaces = (
   const {
     data: places,
     isLoading,
-    refetch,
+    error,
   } = useQuery({
     queryKey: ['places', { page, pageSize, status, name, sorting }],
     queryFn: () => getPlaces(page, pageSize, status, name, sorting),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    retry: 0,
   });
 
-  return { places, isLoading, refetch };
+  useEffect(() => {
+    if (error) {
+      ErrorNotification(error);
+    }
+  }, [error]);
+
+  return { places, isLoading };
 };
