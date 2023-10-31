@@ -17,4 +17,8 @@ export interface IPerson
   birthDate: string;
   deathDate: string;
   slug: string;
+  place: {
+    id: number;
+    name: string;
+  };
 }

@@ -1,13 +1,13 @@
 export interface ICreatePerson {
-  name: string;
+  firstName: string;
   lastName: string;
   patronymic: string;
   biography: string;
   birthDate: Date;
   deathDate: Date;
   ids: string[];
-  slug: string;
   placeId: number | null;
+  slug: string;
   location: {
     place: string | null;
     lng: number | null;
