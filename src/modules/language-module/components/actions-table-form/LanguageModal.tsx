@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { IModalLanguage } from '@/modules/language-module';
 
 export const LanguageModal = ({

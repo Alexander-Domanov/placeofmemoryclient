@@ -1,6 +1,5 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
-import { FormInstance } from 'antd/es/form/hooks/useForm';
 import { ILanguage } from '@/types';
 import { FORM_ITEMS, IAddLanguageForm } from '@/modules/language-module';
 
