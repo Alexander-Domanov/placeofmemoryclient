@@ -83,7 +83,7 @@ export const CreatePlace: FC = () => {
   const [shortDescriptionCount, setShortDescriptionCount] = useState(0);
   const [descriptionCount, setDescriptionCount] = useState(0);
 
-  const { createPlaceMutate } = useCreatePlace();
+  const { createPlaceMutate, isCreating } = useCreatePlace();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
@@ -94,6 +94,7 @@ export const CreatePlace: FC = () => {
         country: selectedPlaceFromMap.country,
         city: selectedPlaceFromMap.city,
         nameCemetery: selectedPlaceFromMap.formattedAddress,
+        location: selectedPlaceFromMap.location.place,
       });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
@@ -116,24 +117,17 @@ export const CreatePlace: FC = () => {
       location: selectedLocation as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
-    if (form.ids.length === 0) {
-      notification.error({
-        message: 'Gallery is empty',
-        description: 'Please, upload at least one image',
-        placement: 'bottomLeft',
-      });
-    } else {
-      createPlaceMutate(form, {
-        onSuccess: (data) => {
-          notification.success({
-            message: 'Place created successfully',
-            description: 'You will be redirected to the place page',
-            placement: 'bottomLeft',
-          });
-          router.push(routes.dashboard.places.place(data.data.id));
-        },
-      });
-    }
+
+    createPlaceMutate(form, {
+      onSuccess: (data) => {
+        notification.success({
+          message: 'Place created successfully',
+          description: 'You will be redirected to the place page',
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.places.place(data.data.id));
+      },
+    });
   };
 
   return (
@@ -187,7 +181,6 @@ export const CreatePlace: FC = () => {
                 <ReactQuill
                   theme="snow"
                   value={shortDescriptionText}
-                  // value={shortDescription}
                   onChange={(value) => {
                     setShortDescriptionText(value);
                     setShortDescriptionCount(value.length);
@@ -220,55 +213,74 @@ export const CreatePlace: FC = () => {
           </Col>
 
           <Col span={8}>
-            <Card style={{ width: '100%', marginBottom: '16px' }}>
-              <Form.Item>
-                <List split={false}>
-                  <List.Item>
-                    <Typography.Text>
-                      Longitude: {selectedLocation?.lng}
-                    </Typography.Text>
-                  </List.Item>
-
-                  <List.Item>
-                    <Typography.Text>
-                      Latitude: {selectedLocation?.lat}
-                    </Typography.Text>
-                  </List.Item>
-                </List>
-              </Form.Item>
-              <Space size={16}>
-                <Button
-                  type="primary"
-                  title="Save"
-                  onClick={() => onFinish(form.getFieldsValue())}
-                  icon={<SaveOutlined />}
-                >
-                  Save
-                </Button>
-                <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-              </Space>
-            </Card>
-
-            <Card>
-              <Form.Item
-                label="Photo"
-                name="photo"
-                hasFeedback
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                rules={[{ required: true }]}
-                shouldUpdate
-              >
-                <Upload {...uploadProps}>
+            <Flex vertical gap={16}>
+              <Card>
+                <Space size={16}>
                   <Button
-                    icon={<UploadOutlined />}
-                    disabled={fileList.length > 0}
+                    type="primary"
+                    htmlType="submit"
+                    loading={isCreating}
+                    icon={<SaveOutlined />}
                   >
-                    Click to upload
+                    Save
                   </Button>
-                </Upload>
-              </Form.Item>
-            </Card>
+                </Space>
+              </Card>
+
+              <Card>
+                <Form.Item
+                  label="Location"
+                  name="location"
+                  rules={[{ required: true }]}
+                  hasFeedback
+                >
+                  <List split={false}>
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Longitude: &nbsp;
+                        </span>
+                        {selectedLocation?.lng}
+                      </Typography.Text>
+                    </List.Item>
+
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Latitude: &nbsp;
+                        </span>
+                        {selectedLocation?.lat}
+                      </Typography.Text>
+                    </List.Item>
+                  </List>
+
+                  <Space size={16}>
+                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  </Space>
+                </Form.Item>
+              </Card>
+
+              <Card>
+                <Form.Item
+                  label="Photo"
+                  name="photo"
+                  hasFeedback
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
+                  shouldUpdate
+                >
+                  <Upload {...uploadProps}>
+                    <Button
+                      icon={<UploadOutlined />}
+                      disabled={fileList.length > 0}
+                    >
+                      Click to upload
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Card>
+            </Flex>
           </Col>
         </Row>
       </Form>

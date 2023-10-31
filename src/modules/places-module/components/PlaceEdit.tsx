@@ -117,6 +117,8 @@ export const PlaceEdit: FC = () => {
         country: place.country,
         city: place.city,
         nameCemetery: place.nameCemetery,
+        shortDescription: place.shortDescription,
+        description: place.description,
         photo: place.photos.map((f) => ({
           uid: f.uploadId,
           name: f.uploadId,
@@ -125,6 +127,7 @@ export const PlaceEdit: FC = () => {
           response: { ...f },
         })),
         slug: place.slug,
+        location: place.location.place,
       });
       setShortDescriptionText(place.shortDescription);
       setShortDescriptionCount(place.shortDescription.length);
@@ -141,6 +144,7 @@ export const PlaceEdit: FC = () => {
         country: selectedPlaceFromMap.country,
         city: selectedPlaceFromMap.city,
         nameCemetery: selectedPlaceFromMap.formattedAddress,
+        location: selectedPlaceFromMap.location.place,
       });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
@@ -215,6 +219,7 @@ export const PlaceEdit: FC = () => {
                 >
                   <Input placeholder="Input Country" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name="city"
                   label="City"
@@ -223,6 +228,7 @@ export const PlaceEdit: FC = () => {
                 >
                   <Input placeholder="Input City" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name="nameCemetery"
                   label="Name Cemetery"
@@ -251,6 +257,7 @@ export const PlaceEdit: FC = () => {
                     Characters: {shortDescriptionCount}
                   </span>
                 </Form.Item>
+
                 <Form.Item
                   name="description"
                   label="Description"
@@ -303,27 +310,10 @@ export const PlaceEdit: FC = () => {
                     />
                   </Form.Item>
 
-                  <Form.Item>
-                    <List split={false}>
-                      <List.Item>
-                        <Typography.Text>
-                          Longitude: {selectedLocation?.lng}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          Latitude: {selectedLocation?.lat}
-                        </Typography.Text>
-                      </List.Item>
-                    </List>
-                  </Form.Item>
-
                   <Space size={16}>
                     <Button
                       type="primary"
-                      title="Save"
-                      onClick={() => onFinish(form.getFieldsValue())}
+                      htmlType="submit"
                       icon={<SaveOutlined />}
                       loading={isUpdating}
                     >
@@ -334,7 +324,36 @@ export const PlaceEdit: FC = () => {
                 </Card>
 
                 <Card>
-                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  <Form.Item
+                    label="Location"
+                    name="location"
+                    rules={[{ required: true }]}
+                    hasFeedback
+                  >
+                    <Form.Item>
+                      <List split={false}>
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Longitude: &nbsp;
+                            </span>
+                            {selectedLocation?.lng}
+                          </Typography.Text>
+                        </List.Item>
+
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Latitude: &nbsp;
+                            </span>
+                            {selectedLocation?.lat}
+                          </Typography.Text>
+                        </List.Item>
+                      </List>
+                    </Form.Item>
+
+                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  </Form.Item>
                 </Card>
 
                 <Card>

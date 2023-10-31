@@ -129,24 +129,17 @@ export const CreatePerson: FC = () => {
       } as ILocation,
       ids: values.photo?.map((file) => file.response?.uploadId || ''),
     };
-    if (form.ids.length === 0) {
-      notification.error({
-        message: 'Gallery is empty',
-        description: 'Please, upload at least one image',
-        placement: 'bottomLeft',
-      });
-    } else {
-      createPerson(form, {
-        onSuccess: (data) => {
-          notification.success({
-            message: 'Person created successfully',
-            description: 'You will be redirected to the person page',
-            placement: 'bottomLeft',
-          });
-          router.push(routes.dashboard.persons.person(data.data.id));
-        },
-      });
-    }
+
+    createPerson(form, {
+      onSuccess: (data) => {
+        notification.success({
+          message: 'Person created successfully',
+          description: 'You will be redirected to the person page',
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.persons.person(data.data.id));
+      },
+    });
   };
 
   return (

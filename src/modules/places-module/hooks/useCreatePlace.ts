@@ -7,7 +7,7 @@ import { IResponseError } from '@/types/response-error-message.type';
 export const useCreatePlace = () => {
   const client = useQueryClient();
 
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading: isCreating } = useMutation({
     mutationKey: ['createPlace'],
     mutationFn: (placeData: ICreatePlace) => createPlace(placeData),
     // ...noRefetch,
@@ -25,5 +25,5 @@ export const useCreatePlace = () => {
     },
   });
 
-  return { createPlaceMutate: mutate, isLoading, isSuccess };
+  return { createPlaceMutate: mutate, isCreating };
 };
