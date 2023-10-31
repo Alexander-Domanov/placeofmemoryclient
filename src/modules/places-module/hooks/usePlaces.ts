@@ -4,14 +4,6 @@ import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPlaces } from '@/modules/places-module/api/places-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
-interface IError {
-  messages: {
-    message: string;
-    field: string;
-  }[];
-  error: string;
-  statusCode: number;
-}
 export const usePlaces = (
   page: number,
   pageSize: number,
