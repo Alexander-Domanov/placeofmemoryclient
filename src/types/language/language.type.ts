@@ -2,7 +2,7 @@ interface ILanguageSwitcher {
   lang: string;
 }
 interface ILanguageID {
-  languageID: string;
+  languageID: number;
 }
 interface ILanguage {
   name: string;

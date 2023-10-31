@@ -15,7 +15,7 @@ export const useMessage = ({
     if (error || isSuccess) {
       const messageType =
         (error && 'error') || (isSuccess && 'success') || null;
-      const contentMessage = error ? error.message : 'Success';
+      const contentMessage = error ? error.message : `Success`;
 
       messageApi.open({
         type: messageType,
