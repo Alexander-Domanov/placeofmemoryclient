@@ -62,6 +62,8 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'status',
     key: 'status',
     align: 'center',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusUserTag(text, false),
   },
   {
@@ -69,6 +71,8 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'role',
     key: 'role',
     align: 'center',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorRoleTag(text),
   },
   {

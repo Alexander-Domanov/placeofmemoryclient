@@ -115,6 +115,8 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'status',
     key: 'status',
     align: 'center',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusTag(text),
   },
   {

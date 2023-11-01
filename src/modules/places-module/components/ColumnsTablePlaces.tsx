@@ -93,6 +93,8 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'status',
     key: 'status',
     align: 'center',
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusTag(text),
   },
   {

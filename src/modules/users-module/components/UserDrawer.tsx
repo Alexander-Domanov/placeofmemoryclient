@@ -191,6 +191,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             />
           </Col>
         </Row>
+
         <Divider />
       </Drawer>
     </Flex>

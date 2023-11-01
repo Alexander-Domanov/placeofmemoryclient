@@ -16,6 +16,10 @@ export const useUser = (id: string | undefined | string[]) => {
     enabled: !!id,
     select: (response) => response.data,
     ...noRefetch,
+    retry: 0,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   useEffect(() => {
