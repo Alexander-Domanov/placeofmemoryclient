@@ -21,7 +21,7 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     key: 'name',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
-    render: (text, record) => (
+    render: (text) => (
       <Typography.Text ellipsis style={{ cursor: 'pointer', color: '#1087f6' }}>
         {text}
       </Typography.Text>

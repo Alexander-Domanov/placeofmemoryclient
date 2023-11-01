@@ -108,6 +108,7 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
             inlineCollapsed={false}
           />
         </Header>
+
         <Layout>
           <Sider width={200} style={sliderStyle}>
             <Menu
@@ -117,6 +118,7 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
               selectedKeys={[router.asPath]}
             />
           </Sider>
+
           <Layout style={{ padding: '0 24px 24px' }}>
             <Content style={contentStyle}>{children}</Content>
           </Layout>

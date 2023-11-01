@@ -4,14 +4,14 @@ import { useUserStore } from '@/store/userStore';
 
 export const DashboardSelectLanguage = () => {
   const { lang } = useUserStore();
-  const { dataListLanguages, isFetchingDataListLanguagesLanguages } =
+  const { languages, isFetchingDataListLanguagesLanguages } =
     useGetListLanguages();
   const { mutateLangSwitcher, isSuccessLangSwitcher } = useLangSwitcher();
   const handleChange = (option: any) => {
     mutateLangSwitcher({ lang: option.label });
   };
 
-  const optionsLanguagesList = dataListLanguages?.items.map((language) => ({
+  const optionsLanguagesList = languages?.items.map((language) => ({
     value: language.id,
     label: language.code,
   }));
@@ -21,7 +21,7 @@ export const DashboardSelectLanguage = () => {
       {!isFetchingDataListLanguagesLanguages && lang ? (
         <Space wrap>
           <Select
-            disabled={!isSuccessLangSwitcher}
+            // disabled={!isSuccessLangSwitcher}
             onChange={(value, option) => handleChange(option)}
             defaultValue={lang}
             style={{ width: 60 }}
