@@ -8,10 +8,10 @@ export const routes = {
     '/auth/forgot-password',
     '/auth/login',
     '/auth/recovery',
-    '/auth/recovery/resend-form',
+    '/auth/recovery/resend-add-form-language',
     '/auth/registration',
     '/auth/registration/external-account',
-    '/auth/registration/resend-form',
+    '/auth/registration/resend-add-form-language',
     '/auth/registration-confirmation',
     '/',
   ],
@@ -58,6 +58,9 @@ export const routes = {
       index: '/dashboard/articles',
       create: '/dashboard/articles/create',
       article: (id: string | number) => `/dashboard/articles/${id}`,
+    },
+    language: {
+      index: '/dashboard/language',
     },
   },
 };
