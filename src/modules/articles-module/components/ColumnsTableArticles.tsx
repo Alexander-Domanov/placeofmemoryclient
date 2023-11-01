@@ -42,12 +42,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     key: 'title',
     render: (text, record) => (
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
-        <Link
-          href={{
-            pathname: routes.dashboard.articles.article('[id]'),
-            query: { id: record.id },
-          }}
-        >
+        <Link href={`${routes.dashboard.articles.article(record.id)}`}>
           <Typography.Text
             ellipsis
             style={{ cursor: 'pointer', color: '#1087f6' }}
@@ -109,6 +104,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateArticleStatusComponent article={record} />
+
         <DeleteArticleComponent article={record} />
       </Row>
     ),

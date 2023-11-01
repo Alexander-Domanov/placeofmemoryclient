@@ -41,12 +41,13 @@ const DeleteArticleComponent: React.FC<DeleteArticleComponentProps> = ({
           <Button
             key={0}
             icon={<DeleteOutlined />}
-            style={{ cursor: 'pointer', color: '#ef2020' }}
             onClick={() => {
               setSelectedArticle(article);
               showDeleteModal();
             }}
             ghost
+            type="text"
+            danger
           />,
         ]}
       />

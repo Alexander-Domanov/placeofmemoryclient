@@ -173,7 +173,12 @@ export const ArticleEdit: FC = () => {
               <Flex vertical gap={16}>
                 <Card>
                   <Form.Item label="Status">
-                    <Select value={status} onChange={setStatus}>
+                    <Select
+                      value={status}
+                      onChange={setStatus}
+                      loading
+                      disabled
+                    >
                       <Option value="DRAFT">Draft</Option>
                       <Option value="PENDING_REVIEW">Pending Review</Option>
                     </Select>

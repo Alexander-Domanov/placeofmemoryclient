@@ -13,6 +13,7 @@ export const useArticles = (
     data: articles,
     isLoading,
     refetch,
+    isFetching,
   } = useQuery({
     queryKey: ['articles', { page, pageSize, status, title, sorting }],
     queryFn: () => getArticles(page, pageSize, status, title, sorting),
@@ -24,5 +25,5 @@ export const useArticles = (
     refetchOnMount: 'always',
   });
 
-  return { articles, isLoading, refetch };
+  return { articles, isLoading, refetch, isFetching };
 };
