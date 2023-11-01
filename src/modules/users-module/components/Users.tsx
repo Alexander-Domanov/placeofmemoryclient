@@ -159,6 +159,7 @@ export const Users: FC = () => {
         <Table
           bordered
           size="small"
+          rowKey={(record) => record.id}
           columns={columnsTableUsers}
           dataSource={users?.items}
           loading={isLoading}

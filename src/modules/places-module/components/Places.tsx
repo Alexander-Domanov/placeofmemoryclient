@@ -123,6 +123,7 @@ export const Places: FC = () => {
         <Table
           bordered
           size="small"
+          rowKey={(record) => record.id}
           columns={columnsTablePlaces}
           dataSource={places?.items}
           loading={isLoading}

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPlaces } from '@/modules/places-module/api/places-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
+import { noRefetch } from '@/common/helpers/noRefetch';
 
 export const usePlaces = (
   page: number,
@@ -21,6 +21,7 @@ export const usePlaces = (
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    cacheTime: 0,
     retry: 0,
   });
 
