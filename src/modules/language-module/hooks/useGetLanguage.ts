@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { languageApi } from '@/services';
 import { ILanguageID } from '@/types';
 import { noRefetch } from '@/common/helpers/noRefetch';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useGetLanguage = ({ languageID }: ILanguageID) => {
   const {
@@ -9,7 +10,7 @@ export const useGetLanguage = ({ languageID }: ILanguageID) => {
     isSuccess: isSuccessLanguage,
     isError: isErrorLanguage,
     isFetching: isFetchingLanguage,
-    error: errorLanguage,
+    error,
   } = useQuery(
     ['language', languageID],
     () => languageApi.getLanguage({ languageID }),
@@ -18,11 +19,12 @@ export const useGetLanguage = ({ languageID }: ILanguageID) => {
     }
   );
 
+  ErrorNotification(error);
+
   return {
     dataLanguage,
     isErrorLanguage,
     isSuccessLanguage,
     isFetchingLanguage,
-    errorLanguage,
   };
 };

@@ -1,30 +1,28 @@
-import { Breadcrumb, Button, Form } from 'antd';
+import { Breadcrumb, Button, Flex, Form, Space, Table } from 'antd';
 import React from 'react';
 import {
-  LanguageListTable,
-  LanguageModalForm,
-  useOpenCloseModal,
-  useCreateLanguage,
-  useMessage,
   BREAD_CRUMBS_LANGUAGE,
+  LanguageModalForm,
+  useCreateLanguage,
+  useOpenCloseModal,
 } from '@/modules/language-module';
 import { ILanguage } from '@/types';
+import { useGetListLanguages } from '@/services';
+import { columnsTableLanguages } from '@/modules/language-module/components/ColumnsTableLanguages';
 
 export const Languages = () => {
+  const { languages, isLoading } = useGetListLanguages();
   const {
     mutateCreateLanguage,
     isSuccessCreateLanguage,
     isLoadingCreateLanguage,
-    errorCreateLanguage,
   } = useCreateLanguage();
   const { isModalOpen, setIsModalOpen } = useOpenCloseModal({
     isSuccessLanguage: isSuccessCreateLanguage,
   });
+
   const [form] = Form.useForm();
-  const { contextHolder } = useMessage({
-    error: errorCreateLanguage,
-    isSuccess: isSuccessCreateLanguage,
-  });
+
   const onFinishSubmit = (data: ILanguage) => {
     mutateCreateLanguage({ ...data });
   };
@@ -32,26 +30,38 @@ export const Languages = () => {
   if (isSuccessCreateLanguage) form.resetFields();
 
   return (
-    <>
-      {contextHolder}
-      <Breadcrumb items={BREAD_CRUMBS_LANGUAGE} />
-      <>
-        <Button type="primary" onClick={() => setIsModalOpen(true)}>
-          Add Language
-        </Button>
-      </>
-      <LanguageModalForm
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        title="Add language"
-        useForm={form}
-        isSuccess={isSuccessCreateLanguage}
-        isLoading={isLoadingCreateLanguage}
-        onFinishSubmit={onFinishSubmit}
-      />
-      <>
-        <LanguageListTable />
-      </>
-    </>
+    <Flex gap="large" vertical>
+      <div>
+        <Breadcrumb items={BREAD_CRUMBS_LANGUAGE} />
+      </div>
+      <Space direction="vertical" style={{ display: 'flex' }}>
+        <Flex
+          justify="space-between"
+          align="center"
+          gap="middle"
+          style={{ marginBottom: '15px' }}
+        >
+          <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            Add Language
+          </Button>
+        </Flex>
+        <LanguageModalForm
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          title="Add language"
+          useForm={form}
+          isSuccess={isSuccessCreateLanguage}
+          isLoading={isLoadingCreateLanguage}
+          onFinishSubmit={onFinishSubmit}
+        />
+        <Table
+          bordered
+          size="small"
+          loading={isLoading}
+          columns={columnsTableLanguages}
+          dataSource={languages?.items}
+        />
+      </Space>
+    </Flex>
   );
 };

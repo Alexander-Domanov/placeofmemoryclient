@@ -68,11 +68,11 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
       icon: <FaNewspaper />,
     },
     {
-      key: routes.dashboard.addLanguage.index,
+      key: routes.dashboard.language.index,
       label: (
         <LinkComponent
-          href={routes.dashboard.addLanguage.index}
-          title="Add Language"
+          href={routes.dashboard.language.index}
+          title="Language"
         />
       ),
       icon: <BsPencilSquare />,

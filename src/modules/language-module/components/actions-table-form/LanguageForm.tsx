@@ -31,7 +31,7 @@ export const LanguageForm = ({
       ))}
       <Form.Item className="flex justify-end">
         <Button type="primary" htmlType="submit">
-          Submit
+          Save
         </Button>
       </Form.Item>
     </Form>

@@ -2,12 +2,12 @@ import { FormInstance } from 'antd/es/form/hooks/useForm';
 import React, { ReactNode } from 'react';
 import { ILanguage } from '@/types';
 
-interface IGetColumnsLanguage {
-  handlerDeleteLanguage: (id: number | null) => void;
-  handlerUpdateLanguage: (id: number | null) => void;
-  isLoadingDeleteLanguage: boolean;
-  currentID: number | null;
-}
+// interface IGetColumnsLanguage {
+//   handlerDeleteLanguage: (id: number | null) => void;
+//   handlerUpdateLanguage: (id: number | null) => void;
+//   isLoadingDeleteLanguage: boolean;
+//   currentID: number | null;
+// }
 
 interface IAddLanguageForm {
   onFinishSubmit: (values: ILanguage) => void;
@@ -24,4 +24,4 @@ interface IModalLanguage {
   handleCancelCallBack: () => void;
 }
 
-export type { IAddLanguageForm, IModalLanguage, IGetColumnsLanguage };
+export type { IAddLanguageForm, IModalLanguage };

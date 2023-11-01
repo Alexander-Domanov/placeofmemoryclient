@@ -14,7 +14,7 @@ export const BREAD_CRUMBS_LANGUAGE: Partial<
     title: <Link href={routes.dashboard.index}>Dashboard</Link>,
   },
   {
-    key: routes.dashboard.addLanguage.index,
-    title: 'Add Language',
+    key: routes.dashboard.language.index,
+    title: 'Language',
   },
 ];

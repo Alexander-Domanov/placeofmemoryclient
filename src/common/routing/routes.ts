@@ -59,8 +59,8 @@ export const routes = {
       create: '/dashboard/articles/create',
       article: (id: string | number) => `/dashboard/articles/${id}`,
     },
-    addLanguage: {
-      index: '/dashboard/add-language',
+    language: {
+      index: '/dashboard/language',
     },
   },
 };

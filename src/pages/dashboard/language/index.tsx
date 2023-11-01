@@ -2,17 +2,18 @@ import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 import { Languages } from '@/modules/language-module';
 
-const AddLanguagePage = () => {
+const LanguagePage = () => {
   return (
     <>
       <Head>
-        <title>Add Language</title>
+        <title>Language</title>
       </Head>
+
       <Languages />
     </>
   );
 };
 
-AddLanguagePage.getLayout = getDashboardLayout;
+LanguagePage.getLayout = getDashboardLayout;
 
-export default AddLanguagePage;
+export default LanguagePage;
