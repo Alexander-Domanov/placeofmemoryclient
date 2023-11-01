@@ -105,7 +105,6 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
             mode="horizontal"
             defaultSelectedKeys={['1']}
             items={headerItems}
-            inlineCollapsed={false}
           />
         </Header>
 
