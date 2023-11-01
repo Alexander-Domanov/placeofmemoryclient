@@ -7,8 +7,9 @@ import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
-import UpdateUserComponent from '@/modules/users-module/components/UpdateUser';
 import DeleteUserComponent from '@/modules/users-module/components/DeleteUser';
+import { routes } from '@/common/routing/routes';
+import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/UpdateUserStatusAndRole';
 
 export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
   {
@@ -31,12 +32,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
-      <Link
-        href={{
-          pathname: '/dashboard/users/[id]',
-          query: { id: record.id },
-        }}
-      >
+      <Link href={{ pathname: routes.dashboard.users.user(record.id) }}>
         <Typography.Text
           ellipsis
           style={{ cursor: 'pointer', color: '#1087f6' }}
@@ -93,7 +89,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
-        <UpdateUserComponent user={record} />
+        <UpdateUserStatusAndRoleComponent user={record} />
         <DeleteUserComponent user={record} />
       </Row>
     ),

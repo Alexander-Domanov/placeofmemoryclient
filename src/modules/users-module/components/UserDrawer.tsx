@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Button, Col, Divider, Drawer, List, Row, Space } from 'antd';
+import { Button, Col, Divider, Drawer, Flex, List, Row, Space } from 'antd';
 import { IUserWithShortExtensions } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
@@ -36,7 +36,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
   };
 
   return (
-    <>
+    <Flex gap="large" vertical>
       <List.Item
         actions={[
           <Button
@@ -51,6 +51,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           </Button>,
         ]}
       />
+
       <Drawer
         width={510}
         placement="right"
@@ -69,12 +70,13 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
         <Space
           direction="horizontal"
           size="large"
-          style={{ display: 'flex', justifyContent: 'flex-start' }}
+          // style={{ display: 'flex', justifyContent: 'flex-start' }}
         >
-          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+          <Space direction="vertical" size="middle">
             {RenderImage(selectedUser?.avatars?.medium.url, 120, true)}
           </Space>
-          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+
+          <Space direction="vertical" size="middle">
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
                 <DescriptionItem
@@ -100,6 +102,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
         </Space>
 
         <Divider orientation="left">User Information</Divider>
+
         <Row>
           <Col span={10}>
             <DescriptionItem
@@ -107,6 +110,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
               content={ColorRoleTag(selectedUser?.role as string)}
             />
           </Col>
+
           <Col span={10}>
             <DescriptionItem
               title="Status"
@@ -114,58 +118,72 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             />
           </Col>
         </Row>
+
         <Row>
           <Col span={12}>
             <Divider orientation="right">Places</Divider>
+
             <DescriptionItem
               title="Draft"
               content={selectedUser?.places?.drafts.length}
             />
+
             <DescriptionItem
               title="Pending to review"
               content={selectedUser?.places?.pendingReview.length}
             />
+
             <DescriptionItem
               title="Published"
               content={selectedUser?.places?.publications.length}
             />
           </Col>
+
           <Col span={12}>
             <Divider orientation="right">Persons</Divider>
             <DescriptionItem
               title="Draft"
               content={selectedUser?.persons?.drafts.length}
             />
+
             <DescriptionItem
               title="Pending to review"
               content={selectedUser?.persons?.pendingReview.length}
             />
+
             <DescriptionItem
               title="Published"
               content={selectedUser?.persons?.publications.length}
             />
           </Col>
+
           <Col span={12}>
             <Divider orientation="right">Articles</Divider>
+
             <DescriptionItem
               title="Draft"
               content={selectedUser?.articles?.drafts.length}
             />
+
             <DescriptionItem
               title="Pending to review"
               content={selectedUser?.articles?.pendingReview.length}
             />
+
             <DescriptionItem
               title="Published"
               content={selectedUser?.articles?.publications.length}
             />
           </Col>
         </Row>
+
         <Divider orientation="left">Other Information</Divider>
+
         <Row>
           <Col span={12}>
             <DescriptionItem title="Added" content={selectedUser?.createdAt} />
           </Col>
+
           <Col span={12}>
             <DescriptionItem
               title="Last Updated"
@@ -175,6 +193,6 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
         </Row>
         <Divider />
       </Drawer>
-    </>
+    </Flex>
   );
 };

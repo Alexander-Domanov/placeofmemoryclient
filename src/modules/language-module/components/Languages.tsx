@@ -60,6 +60,9 @@ export const Languages = () => {
           loading={isLoading}
           columns={columnsTableLanguages}
           dataSource={languages?.items}
+          pagination={{
+            position: ['bottomCenter'],
+          }}
         />
       </Space>
     </Flex>

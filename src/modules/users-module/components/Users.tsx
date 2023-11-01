@@ -94,6 +94,7 @@ export const Users: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
+
       <Space direction="vertical" style={{ display: 'flex' }}>
         <Flex
           justify="end"
@@ -154,6 +155,7 @@ export const Users: FC = () => {
           {/*  /> */}
           {/* </div> */}
         </Flex>
+
         <Table
           bordered
           size="small"

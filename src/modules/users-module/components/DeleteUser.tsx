@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, List, Modal, notification, Space } from 'antd';
+import { Button, Flex, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
 import { IUserWithShortExtensions } from '@/types';
@@ -34,7 +34,7 @@ const DeleteUserComponent: React.FC<DeleteUserComponentProps> = ({ user }) => {
   };
 
   return (
-    <>
+    <Flex gap="large" vertical>
       <List.Item
         actions={[
           <Button
@@ -49,6 +49,7 @@ const DeleteUserComponent: React.FC<DeleteUserComponentProps> = ({ user }) => {
           />,
         ]}
       />
+
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
@@ -68,7 +69,7 @@ const DeleteUserComponent: React.FC<DeleteUserComponentProps> = ({ user }) => {
           </div>
         </Space>
       </Modal>
-    </>
+    </Flex>
   );
 };
 
