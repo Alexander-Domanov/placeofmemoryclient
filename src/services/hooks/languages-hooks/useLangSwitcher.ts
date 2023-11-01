@@ -12,7 +12,8 @@ export const useLangSwitcher = () => {
     ['lang-switcher'],
     ({ lang }: ILanguageSwitcher) => languageApi.languageSwitcher({ lang }),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        localStorage.setItem('accessToken', response.accessToken);
         client.invalidateQueries(['me']);
       },
     }
