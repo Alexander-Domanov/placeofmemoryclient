@@ -5,7 +5,7 @@ import { getUser } from '@/modules/users-module/api/users-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { useMeQuery } from '@/services';
 
-export const useUser = (id: string | undefined | string[]) => {
+export const useUser = (id: string) => {
   const { data: me } = useMeQuery();
   const {
     data: user,

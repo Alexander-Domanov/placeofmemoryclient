@@ -37,6 +37,6 @@ export const updateUserStatus = (id: number | null, status: string) => {
   return authInstance.put(`users/${id}/status`, { status });
 };
 
-export const getUser = (id: string | undefined | string[]) => {
+export const getUser = (id: string) => {
   return authInstance.get<IUser>(`users/${id}`);
 };

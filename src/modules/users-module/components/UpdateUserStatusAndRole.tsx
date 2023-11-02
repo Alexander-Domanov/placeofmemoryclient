@@ -9,14 +9,14 @@ import {
   SolutionOutlined,
   UpOutlined,
 } from '@ant-design/icons';
-import { IUserWithShortExtensions } from '@/types';
+import { IUser, IUserWithShortExtensions } from '@/types';
 import { useUpdateUserRole } from '@/modules/users-module/hooks/useUpdateUserRole';
 import { useUpdateUserStatus } from '@/modules/users-module/hooks/useUpdateUserStatus';
 
 const { Option } = Select;
 
 interface DeleteUserComponentProps {
-  user: IUserWithShortExtensions | null;
+  user: IUserWithShortExtensions | IUser | null;
 }
 const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   user,
