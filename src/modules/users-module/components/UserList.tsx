@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Breadcrumb,
   Card,
   Col,
   Flex,
   Form,
+  Image,
   List,
   Row,
   Space,
   Spin,
-  Table,
   Tabs,
   Typography,
 } from 'antd';
@@ -21,19 +21,20 @@ import {
 import Link from 'next/link';
 import { useUser } from '@/modules/users-module/hooks/useUser';
 import { routes } from '@/common/routing/routes';
-import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
-import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
-import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
-import { columnsTablePlaces } from '@/modules/places-module';
-import DeleteUserModal from '@/modules/users-module/components/DeleteUserModal';
+import { IUser } from '@/types';
 import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/UpdateUserStatusAndRole';
+import DeleteUserModal from '@/modules/users-module/components/DeleteUserModal';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
+import { Places } from '@/modules/places-module/components/Places';
+import { Persons } from '@/modules/persons-module';
+import { Articles } from '@/modules/articles-module';
 
 const cardStyle: React.CSSProperties = {
   width: 200,
   borderRadius: 5,
 };
 
-const COLORS = ['#0088FE', '#74c782', '#FFBB28', '#FF8042'];
+// const COLORS = ['#0088FE', '#74c782', '#FFBB28', '#FF8042'];
 interface DescriptionItemProps {
   title: string;
   content?: React.ReactNode;
@@ -75,6 +76,14 @@ export const UserList: FC = () => {
   const { userId } = router.query as { userId: string };
   const { user, isLoading } = useUser(userId);
 
+  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      setSelectedUser(user);
+    }
+  }, [user]);
+
   const [form] = Form.useForm();
 
   const onChange = (key: string) => {
@@ -86,45 +95,48 @@ export const UserList: FC = () => {
       label: 'Places',
       key: '1',
       children: (
-        <Table
-          bordered
-          size="small"
-          rowKey={(record) => record.id}
-          columns={columnsTablePlaces}
-          dataSource={user?.places || []}
-          loading={isLoading}
-          scroll={{ x: 1000 }}
-        />
+        <Places />
+        // <Table
+        //   bordered
+        //   size="small"
+        //   rowKey={(record) => record.id}
+        //   columns={columnsTablePlaces}
+        //   dataSource={selectedUser?.places || []}
+        //   loading={isLoading}
+        //   scroll={{ x: 1000 }}
+        // />
       ),
     },
     {
       label: 'Persons',
       key: '2',
       children: (
-        <Table
-          bordered
-          size="small"
-          rowKey={(record) => record.id}
-          columns={columnsTablePersons}
-          dataSource={user?.persons || []}
-          loading={isLoading}
-          scroll={{ x: 1300 }}
-        />
+        <Persons />
+        // <Table
+        //   bordered
+        //   size="small"
+        //   rowKey={(record) => record.id}
+        //   columns={columnsTablePersons}
+        //   dataSource={selectedUser?.persons || []}
+        //   loading={isLoading}
+        //   scroll={{ x: 1300 }}
+        // />
       ),
     },
     {
       label: 'Articles',
       key: '3',
       children: (
-        <Table
-          bordered
-          size="small"
-          rowKey={(record) => record.id}
-          columns={columnsTableArticles}
-          dataSource={user?.articles || []}
-          loading={isLoading}
-          scroll={{ x: 900 }}
-        />
+        <Articles />
+        // <Table
+        //   bordered
+        //   size="small"
+        //   rowKey={(record) => record.id}
+        //   columns={columnsTableArticles}
+        //   dataSource={selectedUser?.articles || []}
+        //   loading={isLoading}
+        //   scroll={{ x: 900 }}
+        // />
       ),
     },
   ];
@@ -132,75 +144,77 @@ export const UserList: FC = () => {
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(`${user?.userName}`)} />
+        <Breadcrumb items={breadcrumbs(`${selectedUser?.userName}`)} />
       </div>
 
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form}>
-          <Row gutter={[16, 16]}>
+          <Row gutter={[8, 8]}>
             <Col span={14}>
               <Flex vertical gap={16}>
-                <Card
-                  extra={
-                    <Space direction="vertical">
-                      <Row>
-                        <DescriptionItem title="ID" />
-                        {user?.id}
-                      </Row>
-                    </Space>
-                  }
-                >
-                  <Row gutter={[16, 16]}>
-                    <Col span={16}>
-                      <List split={false}>
-                        {/* <ListItems title="Name" content={user?.userName} /> */}
-
-                        {/* <ListItems title="Email" content={user?.email} /> */}
-
-                        {/* <ListItems title="Role" content={user?.role} /> */}
-
-                        {/* <ListItems title="Status" content={user?.status} /> */}
-                      </List>
-                    </Col>
-                  </Row>
-                </Card>
+                <Card />
               </Flex>
             </Col>
 
             <Col span={10}>
-              <Flex vertical gap={16}>
+              <Flex vertical gap={6}>
                 <Card
+                  size="small"
                   extra={
-                    <Space direction="vertical">
-                      <Row>
-                        <DescriptionItem title="ID" />
-                        {user?.id}
-                      </Row>
-                    </Space>
+                    <Row>
+                      <DescriptionItem title="ID" />
+                      {selectedUser?.id}
+                    </Row>
                   }
                 >
-                  <Row gutter={[16, 16]}>
+                  <Row>
+                    <Col span={8}>
+                      <Image
+                        src={selectedUser?.avatars?.medium.url}
+                        width={150}
+                        preview
+                        style={{ borderRadius: 4 }}
+                        fallback={pictureBackup}
+                      />
+                    </Col>
+
                     <Col span={16}>
-                      <List split={false}>
-                        <ListItems title="Name" content={user?.userName} />
+                      <List split={false} size="small">
+                        <ListItems
+                          title="Name"
+                          content={selectedUser?.userName}
+                        />
 
-                        <ListItems title="Email" content={user?.email} />
+                        <ListItems
+                          title="Email"
+                          content={selectedUser?.email}
+                        />
 
-                        {/* <ListItems title="Role" content={user?.role} /> */}
+                        <ListItems title="Role" content={selectedUser?.role} />
 
-                        {/* <ListItems title="Status" content={user?.status} /> */}
+                        <ListItems
+                          title="Status"
+                          content={selectedUser?.status}
+                        />
+
+                        <ListItems
+                          title="Created At"
+                          content={selectedUser?.createdAt}
+                        />
                       </List>
                     </Col>
-
-                    <Col span={8}>
-                      {RenderImage(user?.avatars?.medium.url, 100, true)}
-                    </Col>
                   </Row>
+                </Card>
 
-                  <Row justify="start">
-                    <UpdateUserStatusAndRoleComponent user={user || null} />
-                    <DeleteUserModal user={user || null} showButton />
-                  </Row>
+                <Card>
+                  <Space size={16}>
+                    <UpdateUserStatusAndRoleComponent
+                      user={selectedUser}
+                      showButton
+                    />
+
+                    <DeleteUserModal user={selectedUser} showButton />
+                  </Space>
                 </Card>
               </Flex>
             </Col>
