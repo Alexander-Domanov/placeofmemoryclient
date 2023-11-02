@@ -17,7 +17,7 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
   const [selectedLanguage, setSelectedLanguage] =
     useState<ILanguageListItem | null>(null);
 
-  const { mutateDeleteLanguage } = useDeleteLanguage();
+  const { mutateDeleteLanguage, isDeleting } = useDeleteLanguage();
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -67,6 +67,7 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       <Button
         title="Delete"
         icon={<DeleteOutlined />}
+        disabled={language?.id === selectedLanguage?.id && !isDeleting}
         style={{ cursor: 'pointer', color: '#ef2020' }}
         onClick={handleClick}
         ghost

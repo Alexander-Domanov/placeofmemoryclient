@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, List, Modal, notification } from 'antd';
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { ILanguageListItem } from '@/types';
@@ -20,12 +20,14 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
 
   const [form] = Form.useForm();
 
-  form.setFieldsValue({
-    name: language?.name,
-    native: language?.native,
-    code: language?.code,
-    order: language?.order,
-  });
+  useEffect(() => {
+    form.setFieldsValue({
+      name: language?.name,
+      native: language?.native,
+      code: language?.code,
+      order: language?.order,
+    });
+  }, [isModalVisible]);
 
   const handleEditClick = () => {
     setModalVisible(true);
@@ -65,6 +67,7 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
         ]}
       />
       <Modal
+        forceRender
         title="Set new status"
         open={isModalVisible}
         onCancel={handleModalCancel}

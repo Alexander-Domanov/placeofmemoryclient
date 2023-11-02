@@ -86,7 +86,7 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
     {
       key: '2',
       label: userName ? (
-        <div className="w-[150px]">
+        <div className="w-[150px] text-light-300">
           <DropdownMenuHeader />
         </div>
       ) : null,
@@ -96,16 +96,20 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <Layout>
-        <Header className="flex justify-between align-middle text-sm">
+        <Header
+          style={{ backgroundColor: '#292929' }}
+          className="flex justify-between align-middle text-sm"
+        >
           <div className="flex items-center font-kelsi text-xl">
-            <Link href={routes.main}>MOGILKI</Link>
+            <Link style={{ color: '#fafafa' }} href={routes.main}>
+              MOGILKI
+            </Link>
           </div>
           <Menu
-            theme="light"
+            style={{ backgroundColor: '#292929' }}
             mode="horizontal"
             defaultSelectedKeys={['1']}
             items={headerItems}
-            inlineCollapsed={false}
           />
         </Header>
 

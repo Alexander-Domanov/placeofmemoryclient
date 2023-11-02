@@ -6,7 +6,7 @@ export const DashboardSelectLanguage = () => {
   const { lang } = useUserStore();
   const { languages, isFetchingDataListLanguagesLanguages } =
     useGetListLanguages();
-  const { mutateLangSwitcher, isSuccessLangSwitcher } = useLangSwitcher();
+  const { mutateLangSwitcher } = useLangSwitcher();
   const handleChange = (option: any) => {
     mutateLangSwitcher({ lang: option.label });
   };
@@ -21,10 +21,9 @@ export const DashboardSelectLanguage = () => {
       {!isFetchingDataListLanguagesLanguages && lang ? (
         <Space wrap>
           <Select
-            // disabled={!isSuccessLangSwitcher}
             onChange={(value, option) => handleChange(option)}
             defaultValue={lang}
-            style={{ width: 60 }}
+            style={{ width: 60, borderColor: 'transparent' }}
             options={optionsLanguagesList}
             loading={isFetchingDataListLanguagesLanguages}
           />
