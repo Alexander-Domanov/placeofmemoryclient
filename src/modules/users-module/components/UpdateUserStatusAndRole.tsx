@@ -31,9 +31,9 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   const { mutate: updateUserRole } = useUpdateUserRole();
   const { mutate: updateUserStatus } = useUpdateUserStatus();
 
-  const handleEditClick = () => {
-    setModalVisible(true);
-  };
+  // const handleEditClick = () => {
+  //   setModalVisible(true);
+  // };
 
   const handleModalCancel = () => {
     setModalVisible(false);
