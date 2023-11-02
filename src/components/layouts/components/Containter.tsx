@@ -16,9 +16,9 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
   types,
 }) => {
   return (
-    <section
+    <div
       className={twMerge(
-        'w-full mx-0 bg-dark-700 my-auto text-base pl-[136px] pr-[94px]',
+        'max-w-7xl px-10 bg-dark-700 my-auto text-base',
         className,
         clsx(
           className,
@@ -27,6 +27,6 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
       )}
     >
       {children}
-    </section>
+    </div>
   );
 };

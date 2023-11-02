@@ -12,7 +12,7 @@ export const Footer = () => {
   return (
     <footer className="h-[417px] bg-dark-900">
       <Container className="bg-dark-900">
-        <div className="grid grid-cols-4 pt-[70px] font-light leading-6 text-sm text-light-300">
+        <div className="flex justify-between pt-[70px] font-light leading-6 text-sm text-light-300">
           <section className="font-kelsi grid text-3xl grid-cols-1">
             <Link href={routes.main}>MOGILKI</Link>
           </section>

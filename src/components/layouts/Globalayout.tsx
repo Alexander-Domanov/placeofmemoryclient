@@ -6,8 +6,8 @@ export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <LayoutWithHeader>
       <Container>
-        <div className="min-h-[calc(100vh-65px)] pt-[197px] pb-[130px]">
-          <div>{children}</div>
+        <div className="min-h-[calc(100vh-65px)] ">
+          <div className="pt-[197px] pb-[130px]">{children}</div>
         </div>
       </Container>
     </LayoutWithHeader>
