@@ -3,17 +3,19 @@ import { useEffect } from 'react';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPerson } from '@/modules/persons-module/api/persons-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
+import { useMeQuery } from '@/services';
 
 export const usePerson = (id: string | undefined | string[]) => {
+  const { data: me } = useMeQuery();
   const {
     data: person,
     isLoading,
     isSuccess,
     error,
   } = useQuery({
-    queryKey: ['person', { id }],
+    queryKey: ['person', { id, lang: me?.lang }],
     queryFn: () => getPerson(id),
-    enabled: !!id,
+    enabled: !!id && !!me,
     select: (response) => response.data,
     ...noRefetch,
     cacheTime: 0,
