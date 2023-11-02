@@ -5,7 +5,15 @@ import { getUser } from '@/modules/users-module/api/users-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { useMeQuery } from '@/services';
 
-export const useUser = (id: string) => {
+export const useUser = (
+  id: string,
+  page: number,
+  pageSize: number,
+  status: string,
+  name: string,
+  sorting: { field: string | null | number | bigint; order: string | null },
+  extensions: string[] = []
+) => {
   const { data: me } = useMeQuery();
   const {
     data: user,
@@ -13,8 +21,12 @@ export const useUser = (id: string) => {
     isSuccess,
     error,
   } = useQuery({
-    queryKey: ['user', { id, lang: me?.lang }],
-    queryFn: () => getUser(id),
+    queryKey: [
+      'user',
+      { id, page, pageSize, status, name, sorting, extensions, lang: me?.lang },
+    ],
+    queryFn: () =>
+      getUser(id, page, pageSize, status, name, sorting, extensions),
     enabled: !!id && !!me,
     select: (response) => response.data,
     ...noRefetch,

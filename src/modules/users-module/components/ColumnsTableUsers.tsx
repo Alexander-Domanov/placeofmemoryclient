@@ -93,7 +93,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
-        <UpdateUserStatusAndRoleComponent user={record} />
+        <UpdateUserStatusAndRoleComponent user={record} showButton={false} />
         <DeleteUserComponent user={record} />
       </Row>
     ),

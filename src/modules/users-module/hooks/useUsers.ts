@@ -11,8 +11,7 @@ export const useUsers = (
   status: string,
   role: string,
   userName: string,
-  sorting: { field: string | null | number | bigint; order: string | null },
-  extensions: string[] = []
+  sorting: { field: string | null | number | bigint; order: string | null }
 ) => {
   const { data: me } = useMeQuery();
   const {
@@ -29,18 +28,19 @@ export const useUsers = (
         role,
         userName,
         sorting,
-        extensions,
+
         lang: me?.lang,
       },
     ],
-    queryFn: () =>
-      getUsers(page, pageSize, status, role, userName, sorting, extensions),
+    queryFn: () => getUsers(page, pageSize, status, role, userName, sorting),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnMount: 'always',
     retry: 0,
     enabled: !!me,
-    refetchOnMount: 'always',
   });
 
   useEffect(() => {

@@ -17,9 +17,11 @@ const { Option } = Select;
 
 interface DeleteUserComponentProps {
   user: IUserWithShortExtensions | IUser | null;
+  showButton: boolean;
 }
 const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   user,
+  showButton,
 }) => {
   const { id, role, status } = user || { id: null, role: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
@@ -61,19 +63,38 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
     );
   };
 
+  const showButtonDelete = (showButton: boolean) => {
+    const handleEditClick = () => {
+      setModalVisible(true);
+    };
+
+    if (showButton) {
+      return (
+        <Button
+          type="default"
+          title="Update user status and role"
+          icon={<EditOutlined />}
+          style={{ cursor: 'pointer', color: '#2c332c' }}
+          onClick={handleEditClick}
+        >
+          Update
+        </Button>
+      );
+    }
+    return (
+      <Button
+        key={0}
+        icon={<EditOutlined />}
+        style={{ cursor: 'pointer', color: '#2c332c' }}
+        onClick={handleEditClick}
+        ghost
+      />
+    );
+  };
+
   return (
     <>
-      <List.Item
-        actions={[
-          <Button
-            key={0}
-            icon={<EditOutlined />}
-            style={{ cursor: 'pointer', color: '#2c332c' }}
-            onClick={handleEditClick}
-            ghost
-          />,
-        ]}
-      />
+      <List.Item actions={[showButtonDelete(showButton)]} />
       <Modal
         title="Change user role or status:"
         open={isModalVisible}
