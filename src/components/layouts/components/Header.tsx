@@ -9,7 +9,7 @@ export function Header() {
   const { userName } = useUserStore();
   return (
     <header className="h-[65px] bg-dark-900 flex items-center border-b border-dark-900 ">
-      <Container className="bg-dark-900">
+      <Container className="bg-dark-900 w-full">
         <section className="flex justify-between items-center font-normal leading-3 text-sm text-light-300">
           <div className="flex items-center font-kelsi text-xl">
             <Link href={routes.main}>MOGILKI</Link>
@@ -28,10 +28,10 @@ export function Header() {
               {!userName ? (
                 <>
                   <li>
-                    <Link href={routes.auth.signIn}>Log in</Link>
+                    <Link href={routes.auth.signIn}>Уваход</Link>
                   </li>
                   <li>
-                    <Link href={routes.auth.signUp}>SignUp</Link>
+                    <Link href={routes.auth.signUp}>Рэгістрацыя</Link>
                   </li>
                 </>
               ) : (

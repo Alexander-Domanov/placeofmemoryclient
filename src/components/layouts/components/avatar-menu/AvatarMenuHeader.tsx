@@ -6,7 +6,9 @@ export const AvatarMenuHeader = () => {
   return (
     <div className="flex items-center gap-3">
       <AvatarComponent src={urlAvatar} alt="user-avatar" />
-      <span className="hover:underline hover:text-blue-500">{userName}</span>
+      <span className="hover:underline hover:text-blue-500 cursor-pointer">
+        {userName}
+      </span>
     </div>
   );
 };
