@@ -14,6 +14,7 @@ import {
   Form,
   Input,
   List,
+  Modal,
   notification,
   Row,
   Select,
@@ -24,7 +25,11 @@ import {
 } from 'antd';
 import dynamic from 'next/dynamic';
 import {
+  ClockCircleOutlined,
   DeleteOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+  InboxOutlined,
   SaveOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
@@ -33,8 +38,13 @@ import { useArticle } from '@/modules/articles-module/hooks/useArticle';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
+import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 
 const { Option } = Select;
+
+const { confirm } = Modal;
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -60,8 +70,10 @@ export const ArticleEdit: FC = () => {
   const router = useRouter();
   const id = router.query.id as string;
 
-  const { article, isLoading, isSuccess } = useArticle(id);
+  const { article, isLoading } = useArticle(id);
   const { mutate, isUpdating } = useUpdateArticle(id);
+  const { updateStatusArticle, isStatusUpdating } = useUpdateArticleStatus();
+  const { deleteArticleMutationAsync } = useDeleteArticle();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
@@ -70,6 +82,22 @@ export const ArticleEdit: FC = () => {
   const [status, setStatus] = useState('DRAFT');
 
   const content = Form.useWatch('content', form);
+
+  const onStatusChange = (status: string) => {
+    setStatus(status);
+
+    updateStatusArticle(
+      { id: +id, status },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: 'Status updated successfully',
+            placement: 'bottomLeft',
+          });
+        },
+      }
+    );
+  };
 
   const normFile = (e: any) => {
     // console.log('Upload event:', e);
@@ -113,8 +141,26 @@ export const ArticleEdit: FC = () => {
       onSuccess: () => {
         notification.success({
           message: 'Article updated successfully',
-          // description: 'You will be redirected to the place page',
           placement: 'bottomLeft',
+        });
+      },
+    });
+  };
+
+  const onDelete = () => {
+    confirm({
+      title: 'Do you want to delete these article?',
+      okType: 'danger',
+      onOk() {
+        return deleteArticleMutationAsync(+id, {
+          onSuccess: () => {
+            notification.success({
+              message: 'Article was deleted successfully',
+              placement: 'bottomLeft',
+            });
+
+            router.push(routes.dashboard.articles.index);
+          },
         });
       },
     });
@@ -129,28 +175,22 @@ export const ArticleEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onSubmit}>
           <Row gutter={[16, 16]}>
-            <Col span={18}>
+            <Col span={16}>
               <Card>
                 <Form.Item
                   label="Title"
                   name="title"
                   rules={[{ required: true }]}
+                  hasFeedback
                 >
                   <Input placeholder="Title" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Slug"
-                  name="slug"
-                  rules={[{ required: true }]}
-                >
-                  <Input placeholder="Slug" />
                 </Form.Item>
 
                 <Form.Item
                   label="Short Description"
                   name="description"
                   rules={[{ required: true }]}
+                  hasFeedback
                 >
                   <Input.TextArea autoSize placeholder="Short Description" />
                 </Form.Item>
@@ -169,32 +209,51 @@ export const ArticleEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={6}>
+            <Col span={8}>
               <Flex vertical gap={16}>
                 <Card>
                   <Form.Item label="Status">
                     <Select
                       value={status}
-                      onChange={setStatus}
-                      loading
-                      disabled
+                      onChange={onStatusChange}
+                      loading={isStatusUpdating}
+                      disabled={isStatusUpdating}
                     >
-                      <Option value="DRAFT">Draft</Option>
-                      <Option value="PENDING_REVIEW">Pending Review</Option>
+                      <Option value="DRAFT">
+                        <EyeInvisibleOutlined /> Draft
+                      </Option>
+                      <Option value="PENDING_REVIEW">
+                        <ClockCircleOutlined /> Send for review
+                      </Option>
+                      <Option value="PUBLISHED">
+                        <EyeOutlined /> Publish
+                      </Option>
+                      <Option value="ARCHIVED">
+                        <InboxOutlined /> Archive
+                      </Option>
                     </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Slug"
+                    name="slug"
+                    rules={[{ required: true }]}
+                    hasFeedback
+                  >
+                    <Input placeholder="Slug" />
                   </Form.Item>
 
                   <Form.Item>
                     <List split={false}>
                       <List.Item>
                         <Typography.Text>
-                          Created At: {article?.createdAt}
+                          Created At: {convertDateToFormat(article?.createdAt)}
                         </Typography.Text>
                       </List.Item>
 
                       <List.Item>
                         <Typography.Text>
-                          Updated At: {article?.updatedAt}
+                          Updated At: {convertDateToFormat(article?.updatedAt)}
                         </Typography.Text>
                       </List.Item>
                     </List>
@@ -215,7 +274,9 @@ export const ArticleEdit: FC = () => {
                       type="primary"
                       title="Delete"
                       danger
+                      ghost
                       icon={<DeleteOutlined />}
+                      onClick={onDelete}
                     >
                       Delete
                     </Button>

@@ -34,7 +34,7 @@ const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
 
   return (
     <>
-      {fetchStatus === 'fetching' && <div>Loading...</div>}
+      {/* {fetchStatus === 'fetching' && <div>Loading...</div>} */}
       {children}
     </>
   );

@@ -123,7 +123,7 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
             />
           </Sider>
 
-          <Layout style={{ padding: '0 24px 24px' }}>
+          <Layout>
             <Content style={contentStyle}>{children}</Content>
           </Layout>
         </Layout>

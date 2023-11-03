@@ -8,6 +8,7 @@ import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticle';
 import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 export const columnsTableArticles: ColumnsType<IArticle> = [
   {
@@ -64,6 +65,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Updated At',
@@ -72,6 +74,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Status',

@@ -119,6 +119,7 @@ export const Articles: FC = () => {
       <Table
         bordered
         size="small"
+        rowKey={(record) => record.id}
         columns={columnsTableArticles}
         dataSource={articles?.items}
         loading={isFetching}

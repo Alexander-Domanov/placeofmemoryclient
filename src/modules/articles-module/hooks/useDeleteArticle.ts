@@ -6,7 +6,11 @@ import { deleteArticle } from '@/modules/articles-module/api/articles-api';
 
 export const useDeleteArticle = () => {
   const client = useQueryClient();
-  const { mutate: deleteArticleMutation, isLoading: isDeleting } = useMutation({
+  const {
+    mutate: deleteArticleMutation,
+    mutateAsync: deleteArticleMutationAsync,
+    isLoading: isDeleting,
+  } = useMutation({
     mutationKey: ['delete-article'],
     mutationFn: (id: number | null) => deleteArticle(id),
     onSuccess: () => {
@@ -24,5 +28,5 @@ export const useDeleteArticle = () => {
     },
   });
 
-  return { deleteArticleMutation, isDeleting };
+  return { deleteArticleMutation, deleteArticleMutationAsync, isDeleting };
 };

@@ -53,7 +53,6 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
             key={0}
             icon={<EditOutlined />}
             onClick={handleEditClick}
-            ghost
             type="text"
           />,
         ]}

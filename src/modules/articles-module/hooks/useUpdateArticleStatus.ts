@@ -8,7 +8,7 @@ export const useUpdateArticleStatus = () => {
   const client = useQueryClient();
   const {
     mutate: updateStatusArticle,
-    isLoading,
+    isLoading: isStatusUpdating,
     isSuccess,
   } = useMutation({
     mutationKey: ['updateArticleStatus'],
@@ -28,5 +28,5 @@ export const useUpdateArticleStatus = () => {
       });
     },
   });
-  return { updateStatusArticle, isLoading, isSuccess };
+  return { updateStatusArticle, isStatusUpdating, isSuccess };
 };

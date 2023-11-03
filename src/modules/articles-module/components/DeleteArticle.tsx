@@ -45,7 +45,6 @@ const DeleteArticleComponent: React.FC<DeleteArticleComponentProps> = ({
               setSelectedArticle(article);
               showDeleteModal();
             }}
-            ghost
             type="text"
             danger
           />,

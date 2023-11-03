@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import {
   Breadcrumb,
   Button,
@@ -7,6 +7,7 @@ import {
   Flex,
   Form,
   Input,
+  notification,
   Row,
   Upload,
 } from 'antd';
@@ -17,7 +18,7 @@ import {
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { UploadOutlined } from '@ant-design/icons';
+import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { routes } from '@/common/routing/routes';
 import 'react-quill/dist/quill.snow.css';
@@ -72,7 +73,7 @@ export const ArticleCreate: FC = () => {
   const { uploadProps } = useUpload(setFileList);
 
   const normFile = (e: any) => {
-    console.log('Upload event:', e);
+    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -80,7 +81,7 @@ export const ArticleCreate: FC = () => {
   };
 
   const onSubmit = (values: ArticleForm) => {
-    console.log(values);
+    // console.log(values);
 
     const form = {
       title: values.title,
@@ -91,6 +92,12 @@ export const ArticleCreate: FC = () => {
 
     mutate(form, {
       onSuccess: (data) => {
+        notification.success({
+          message: 'Article created successfully',
+          description: 'You will be redirected to the article page',
+          placement: 'bottomLeft',
+        });
+
         if (data.data.id) {
           router.push(routes.dashboard.articles.article(data.data.id));
         }
@@ -104,36 +111,23 @@ export const ArticleCreate: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col span={16}>
-          <Card>
-            <Form
-              layout="vertical"
-              fields={fields}
-              form={form}
-              onFieldsChange={(_, allFields) => {
-                setFields(allFields);
-              }}
-              onFinish={onSubmit}
-              // form={form}
-              // initialValues={{
-              //   photo: article?.photos.map((f) => ({
-              //     response: f,
-              //     id: f.uploadId,
-              //     status: 'done',
-              //     name: '1337.png',
-              //     url: f.versions.huge.url,
-              //   })),
-              // }}
-            >
-              {/* <Form.Item> */}
-              {/*  <pre>{JSON.stringify(fields, null, 2)}</pre> */}
-              {/* </Form.Item> */}
-
+      <Form
+        layout="vertical"
+        fields={fields}
+        form={form}
+        onFieldsChange={(_, allFields) => {
+          setFields(allFields);
+        }}
+        onFinish={onSubmit}
+      >
+        <Row gutter={[16, 16]}>
+          <Col span={16}>
+            <Card>
               <Form.Item
                 label="Title"
                 name="title"
                 rules={[{ required: true }]}
+                hasFeedback
               >
                 <Input placeholder="Title" />
               </Form.Item>
@@ -142,6 +136,7 @@ export const ArticleCreate: FC = () => {
                 label="Short Description"
                 name="description"
                 rules={[{ required: true }]}
+                hasFeedback
               >
                 <Input.TextArea autoSize placeholder="Short Description" />
               </Form.Item>
@@ -154,46 +149,48 @@ export const ArticleCreate: FC = () => {
                 <ReactQuill
                   theme="snow"
                   value={content}
-                  onChange={(value) => {
-                    form.setFieldValue('content', value);
-                    // form.
-                  }}
+                  onChange={(value) => form.setFieldValue('content', value)}
                 />
-
-                {/* <TextEditor content={content} setContent={form.setFieldValue} /> */}
               </Form.Item>
+            </Card>
+          </Col>
 
-              <Form.Item
-                label="Photo"
-                name="photo"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                rules={[{ required: true }]}
-                shouldUpdate
-              >
-                <Upload {...uploadProps}>
-                  <Button
-                    icon={<UploadOutlined />}
-                    disabled={fileList.length > 0}
-                  >
-                    Click to upload
-                  </Button>
-                </Upload>
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit" loading={isCreating}>
+          <Col span={8}>
+            <Flex vertical gap="middle">
+              <Card>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  icon={<SaveOutlined />}
+                  loading={isCreating}
+                >
                   Save
                 </Button>
-              </Form.Item>
-            </Form>
-          </Card>
-        </Col>
+              </Card>
 
-        <Col span={8}>
-          <Card />
-        </Col>
-      </Row>
+              <Card>
+                <Form.Item
+                  label="Photo"
+                  name="photo"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
+                  shouldUpdate
+                >
+                  <Upload {...uploadProps}>
+                    <Button
+                      icon={<UploadOutlined />}
+                      disabled={fileList.length > 0}
+                    >
+                      Click to upload
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Card>
+            </Flex>
+          </Col>
+        </Row>
+      </Form>
     </Flex>
   );
 };
