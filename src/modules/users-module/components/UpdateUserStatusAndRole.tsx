@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import {
   CheckCircleOutlined,
@@ -34,6 +34,11 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   // const handleEditClick = () => {
   //   setModalVisible(true);
   // };
+
+  useEffect(() => {
+    setNewRole(role);
+    setNewStatus(status);
+  }, [user]);
 
   const handleModalCancel = () => {
     setModalVisible(false);

@@ -179,6 +179,11 @@ export const UserList: FC = () => {
                     title="Created At"
                     content={selectedUser?.createdAt}
                   />
+
+                  <ListItems
+                    title="Updated At"
+                    content={selectedUser?.updatedAt}
+                  />
                 </List>
               </Col>
 
@@ -286,6 +291,7 @@ export const UserList: FC = () => {
               />
             </div>
           </Flex>
+
           <Table
             bordered
             size="small"
@@ -342,6 +348,7 @@ export const UserList: FC = () => {
               />
             </div>
           </Flex>
+
           <Table
             bordered
             size="small"
@@ -374,68 +381,6 @@ export const UserList: FC = () => {
 
       <Spin spinning={isLoading}>
         <Row gutter={[8, 8]}>
-          {/* <Col span={14}>/!* <Flex vertical gap={16} /> *!/</Col> */}
-
-          {/* <Col span={10}> */}
-          {/*  <Flex vertical gap={6}> */}
-          {/*    <Card */}
-          {/*      size="small" */}
-          {/*      extra={ */}
-          {/*        <Row> */}
-          {/*          <DescriptionItem title="ID" /> */}
-          {/*          {selectedUser?.id} */}
-          {/*        </Row> */}
-          {/*      } */}
-          {/*    > */}
-          {/*      <Row> */}
-          {/*        <Col span={8}> */}
-          {/*          <Image */}
-          {/*            src={selectedUser?.avatars?.medium.url} */}
-          {/*            width={150} */}
-          {/*            preview */}
-          {/*            style={{ borderRadius: 4 }} */}
-          {/*            fallback={pictureBackup} */}
-          {/*          /> */}
-          {/*        </Col> */}
-
-          {/*        <Col span={16}> */}
-          {/*          <List split={false} size="small"> */}
-          {/*            <ListItems */}
-          {/*              title="Name" */}
-          {/*              content={selectedUser?.userName} */}
-          {/*            /> */}
-
-          {/*            <ListItems title="Email" content={selectedUser?.email} /> */}
-
-          {/*            <ListItems title="Role" content={selectedUser?.role} /> */}
-
-          {/*            <ListItems */}
-          {/*              title="Status" */}
-          {/*              content={selectedUser?.status} */}
-          {/*            /> */}
-
-          {/*            <ListItems */}
-          {/*              title="Created At" */}
-          {/*              content={selectedUser?.createdAt} */}
-          {/*            /> */}
-          {/*          </List> */}
-          {/*        </Col> */}
-          {/*      </Row> */}
-          {/*    </Card> */}
-
-          {/*    <Card> */}
-          {/*      <Space size={16}> */}
-          {/*        <UpdateUserStatusAndRoleComponent */}
-          {/*          user={selectedUser} */}
-          {/*          showButton */}
-          {/*        /> */}
-
-          {/*        <DeleteUserModal user={selectedUser} showButton /> */}
-          {/*      </Space> */}
-          {/*    </Card> */}
-          {/*  </Flex> */}
-          {/* </Col> */}
-
           <Col span={24}>
             <Card>
               <Tabs onChange={onChangeExtensions} type="card" items={items} />
