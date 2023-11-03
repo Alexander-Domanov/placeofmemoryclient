@@ -104,6 +104,7 @@ export const PersonEdit: FC = () => {
   const [selectedPlace, setSelectedPlace] = useState<{
     value: string;
     id: number;
+    formattedAddress: string;
   } | null>(null);
   const [biographyText, setBiographyText] = useState('');
   const [biographyCount, setBiographyCount] = useState(0);
@@ -142,7 +143,11 @@ export const PersonEdit: FC = () => {
       });
       setBiographyText(person.biography);
       setSelectedLocation(person.location);
-      setSelectedPlace({ value: person.place.name, id: person.place.id });
+      setSelectedPlace({
+        value: person.place.name,
+        id: person.place.id,
+        formattedAddress: person.place.formattedAddress,
+      });
     }
   }, [person]);
 
@@ -330,10 +335,22 @@ export const PersonEdit: FC = () => {
                             </span>
                             {selectedPlace?.value}
                           </Typography.Text>
+                        </List.Item>
+
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Formatted address: &nbsp;
+                            </span>
+                            {selectedPlace?.formattedAddress}
+                          </Typography.Text>
+                        </List.Item>
+
+                        <Row justify="end">
                           <Button type="dashed" onClick={clearSelectedPlace}>
                             Clear
                           </Button>
-                        </List.Item>
+                        </Row>
                       </List>
                     </Form.Item>
                   </Form.Item>
@@ -348,6 +365,15 @@ export const PersonEdit: FC = () => {
                   >
                     <Form.Item>
                       <List split={false}>
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
+                              Formatted Address: &nbsp;
+                            </span>
+                            {selectedLocation?.place}
+                          </Typography.Text>
+                        </List.Item>
+
                         <List.Item>
                           <Typography.Text>
                             <span className="font-normal text-neutral-400">

@@ -37,6 +37,24 @@ export const updateUserStatus = (id: number | null, status: string) => {
   return authInstance.put(`users/${id}/status`, { status });
 };
 
-export const getUser = (id: string | undefined | string[]) => {
-  return authInstance.get<IUser>(`users/${id}`);
+export const getUser = (
+  id: string,
+  page: number,
+  pageSize: number,
+  status: string,
+  name: string,
+  sorting: { field: string | null | number | bigint; order: string | null },
+  extensions: string[] = []
+) => {
+  return authInstance.get<IUser>(`users/${id}`, {
+    params: {
+      pageNumber: page,
+      pageSize,
+      status,
+      name,
+      sortBy: sorting.field,
+      sortDirection: sorting.order,
+      extensions,
+    },
+  });
 };

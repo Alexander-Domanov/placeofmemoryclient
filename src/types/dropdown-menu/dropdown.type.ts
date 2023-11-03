@@ -7,5 +7,5 @@ export interface IDropdownMenuItems {
 export interface IDropdownMenuComponentProps {
   children: React.ReactNode;
   items: IDropdownMenuItems[];
-  menuLabel?: string;
+  menuLabel?: string | JSX.Element;
 }

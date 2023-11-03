@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { ILanguageListItem } from '@/types';
-import { useDeleteLanguage } from '@/modules/language-module';
+import { IUser, IUserWithShortExtensions } from '@/types';
+import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
 
-interface DeleteLanguageModalProps {
-  language: ILanguageListItem | null;
+interface DeleteUserModalProps {
+  user: IUser | IUserWithShortExtensions | null;
   showButton: boolean;
 }
 
-const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
-  language,
+const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
+  user,
   showButton,
 }) => {
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<ILanguageListItem | null>(null);
-
-  const { mutateDeleteLanguage, isDeleting } = useDeleteLanguage();
+  const [selectedUser, setSelectedUser] = useState<
+    IUser | IUserWithShortExtensions | null
+  >(null);
+  const { deleteUserMutation } = useDeleteUser();
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -27,24 +27,21 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
     setDeleteModalVisible(false);
   };
 
-  const deleteLanguage = () => {
-    mutateDeleteLanguage(
-      { languageID: selectedLanguage?.id as number },
-      {
-        onSuccess: () => {
-          notification.success({
-            message: `Language ${selectedLanguage?.name} deleted`,
-            placement: 'bottomLeft',
-          });
-        },
-      }
-    );
+  const deleteUser = () => {
+    deleteUserMutation(selectedUser?.id || null, {
+      onSuccess: () => {
+        notification.success({
+          message: `User: ${selectedUser?.userName} deleted successfully`,
+          placement: 'bottomLeft',
+        });
+      },
+    });
     setDeleteModalVisible(false);
   };
 
   const showButtonDelete = (showButton: boolean) => {
     const handleClick = () => {
-      setSelectedLanguage(language);
+      setSelectedUser(user);
       showDeleteModal();
     };
 
@@ -67,7 +64,6 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       <Button
         title="Delete"
         icon={<DeleteOutlined />}
-        disabled={language?.id === selectedLanguage?.id && !isDeleting}
         style={{ cursor: 'pointer', color: '#ef2020' }}
         onClick={handleClick}
         ghost
@@ -81,7 +77,7 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
-        onOk={deleteLanguage}
+        onOk={deleteUser}
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
@@ -89,10 +85,10 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the language:
+              Are you sure you want to delete the user:{' '}
             </span>
             <span className="font-normal text-start">
-              {selectedLanguage?.name}
+              {selectedUser?.userName}
             </span>
           </div>
         </Space>
@@ -100,7 +96,7 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
-        onOk={deleteLanguage}
+        onOk={deleteUser}
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
@@ -108,10 +104,10 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the language:
+              Are you sure you want to delete the user:{' '}
             </span>
             <span className="font-normal text-start">
-              {selectedLanguage?.name}
+              {selectedUser?.userName}
             </span>
           </div>
         </Space>
@@ -120,4 +116,4 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
   );
 };
 
-export default DeleteLanguageModal;
+export default DeleteUserModal;

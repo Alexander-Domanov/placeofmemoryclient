@@ -20,7 +20,7 @@ export const DropdownMenuComponent = ({
       <DropdownMenuContent>
         {menuLabel && (
           <>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
             <DropdownMenuSeparator />
           </>
         )}

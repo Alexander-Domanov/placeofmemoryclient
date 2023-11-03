@@ -36,7 +36,7 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
       postalCode: place?.postalCode,
       formattedAddress: place?.formattedAddress,
       location: {
-        place: place?.formattedAddress.split(',')[0],
+        place: place?.formattedAddress,
         lat: place?.location?.lat,
         lng: place?.location?.lng,
       },

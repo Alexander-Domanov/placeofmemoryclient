@@ -14,6 +14,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
+    width: 60,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -24,6 +25,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'owner',
     key: 'ownerId',
     align: 'center',
+    width: 60,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -41,6 +43,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'First Name',
     dataIndex: 'firstName',
     key: 'firstName',
+    width: 150,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -64,6 +67,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'Last Name',
     dataIndex: 'lastName',
     key: 'lastName',
+    width: 150,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -71,6 +75,8 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'Birth Date',
     dataIndex: 'birthDate',
     key: 'birthDate',
+    width: 110,
+    align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -78,6 +84,8 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'Death Date',
     dataIndex: 'deathDate',
     key: 'deathDate',
+    width: 115,
+    align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -85,6 +93,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'Created At',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -92,6 +101,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -100,6 +110,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'place',
     key: 'place',
     align: 'center',
+    width: 80,
     render: (text, record) => (
       <Tooltip
         title={`name: ${record.place.name}`}
@@ -115,6 +126,9 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'status',
     key: 'status',
     align: 'center',
+    width: 130,
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusTag(text),
   },
   {
@@ -122,6 +136,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'photos',
     key: 'photos',
     align: 'center',
+    width: 80,
     render: (text, record: IPerson) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
@@ -144,6 +159,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
+    width: 90,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePersonStatusComponent person={record} />

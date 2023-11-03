@@ -1,7 +1,11 @@
-import { IAvatarVersions, IPerson, IPlace } from '@/types';
+import {
+  IAvatarVersions,
+  IGetPersonsResponse,
+  IGetPlacesResponse,
+} from '@/types';
 import { IBaseDateType } from '@/types/common/base-date.type';
 import { ISummaryStatusGroupDto } from '@/types/common/summary-status-group.type';
-import { IArticle } from '@/types/articles/article.type';
+import { IGetArticlesResponse } from '@/types/articles/get-articles-response.type';
 
 interface IBaseUserType {
   id: number;
@@ -19,7 +23,7 @@ export interface IUserWithShortExtensions extends IBaseDateType, IBaseUserType {
 }
 
 export interface IUser extends IBaseDateType, IBaseUserType {
-  places: IPlace[] | null;
-  persons: IPerson[] | null;
-  articles: IArticle[] | null;
+  places: IGetPlacesResponse;
+  persons: IGetPersonsResponse;
+  articles: IGetArticlesResponse;
 }

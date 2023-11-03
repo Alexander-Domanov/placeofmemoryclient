@@ -1,6 +1,6 @@
-export const REG_FORM_NUMBER = /^[0-9]+$/;
-export const REG_FORM_TEXT = /^[a-zA-Z]+$/;
-export const REG_FORM_LOWER_TEXT = /^[a-z]+$/;
+const REG_FORM_NUMBER = /^[0-9]+$/;
+const REG_FORM_TEXT = /^[a-zA-Z]+$/;
+const REG_FORM_NATIVE = /^[\p{L}]+$/u;
 
 export const FORM_ITEMS = [
   {
@@ -27,7 +27,7 @@ export const FORM_ITEMS = [
         message: 'Please input the native language!',
       },
       {
-        pattern: REG_FORM_TEXT,
+        pattern: REG_FORM_NATIVE,
         message: 'Language name must contain only text!',
       },
     ],
@@ -46,10 +46,6 @@ export const FORM_ITEMS = [
         message: 'Language name must contain only text!',
       },
 
-      {
-        pattern: REG_FORM_LOWER_TEXT,
-        message: 'Code must contain only lowercase letters!',
-      },
       {
         max: 2,
         message: 'Code must be 2 characters or less!',

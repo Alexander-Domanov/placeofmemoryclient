@@ -11,6 +11,7 @@ export const useDeleteUser = () => {
     mutationFn: (id: number | null) => deleteUser(id),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['users'] });
+      client.invalidateQueries({ queryKey: ['user'] });
     },
     ...noRefetch,
     onError: (error: IResponseError) => {

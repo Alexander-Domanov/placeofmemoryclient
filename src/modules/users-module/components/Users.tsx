@@ -35,11 +35,6 @@ export const Users: FC = () => {
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-  // const [extensions, setExtensions] = useState<string[]>([
-  //   'places',
-  //   'persons',
-  //   'articles',
-  // ]);
 
   const [status, setStatus] = useState('all');
   const [role, setRole] = useState('all');
@@ -53,7 +48,6 @@ export const Users: FC = () => {
     role,
     search,
     sorting
-    // extensions
   );
 
   const onPageChange = (_page: number) => {
@@ -85,15 +79,13 @@ export const Users: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
-  // const handleExtensionsChange = (value: string[]) => {
-  //   setExtensions(value);
-  // };
 
   return (
     <Flex gap="large" vertical>
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
+
       <Space direction="vertical" style={{ display: 'flex' }}>
         <Flex
           justify="end"
@@ -135,28 +127,12 @@ export const Users: FC = () => {
               onChange={onRoleChange}
             />
           </div>
-          {/* <div> */}
-          {/*  <Select */}
-          {/*    mode="multiple" */}
-          {/*    tagRender={tagRender} */}
-          {/*    defaultValue={['places', 'persons', 'articles']} */}
-          {/*    style={{ */}
-          {/*      width: '300px', */}
-          {/*      boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`, */}
-          {/*      borderRadius: '7px', */}
-          {/*    }} */}
-          {/*    options={[ */}
-          {/*      { value: 'places', label: 'Places' }, */}
-          {/*      { value: 'persons', label: 'Persons' }, */}
-          {/*      { value: 'articles', label: 'Articles' }, */}
-          {/*    ]} */}
-          {/*    onChange={handleExtensionsChange} */}
-          {/*  /> */}
-          {/* </div> */}
         </Flex>
+
         <Table
           bordered
           size="small"
+          rowKey={(record) => record.id}
           columns={columnsTableUsers}
           dataSource={users?.items}
           loading={isLoading}

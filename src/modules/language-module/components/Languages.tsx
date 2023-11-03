@@ -56,10 +56,15 @@ export const Languages = () => {
         />
         <Table
           bordered
+          rowKey={(record) => record.id}
           size="small"
           loading={isLoading}
           columns={columnsTableLanguages}
           dataSource={languages?.items}
+          scroll={{ x: 1000 }}
+          pagination={{
+            position: ['bottomCenter'],
+          }}
         />
       </Space>
     </Flex>

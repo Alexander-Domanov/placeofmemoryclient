@@ -14,6 +14,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
+    width: 60,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -23,6 +24,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Owner',
     dataIndex: 'owner',
     key: 'ownerId',
+    width: 80,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -40,6 +42,8 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    ellipsis: true,
+    width: 300,
     render: (text, record) => (
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link href={`${routes.dashboard.articles.article(record.id)}`}>
@@ -57,6 +61,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Created At',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -64,6 +69,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -71,6 +77,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+    width: 130,
     align: 'center',
     render: (text: string) => ColorStatusTag(text),
   },
@@ -78,6 +85,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Photos',
     dataIndex: 'photos',
     key: 'photos',
+    width: 80,
     align: 'center',
     render: (text, record: IArticle) => (
       <Row justify="space-evenly">
@@ -100,6 +108,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     title: 'Actions',
     dataIndex: 'actions',
     key: 'actions',
+    width: 90,
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">

@@ -41,6 +41,7 @@ export const routes = {
     users: {
       index: '/dashboard/users',
       user: (id: string | number) => `/dashboard/users/${id}`,
+      breadcrumbs: (name: string) => `/dashboard/users/${name}`,
     },
     places: {
       index: '/dashboard/places',

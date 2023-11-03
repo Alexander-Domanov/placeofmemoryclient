@@ -13,6 +13,7 @@ export const useUpdateUserStatus = () => {
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['users']);
+      client.invalidateQueries(['user']);
     },
     onError: (error: IResponseError) => {
       ErrorNotification(error);

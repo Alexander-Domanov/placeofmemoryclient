@@ -12,7 +12,7 @@ export const LogoutButton: FC = () => {
   return (
     <>
       <button onClick={() => handleLogout()}>
-        <span>Logout</span>
+        <span>Выйсці</span>
       </button>
     </>
   );

@@ -121,6 +121,7 @@ export const Persons: FC = () => {
         <Table
           bordered
           size="small"
+          rowKey={(record) => record.id}
           columns={columnsTablePersons}
           dataSource={persons?.items}
           loading={isLoading}
@@ -134,7 +135,7 @@ export const Persons: FC = () => {
             pageSizeOptions: [10, 20, 30, 50, 100],
             onShowSizeChange: onPageSizeChange,
           }}
-          scroll={{ x: 1000 }}
+          scroll={{ x: 1300 }}
           onChange={handleTableChange}
         />
       </Space>

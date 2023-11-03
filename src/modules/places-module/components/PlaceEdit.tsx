@@ -329,6 +329,15 @@ export const PlaceEdit: FC = () => {
                         <List.Item>
                           <Typography.Text>
                             <span className="font-normal text-neutral-400">
+                              Formatted Address: &nbsp;
+                            </span>
+                            {selectedLocation?.place}
+                          </Typography.Text>
+                        </List.Item>
+
+                        <List.Item>
+                          <Typography.Text>
+                            <span className="font-normal text-neutral-400">
                               Longitude: &nbsp;
                             </span>
                             {selectedLocation?.lng}

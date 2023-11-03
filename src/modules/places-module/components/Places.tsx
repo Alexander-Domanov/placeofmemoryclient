@@ -81,6 +81,7 @@ export const Places: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
+
       <Space direction="vertical" style={{ display: 'flex' }}>
         <Flex
           justify="space-between"
@@ -118,9 +119,11 @@ export const Places: FC = () => {
             />
           </div>
         </Flex>
+
         <Table
           bordered
           size="small"
+          rowKey={(record) => record.id}
           columns={columnsTablePlaces}
           dataSource={places?.items}
           loading={isLoading}
