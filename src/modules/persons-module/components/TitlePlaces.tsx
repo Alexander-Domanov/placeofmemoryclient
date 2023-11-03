@@ -4,7 +4,11 @@ import { useDebounce } from 'usehooks-ts';
 import { useTitlePlaces } from '@/modules/places-module/hooks/useTtitlePlaces';
 
 interface TitlePlacesFormProps {
-  onFinishValue: (placeDetail: { value: string; id: number }) => void;
+  onFinishValue: (placeDetail: {
+    value: string;
+    id: number;
+    formattedAddress: string;
+  }) => void;
 }
 export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
   const [pagination, setPagination] = useState({
@@ -28,6 +32,7 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
   const options = titlePlaces?.items.map((place) => ({
     value: place.nameCemetery,
     id: place.id,
+    formattedAddress: place.formattedAddress,
   }));
 
   const findIdFromOption = (selectedValue: string) => {

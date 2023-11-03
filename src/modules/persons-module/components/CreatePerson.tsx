@@ -30,8 +30,8 @@ import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { ICreatePerson, IGalleryFile, ILocation } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson';
-import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
+import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 
 const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   {
@@ -85,6 +85,7 @@ export const CreatePerson: FC = () => {
   const [selectedPlace, setSelectedPlace] = useState<{
     value: string;
     id: number;
+    formattedAddress: string;
   } | null>(null);
   const [biographyText, setBiographyText] = useState('');
   const [biographyCount, setBiographyCount] = useState(0);
@@ -243,10 +244,22 @@ export const CreatePerson: FC = () => {
                           </span>
                           {selectedPlace?.value}
                         </Typography.Text>
+                      </List.Item>
+
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Formatted address: &nbsp;
+                          </span>
+                          {selectedPlace?.formattedAddress}
+                        </Typography.Text>
+                      </List.Item>
+
+                      <Row justify="end">
                         <Button type="dashed" onClick={clearSelectedPlace}>
                           Clear
                         </Button>
-                      </List.Item>
+                      </Row>
                     </List>
                   </Form.Item>
                 </Form.Item>
@@ -260,6 +273,15 @@ export const CreatePerson: FC = () => {
                   hasFeedback
                 >
                   <List split={false}>
+                    <List.Item>
+                      <Typography.Text>
+                        <span className="font-normal text-neutral-400">
+                          Formatted Address: &nbsp;
+                        </span>
+                        {selectedLocation?.place}
+                      </Typography.Text>
+                    </List.Item>
+
                     <List.Item>
                       <Typography.Text>
                         <span className="font-normal text-neutral-400">
