@@ -18,6 +18,7 @@ export const useUpdatePlaceStatus = () => {
     onSuccess: () => {
       client.invalidateQueries(['places']);
       client.invalidateQueries(['persons']);
+      client.invalidateQueries(['user']);
     },
     onError: (error: IResponseError) => {
       ErrorNotification(error);

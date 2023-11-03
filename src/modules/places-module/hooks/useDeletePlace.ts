@@ -11,6 +11,7 @@ export const useDeletePlace = () => {
     mutationFn: (id: number | null) => deletePlace(id),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['places'] });
+      client.invalidateQueries(['user']);
     },
     ...noRefetch,
     onError: (error: IResponseError) => {
