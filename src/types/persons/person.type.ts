@@ -20,5 +20,6 @@ export interface IPerson
   place: {
     id: number;
     name: string;
+    formattedAddress: string;
   };
 }

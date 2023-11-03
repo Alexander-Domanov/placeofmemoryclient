@@ -6,4 +6,5 @@ export interface ITitlePlace extends IBaseLocation, IBaseDateType {
   country: string;
   city: string;
   nameCemetery: string;
+  formattedAddress: string;
 }
