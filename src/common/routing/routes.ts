@@ -60,7 +60,7 @@ export const routes = {
       create: '/dashboard/articles/create',
       article: (id: string | number) => `/dashboard/articles/${id}`,
     },
-    language: {
+    languages: {
       index: '/dashboard/language',
     },
   },

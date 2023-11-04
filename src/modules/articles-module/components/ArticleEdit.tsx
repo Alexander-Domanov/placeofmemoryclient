@@ -123,8 +123,8 @@ export const ArticleEdit: FC = () => {
           response: { ...f },
         }))
       );
-      setContentText(article.content);
-      setContentCount(article.content.length);
+      setContentText(article.content || '');
+      setContentCount(article.content?.length || 0);
       setStatus(article.status);
     }
   }, [article]);
@@ -176,7 +176,7 @@ export const ArticleEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onSubmit}>
           <Row gutter={[16, 16]}>
-            <Col span={16}>
+            <Col span={24} lg={16}>
               <Card>
                 <Form.Item
                   label="Title"
@@ -217,7 +217,7 @@ export const ArticleEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={8}>
+            <Col span={24} md={12} lg={8}>
               <Flex vertical gap={16}>
                 <Card>
                   <Form.Item label="Status">
@@ -273,7 +273,7 @@ export const ArticleEdit: FC = () => {
                     </List>
                   </Form.Item>
 
-                  <Space size="middle">
+                  <Space size="middle" wrap>
                     <Button
                       type="primary"
                       htmlType="submit"

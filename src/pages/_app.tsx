@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         </AuthProtection>
       </Hydrate>
 
-      <ReactQueryDevtools />
+      <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
   );
 }

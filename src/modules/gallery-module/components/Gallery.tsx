@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import {
-  Button,
   Card,
   Col,
   Empty,
@@ -49,12 +48,16 @@ export const Gallery: FC = () => {
   return (
     <div>
       <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-        <Flex justify="space-between" align="center" gap="middle">
-          <div>
-            <Button type="primary" onClick={() => setIsUploadGalleryOpen(true)}>
-              Add File
-            </Button>
-          </div>
+        <Flex justify="end" align="center" gap="middle">
+          {/* <div> */}
+          {/*  <Button */}
+          {/*    type="primary" */}
+          {/*    onClick={() => setIsUploadGalleryOpen(true)} */}
+          {/*    disabled */}
+          {/*  > */}
+          {/*    Add File */}
+          {/*  </Button> */}
+          {/* </div> */}
 
           <Space size="middle">
             <Select
@@ -90,7 +93,14 @@ export const Gallery: FC = () => {
             ) : (
               <Row gutter={[16, 16]}>
                 {gallery?.items.map((item) => (
-                  <Col span={4} key={item.uploadId}>
+                  <Col
+                    span={12}
+                    sm={8}
+                    md={6}
+                    lg={6}
+                    xl={4}
+                    key={item.uploadId}
+                  >
                     <GalleryItem file={item} />
                   </Col>
                 ))}

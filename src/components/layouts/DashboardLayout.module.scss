@@ -1,0 +1,8 @@
+.content {
+	background-color: #f0f2f5;
+	padding: 24px;
+
+	@media(max-width: 1023px) {
+		padding: 16px;
+	}
+}

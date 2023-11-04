@@ -13,26 +13,26 @@ const getStatusIcon = (status: string) => {
     case 'PUBLISHED':
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
-          <BsEyeFill color="green" size={32} />
+          <BsEyeFill color="green" size={24} />
         </Tooltip>
       );
     case 'DRAFT':
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
-          <BsEyeSlashFill color="red" size={32} />
+          <BsEyeSlashFill color="red" size={24} />
         </Tooltip>
       );
     case 'PENDING_REVIEW':
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
-          <BsEye color="orange" size={32} />
+          <BsEye color="orange" size={24} />
           );
         </Tooltip>
       );
     case 'ARCHIVED':
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
-          <BsEyeSlashFill color="lightgrey" size={32} />
+          <BsEyeSlashFill color="lightgrey" size={24} />
         </Tooltip>
       );
     default:
@@ -83,8 +83,8 @@ export const GalleryItem: FC<Props> = ({ file }) => {
           justifyContent: 'center',
           position: 'absolute',
           filter: 'drop-shadow(4px 1px 2px rgb(0 0 0 / 0.4))',
-          top: '16px',
-          right: '16px',
+          top: '10px',
+          right: '10px',
           zIndex: 1,
         }}
       >
