@@ -4,6 +4,7 @@ import React from 'react';
 import { ILanguageListItem } from '@/types';
 import DeleteLanguageComponent from '@/modules/language-module/components/DeleteLanguage';
 import UpdateLanguage from '@/modules/language-module/components/UpdateLanguege';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
   {
@@ -48,11 +49,13 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     title: 'Сreated At',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    render: (text: string) => convertDateToFormat(text),
   },
 
   {
