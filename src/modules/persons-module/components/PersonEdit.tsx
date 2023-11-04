@@ -45,6 +45,7 @@ import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 const { Option } = Select;
 
@@ -88,7 +89,7 @@ export const PersonEdit: FC = () => {
 
   const { person, isLoading } = usePerson(personId);
   const { updatePersonMutation, isUpdating } = useUpdatePerson();
-  const { updateStatusPerson } = useUpdatePersonStatus();
+  const { updateStatusPerson, isStatusUpdating } = useUpdatePersonStatus();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
@@ -281,7 +282,12 @@ export const PersonEdit: FC = () => {
               <Flex vertical gap={16}>
                 <Card>
                   <Form.Item label="Status">
-                    <Select value={status} onChange={handleStatusChange}>
+                    <Select
+                      value={status}
+                      onChange={handleStatusChange}
+                      loading={isStatusUpdating}
+                      disabled={isStatusUpdating}
+                    >
                       <Option value="DRAFT">
                         <EyeInvisibleOutlined /> Draft
                       </Option>
@@ -306,6 +312,28 @@ export const PersonEdit: FC = () => {
                       placeholder="This field is auto generated"
                       allowClear
                     />
+                  </Form.Item>
+
+                  <Form.Item>
+                    <List split={false}>
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Created At: &nbsp;
+                          </span>
+                          {convertDateToFormat(person?.createdAt)}
+                        </Typography.Text>
+                      </List.Item>
+
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Updated At: &nbsp;
+                          </span>
+                          {convertDateToFormat(person?.updatedAt)}
+                        </Typography.Text>
+                      </List.Item>
+                    </List>
                   </Form.Item>
 
                   <Space size={16}>

@@ -8,6 +8,7 @@ import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
 import UpdatePersonStatusComponent from '@/modules/persons-module/components/UpdatePersonStatus';
 import DeletePersonComponent from '@/modules/persons-module/components/DeletePerson';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 export const columnsTablePersons: ColumnsType<IPerson> = [
   {
@@ -96,6 +97,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Updated At',
@@ -104,6 +106,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     width: 110,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'PlaceId',

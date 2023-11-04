@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Breadcrumb, Button, Flex, Input, Space, Table } from 'antd';
+import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
@@ -42,7 +42,7 @@ export const Persons: FC = () => {
 
   const search = useDebounce(pagination.searchTerm, 500);
 
-  const { persons, isLoading } = usePersons(
+  const { persons, isFetching } = usePersons(
     pagination.page,
     pagination.pageSize,
     status,
@@ -81,21 +81,18 @@ export const Persons: FC = () => {
       <div>
         <Breadcrumb items={breadcrumbs} />
       </div>
-      <Space direction="vertical" style={{ display: 'flex' }}>
-        <Flex
-          justify="space-between"
-          align="center"
-          gap="middle"
-          style={{ marginBottom: '15px' }}
-        >
-          <div>
-            <Button
-              type="primary"
-              onClick={() => router.push(routes.dashboard.persons.create)}
-            >
-              Add Person
-            </Button>
-          </div>
+
+      <Flex justify="space-between" align="center" gap="middle">
+        <div>
+          <Button
+            type="primary"
+            onClick={() => router.push(routes.dashboard.persons.create)}
+          >
+            Add Person
+          </Button>
+        </div>
+
+        <Flex align="center">
           <Input
             placeholder="Search by name"
             allowClear
@@ -104,41 +101,41 @@ export const Persons: FC = () => {
             }
             style={{ width: 200 }}
           />
-          <div>
-            <SelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Draft', value: 'draft' },
-                { label: 'PendingReview', value: 'pendingReview' },
-                { label: 'Published', value: 'published' },
-                { label: 'Archived', value: 'archived' },
-              ]}
-              onChange={onStatusChange}
-            />
-          </div>
+
+          <SelectInput
+            defaultValue={{ value: 'all', label: 'All' }}
+            options={[
+              { label: 'All', value: 'all' },
+              { label: 'Draft', value: 'draft' },
+              { label: 'PendingReview', value: 'pendingReview' },
+              { label: 'Published', value: 'published' },
+              { label: 'Archived', value: 'archived' },
+            ]}
+            onChange={onStatusChange}
+          />
         </Flex>
-        <Table
-          bordered
-          size="small"
-          rowKey={(record) => record.id}
-          columns={columnsTablePersons}
-          dataSource={persons?.items}
-          loading={isLoading}
-          pagination={{
-            position: ['bottomCenter'],
-            total: persons?.totalCount || 1,
-            current: pagination.page,
-            onChange: onPageChange,
-            defaultCurrent: 1,
-            defaultPageSize: 18,
-            pageSizeOptions: [10, 20, 30, 50, 100],
-            onShowSizeChange: onPageSizeChange,
-          }}
-          scroll={{ x: 1300 }}
-          onChange={handleTableChange}
-        />
-      </Space>
+      </Flex>
+
+      <Table
+        bordered
+        size="small"
+        rowKey={(record) => record.id}
+        columns={columnsTablePersons}
+        dataSource={persons?.items}
+        loading={isFetching}
+        pagination={{
+          position: ['bottomCenter'],
+          total: persons?.totalCount || 1,
+          current: pagination.page,
+          onChange: onPageChange,
+          defaultCurrent: 1,
+          defaultPageSize: 18,
+          pageSizeOptions: [10, 20, 30, 50, 100],
+          onShowSizeChange: onPageSizeChange,
+        }}
+        scroll={{ x: 1300 }}
+        onChange={handleTableChange}
+      />
     </Flex>
   );
 };

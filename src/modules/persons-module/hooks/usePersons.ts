@@ -16,7 +16,7 @@ export const usePersons = (
   const {
     data: persons,
     isLoading,
-    refetch,
+    isFetching,
     error,
   } = useQuery({
     queryKey: [
@@ -29,6 +29,7 @@ export const usePersons = (
     ...noRefetch,
     cacheTime: 0,
     staleTime: 0,
+    retry: 0,
     enabled: !!me,
     refetchOnMount: 'always',
   });
@@ -39,5 +40,5 @@ export const usePersons = (
     }
   }, [error]);
 
-  return { persons, isLoading, refetch };
+  return { persons, isFetching, isLoading };
 };
