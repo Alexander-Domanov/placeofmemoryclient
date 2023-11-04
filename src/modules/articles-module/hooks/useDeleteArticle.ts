@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { notification } from 'antd';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { IResponseError } from '@/types/response-error-message.type';
 import { deleteArticle } from '@/modules/articles-module/api/articles-api';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useDeleteArticle = () => {
   const client = useQueryClient();
@@ -18,13 +18,7 @@ export const useDeleteArticle = () => {
     },
     ...noRefetch,
     onError: (error: IResponseError) => {
-      const messages = error?.response?.data?.messages;
-      messages?.forEach(({ message }) => {
-        notification.error({
-          message: `Error: ${message}`,
-          placement: 'bottomLeft',
-        });
-      });
+      ErrorNotification(error);
     },
   });
 

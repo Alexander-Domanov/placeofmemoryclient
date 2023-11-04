@@ -81,7 +81,8 @@ export const ArticleEdit: FC = () => {
   const [form] = Form.useForm();
   const [status, setStatus] = useState('DRAFT');
 
-  const content = Form.useWatch('content', form);
+  const [contentText, setContentText] = useState<string>('');
+  const [contentCount, setContentCount] = useState<number>(0);
 
   const onStatusChange = (status: string) => {
     setStatus(status);
@@ -123,7 +124,8 @@ export const ArticleEdit: FC = () => {
           response: { ...f },
         }))
       );
-
+      setContentText(article.content);
+      setContentCount(article.content.length);
       setStatus(article.status);
     }
   }, [article]);
@@ -202,9 +204,16 @@ export const ArticleEdit: FC = () => {
                 >
                   <ReactQuill
                     theme="snow"
-                    value={content}
-                    onChange={(value) => form.setFieldValue('content', value)}
+                    value={contentText}
+                    onChange={(value) => {
+                      setContentText(value);
+                      setContentCount(value.length);
+                      form.setFieldValue('content', value);
+                    }}
                   />
+                  <span className="font-normal text-neutral-400">
+                    Characters: {contentCount}
+                  </span>
                 </Form.Item>
               </Card>
             </Col>
@@ -247,13 +256,19 @@ export const ArticleEdit: FC = () => {
                     <List split={false}>
                       <List.Item>
                         <Typography.Text>
-                          Created At: {convertDateToFormat(article?.createdAt)}
+                          <span className="font-normal text-neutral-400">
+                            Created At: &nbsp;
+                          </span>
+                          {convertDateToFormat(article?.createdAt)}
                         </Typography.Text>
                       </List.Item>
 
                       <List.Item>
                         <Typography.Text>
-                          Updated At: {convertDateToFormat(article?.updatedAt)}
+                          <span className="font-normal text-neutral-400">
+                            Updated At: &nbsp;
+                          </span>
+                          {convertDateToFormat(article?.updatedAt)}
                         </Typography.Text>
                       </List.Item>
                     </List>

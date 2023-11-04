@@ -133,7 +133,7 @@ export const Articles: FC = () => {
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
         }}
-        scroll={{ x: 1200 }}
+        scroll={{ x: 1000 }}
         onChange={handleTableChange}
       />
     </Flex>

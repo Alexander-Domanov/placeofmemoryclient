@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getArticles } from '@/modules/articles-module/api/articles-api';
 import { useMeQuery } from '@/services';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useArticles = (
   page: number,
@@ -17,6 +19,7 @@ export const useArticles = (
     isLoading,
     refetch,
     isFetching,
+    error,
   } = useQuery({
     queryKey: [
       'articles',
@@ -31,6 +34,12 @@ export const useArticles = (
     refetchOnMount: 'always',
     enabled: !!me,
   });
+
+  useEffect(() => {
+    if (error) {
+      ErrorNotification(error);
+    }
+  }, [error]);
 
   return { articles, isLoading, refetch, isFetching };
 };

@@ -67,13 +67,13 @@ export const ArticleCreate: FC = () => {
   const [fields, setFields] = useState<FieldData[]>([]);
 
   const { mutate, isCreating } = useCreateArticle();
-  const content = Form.useWatch('content', form);
+  const [contentText, setContentText] = useState<string>('');
+  const [contentCount, setContentCount] = useState<number>(0);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
 
   const normFile = (e: any) => {
-    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -81,8 +81,6 @@ export const ArticleCreate: FC = () => {
   };
 
   const onSubmit = (values: ArticleForm) => {
-    // console.log(values);
-
     const form = {
       title: values.title,
       description: values.description,
@@ -148,9 +146,16 @@ export const ArticleCreate: FC = () => {
               >
                 <ReactQuill
                   theme="snow"
-                  value={content}
-                  onChange={(value) => form.setFieldValue('content', value)}
+                  value={contentText}
+                  onChange={(value) => {
+                    setContentText(value);
+                    setContentCount(value.length);
+                    form.setFieldValue('content', value);
+                  }}
                 />
+                <span className="font-normal text-neutral-400">
+                  Characters: {contentCount}
+                </span>
               </Form.Item>
             </Card>
           </Col>
