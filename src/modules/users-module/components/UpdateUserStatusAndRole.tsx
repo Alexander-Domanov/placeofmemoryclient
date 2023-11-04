@@ -42,11 +42,17 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
 
   const handleMenuRoleClick = (role: string) => {
     setNewRole(role);
-    updateUserRole({ id, role });
-    notification.success({
-      message: `Changed role to: ${role} for user: ${user?.userName}`,
-      placement: 'bottomLeft',
-    });
+    updateUserRole(
+      { id, role },
+      {
+        onSuccess: () => {
+          notification.success({
+            message: `Changed role to: ${role} for user: ${user?.userName}`,
+            placement: 'bottomLeft',
+          });
+        },
+      }
+    );
   };
 
   const handleMenuStatusClick = (status: string) => {
