@@ -101,7 +101,6 @@ export const ArticleEdit: FC = () => {
   };
 
   const normFile = (e: any) => {
-    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -113,7 +112,7 @@ export const ArticleEdit: FC = () => {
       form.setFieldValue('title', article.title);
       form.setFieldValue('slug', article.slug);
       form.setFieldValue('description', article.description);
-      form.setFieldValue('content', article.content);
+      // form.setFieldValue('content', article.content);
       form.setFieldValue(
         'photo',
         article.photos.map((f) => ({

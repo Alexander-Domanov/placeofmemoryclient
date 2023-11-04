@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Breadcrumb, Flex, Input, Space, Table } from 'antd';
+import { Breadcrumb, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
@@ -21,7 +21,7 @@ const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
   },
   {
     key: routes.dashboard.users.index,
-    title: <Link href={routes.dashboard.users.index}>Users</Link>,
+    title: 'Users',
   },
 ];
 
@@ -41,7 +41,7 @@ export const Users: FC = () => {
 
   const search = useDebounce(pagination.searchTerm, 500);
 
-  const { users, isLoading } = useUsers(
+  const { users, isFetching } = useUsers(
     pagination.page,
     pagination.pageSize,
     status,
@@ -86,13 +86,8 @@ export const Users: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Space direction="vertical" style={{ display: 'flex' }}>
-        <Flex
-          justify="end"
-          align="center"
-          gap="middle"
-          style={{ marginBottom: '15px' }}
-        >
+      <Flex justify="flex-end" align="center" gap="middle">
+        <Flex align="center" justify="end">
           <Input
             placeholder="Search by name"
             allowClear
@@ -101,55 +96,52 @@ export const Users: FC = () => {
             }
             style={{ width: 200 }}
           />
-          <div>
-            <SelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Active', value: 'active' },
-                { label: 'Banned', value: 'banned' },
-                { label: 'Pending', value: 'pending' },
-              ]}
-              onChange={onStatusChange}
-            />
-          </div>
 
-          <div>
-            <SelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Admin', value: 'ADMIN' },
-                { label: 'Editor', value: 'EDITOR' },
-                { label: 'Author', value: 'AUTHOR' },
-                { label: 'User', value: 'USER' },
-              ]}
-              onChange={onRoleChange}
-            />
-          </div>
+          <SelectInput
+            defaultValue={{ value: 'all', label: 'All' }}
+            options={[
+              { label: 'All', value: 'all' },
+              { label: 'Active', value: 'active' },
+              { label: 'Banned', value: 'banned' },
+              { label: 'Pending', value: 'pending' },
+            ]}
+            onChange={onStatusChange}
+          />
+
+          <SelectInput
+            defaultValue={{ value: 'all', label: 'All' }}
+            options={[
+              { label: 'All', value: 'all' },
+              { label: 'Admin', value: 'ADMIN' },
+              { label: 'Editor', value: 'EDITOR' },
+              { label: 'Author', value: 'AUTHOR' },
+              { label: 'User', value: 'USER' },
+            ]}
+            onChange={onRoleChange}
+          />
         </Flex>
+      </Flex>
 
-        <Table
-          bordered
-          size="small"
-          rowKey={(record) => record.id}
-          columns={columnsTableUsers}
-          dataSource={users?.items}
-          loading={isLoading}
-          pagination={{
-            position: ['bottomCenter'],
-            total: users?.totalCount || 1,
-            current: pagination.page,
-            onChange: onPageChange,
-            defaultCurrent: 1,
-            defaultPageSize: 11,
-            pageSizeOptions: [10, 20, 30, 50, 100],
-            onShowSizeChange: onPageSizeChange,
-          }}
-          scroll={{ x: 1000 }}
-          onChange={handleTableChange}
-        />
-      </Space>
+      <Table
+        bordered
+        size="small"
+        rowKey={(record) => record.id}
+        columns={columnsTableUsers}
+        dataSource={users?.items}
+        loading={isFetching}
+        pagination={{
+          position: ['bottomCenter'],
+          total: users?.totalCount || 1,
+          current: pagination.page,
+          onChange: onPageChange,
+          defaultCurrent: 1,
+          defaultPageSize: 11,
+          pageSizeOptions: [10, 20, 30, 50, 100],
+          onShowSizeChange: onPageSizeChange,
+        }}
+        scroll={{ x: 1000 }}
+        onChange={handleTableChange}
+      />
     </Flex>
   );
 };

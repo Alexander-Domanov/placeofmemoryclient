@@ -6,7 +6,11 @@ import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useUpdateUserStatus = () => {
   const client = useQueryClient();
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const {
+    mutate,
+    isLoading: isStatusUpdating,
+    isSuccess,
+  } = useMutation({
     mutationKey: ['updateUserStatus'],
     mutationFn: ({ id, status }: { id: number | null; status: string }) =>
       updateUserStatus(id, status),
@@ -19,5 +23,5 @@ export const useUpdateUserStatus = () => {
       ErrorNotification(error);
     },
   });
-  return { mutate, isLoading, isSuccess };
+  return { mutate, isStatusUpdating, isSuccess };
 };

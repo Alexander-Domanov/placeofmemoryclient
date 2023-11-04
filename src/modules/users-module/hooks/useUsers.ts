@@ -18,6 +18,7 @@ export const useUsers = (
     data: users,
     isLoading,
     error,
+    isFetching,
   } = useQuery({
     queryKey: [
       'users',
@@ -49,5 +50,5 @@ export const useUsers = (
     }
   }, [error]);
 
-  return { users, isLoading };
+  return { users, isLoading, isFetching };
 };

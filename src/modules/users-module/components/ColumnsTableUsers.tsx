@@ -10,11 +10,13 @@ import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
 import DeleteUserComponent from '@/modules/users-module/components/DeleteUser';
 import { routes } from '@/common/routing/routes';
 import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/UpdateUserStatusAndRole';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
   {
     dataIndex: 'id',
     key: 'id',
+    width: 40,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -29,6 +31,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Name',
     dataIndex: 'userName',
     key: 'userName',
+    width: 130,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -46,6 +49,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
+    width: 250,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text) => <Typography.Text>{text}</Typography.Text>,
@@ -54,14 +58,17 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     title: 'Created At',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    width: 120,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
     align: 'center',
+    width: 70,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusUserTag(text, false),
@@ -71,6 +78,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'role',
     key: 'role',
     align: 'center',
+    width: 100,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorRoleTag(text),
@@ -80,6 +88,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'view profile',
     key: 'view profile',
     align: 'center',
+    width: 100,
     render: (text, record) => (
       <Row justify="space-around">
         <UserDrawer onUserSelected={record} />
@@ -91,6 +100,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
+    width: 90,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateUserStatusAndRoleComponent user={record} showButton={false} />

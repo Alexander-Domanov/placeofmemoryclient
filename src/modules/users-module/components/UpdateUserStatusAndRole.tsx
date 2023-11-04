@@ -28,12 +28,8 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   const [newRole, setNewRole] = useState(role);
   const [newStatus, setNewStatus] = useState(status);
 
-  const { mutate: updateUserRole } = useUpdateUserRole();
-  const { mutate: updateUserStatus } = useUpdateUserStatus();
-
-  // const handleEditClick = () => {
-  //   setModalVisible(true);
-  // };
+  const { mutate: updateUserRole, isRoleUpdating } = useUpdateUserRole();
+  const { mutate: updateUserStatus, isStatusUpdating } = useUpdateUserStatus();
 
   useEffect(() => {
     setNewRole(role);
@@ -108,7 +104,12 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
       >
         <br />
         <Form.Item label="Current role" style={{ marginBottom: 10 }}>
-          <Select value={newRole} onChange={handleMenuRoleClick}>
+          <Select
+            value={newRole}
+            onChange={handleMenuRoleClick}
+            loading={isRoleUpdating}
+            disabled={isRoleUpdating}
+          >
             <Option value="ADMIN">
               <UpOutlined /> Admin
             </Option>
@@ -128,7 +129,12 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
         </Form.Item>
 
         <Form.Item label="Current status" style={{ marginBottom: 10 }}>
-          <Select value={newStatus} onChange={handleMenuStatusClick}>
+          <Select
+            value={newStatus}
+            onChange={handleMenuStatusClick}
+            loading={isStatusUpdating}
+            disabled={isStatusUpdating}
+          >
             <Option value="ACTIVE">
               <CheckCircleOutlined /> Active
             </Option>

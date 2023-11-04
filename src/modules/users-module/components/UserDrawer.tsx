@@ -4,6 +4,7 @@ import { IUserWithShortExtensions } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 interface DescriptionItemProps {
   title: string;
@@ -181,17 +182,19 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
 
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Added" content={selectedUser?.createdAt} />
+            <DescriptionItem
+              title="Added"
+              content={convertDateToFormat(selectedUser?.createdAt)}
+            />
           </Col>
 
           <Col span={12}>
             <DescriptionItem
               title="Last Updated"
-              content={selectedUser?.updatedAt}
+              content={convertDateToFormat(selectedUser?.updatedAt)}
             />
           </Col>
         </Row>
-
         <Divider />
       </Drawer>
     </Flex>

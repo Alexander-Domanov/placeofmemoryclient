@@ -35,6 +35,7 @@ import { Articles } from '@/modules/articles-module';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { columnsTablePlaces } from '@/modules/places-module';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 interface DescriptionItemProps {
   title: string;
@@ -177,12 +178,12 @@ export const UserList: FC = () => {
 
                   <ListItems
                     title="Created At"
-                    content={selectedUser?.createdAt}
+                    content={convertDateToFormat(selectedUser?.createdAt)}
                   />
 
                   <ListItems
                     title="Updated At"
-                    content={selectedUser?.updatedAt}
+                    content={convertDateToFormat(selectedUser?.updatedAt)}
                   />
                 </List>
               </Col>
