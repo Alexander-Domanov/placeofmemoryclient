@@ -17,6 +17,7 @@ export const usePlaces = (
     data: places,
     isLoading,
     error,
+    isFetching,
   } = useQuery({
     queryKey: [
       'places',
@@ -28,6 +29,7 @@ export const usePlaces = (
     ...noRefetch,
     cacheTime: 0,
     retry: 0,
+    refetchOnMount: 'always',
     enabled: !!me,
   });
 
@@ -37,5 +39,5 @@ export const usePlaces = (
     }
   }, [error]);
 
-  return { places, isLoading };
+  return { places, isFetching, isLoading };
 };

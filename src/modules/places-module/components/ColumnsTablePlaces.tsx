@@ -8,6 +8,7 @@ import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace
 import UpdatePlaceStatus from '@/modules/places-module/components/UpdatePlaceStatus';
 import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 export const columnsTablePlaces: ColumnsType<IPlace> = [
   {
@@ -45,7 +46,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     key: 'nameCemetery',
     ellipsis: true,
     sorter: true,
-    width: 300,
+    width: 250,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
@@ -85,16 +86,18 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     sorter: true,
-    width: 110,
+    width: 120,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
-    width: 110,
+    width: 120,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Status',

@@ -43,6 +43,7 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 const { Option } = Select;
 
@@ -85,7 +86,7 @@ export const PlaceEdit: FC = () => {
 
   const { place, isLoading } = usePlace(placeId);
   const { updatePlaceMutate, isUpdating } = useUpdatePlace();
-  const { updateStatusPlace } = useUpdatePlaceStatus();
+  const { updateStatusPlace, isStatusUpdating } = useUpdatePlaceStatus();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList);
@@ -227,7 +228,7 @@ export const PlaceEdit: FC = () => {
                   name="nameCemetery"
                   label="Name Cemetery"
                   validateDebounce={500}
-                  rules={[{ required: true, min: 2, max: 100 }]}
+                  rules={[{ required: true, min: 2, max: 200 }]}
                   hasFeedback
                 >
                   <Input placeholder="Input Name Cemetery" allowClear />
@@ -277,7 +278,12 @@ export const PlaceEdit: FC = () => {
               <Flex vertical gap={16}>
                 <Card>
                   <Form.Item label="Status">
-                    <Select value={status} onChange={handleStatusChange}>
+                    <Select
+                      value={status}
+                      onChange={handleStatusChange}
+                      loading={isStatusUpdating}
+                      disabled={isStatusUpdating}
+                    >
                       <Option value="DRAFT">
                         <EyeInvisibleOutlined /> Draft
                       </Option>
@@ -297,6 +303,7 @@ export const PlaceEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={[{ required: true, whitespace: true }]}
+                    hasFeedback
                   >
                     <Input
                       placeholder="This field is auto generated"
@@ -304,15 +311,39 @@ export const PlaceEdit: FC = () => {
                     />
                   </Form.Item>
 
+                  <Form.Item>
+                    <List split={false}>
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Created At: &nbsp;
+                          </span>
+                          {convertDateToFormat(place?.createdAt)}
+                        </Typography.Text>
+                      </List.Item>
+
+                      <List.Item>
+                        <Typography.Text>
+                          <span className="font-normal text-neutral-400">
+                            Updated At: &nbsp;
+                          </span>
+                          {convertDateToFormat(place?.updatedAt)}
+                        </Typography.Text>
+                      </List.Item>
+                    </List>
+                  </Form.Item>
+
                   <Space size={16}>
                     <Button
                       type="primary"
                       htmlType="submit"
+                      title="Save"
                       icon={<SaveOutlined />}
                       loading={isUpdating}
                     >
                       Save
                     </Button>
+
                     <DeletePlaceModal place={selectedPlace} showButton />
                   </Space>
                 </Card>
