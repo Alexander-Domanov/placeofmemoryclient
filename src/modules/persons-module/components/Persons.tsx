@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
@@ -58,7 +58,7 @@ export const Persons: FC = () => {
     setPagination({ ...pagination, page: 1, pageSize: size });
   };
 
-  const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
+  const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
   };
