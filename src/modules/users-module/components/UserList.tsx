@@ -151,53 +151,60 @@ export const UserList: FC = () => {
       label: 'Info',
       key: 'info',
       children: (
-        <Flex vertical gap={6}>
+        <Flex vertical gap="large">
           <Spin spinning={isLoading}>
-            <Row gutter={[16, 16]}>
-              <Col span={5} flex="auto">
-                <Image
-                  src={selectedUser?.avatars?.medium.url}
-                  width={250}
-                  preview
-                  style={{ borderRadius: 4 }}
-                  fallback={pictureBackup}
-                />
-              </Col>
-
-              <Col span={14}>
-                <List split={false} size="small">
-                  <ListItems title="ID" content={selectedUser?.id} />
-
-                  <ListItems title="Name" content={selectedUser?.userName} />
-
-                  <ListItems title="Email" content={selectedUser?.email} />
-
-                  <ListItems title="Role" content={selectedUser?.role} />
-
-                  <ListItems title="Status" content={selectedUser?.status} />
-
-                  <ListItems
-                    title="Created At"
-                    content={convertDateToFormat(selectedUser?.createdAt)}
+            <Flex
+              justify="space-between"
+              align="center"
+              gap="middle"
+              wrap="wrap"
+            >
+              <Row gutter={[16, 16]}>
+                <Col>
+                  <Image
+                    src={selectedUser?.avatars?.medium.url}
+                    width={250}
+                    preview
+                    style={{ borderRadius: 4 }}
+                    fallback={pictureBackup}
                   />
+                </Col>
 
-                  <ListItems
-                    title="Updated At"
-                    content={convertDateToFormat(selectedUser?.updatedAt)}
-                  />
-                </List>
-              </Col>
+                <Col>
+                  <List split={false} size="small">
+                    <ListItems title="ID" content={selectedUser?.id} />
 
-              <Col span={5}>
-                <Space size={16}>
-                  <UpdateUserStatusAndRoleComponent
-                    user={selectedUser}
-                    showButton
-                  />
-                  <DeleteUserModal user={selectedUser} showButton />
-                </Space>
-              </Col>
-            </Row>
+                    <ListItems title="Name" content={selectedUser?.userName} />
+
+                    <ListItems title="Email" content={selectedUser?.email} />
+
+                    <ListItems title="Role" content={selectedUser?.role} />
+
+                    <ListItems title="Status" content={selectedUser?.status} />
+
+                    <ListItems
+                      title="Created At"
+                      content={convertDateToFormat(selectedUser?.createdAt)}
+                    />
+
+                    <ListItems
+                      title="Updated At"
+                      content={convertDateToFormat(selectedUser?.updatedAt)}
+                    />
+                  </List>
+                </Col>
+
+                <Col sm={24} xs={24}>
+                  <Space size={16}>
+                    <UpdateUserStatusAndRoleComponent
+                      user={selectedUser}
+                      showButton
+                    />
+                    <DeleteUserModal user={selectedUser} showButton />
+                  </Space>
+                </Col>
+              </Row>
+            </Flex>
           </Spin>
         </Flex>
       ),
@@ -207,29 +214,27 @@ export const UserList: FC = () => {
       key: 'places',
       children: (
         <Flex gap="large" vertical>
-          <Flex justify="end" align="center" gap="middle">
-            <Flex align="center">
-              <Input
-                placeholder="Search by name"
-                allowClear
-                onChange={(e) =>
-                  setPagination({ ...pagination, searchTerm: e.target.value })
-                }
-                style={{ width: 200 }}
-              />
+          <Flex justify="end" align="center" gap="middle" wrap="wrap">
+            <Input
+              placeholder="Search by name"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchTerm: e.target.value })
+              }
+              style={{ width: 200 }}
+            />
 
-              <SelectInput
-                defaultValue={{ value: 'all', label: 'All' }}
-                options={[
-                  { label: 'All', value: 'all' },
-                  { label: 'Draft', value: 'draft' },
-                  { label: 'PendingReview', value: 'pendingReview' },
-                  { label: 'Published', value: 'published' },
-                  { label: 'Archived', value: 'archived' },
-                ]}
-                onChange={onStatusChange}
-              />
-            </Flex>
+            <SelectInput
+              defaultValue={{ value: 'all', label: 'All' }}
+              options={[
+                { label: 'All', value: 'all' },
+                { label: 'Draft', value: 'draft' },
+                { label: 'PendingReview', value: 'pendingReview' },
+                { label: 'Published', value: 'published' },
+                { label: 'Archived', value: 'archived' },
+              ]}
+              onChange={onStatusChange}
+            />
           </Flex>
 
           <Table
@@ -260,29 +265,27 @@ export const UserList: FC = () => {
       key: 'persons',
       children: (
         <Flex gap="large" vertical>
-          <Flex justify="end" align="center" gap="middle">
-            <Flex align="center">
-              <Input
-                placeholder="Search by name"
-                allowClear
-                onChange={(e) =>
-                  setPagination({ ...pagination, searchTerm: e.target.value })
-                }
-                style={{ width: 200 }}
-              />
+          <Flex justify="end" align="center" gap="middle" wrap="wrap">
+            <Input
+              placeholder="Search by name"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchTerm: e.target.value })
+              }
+              style={{ width: 200 }}
+            />
 
-              <SelectInput
-                defaultValue={{ value: 'all', label: 'All' }}
-                options={[
-                  { label: 'All', value: 'all' },
-                  { label: 'Draft', value: 'draft' },
-                  { label: 'PendingReview', value: 'pendingReview' },
-                  { label: 'Published', value: 'published' },
-                  { label: 'Archived', value: 'archived' },
-                ]}
-                onChange={onStatusChange}
-              />
-            </Flex>
+            <SelectInput
+              defaultValue={{ value: 'all', label: 'All' }}
+              options={[
+                { label: 'All', value: 'all' },
+                { label: 'Draft', value: 'draft' },
+                { label: 'PendingReview', value: 'pendingReview' },
+                { label: 'Published', value: 'published' },
+                { label: 'Archived', value: 'archived' },
+              ]}
+              onChange={onStatusChange}
+            />
           </Flex>
 
           <Table
@@ -313,29 +316,27 @@ export const UserList: FC = () => {
       key: 'articles',
       children: (
         <Flex gap="large" vertical>
-          <Flex justify="end" align="center" gap="middle">
-            <Flex align="center">
-              <Input
-                placeholder="Search by title"
-                allowClear
-                onChange={(e) =>
-                  setPagination({ ...pagination, searchTerm: e.target.value })
-                }
-                style={{ width: 200 }}
-              />
+          <Flex justify="end" align="center" gap="middle" wrap="wrap">
+            <Input
+              placeholder="Search by title"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchTerm: e.target.value })
+              }
+              style={{ width: 200 }}
+            />
 
-              <SelectInput
-                defaultValue={{ value: 'all', label: 'All' }}
-                options={[
-                  { label: 'All', value: 'all' },
-                  { label: 'Draft', value: 'draft' },
-                  { label: 'PendingReview', value: 'pendingReview' },
-                  { label: 'Published', value: 'published' },
-                  { label: 'Archived', value: 'archived' },
-                ]}
-                onChange={onStatusChange}
-              />
-            </Flex>
+            <SelectInput
+              defaultValue={{ value: 'all', label: 'All' }}
+              options={[
+                { label: 'All', value: 'all' },
+                { label: 'Draft', value: 'draft' },
+                { label: 'PendingReview', value: 'pendingReview' },
+                { label: 'Published', value: 'published' },
+                { label: 'Archived', value: 'archived' },
+              ]}
+              onChange={onStatusChange}
+            />
           </Flex>
 
           <Table

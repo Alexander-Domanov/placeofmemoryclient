@@ -99,7 +99,7 @@ export const Places: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Flex justify="space-between" align="center" gap="middle">
+      <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button
             type="primary"

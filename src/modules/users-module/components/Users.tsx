@@ -87,7 +87,7 @@ export const Users: FC = () => {
       </div>
 
       <Flex justify="flex-end" align="center" gap="middle">
-        <Flex align="center" justify="end">
+        <Flex align="center" justify="end" wrap="wrap">
           <Input
             placeholder="Search by name"
             allowClear

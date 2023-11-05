@@ -203,7 +203,7 @@ export const PlaceEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
-            <Col span={16}>
+            <Col span={24} lg={16}>
               <Card>
                 <Form.Item
                   name="country"
@@ -273,8 +273,8 @@ export const PlaceEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={8}>
-              <Flex vertical gap={16}>
+            <Col span={24} lg={8}>
+              <Flex vertical gap="middle">
                 <Card>
                   <Form.Item label="Status">
                     <Select
