@@ -76,6 +76,23 @@ export const Places: FC = () => {
     }
   };
 
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  // // const [loading, setLoading] = useState(false);
+  // const [selectedRows, setSelectedRows] = useState<IPlace[]>([]);
+  //
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys: React.Key[], selectedRows: IPlace[]) => {
+  //     setSelectedRowKeys(selectedRowKeys);
+  //     setSelectedRows(selectedRows);
+  //   },
+  //   // getCheckboxProps: (record: IPlace) => ({
+  //   //   disabled: record.nameCemetery === 'Disabled User', // Column configuration not to be checked
+  //   //   name: record.nameCemetery,
+  //   // }),
+  // };
+  //
+  // const hasSelected = selectedRowKeys.length > 0;
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -83,13 +100,24 @@ export const Places: FC = () => {
       </div>
 
       <Flex justify="space-between" align="center" gap="middle">
-        <div>
+        <div style={{ display: 'flex', gap: '10px' }}>
           <Button
             type="primary"
             onClick={() => router.push(routes.dashboard.places.create)}
           >
             Add Place
           </Button>
+
+          {/* <Button */}
+          {/*  type="primary" */}
+          {/*  danger */}
+          {/*  // onClick={start} */}
+          {/*  disabled={!hasSelected} */}
+          {/*  // loading={loading} */}
+          {/* > */}
+          {/*  Delete */}
+          {/* </Button> */}
+          {/* <DeletePlaceComponent place={selectedRowKeys} /> */}
         </div>
 
         <Flex align="center">
@@ -119,6 +147,9 @@ export const Places: FC = () => {
       <Table
         bordered
         size="small"
+        // rowSelection={{
+        //   ...rowSelection,
+        // }}
         rowKey={(record) => record.id}
         columns={columnsTablePlaces}
         dataSource={places?.items}
