@@ -88,12 +88,10 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
-            <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the language:
+            <span className="text-neutral-400">
+              Are you sure you want to delete the language: &nbsp;
             </span>
-            <span className="font-normal text-start">
-              {selectedLanguage?.name}
-            </span>
+            {selectedLanguage?.name}
           </div>
         </Space>
       </Modal>
@@ -107,12 +105,10 @@ const DeleteLanguageModal: React.FC<DeleteLanguageModalProps> = ({
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
-            <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the language:
+            <span className="text-neutral-400">
+              Are you sure you want to delete the language: &nbsp;
             </span>
-            <span className="font-normal text-start">
-              {selectedLanguage?.name}
-            </span>
+            {selectedLanguage?.name}
           </div>
         </Space>
       </Modal>

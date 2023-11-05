@@ -66,6 +66,7 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
           />,
         ]}
       />
+
       <Modal
         forceRender
         title="Set new status"

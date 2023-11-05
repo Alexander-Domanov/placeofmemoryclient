@@ -13,8 +13,8 @@ interface DescriptionItemProps {
 
 const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
   <div className="site-description-item-profile-wrapper">
-    <span className="font-normal text-neutral-400">{title}: </span>
-    <span className="font-normal text-start">{content}</span>
+    <span className="text-neutral-400">{title}: &nbsp;</span>
+    {content}
   </div>
 );
 
@@ -68,11 +68,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           </Space>
         }
       >
-        <Space
-          direction="horizontal"
-          size="large"
-          // style={{ display: 'flex', justifyContent: 'flex-start' }}
-        >
+        <Space direction="horizontal" size="large">
           <Space direction="vertical" size="middle">
             {RenderImage(selectedUser?.avatars?.medium.url, 120, true)}
           </Space>
@@ -126,17 +122,17 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
 
             <DescriptionItem
               title="Draft"
-              content={selectedUser?.places?.drafts.length}
+              content={selectedUser?.places?.drafts?.length || 0}
             />
 
             <DescriptionItem
               title="Pending to review"
-              content={selectedUser?.places?.pendingReview.length}
+              content={selectedUser?.places?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
               title="Published"
-              content={selectedUser?.places?.publications.length}
+              content={selectedUser?.places?.publications?.length || 0}
             />
           </Col>
 
@@ -144,17 +140,17 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             <Divider orientation="right">Persons</Divider>
             <DescriptionItem
               title="Draft"
-              content={selectedUser?.persons?.drafts.length}
+              content={selectedUser?.persons?.drafts?.length || 0}
             />
 
             <DescriptionItem
               title="Pending to review"
-              content={selectedUser?.persons?.pendingReview.length}
+              content={selectedUser?.persons?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
               title="Published"
-              content={selectedUser?.persons?.publications.length}
+              content={selectedUser?.persons?.publications?.length || 0}
             />
           </Col>
 
@@ -163,17 +159,17 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
 
             <DescriptionItem
               title="Draft"
-              content={selectedUser?.articles?.drafts.length}
+              content={selectedUser?.articles?.drafts?.length || 0}
             />
 
             <DescriptionItem
               title="Pending to review"
-              content={selectedUser?.articles?.pendingReview.length}
+              content={selectedUser?.articles?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
               title="Published"
-              content={selectedUser?.articles?.publications.length}
+              content={selectedUser?.articles?.publications?.length || 0}
             />
           </Col>
         </Row>

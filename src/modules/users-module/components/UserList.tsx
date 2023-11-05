@@ -42,7 +42,7 @@ interface DescriptionItemProps {
   content?: React.ReactNode;
 }
 const DescriptionItem = ({ title }: DescriptionItemProps) => (
-  <span className="font-normal text-neutral-400">{title}: &nbsp;</span>
+  <span className="text-neutral-400">{title}: &nbsp;</span>
 );
 
 const ListItems = ({ title, content }: DescriptionItemProps) => (
@@ -206,22 +206,18 @@ export const UserList: FC = () => {
       label: 'Places',
       key: 'places',
       children: (
-        <Space direction="vertical" style={{ display: 'flex' }}>
-          <Flex
-            justify="end"
-            align="center"
-            gap="middle"
-            style={{ marginBottom: '15px' }}
-          >
-            <Input
-              placeholder="Search by name"
-              allowClear
-              onChange={(e) =>
-                setPagination({ ...pagination, searchTerm: e.target.value })
-              }
-              style={{ width: 200 }}
-            />
-            <div>
+        <Flex gap="large" vertical>
+          <Flex justify="end" align="center" gap="middle">
+            <Flex align="center">
+              <Input
+                placeholder="Search by name"
+                allowClear
+                onChange={(e) =>
+                  setPagination({ ...pagination, searchTerm: e.target.value })
+                }
+                style={{ width: 200 }}
+              />
+
               <SelectInput
                 defaultValue={{ value: 'all', label: 'All' }}
                 options={[
@@ -233,7 +229,7 @@ export const UserList: FC = () => {
                 ]}
                 onChange={onStatusChange}
               />
-            </div>
+            </Flex>
           </Flex>
 
           <Table
@@ -256,29 +252,25 @@ export const UserList: FC = () => {
             scroll={{ x: 1000 }}
             onChange={handleTableChange}
           />
-        </Space>
+        </Flex>
       ),
     },
     {
       label: 'Persons',
       key: 'persons',
       children: (
-        <Space direction="vertical" style={{ display: 'flex' }}>
-          <Flex
-            justify="end"
-            align="center"
-            gap="middle"
-            style={{ marginBottom: '15px' }}
-          >
-            <Input
-              placeholder="Search by name"
-              allowClear
-              onChange={(e) =>
-                setPagination({ ...pagination, searchTerm: e.target.value })
-              }
-              style={{ width: 200 }}
-            />
-            <div>
+        <Flex gap="large" vertical>
+          <Flex justify="end" align="center" gap="middle">
+            <Flex align="center">
+              <Input
+                placeholder="Search by name"
+                allowClear
+                onChange={(e) =>
+                  setPagination({ ...pagination, searchTerm: e.target.value })
+                }
+                style={{ width: 200 }}
+              />
+
               <SelectInput
                 defaultValue={{ value: 'all', label: 'All' }}
                 options={[
@@ -290,7 +282,7 @@ export const UserList: FC = () => {
                 ]}
                 onChange={onStatusChange}
               />
-            </div>
+            </Flex>
           </Flex>
 
           <Table
@@ -313,29 +305,25 @@ export const UserList: FC = () => {
             scroll={{ x: 1300 }}
             onChange={handleTableChange}
           />
-        </Space>
+        </Flex>
       ),
     },
     {
       label: 'Articles',
       key: 'articles',
       children: (
-        <Space direction="vertical" style={{ display: 'flex' }}>
-          <Flex
-            justify="end"
-            align="center"
-            gap="middle"
-            style={{ marginBottom: '15px' }}
-          >
-            <Input
-              placeholder="Search by title"
-              allowClear
-              onChange={(e) =>
-                setPagination({ ...pagination, searchTerm: e.target.value })
-              }
-              style={{ width: 200 }}
-            />
-            <div>
+        <Flex gap="large" vertical>
+          <Flex justify="end" align="center" gap="middle">
+            <Flex align="center">
+              <Input
+                placeholder="Search by title"
+                allowClear
+                onChange={(e) =>
+                  setPagination({ ...pagination, searchTerm: e.target.value })
+                }
+                style={{ width: 200 }}
+              />
+
               <SelectInput
                 defaultValue={{ value: 'all', label: 'All' }}
                 options={[
@@ -347,7 +335,7 @@ export const UserList: FC = () => {
                 ]}
                 onChange={onStatusChange}
               />
-            </div>
+            </Flex>
           </Flex>
 
           <Table
@@ -369,7 +357,7 @@ export const UserList: FC = () => {
             scroll={{ x: 900 }}
             onChange={handleTableChange}
           />
-        </Space>
+        </Flex>
       ),
     },
   ];

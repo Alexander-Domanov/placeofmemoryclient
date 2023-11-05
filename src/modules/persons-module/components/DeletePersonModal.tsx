@@ -83,12 +83,10 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
-            <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the person:
+            <span className="text-neutral-400">
+              Are you sure you want to delete the person: &nbsp;
             </span>
-            <span className="font-normal text-start">
-              {selectedPerson?.firstName} {selectedPerson?.lastName}
-            </span>
+            {selectedPerson?.firstName}
           </div>
         </Space>
       </Modal>
@@ -102,12 +100,10 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
-            <span className="font-normal text-neutral-400">
-              Are you sure you want to delete the person:
+            <span className="text-neutral-400">
+              Are you sure you want to delete the person: &nbsp;
             </span>
-            <span className="font-normal text-start">
-              {selectedPerson?.firstName} {selectedPerson?.lastName}
-            </span>
+            {selectedPerson?.firstName}
           </div>
         </Space>
       </Modal>

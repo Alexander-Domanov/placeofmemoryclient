@@ -131,10 +131,10 @@ export const PlaceEdit: FC = () => {
         slug: place.slug,
         location: place.location.place,
       });
-      setShortDescriptionText(place.shortDescription);
-      setShortDescriptionCount(place.shortDescription.length);
-      setDescriptionText(place.description);
-      setDescriptionCount(place.description.length);
+      setShortDescriptionText(place.shortDescription || '');
+      setShortDescriptionCount(place.shortDescription?.length || 0);
+      setDescriptionText(place.description || '');
+      setDescriptionCount(place.description?.length || 0);
       setSelectedLocation(place.location);
       setStatus(place.status);
     }
@@ -170,7 +170,6 @@ export const PlaceEdit: FC = () => {
 
   const onFinish = (values: IPlaceEditForm) => {
     const newPlace: ICreatePlace = {
-      // ...values,
       country: values.country,
       city: values.city,
       nameCemetery: values.nameCemetery,
@@ -248,7 +247,7 @@ export const PlaceEdit: FC = () => {
                       form.setFieldValue('shortDescription', value);
                     }}
                   />
-                  <span className="font-normal text-neutral-400">
+                  <span className="text-neutral-400">
                     Characters: {shortDescriptionCount}
                   </span>
                 </Form.Item>
@@ -267,7 +266,7 @@ export const PlaceEdit: FC = () => {
                       form.setFieldValue('description', value);
                     }}
                   />
-                  <span className="font-normal text-neutral-400">
+                  <span className="text-neutral-400">
                     Characters: {descriptionCount}
                   </span>
                 </Form.Item>
@@ -315,7 +314,7 @@ export const PlaceEdit: FC = () => {
                     <List split={false}>
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Created At: &nbsp;
                           </span>
                           {convertDateToFormat(place?.createdAt)}
@@ -324,7 +323,7 @@ export const PlaceEdit: FC = () => {
 
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Updated At: &nbsp;
                           </span>
                           {convertDateToFormat(place?.updatedAt)}
@@ -359,7 +358,7 @@ export const PlaceEdit: FC = () => {
                       <List split={false}>
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Formatted Address: &nbsp;
                             </span>
                             {selectedLocation?.place}
@@ -368,7 +367,7 @@ export const PlaceEdit: FC = () => {
 
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Longitude: &nbsp;
                             </span>
                             {selectedLocation?.lng}
@@ -377,7 +376,7 @@ export const PlaceEdit: FC = () => {
 
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Latitude: &nbsp;
                             </span>
                             {selectedLocation?.lat}

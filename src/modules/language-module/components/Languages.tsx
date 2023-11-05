@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Flex, Form, Space, Table } from 'antd';
+import { Breadcrumb, Button, Flex, Form, Table } from 'antd';
 import React from 'react';
 import {
   BREAD_CRUMBS_LANGUAGE,
@@ -34,39 +34,35 @@ export const Languages = () => {
       <div>
         <Breadcrumb items={BREAD_CRUMBS_LANGUAGE} />
       </div>
-      <Space direction="vertical" style={{ display: 'flex' }}>
-        <Flex
-          justify="space-between"
-          align="center"
-          gap="middle"
-          style={{ marginBottom: '15px' }}
-        >
-          <Button type="primary" onClick={() => setIsModalOpen(true)}>
-            Add Language
-          </Button>
-        </Flex>
-        <LanguageModalForm
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          title="Add language"
-          useForm={form}
-          isSuccess={isSuccessCreateLanguage}
-          isLoading={isLoadingCreateLanguage}
-          onFinishSubmit={onFinishSubmit}
-        />
-        <Table
-          bordered
-          rowKey={(record) => record.id}
-          size="small"
-          loading={isLoading}
-          columns={columnsTableLanguages}
-          dataSource={languages?.items}
-          scroll={{ x: 1000 }}
-          pagination={{
-            position: ['bottomCenter'],
-          }}
-        />
-      </Space>
+
+      <Flex justify="space-between" align="center" gap="middle">
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+          Add Language
+        </Button>
+      </Flex>
+
+      <LanguageModalForm
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        title="Add language"
+        useForm={form}
+        isSuccess={isSuccessCreateLanguage}
+        isLoading={isLoadingCreateLanguage}
+        onFinishSubmit={onFinishSubmit}
+      />
+
+      <Table
+        bordered
+        rowKey={(record) => record.id}
+        size="small"
+        loading={isLoading}
+        columns={columnsTableLanguages}
+        dataSource={languages?.items}
+        scroll={{ x: 1000 }}
+        pagination={{
+          position: ['bottomCenter'],
+        }}
+      />
     </Flex>
   );
 };

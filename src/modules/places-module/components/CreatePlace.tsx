@@ -187,7 +187,7 @@ export const CreatePlace: FC = () => {
                     form.setFieldValue('shortDescription', value);
                   }}
                 />
-                <span className="font-normal text-neutral-400">
+                <span className="text-neutral-400">
                   Characters: {shortDescriptionCount}
                 </span>
               </Form.Item>
@@ -205,7 +205,7 @@ export const CreatePlace: FC = () => {
                     form.setFieldValue('description', value);
                   }}
                 />
-                <span className="font-normal text-neutral-400">
+                <span className="text-neutral-400">
                   Characters: {descriptionCount}
                 </span>
               </Form.Item>
@@ -237,7 +237,7 @@ export const CreatePlace: FC = () => {
                   <List split={false}>
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Formatted Address: &nbsp;
                         </span>
                         {selectedLocation?.place}
@@ -246,7 +246,7 @@ export const CreatePlace: FC = () => {
 
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Longitude: &nbsp;
                         </span>
                         {selectedLocation?.lng}
@@ -255,7 +255,7 @@ export const CreatePlace: FC = () => {
 
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Latitude: &nbsp;
                         </span>
                         {selectedLocation?.lat}

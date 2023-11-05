@@ -142,7 +142,8 @@ export const PersonEdit: FC = () => {
         slug: person.slug,
         location: person.location.place,
       });
-      setBiographyText(person.biography);
+      setBiographyText(person.biography || '');
+      setBiographyCount(person.biography?.length || 0);
       setSelectedLocation(person.location);
       setSelectedPlace({
         value: person.place.name,
@@ -271,7 +272,7 @@ export const PersonEdit: FC = () => {
                       form.setFieldValue('biography', value);
                     }}
                   />
-                  <span className="font-normal text-neutral-400">
+                  <span className="text-neutral-400">
                     Characters: {biographyCount}
                   </span>
                 </Form.Item>
@@ -318,7 +319,7 @@ export const PersonEdit: FC = () => {
                     <List split={false}>
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Created At: &nbsp;
                           </span>
                           {convertDateToFormat(person?.createdAt)}
@@ -327,7 +328,7 @@ export const PersonEdit: FC = () => {
 
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Updated At: &nbsp;
                           </span>
                           {convertDateToFormat(person?.updatedAt)}
@@ -358,7 +359,7 @@ export const PersonEdit: FC = () => {
                       <List split={false}>
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Selected place: &nbsp;
                             </span>
                             {selectedPlace?.value}
@@ -367,7 +368,7 @@ export const PersonEdit: FC = () => {
 
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Formatted address: &nbsp;
                             </span>
                             {selectedPlace?.formattedAddress}
@@ -395,7 +396,7 @@ export const PersonEdit: FC = () => {
                       <List split={false}>
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Formatted Address: &nbsp;
                             </span>
                             {selectedLocation?.place}
@@ -404,7 +405,7 @@ export const PersonEdit: FC = () => {
 
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Longitude: &nbsp;
                             </span>
                             {selectedLocation?.lng}
@@ -413,7 +414,7 @@ export const PersonEdit: FC = () => {
 
                         <List.Item>
                           <Typography.Text>
-                            <span className="font-normal text-neutral-400">
+                            <span className="text-neutral-400">
                               Latitude: &nbsp;
                             </span>
                             {selectedLocation?.lat}

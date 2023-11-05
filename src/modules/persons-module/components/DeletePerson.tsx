@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { List } from 'antd';
 import { IPerson } from '@/types';
 import DeletePersonModal from '@/modules/persons-module/components/DeletePersonModal';
@@ -7,9 +7,7 @@ interface DeletePersonComponentProps {
   person: IPerson | null;
 }
 
-const DeletePersonComponent: React.FC<DeletePersonComponentProps> = ({
-  person,
-}) => {
+const DeletePersonComponent: FC<DeletePersonComponentProps> = ({ person }) => {
   return (
     <>
       <List.Item

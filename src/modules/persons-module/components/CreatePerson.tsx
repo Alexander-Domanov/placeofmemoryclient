@@ -223,7 +223,6 @@ export const CreatePerson: FC = () => {
                     type="primary"
                     htmlType="submit"
                     loading={isCreating}
-                    // onClick={() => onFinish(form.getFieldsValue())}
                     icon={<SaveOutlined />}
                   >
                     Save
@@ -239,7 +238,7 @@ export const CreatePerson: FC = () => {
                     <List split={false}>
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Selected place: &nbsp;
                           </span>
                           {selectedPlace?.value}
@@ -248,7 +247,7 @@ export const CreatePerson: FC = () => {
 
                       <List.Item>
                         <Typography.Text>
-                          <span className="font-normal text-neutral-400">
+                          <span className="text-neutral-400">
                             Formatted address: &nbsp;
                           </span>
                           {selectedPlace?.formattedAddress}
@@ -275,7 +274,7 @@ export const CreatePerson: FC = () => {
                   <List split={false}>
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Formatted Address: &nbsp;
                         </span>
                         {selectedLocation?.place}
@@ -284,7 +283,7 @@ export const CreatePerson: FC = () => {
 
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Longitude: &nbsp;
                         </span>
                         {selectedLocation?.lng}
@@ -293,7 +292,7 @@ export const CreatePerson: FC = () => {
 
                     <List.Item>
                       <Typography.Text>
-                        <span className="font-normal text-neutral-400">
+                        <span className="text-neutral-400">
                           Latitude: &nbsp;
                         </span>
                         {selectedLocation?.lat}
