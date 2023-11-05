@@ -1,17 +1,10 @@
 import { NextPage } from 'next';
 import React, { PropsWithChildren, ReactElement } from 'react';
-import { Layout, Menu } from 'antd';
-import Link from 'next/link';
-import type { MenuProps } from 'antd/es/menu';
+import { Layout } from 'antd';
 import dynamic from 'next/dynamic';
-import { routes } from '@/common/routing/routes';
-import {
-  DashboardModals,
-  DashboardSelectLanguage,
-  DropdownMenuHeader,
-} from '@/components';
-import { useUserStore } from '@/store/userStore';
+import { DashboardModals } from '@/components';
 import styles from './DashboardLayout.module.scss';
+import { DashboardHeader } from '@/components/layouts/components/DashboardHeader';
 
 const DynamicDashboardSidebar = dynamic(
   () => import('./components/DashboardSidebar'),
@@ -20,46 +13,13 @@ const DynamicDashboardSidebar = dynamic(
   }
 );
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
-  const { userName } = useUserStore();
-
-  const headerItems: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <DashboardSelectLanguage />,
-    },
-    {
-      key: '2',
-      label: userName ? (
-        <div className="hidden sm:block w-[150px] text-light-300">
-          <DropdownMenuHeader />
-        </div>
-      ) : null,
-    },
-  ];
-
   return (
     <>
       <Layout>
-        <Header
-          style={{ backgroundColor: '#292929' }}
-          className="flex justify-between align-middle text-sm"
-        >
-          <div className="flex items-center font-kelsi text-xl">
-            <Link style={{ color: '#fafafa' }} href={routes.main}>
-              MOGILKI
-            </Link>
-          </div>
-
-          <Menu
-            style={{ backgroundColor: '#292929' }}
-            mode="horizontal"
-            defaultSelectedKeys={['1']}
-            items={headerItems}
-          />
-        </Header>
+        <DashboardHeader />
 
         <Layout>
           <DynamicDashboardSidebar />

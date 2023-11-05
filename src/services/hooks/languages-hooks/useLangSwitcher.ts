@@ -10,6 +10,7 @@ export const useLangSwitcher = () => {
     isSuccess: isSuccessLangSwitcher,
     isError: isErrorLangSwitcher,
     mutate: mutateLangSwitcher,
+    isLoading: isChangingLanguage,
   } = useMutation(
     ['lang-switcher'],
     ({ lang }: ILanguageSwitcher) => languageApi.languageSwitcher({ lang }),
@@ -28,5 +29,6 @@ export const useLangSwitcher = () => {
     mutateLangSwitcher,
     isErrorLangSwitcher,
     isSuccessLangSwitcher,
+    isChangingLanguage,
   };
 };

@@ -5,21 +5,41 @@ import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
 import { FaUsers } from 'react-icons/fa';
 import { MdOutlinePlace } from 'react-icons/md';
 import { GoPeople } from 'react-icons/go';
-import { FaNewspaper } from 'react-icons/fa6';
+import { FaNewspaper, FaRightFromBracket } from 'react-icons/fa6';
 import { BsPencilSquare } from 'react-icons/bs';
 import { useMediaQuery } from 'usehooks-ts';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Modal, notification } from 'antd';
 import type { MenuProps } from 'antd/es/menu';
 import { routes } from '@/common/routing/routes';
 
 import styles from './DashboardSidebar.module.scss';
+import { useLogout } from '@/modules/auth-modules/logout-module';
 
 const { Sider } = Layout;
+const { confirm } = Modal;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const DashboardSidebar: FC = () => {
   const router = useRouter();
+
+  const { sendLogoutAsync } = useLogout();
+
+  const onLogout = () => {
+    confirm({
+      title: 'Do you want to logout?',
+      okType: 'danger',
+      maskClosable: true,
+      async onOk() {
+        await sendLogoutAsync();
+
+        notification.success({
+          message: 'You was logged out',
+          placement: 'bottomLeft',
+        });
+      },
+    });
+  };
 
   const items: MenuItem[] = [
     {
@@ -57,15 +77,27 @@ const DashboardSidebar: FC = () => {
       label: <Link href={routes.dashboard.languages.index}>Languages</Link>,
       icon: <BsPencilSquare />,
     },
+    {
+      key: 'logout',
+      label: 'Logout',
+      icon: <FaRightFromBracket />,
+      danger: true,
+      onClick: onLogout,
+    },
   ];
 
   const isLT1024px = useMediaQuery('(max-width: 1023px)');
 
   return (
-    <Sider width={200} className={styles.sidebar} collapsed={isLT1024px}>
+    <Sider
+      width={200}
+      collapsedWidth={60}
+      className={styles.sidebar}
+      collapsed={isLT1024px}
+    >
       <Menu
         mode="inline"
-        style={{ height: '100%' }}
+        className={styles.menu}
         items={items}
         selectedKeys={[router.asPath]}
       />

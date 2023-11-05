@@ -11,6 +11,7 @@ export const useLogout = () => {
     isLoading,
     mutate: sendLogout,
     isSuccess,
+    mutateAsync: sendLogoutAsync,
   } = useMutation({
     mutationFn: sendLogoutRequest,
     mutationKey: ['logout'],
@@ -26,5 +27,5 @@ export const useLogout = () => {
     },
   });
 
-  return { isLoading, sendLogout, isSuccess };
+  return { isLoading, sendLogout, isSuccess, sendLogoutAsync };
 };
