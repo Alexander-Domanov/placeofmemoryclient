@@ -84,9 +84,9 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the place:
+              Are you sure you want to delete the place: &nbsp;
             </span>
-            <span className="text-start">{selectedPlace?.nameCemetery}</span>
+            {selectedPlace?.nameCemetery}
           </div>
         </Space>
       </Modal>
@@ -101,9 +101,9 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the place:
+              Are you sure you want to delete the place: &nbsp;
             </span>
-            <span className="text-start">{selectedPlace?.nameCemetery}</span>
+            {selectedPlace?.nameCemetery}
           </div>
         </Space>
       </Modal>
