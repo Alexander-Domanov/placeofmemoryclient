@@ -44,6 +44,7 @@ import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModa
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 
 const { Option } = Select;
 
@@ -406,6 +407,16 @@ export const PlaceEdit: FC = () => {
                       </Button>
                     </Upload>
                   </Form.Item>
+                </Card>
+
+                <Card>
+                  <MapWithMarkersComponent
+                    center={{
+                      lat: selectedPlace?.location.lat || 0,
+                      lng: selectedPlace?.location.lng || 0,
+                    }}
+                    locations={selectedPlace?.personsLocation || []}
+                  />
                 </Card>
               </Flex>
             </Col>
