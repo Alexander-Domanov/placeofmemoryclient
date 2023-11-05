@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useCallback, useState } from 'react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { message } from 'antd';
 import {
@@ -14,7 +14,7 @@ const center = {
   lng: 21.0122287,
 };
 
-const MapComponent: React.FC<AutoCompleteMapComponentProps> = ({
+const MapComponent: FC<AutoCompleteMapComponentProps> = ({
   onPlaceSelected,
 }) => {
   const { isLoaded } = useLoadScript({
@@ -23,15 +23,15 @@ const MapComponent: React.FC<AutoCompleteMapComponentProps> = ({
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}` || '',
   });
 
-  const [map, setMap] = React.useState<google.maps.Map | null>(null);
-  const [marker, setMarker] = React.useState<google.maps.Marker | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
 
-  const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+  const onLoad = useCallback(function callback(map: google.maps.Map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map);
   }, []);
-  const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
+  const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
   }, []);
 
