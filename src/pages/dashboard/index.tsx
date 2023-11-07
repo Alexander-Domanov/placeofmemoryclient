@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
+import { Dashboard } from '@/modules/dashboard-module/components/dashboard';
 
 const DashboardPage = () => {
   return (
@@ -7,6 +8,8 @@ const DashboardPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
+
+      <Dashboard />
     </>
   );
 };
