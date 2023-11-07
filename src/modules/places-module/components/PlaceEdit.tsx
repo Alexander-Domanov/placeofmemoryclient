@@ -44,6 +44,7 @@ import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModa
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 
 const { Option } = Select;
 
@@ -81,6 +82,13 @@ export const PlaceEdit: FC = () => {
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
   );
+  // const MapWithNoSSR = dynamic(
+  //   () => import('@/modules/leaflet-maps-module/components/LeafletMap'),
+  //   {
+  //     ssr: false,
+  //     // loading: () => <div>loading...</div>,
+  //   }
+  // );
   const router = useRouter();
   const { placeId } = router.query as { placeId: string };
 
@@ -406,6 +414,18 @@ export const PlaceEdit: FC = () => {
                       </Button>
                     </Upload>
                   </Form.Item>
+                </Card>
+
+                <Card>
+                  <Flex gap="large" vertical>
+                    <MapWithMarkersComponent
+                      center={{
+                        lat: selectedLocation?.lat || 0,
+                        lng: selectedLocation?.lng || 0,
+                      }}
+                      locations={selectedPlace?.personsLocation || []}
+                    />
+                  </Flex>
                 </Card>
               </Flex>
             </Col>
