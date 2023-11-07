@@ -1,13 +1,13 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { Button, Flex } from 'antd';
+import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { Button, Flex, Input } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
-  height: '700px',
+  height: '800px',
   width: '100%',
   borderRadius: '10px',
   // position: 'absolute',
@@ -45,6 +45,10 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
   const [selectedLocations, setSelectedLocations] = useState<IPersonForMap[]>(
     []
   );
+
+  const [searchResult, setSearchResult] =
+    useState<google.maps.places.Autocomplete | null>(null);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     if (center) {
@@ -114,9 +118,52 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
     }
   }, [map, selectedLocations]);
 
+  const onLoadAutoComplete: (
+    autocomplete: google.maps.places.Autocomplete
+  ) => void = (autocomplete: google.maps.places.Autocomplete) => {
+    setSearchResult(autocomplete);
+  };
+
+  const onPlaceChanged = () => {
+    if (searchResult != null) {
+      const place = searchResult.getPlace();
+      const position = {
+        lat: place.geometry?.location?.lat() || 0,
+        lng: place.geometry?.location?.lng() || 0,
+      };
+      setSelectedCenter(position);
+      setInputValue(place.formatted_address || '');
+    }
+  };
+
   return isLoaded ? (
     <Flex gap="large" vertical>
-      <Button onClick={() => panTo(center)}>Pan to Current Location</Button>
+      <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button type="primary" onClick={() => panTo(center)}>
+            Pan to location Poland …
+          </Button>
+        </div>
+
+        <Flex align="center">
+          <Autocomplete
+            onPlaceChanged={onPlaceChanged}
+            onLoad={onLoadAutoComplete}
+          >
+            <Input
+              placeholder="Go to ...   input location"
+              allowClear
+              title={inputValue}
+              style={{
+                width: 400,
+                textOverflow: `ellipses`,
+              }}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </Autocomplete>
+        </Flex>
+      </Flex>
 
       <GoogleMap
         mapContainerStyle={containerStyle}

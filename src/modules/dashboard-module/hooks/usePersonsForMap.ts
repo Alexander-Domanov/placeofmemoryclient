@@ -5,7 +5,7 @@ import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { useMeQuery } from '@/services';
 import { getPersonsForMap } from '@/modules/dashboard-module/api/persons-for-map-api';
 
-export const usePersonsForMap = (name: string, lang?: string) => {
+export const usePersonsForMap = (name?: string, lang?: string) => {
   const { data: me } = useMeQuery();
   const {
     data: persons,
