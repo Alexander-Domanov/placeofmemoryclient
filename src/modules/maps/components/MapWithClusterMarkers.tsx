@@ -105,6 +105,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
         marker.addListener('click', () => {
           infoWindow.close();
           infoWindow.setContent(contentString);
+          infoWindow.setOptions({ pixelOffset: new google.maps.Size(0, -10) });
           infoWindow.open(marker.getMap(), marker);
         });
 
