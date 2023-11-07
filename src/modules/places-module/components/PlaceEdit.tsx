@@ -82,6 +82,13 @@ export const PlaceEdit: FC = () => {
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
   );
+  // const MapWithNoSSR = dynamic(
+  //   () => import('@/modules/leaflet-maps-module/components/LeafletMap'),
+  //   {
+  //     ssr: false,
+  //     // loading: () => <div>loading...</div>,
+  //   }
+  // );
   const router = useRouter();
   const { placeId } = router.query as { placeId: string };
 
@@ -410,13 +417,15 @@ export const PlaceEdit: FC = () => {
                 </Card>
 
                 <Card>
-                  <MapWithMarkersComponent
-                    center={{
-                      lat: selectedPlace?.location.lat || 0,
-                      lng: selectedPlace?.location.lng || 0,
-                    }}
-                    locations={selectedPlace?.personsLocation || []}
-                  />
+                  <Flex gap="large" vertical>
+                    <MapWithMarkersComponent
+                      center={{
+                        lat: selectedPlace?.location.lat || 0,
+                        lng: selectedPlace?.location.lng || 0,
+                      }}
+                      locations={selectedPlace?.personsLocation || []}
+                    />
+                  </Flex>
                 </Card>
               </Flex>
             </Col>
@@ -426,3 +435,41 @@ export const PlaceEdit: FC = () => {
     </Flex>
   );
 };
+
+// {/* <MapWithNoSSR */}
+//                     {/*  center={[ */}
+//                     {/*    selectedPlace?.location.lat || 0, */}
+//                     {/*    selectedPlace?.location.lng || 0, */}
+//                     {/*  ]} */}
+//                     {/*  zoom={mapZoom} */}
+//                     {/* > */}
+//                     {/*  <MarkerCluster> */}
+//                     {/*    {selectedPlace?.personsLocation?.map((item) => ( */}
+//                     {/*      <Marker */}
+//                     {/*        position={[item.location.lat, item.location.lng]} */}
+//                     {/*        key={item.id} */}
+//                     {/*      > */}
+//                     {/*        <Popup> */}
+//                     {/*          <Flex gap="small" vertical justify="center"> */}
+//                     {/*            <Typography.Text> */}
+//                     {/*              {RenderImage( */}
+//                     {/*                item.photos[0].versions.large.url, */}
+//                     {/*                100, */}
+//                     {/*                true */}
+//                     {/*              )} */}
+//                     {/*            </Typography.Text> */}
+//
+//                     {/*            <Typography.Text> */}
+//                     {/*              {item.firstName} {item.lastName} */}
+//                     {/*            </Typography.Text> */}
+//
+//                     {/*            <Typography.Text> */}
+//                     {/*              {item.birthDate || 'n/a'} -{' '} */}
+//                     {/*              {item.deathDate || 'n/a'} */}
+//                     {/*            </Typography.Text> */}
+//                     {/*          </Flex> */}
+//                     {/*        </Popup> */}
+//                     {/*      </Marker> */}
+//                     {/*    ))} */}
+//                     {/*  </MarkerCluster> */}
+//                     {/* </MapWithNoSSR> */}
