@@ -88,13 +88,19 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
           // animation: google.maps.Animation.DROP,
         });
 
+        const contentString = `
+<Flex gap="large" vertical>
+<img src="${p.url}" alt="${p.firstName} ${
+          p.lastName
+        }" style="max-width: 100px; max-height: 100px;">
+<p>${p.firstName} ${p.lastName}: ${p.birthDate || 'n/a'} - ${
+          p.deathDate || 'n/a'
+        }</p>
+</Flex>`;
+
         marker.addListener('click', () => {
           infoWindow.close();
-          infoWindow.setContent(
-            `${p.firstName} ${p.lastName}:  ${p.birthDate || 'n/a'} - ${
-              p.deathDate || 'n/a'
-            }`
-          );
+          infoWindow.setContent(contentString);
           infoWindow.open(marker.getMap(), marker);
         });
 

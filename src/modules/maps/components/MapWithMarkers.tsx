@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import { Button, Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -70,6 +70,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
       const infoWindow = new google.maps.InfoWindow();
 
       const markers = selectedLocations.map((p) => {
+        const { url } = p.photos[0].versions.large;
         const marker = new google.maps.Marker({
           position: {
             lat: p.location.lat,
@@ -79,13 +80,19 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
           icon: '/google/people35.png',
         });
 
+        const contentString = `
+<Flex gap="large" vertical>
+<img src="${url}" alt="${p.firstName} ${
+          p.lastName
+        }" style="max-width: 100px; max-height: 100px;">
+<p>${p.firstName} ${p.lastName}: ${p.birthDate || 'n/a'} - ${
+          p.deathDate || 'n/a'
+        }</p>
+</Flex>`;
+
         marker.addListener('click', () => {
           infoWindow.close();
-          infoWindow.setContent(
-            `${p.firstName} ${p.lastName}:  ${p.birthDate || 'n/a'} - ${
-              p.deathDate || 'n/a'
-            }`
-          );
+          infoWindow.setContent(contentString);
           infoWindow.open(marker.getMap(), marker);
         });
 
