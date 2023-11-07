@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import { Button, Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
@@ -46,6 +46,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
     if (center) {
       setSelectedCenter({ lat: center.lat, lng: center.lng });
       setSelectedLocations(locations);
+      console.log(center, '=====');
     }
   }, [center]);
 
@@ -76,6 +77,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
             lng: p.location.lng,
           },
           map: mapRef.current,
+          icon: '/google/people35.png',
         });
 
         marker.addListener('click', () => {
@@ -110,7 +112,11 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         onUnmount={onUnmount}
         // options={mapOptions}
       >
-        <Marker key="center" position={{ lat: center.lat, lng: center.lng }} />
+        <MarkerF
+          key="center"
+          position={{ lat: center.lat, lng: center.lng }}
+          options={{ icon: '/leaflet/map-marker.svg', zIndex: 1000 }}
+        />
       </GoogleMap>
     </Flex>
   ) : (

@@ -46,6 +46,7 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 
 const { Option } = Select;
 
@@ -445,6 +446,18 @@ export const PersonEdit: FC = () => {
                       </Button>
                     </Upload>
                   </Form.Item>
+                </Card>
+
+                <Card>
+                  <Flex gap="large" vertical>
+                    <MapWithMarkersComponent
+                      center={{
+                        lat: selectedLocation?.lat || 0,
+                        lng: selectedLocation?.lng || 0,
+                      }}
+                      locations={[]}
+                    />
+                  </Flex>
                 </Card>
               </Flex>
             </Col>

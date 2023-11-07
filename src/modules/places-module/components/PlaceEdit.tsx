@@ -420,8 +420,8 @@ export const PlaceEdit: FC = () => {
                   <Flex gap="large" vertical>
                     <MapWithMarkersComponent
                       center={{
-                        lat: selectedPlace?.location.lat || 0,
-                        lng: selectedPlace?.location.lng || 0,
+                        lat: selectedLocation?.lat || 0,
+                        lng: selectedLocation?.lng || 0,
                       }}
                       locations={selectedPlace?.personsLocation || []}
                     />
