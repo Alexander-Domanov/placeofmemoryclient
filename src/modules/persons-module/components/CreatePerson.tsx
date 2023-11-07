@@ -17,11 +17,6 @@ import {
   Typography,
   Upload,
 } from 'antd';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
@@ -32,20 +27,17 @@ import { routes } from '@/common/routing/routes';
 import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
-    key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
-    key: routes.dashboard.places.index,
-    title: <Link href={routes.dashboard.persons.index}>Persons</Link>,
-  },
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({ key: routes.dashboard.persons.index, text: 'Persons' }),
+  CreateBreadcrumb({
     key: routes.dashboard.persons.create,
-    title: 'Create Person',
-  },
+    text: 'Create Person',
+    withLink: false,
+  }),
 ];
 
 interface IPersonForm {

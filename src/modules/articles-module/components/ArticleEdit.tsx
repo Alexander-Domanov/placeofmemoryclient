@@ -1,11 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
-import {
   Breadcrumb,
   Button,
   Card,
@@ -41,25 +36,27 @@ import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArtic
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 
 const { confirm } = Modal;
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
-    key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
-    key: routes.dashboard.articles.index,
-    title: <Link href={routes.dashboard.articles.index}>Articles</Link>,
-  },
-  {
-    key: routes.dashboard.articles.create,
-    title: 'Edit Article',
-  },
-];
+function breadcrumbs(name: string) {
+  return [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.articles.index,
+      text: 'Articles',
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.articles.breadcrumbs(name),
+      text: name,
+      withLink: false,
+    }),
+  ];
+}
 
 export const ArticleEdit: FC = () => {
   const ReactQuill = useMemo(
@@ -170,7 +167,7 @@ export const ArticleEdit: FC = () => {
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs} />
+        <Breadcrumb items={breadcrumbs(article?.title || '')} />
       </div>
 
       <Spin spinning={isLoading}>

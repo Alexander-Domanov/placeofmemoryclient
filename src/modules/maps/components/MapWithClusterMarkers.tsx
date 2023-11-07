@@ -71,7 +71,9 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
 
   useEffect(() => {
     if (map && selectedLocations.length > 0) {
-      const infoWindow = new google.maps.InfoWindow();
+      const infoWindow = new google.maps.InfoWindow({
+        content: '',
+      });
 
       const markers = selectedLocations.map((p) => {
         const marker = new google.maps.Marker({
@@ -81,6 +83,9 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
           },
           map: mapRef.current,
           icon: '/google/people35.png',
+          clickable: true,
+          cursor: 'pointer',
+          // animation: google.maps.Animation.DROP,
         });
 
         marker.addListener('click', () => {

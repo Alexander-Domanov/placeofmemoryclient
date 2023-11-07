@@ -16,11 +16,6 @@ import {
   Typography,
   Upload,
 } from 'antd';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
@@ -30,20 +25,17 @@ import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
-    key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
-    key: routes.dashboard.places.index,
-    title: <Link href={routes.dashboard.places.index}>Places</Link>,
-  },
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({ key: routes.dashboard.places.index, text: 'Places' }),
+  CreateBreadcrumb({
     key: routes.dashboard.places.create,
-    title: 'Create Place',
-  },
+    text: 'Create Place',
+    withLink: false,
+  }),
 ];
 
 interface IPlaceForm {

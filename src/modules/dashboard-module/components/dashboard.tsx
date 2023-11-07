@@ -1,19 +1,18 @@
 import React, { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Flex } from 'antd';
 import { useDebounce } from 'usehooks-ts';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import { routes } from '@/common/routing/routes';
 import { usePersonsForMap } from '@/modules/dashboard-module/hooks/usePersonsForMap';
 import MapWithClusterMarkers from '@/modules/maps/components/MapWithClusterMarkers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { routes } from '@/common/routing/routes';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({
     key: routes.dashboard.index,
-    title: 'Dashboard',
-  },
+    text: 'Dashboard',
+    withLink: false,
+  }),
 ];
 
 export const Dashboard: FC = () => {

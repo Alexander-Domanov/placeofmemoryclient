@@ -18,12 +18,6 @@ import {
   Typography,
   Upload,
 } from 'antd';
-
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import {
@@ -45,6 +39,7 @@ import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 
@@ -58,22 +53,16 @@ interface IPlaceEditForm {
   photo: UploadFile<IGalleryFile>[];
 }
 
-function breadcrumbs(
-  name: string
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+function breadcrumbs(name: string) {
   return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.places.index,
-      title: <Link href={routes.dashboard.places.index}>Places</Link>,
-    },
-    {
-      key: routes.dashboard.places.breadcrumbs(name as string),
-      title: `${name}`,
-    },
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({ key: routes.dashboard.places.index, text: 'Places' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.places.breadcrumbs(name),
+      text: `${name}`,
+      withLink: false,
+    }),
   ];
 }
 

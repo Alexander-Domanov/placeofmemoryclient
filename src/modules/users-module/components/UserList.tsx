@@ -15,11 +15,6 @@ import {
   Typography,
 } from 'antd';
 import { useRouter } from 'next/router';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import { useDebounce } from 'usehooks-ts';
 import { TablePaginationConfig } from 'antd/lib';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
@@ -36,6 +31,7 @@ import { columnsTableArticles } from '@/modules/articles-module/components/Colum
 import { columnsTablePlaces } from '@/modules/places-module';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 interface DescriptionItemProps {
   title: string;
@@ -54,22 +50,16 @@ const ListItems = ({ title, content }: DescriptionItemProps) => (
   </List.Item>
 );
 
-function breadcrumbs(
-  name: string
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+function breadcrumbs(sectionName: string) {
   return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.users.index,
-      title: <Link href={routes.dashboard.users.index}>Users</Link>,
-    },
-    {
-      key: routes.dashboard.users.breadcrumbs(name as string),
-      title: `${name}`,
-    },
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({ key: routes.dashboard.users.index, text: 'Users' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.users.breadcrumbs(sectionName),
+      text: sectionName,
+      withLink: false,
+    }),
   ];
 }
 

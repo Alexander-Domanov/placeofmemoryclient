@@ -59,6 +59,7 @@ export const routes = {
       index: '/dashboard/articles',
       create: '/dashboard/articles/create',
       article: (id: string | number) => `/dashboard/articles/${id}`,
+      breadcrumbs: (name: string) => `/dashboard/articles/${name}`,
     },
     languages: {
       index: '/dashboard/language',

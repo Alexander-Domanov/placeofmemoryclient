@@ -20,11 +20,6 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
-import {
   ClockCircleOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
@@ -47,25 +42,20 @@ import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdateP
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 
-function breadcrumbs(
-  fillName: string
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+function breadcrumbs(name: string) {
   return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.persons.index,
-      title: <Link href={routes.dashboard.persons.index}>Persons</Link>,
-    },
-    {
-      key: routes.dashboard.persons.breadcrumbs(fillName),
-      title: `${fillName}`,
-    },
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({ key: routes.dashboard.persons.index, text: 'Persons' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.breadcrumbs(name),
+      text: name,
+      withLink: false,
+    }),
   ];
 }
 

@@ -1,5 +1,6 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
+  Breadcrumb,
   Card,
   Col,
   Empty,
@@ -14,8 +15,20 @@ import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
 import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { routes } from '@/common/routing/routes';
 
 const { Option } = Select;
+
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({
+    key: routes.dashboard.gallery,
+    text: 'Gallery',
+    withLink: false,
+  }),
+];
 
 export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
@@ -46,7 +59,11 @@ export const Gallery: FC = () => {
   };
 
   return (
-    <div>
+    <Flex gap="large" vertical>
+      <div>
+        <Breadcrumb items={breadcrumbs} />
+      </div>
+
       <Space direction="vertical" size="large" style={{ display: 'flex' }}>
         <Flex justify="end" align="center" gap="middle">
           {/* <div> */}
@@ -115,6 +132,6 @@ export const Gallery: FC = () => {
         setIsOpen={setIsUploadGalleryOpen}
         refetch={refetch}
       />
-    </div>
+    </Flex>
   );
 };

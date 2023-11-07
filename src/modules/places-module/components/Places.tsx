@@ -4,26 +4,21 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import { IPlace } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
-    key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({
     key: routes.dashboard.places.index,
-    title: 'Places',
-  },
+    text: 'Places',
+    withLink: false,
+  }),
 ];
 
 export const Places: FC = () => {
