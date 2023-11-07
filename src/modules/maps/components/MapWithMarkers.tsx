@@ -1,8 +1,8 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { Button, Flex } from 'antd';
+import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
-import MarkerComponent from '@/modules/maps/components/MarkerComponent';
 
 const containerStyle = {
   height: '500px',
@@ -42,6 +42,8 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
     useState<google.maps.LatLngLiteral>();
   const [selectedLocations, setSelectedLocations] = useState<IPerson[]>([]);
 
+  const [activeMarker, setActiveMarker] = useState<IPerson | null>(null);
+
   useEffect(() => {
     if (center) {
       setSelectedCenter({ lat: center.lat, lng: center.lng });
@@ -57,13 +59,42 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
   const panTo = useCallback(({ lat, lng }: { lat: number; lng: number }) => {
     if (mapRef.current) {
       mapRef.current.panTo({ lat, lng });
-      mapRef.current.setZoom(14);
+      mapRef.current.setZoom(15);
     }
   }, []);
 
   const onUnmount = useCallback(() => {
     mapRef.current = null;
   }, []);
+
+  useEffect(() => {
+    if (map && selectedLocations.length > 0) {
+      const infoWindow = new google.maps.InfoWindow();
+
+      const markers = selectedLocations.map((location) => {
+        const marker = new google.maps.Marker({
+          position: {
+            lat: location.location.lat,
+            lng: location.location.lng,
+          },
+          map: mapRef.current,
+        });
+
+        marker.addListener('click', () => {
+          infoWindow.close();
+          infoWindow.setContent(location.id.toString());
+          infoWindow.open(marker.getMap(), marker);
+        });
+
+        return marker;
+      });
+
+      const markerCluster = new MarkerClusterer({
+        map,
+        markers,
+      });
+    }
+  }, [map, selectedLocations]);
 
   return isLoaded ? (
     <Flex gap="large" vertical>
@@ -76,9 +107,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         onLoad={onLoad}
         onUnmount={onUnmount}
         // options={mapOptions}
-      >
-        <MarkerComponent locations={selectedLocations} />
-      </GoogleMap>
+      />
     </Flex>
   ) : (
     <></>
