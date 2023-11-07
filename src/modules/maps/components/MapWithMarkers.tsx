@@ -46,7 +46,6 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
     if (center) {
       setSelectedCenter({ lat: center.lat, lng: center.lng });
       setSelectedLocations(locations);
-      console.log(center, '=====');
     }
   }, [center]);
 
