@@ -42,8 +42,6 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
     useState<google.maps.LatLngLiteral>();
   const [selectedLocations, setSelectedLocations] = useState<IPerson[]>([]);
 
-  const [activeMarker, setActiveMarker] = useState<IPerson | null>(null);
-
   useEffect(() => {
     if (center) {
       setSelectedCenter({ lat: center.lat, lng: center.lng });
@@ -71,18 +69,22 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
     if (map && selectedLocations.length > 0) {
       const infoWindow = new google.maps.InfoWindow();
 
-      const markers = selectedLocations.map((location) => {
+      const markers = selectedLocations.map((p) => {
         const marker = new google.maps.Marker({
           position: {
-            lat: location.location.lat,
-            lng: location.location.lng,
+            lat: p.location.lat,
+            lng: p.location.lng,
           },
           map: mapRef.current,
         });
 
         marker.addListener('click', () => {
           infoWindow.close();
-          infoWindow.setContent(location.id.toString());
+          infoWindow.setContent(
+            `${p.firstName} ${p.lastName}:  ${p.birthDate || 'n/a'} - ${
+              p.deathDate || 'n/a'
+            }`
+          );
           infoWindow.open(marker.getMap(), marker);
         });
 
