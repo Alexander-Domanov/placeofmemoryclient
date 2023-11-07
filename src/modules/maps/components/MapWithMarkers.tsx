@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { Button, Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
@@ -109,7 +109,9 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         onLoad={onLoad}
         onUnmount={onUnmount}
         // options={mapOptions}
-      />
+      >
+        <Marker key="center" position={{ lat: center.lat, lng: center.lng }} />
+      </GoogleMap>
     </Flex>
   ) : (
     <></>
