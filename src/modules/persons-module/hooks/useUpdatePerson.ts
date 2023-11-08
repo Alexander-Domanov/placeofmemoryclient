@@ -14,6 +14,7 @@ export const useUpdatePerson = () => {
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['persons']);
+      client.invalidateQueries(['person']);
     },
     onError: (error: IResponseError) => {
       ErrorNotification(error);

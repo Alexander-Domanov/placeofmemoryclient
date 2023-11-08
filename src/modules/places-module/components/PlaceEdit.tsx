@@ -28,6 +28,7 @@ import {
   SaveOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
@@ -310,6 +311,28 @@ export const PlaceEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Public link: &nbsp;
+                          </span>
+                          <Link
+                            href={{
+                              pathname: routes.place.getPlace(
+                                selectedPlace?.slug || ''
+                              ),
+                            }}
+                          >
+                            <Typography.Text
+                              ellipsis
+                              style={{ cursor: 'pointer', color: '#1087f6' }}
+                            >
+                              {selectedPlace?.slug || ''}
+                            </Typography.Text>
+                          </Link>
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item draggable>
                         <Typography.Text>
                           <span className="text-neutral-400">

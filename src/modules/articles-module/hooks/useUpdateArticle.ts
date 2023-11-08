@@ -13,6 +13,7 @@ export const useUpdateArticle = (id: string) => {
     mutationFn: (form: IArticleCreate) => updateArticle(id, form),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['articles'] });
+      client.invalidateQueries({ queryKey: ['article'] });
     },
     onError: (error: IResponseError) => {
       ErrorNotification(error);

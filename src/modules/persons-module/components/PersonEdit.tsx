@@ -30,6 +30,7 @@ import {
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePerson, IGalleryFile, ILocation, IPerson } from '@/types';
 import { routes } from '@/common/routing/routes';
@@ -310,6 +311,28 @@ export const PersonEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Public link: &nbsp;
+                          </span>
+                          <Link
+                            href={{
+                              pathname: routes.people.getPerson(
+                                selectedPerson?.slug || ''
+                              ),
+                            }}
+                          >
+                            <Typography.Text
+                              ellipsis
+                              style={{ cursor: 'pointer', color: '#1087f6' }}
+                            >
+                              {selectedPerson?.slug || ''}
+                            </Typography.Text>
+                          </Link>
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item draggable>
                         <Typography.Text>
                           <span className="text-neutral-400">

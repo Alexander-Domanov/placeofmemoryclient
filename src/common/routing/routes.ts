@@ -22,12 +22,15 @@ export const routes = {
   main: '/',
   articles: {
     index: '/articles',
+    getArticle: (slug: string) => `${routes.articles.index}/${slug}`,
   },
   place: {
     index: '/place',
+    getPlace: (slug: string) => `${routes.place.index}/${slug}`,
   },
   people: {
     index: '/people',
+    getPerson: (slug: string) => `${routes.people.index}/${slug}`,
   },
   aboutTheProject: {
     index: 'about-the-project',

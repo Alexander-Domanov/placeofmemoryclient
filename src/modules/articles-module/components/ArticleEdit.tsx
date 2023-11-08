@@ -29,6 +29,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import { UploadFile } from 'antd/es/upload/interface';
+import Link from 'next/link';
 import { useArticle } from '@/modules/articles-module/hooks/useArticle';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
@@ -251,6 +252,28 @@ export const ArticleEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Public link: &nbsp;
+                          </span>
+                          <Link
+                            href={{
+                              pathname: routes.articles.getArticle(
+                                article?.slug || ''
+                              ),
+                            }}
+                          >
+                            <Typography.Text
+                              ellipsis
+                              style={{ cursor: 'pointer', color: '#1087f6' }}
+                            >
+                              {article?.slug || ''}
+                            </Typography.Text>
+                          </Link>
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item draggable>
                         <Typography.Text>
                           <span className="text-neutral-400">
