@@ -214,7 +214,7 @@ export const PersonEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
-            <Col span={24} lg={16}>
+            <Col span={24} lg={14} md={12}>
               <Card>
                 <Form.Item
                   name="firstName"
@@ -270,7 +270,7 @@ export const PersonEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={24} lg={8}>
+            <Col span={24} lg={10} md={12}>
               <Flex vertical gap="middle">
                 <Card>
                   <Form.Item label="Status">
@@ -418,37 +418,39 @@ export const PersonEdit: FC = () => {
                   </Form.Item>
                 </Card>
 
-                <Card>
-                  <Form.Item
-                    label="Photo"
-                    name="photo"
-                    hasFeedback
-                    valuePropName="fileList"
-                    getValueFromEvent={normFile}
-                    rules={[{ required: true }]}
-                  >
-                    <Upload {...uploadProps} maxCount={3} multiple>
-                      <Button
-                        icon={<UploadOutlined />}
-                        disabled={fileList.length > 2}
-                      >
-                        Click to upload
-                      </Button>
-                    </Upload>
-                  </Form.Item>
-                </Card>
+                <Flex vertical gap="middle">
+                  <Card>
+                    <Form.Item
+                      label="Photo"
+                      name="photo"
+                      hasFeedback
+                      valuePropName="fileList"
+                      getValueFromEvent={normFile}
+                      rules={[{ required: true }]}
+                    >
+                      <Upload {...uploadProps} maxCount={3} multiple>
+                        <Button
+                          icon={<UploadOutlined />}
+                          disabled={fileList.length > 2}
+                        >
+                          Click to upload
+                        </Button>
+                      </Upload>
+                    </Form.Item>
+                  </Card>
 
-                <Card>
-                  <Flex gap="large" vertical>
-                    <MapWithMarkersComponent
-                      center={{
-                        lat: selectedLocation?.lat || 0,
-                        lng: selectedLocation?.lng || 0,
-                      }}
-                      locations={[]}
-                    />
-                  </Flex>
-                </Card>
+                  <Card>
+                    <Flex gap="large" vertical>
+                      <MapWithMarkersComponent
+                        center={{
+                          lat: selectedLocation?.lat || 0,
+                          lng: selectedLocation?.lng || 0,
+                        }}
+                        locations={[]}
+                      />
+                    </Flex>
+                  </Card>
+                </Flex>
               </Flex>
             </Col>
           </Row>

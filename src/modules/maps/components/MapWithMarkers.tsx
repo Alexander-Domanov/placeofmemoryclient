@@ -5,7 +5,7 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 
 const containerStyle = {
-  height: '500px',
+  height: '50vh',
   width: '100%',
   borderRadius: '10px',
   // position: 'absolute',
