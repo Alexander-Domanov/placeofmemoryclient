@@ -17,7 +17,7 @@ const LinkVariants = cva('text-sm', {
 interface PropsType
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof LinkVariants> {
-  title: string;
+  title?: string;
   href: string;
 }
 

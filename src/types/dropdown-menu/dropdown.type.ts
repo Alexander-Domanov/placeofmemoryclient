@@ -1,6 +1,6 @@
 export interface IDropdownMenuItems {
   title?: string;
-  href?: string;
+  link?: string;
   content?: React.ReactNode;
 }
 

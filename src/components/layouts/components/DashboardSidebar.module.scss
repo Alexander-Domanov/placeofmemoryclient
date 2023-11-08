@@ -1,12 +1,12 @@
 .sidebar {
-	min-height: calc(100vh - 64px);
-	background-color: #fff;
+  min-height: calc(100vh - 64px);
+  background-color: #fff;
 
-	@media(max-width: 575px) {
-		display: none;
-	}
+  @media (max-width: 575px) {
+    display: none;
+  }
 }
 
 .menu {
-	height: 100%;
+  height: 100%;
 }
