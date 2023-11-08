@@ -67,5 +67,8 @@ export const routes = {
     languages: {
       index: '/dashboard/language',
     },
+    contacts: {
+      index: '/dashboard/contacts',
+    },
   },
 };
