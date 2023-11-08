@@ -6,9 +6,9 @@ export interface INavigationLinks {
 }
 
 export const NAVIGATION_LINK: INavigationLinks[] = [
-  { title: 'АРТЫКУЛЫ', link: routes.articles.index },
-  { title: 'МЕСЦА', link: routes.place.index },
-  { title: 'ЛЮДЗІ', link: routes.people.index },
-  { title: 'ПРА ПРАЭКТ', link: routes.aboutTheProject.index },
-  { title: 'МАПА', link: routes.map.index },
+  { title: 'Артыкулы', link: routes.articles.index },
+  { title: 'Месца', link: routes.places.index },
+  { title: 'Людзі', link: routes.people.index },
+  { title: 'Пра праэкт', link: routes.aboutTheProject.index },
+  { title: 'Мапа', link: routes.map.index },
 ];

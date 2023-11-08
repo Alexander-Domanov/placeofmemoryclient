@@ -21,7 +21,7 @@ export const DropdownMenuComponent = ({
         {menuLabel && (
           <>
             <DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-dark-900" />
           </>
         )}
         {items.map((item, index) => (
@@ -29,7 +29,7 @@ export const DropdownMenuComponent = ({
             {!item.content && item.title ? (
               <LinkComponent
                 title={item.title}
-                href={item.href ? item.href : ''}
+                href={item.link ? item.link : ''}
               />
             ) : (
               item.content

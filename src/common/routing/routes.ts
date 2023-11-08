@@ -14,6 +14,8 @@ export const routes = {
     '/auth/registration/resend-add-form-language',
     '/auth/registration-confirmation',
     '/',
+    '/places/:slug',
+    '/places',
   ],
   dropdownMenuHeader: {
     settings: '/account',
@@ -23,8 +25,9 @@ export const routes = {
   articles: {
     index: '/articles',
   },
-  place: {
-    index: '/place',
+  places: {
+    place: (slug: string | number) => `places/${slug}`,
+    index: '/places',
   },
   people: {
     index: '/people',

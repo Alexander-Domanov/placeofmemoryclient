@@ -18,7 +18,7 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
   return (
     <div
       className={twMerge(
-        'max-w-7xl px-10 bg-dark-700 my-auto text-base',
+        'max-w-7xl w-full text-light-300 px-10 bg-dark-700 mx-auto text-base',
         className,
         clsx(
           className,

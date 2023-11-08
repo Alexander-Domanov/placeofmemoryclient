@@ -22,8 +22,7 @@ export const ImageComponent = ({
     <Image
       src={src || placeholder}
       alt={alt}
-      placeholder="blur"
-      className={`${className} z-1`}
+      className={`${className} z-1 h-full w-full`}
       width={width}
       height={height}
     />

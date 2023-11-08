@@ -7,7 +7,7 @@ export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
     <LayoutWithHeader>
       <Container>
         <div className="min-h-[calc(100vh-65px)] ">
-          <div className="pt-[197px] pb-[130px]">{children}</div>
+          <div className="pt-[70px] pb-[130px]">{children}</div>
         </div>
       </Container>
     </LayoutWithHeader>
