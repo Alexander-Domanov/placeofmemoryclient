@@ -14,7 +14,6 @@ export const routes = {
     '/auth/registration/resend-add-form-language',
     '/auth/registration-confirmation',
     '/',
-    '/places/:slug',
     '/places',
   ],
   dropdownMenuHeader: {
@@ -24,13 +23,14 @@ export const routes = {
   main: '/',
   articles: {
     index: '/articles',
+    getArticle: (slug: string) => `${routes.articles.index}/${slug}`,
   },
-  places: {
-    place: (slug: string | number) => `places/${slug}`,
-    index: '/places',
+  place: {
+    index: '/place',
   },
   people: {
     index: '/people',
+    getPerson: (slug: string) => `${routes.people.index}/${slug}`,
   },
   aboutTheProject: {
     index: 'about-the-project',
@@ -62,9 +62,13 @@ export const routes = {
       index: '/dashboard/articles',
       create: '/dashboard/articles/create',
       article: (id: string | number) => `/dashboard/articles/${id}`,
+      breadcrumbs: (name: string) => `/dashboard/articles/${name}`,
     },
     languages: {
       index: '/dashboard/language',
+    },
+    contacts: {
+      index: '/dashboard/contacts',
     },
   },
 };

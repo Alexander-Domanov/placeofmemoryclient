@@ -31,6 +31,7 @@ const MapComponent: FC<AutoCompleteMapComponentProps> = ({
     map.fitBounds(bounds);
     setMap(map);
   }, []);
+
   const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
   }, []);

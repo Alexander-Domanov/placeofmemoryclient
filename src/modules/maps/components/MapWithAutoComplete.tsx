@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import {
   Autocomplete,
   GoogleMap,
@@ -21,9 +21,7 @@ const styleButton = {
   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
 };
 
-const MapWithAutoComplete: React.FC<MapLocationProps> = ({
-  onDefineLocation,
-}) => {
+const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
   const { isLoaded } = useLoadScript({
     libraries: ['places'],
     version: 'weekly',
@@ -31,7 +29,7 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}` || '',
   });
 
-  const [map, setMap] = React.useState<google.maps.Map | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markerPosition, setMarkerPosition] =
     useState<google.maps.LatLngLiteral | null>(null);
   const [center, setCenter] = useState(initialCenter);
@@ -49,13 +47,13 @@ const MapWithAutoComplete: React.FC<MapLocationProps> = ({
     }
   }, [map, markerPosition]);
 
-  const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+  const onLoad = useCallback(function callback(map: google.maps.Map) {
     map.setOptions({
       maxZoom: maxZoomLevel,
     });
     setMap(map);
   }, []);
-  const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
+  const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
   }, []);
   const onLoadAutoComplete: (

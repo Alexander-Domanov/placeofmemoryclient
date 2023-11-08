@@ -18,12 +18,6 @@ import {
   Typography,
   Upload,
 } from 'antd';
-
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import {
@@ -34,6 +28,7 @@ import {
   SaveOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
@@ -44,6 +39,8 @@ import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModa
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 
@@ -57,22 +54,16 @@ interface IPlaceEditForm {
   photo: UploadFile<IGalleryFile>[];
 }
 
-function breadcrumbs(
-  name: string
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+function breadcrumbs(name: string) {
   return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.places.index,
-      title: <Link href={routes.dashboard.places.index}>Places</Link>,
-    },
-    {
-      key: routes.dashboard.places.breadcrumbs(name as string),
-      title: `${name}`,
-    },
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({ key: routes.dashboard.places.index, text: 'Places' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.places.breadcrumbs(name),
+      text: `${name}`,
+      withLink: false,
+    }),
   ];
 }
 
@@ -81,6 +72,13 @@ export const PlaceEdit: FC = () => {
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
   );
+  // const MapWithNoSSR = dynamic(
+  //   () => import('@/modules/leaflet-maps-module/components/LeafletMap'),
+  //   {
+  //     ssr: false,
+  //     // loading: () => <div>loading...</div>,
+  //   }
+  // );
   const router = useRouter();
   const { placeId } = router.query as { placeId: string };
 
@@ -203,7 +201,7 @@ export const PlaceEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
-            <Col span={24} lg={16}>
+            <Col span={24} lg={14} md={12}>
               <Card>
                 <Form.Item
                   name="country"
@@ -273,7 +271,7 @@ export const PlaceEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={24} lg={8}>
+            <Col span={24} lg={10} md={12}>
               <Flex vertical gap="middle">
                 <Card>
                   <Form.Item label="Status">
@@ -302,6 +300,7 @@ export const PlaceEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={[{ required: true, whitespace: true }]}
+                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each place."
                     hasFeedback
                   >
                     <Input
@@ -312,6 +311,37 @@ export const PlaceEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Public link: &nbsp;
+                          </span>
+                          <Link
+                            href={{
+                              pathname: routes.place.getPlace(
+                                selectedPlace?.slug || ''
+                              ),
+                            }}
+                          >
+                            <Typography.Text
+                              ellipsis
+                              style={{ cursor: 'pointer', color: '#1087f6' }}
+                            >
+                              {selectedPlace?.slug || ''}
+                            </Typography.Text>
+                          </Link>
+                        </Typography.Text>
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Owner: &nbsp;
+                          </span>
+                          {selectedPlace?.owner?.userName}
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
@@ -353,6 +383,7 @@ export const PlaceEdit: FC = () => {
                     name="location"
                     rules={[{ required: true }]}
                     hasFeedback
+                    tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <Form.Item>
                       <List split={false}>
@@ -406,6 +437,18 @@ export const PlaceEdit: FC = () => {
                       </Button>
                     </Upload>
                   </Form.Item>
+                </Card>
+
+                <Card>
+                  <Flex gap="large" vertical>
+                    <MapWithMarkersComponent
+                      center={{
+                        lat: selectedLocation?.lat || 0,
+                        lng: selectedLocation?.lng || 0,
+                      }}
+                      locations={selectedPlace?.personsLocation || []}
+                    />
+                  </Flex>
                 </Card>
               </Flex>
             </Col>

@@ -11,11 +11,6 @@ import {
   Row,
   Upload,
 } from 'antd';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
@@ -25,20 +20,17 @@ import 'react-quill/dist/quill.snow.css';
 import { IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
-    key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
-    key: routes.dashboard.articles.index,
-    title: <Link href={routes.dashboard.articles.index}>Articles</Link>,
-  },
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({ key: routes.dashboard.articles.index, text: 'Articles' }),
+  CreateBreadcrumb({
     key: routes.dashboard.articles.create,
-    title: 'Create Article',
-  },
+    text: 'Create Article',
+    withLink: false,
+  }),
 ];
 
 interface ArticleForm {

@@ -14,6 +14,7 @@ export const useUpdatePlace = () => {
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['places']);
+      client.invalidateQueries(['place']);
     },
     onError: (error: IResponseError) => {
       ErrorNotification(error);

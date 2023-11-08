@@ -20,11 +20,6 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
-import {
   ClockCircleOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
@@ -35,6 +30,7 @@ import {
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
+import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePerson, IGalleryFile, ILocation, IPerson } from '@/types';
 import { routes } from '@/common/routing/routes';
@@ -46,25 +42,21 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 
-function breadcrumbs(
-  fillName: string
-): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] {
+function breadcrumbs(name: string) {
   return [
-    {
-      key: routes.dashboard.index,
-      title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-    },
-    {
-      key: routes.dashboard.persons.index,
-      title: <Link href={routes.dashboard.persons.index}>Persons</Link>,
-    },
-    {
-      key: routes.dashboard.persons.breadcrumbs(fillName),
-      title: `${fillName}`,
-    },
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({ key: routes.dashboard.persons.index, text: 'Persons' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.breadcrumbs(name),
+      text: name,
+      withLink: false,
+    }),
   ];
 }
 
@@ -223,7 +215,7 @@ export const PersonEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
-            <Col span={24} lg={16}>
+            <Col span={24} lg={14} md={12}>
               <Card>
                 <Form.Item
                   name="firstName"
@@ -279,7 +271,7 @@ export const PersonEdit: FC = () => {
               </Card>
             </Col>
 
-            <Col span={24} lg={8}>
+            <Col span={24} lg={10} md={12}>
               <Flex vertical gap="middle">
                 <Card>
                   <Form.Item label="Status">
@@ -308,6 +300,8 @@ export const PersonEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={[{ required: true, whitespace: true }]}
+                    hasFeedback
+                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each person"
                   >
                     <Input
                       placeholder="This field is auto generated"
@@ -317,6 +311,37 @@ export const PersonEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Public link: &nbsp;
+                          </span>
+                          <Link
+                            href={{
+                              pathname: routes.people.getPerson(
+                                selectedPerson?.slug || ''
+                              ),
+                            }}
+                          >
+                            <Typography.Text
+                              ellipsis
+                              style={{ cursor: 'pointer', color: '#1087f6' }}
+                            >
+                              {selectedPerson?.slug || ''}
+                            </Typography.Text>
+                          </Link>
+                        </Typography.Text>
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Owner: &nbsp;
+                          </span>
+                          {selectedPerson?.owner?.userName}
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
@@ -352,7 +377,10 @@ export const PersonEdit: FC = () => {
                 </Card>
 
                 <Card>
-                  <Form.Item label="Place">
+                  <Form.Item
+                    label="Place"
+                    tooltip="Select a location from the list to link it to a specific location on the map."
+                  >
                     <TitlePlaces onFinishValue={setSelectedPlace} />
 
                     <Form.Item style={{ marginBottom: 0 }}>
@@ -391,6 +419,7 @@ export const PersonEdit: FC = () => {
                     name="location"
                     rules={[{ required: true }]}
                     hasFeedback
+                    tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <Form.Item>
                       <List split={false}>
@@ -427,25 +456,39 @@ export const PersonEdit: FC = () => {
                   </Form.Item>
                 </Card>
 
-                <Card>
-                  <Form.Item
-                    label="Photo"
-                    name="photo"
-                    hasFeedback
-                    valuePropName="fileList"
-                    getValueFromEvent={normFile}
-                    rules={[{ required: true }]}
-                  >
-                    <Upload {...uploadProps} maxCount={3} multiple>
-                      <Button
-                        icon={<UploadOutlined />}
-                        disabled={fileList.length > 2}
-                      >
-                        Click to upload
-                      </Button>
-                    </Upload>
-                  </Form.Item>
-                </Card>
+                <Flex vertical gap="middle">
+                  <Card>
+                    <Form.Item
+                      label="Photo"
+                      name="photo"
+                      hasFeedback
+                      valuePropName="fileList"
+                      getValueFromEvent={normFile}
+                      rules={[{ required: true }]}
+                    >
+                      <Upload {...uploadProps} maxCount={3} multiple>
+                        <Button
+                          icon={<UploadOutlined />}
+                          disabled={fileList.length > 2}
+                        >
+                          Click to upload
+                        </Button>
+                      </Upload>
+                    </Form.Item>
+                  </Card>
+
+                  <Card>
+                    <Flex gap="large" vertical>
+                      <MapWithMarkersComponent
+                        center={{
+                          lat: selectedLocation?.lat || 0,
+                          lng: selectedLocation?.lng || 0,
+                        }}
+                        locations={[]}
+                      />
+                    </Flex>
+                  </Card>
+                </Flex>
               </Flex>
             </Col>
           </Row>

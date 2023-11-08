@@ -1,7 +1,6 @@
 import { Breadcrumb, Button, Flex, Form, Table } from 'antd';
 import React from 'react';
 import {
-  BREAD_CRUMBS_LANGUAGE,
   LanguageModalForm,
   useCreateLanguage,
   useOpenCloseModal,
@@ -9,6 +8,18 @@ import {
 import { ILanguage } from '@/types';
 import { useGetListLanguages } from '@/services';
 import { columnsTableLanguages } from '@/modules/language-module/components/ColumnsTableLanguages';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { routes } from '@/common/routing/routes';
+
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+  CreateBreadcrumb({
+    key: routes.dashboard.languages.index,
+    text: 'Languages',
+    withLink: false,
+  }),
+];
 
 export const Languages = () => {
   const { languages, isLoading } = useGetListLanguages();
@@ -32,7 +43,7 @@ export const Languages = () => {
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={BREAD_CRUMBS_LANGUAGE} />
+        <Breadcrumb items={breadcrumbs} />
       </div>
 
       <Flex justify="space-between" align="center" gap="middle">

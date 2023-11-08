@@ -3,26 +3,24 @@ import { Breadcrumb, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
-import {
-  BreadcrumbItemType,
-  BreadcrumbSeparatorType,
-} from 'antd/es/breadcrumb/Breadcrumb';
-import Link from 'next/link';
 import { useUsers } from '@/modules/users-module/hooks/useUsers';
 import { IUserWithShortExtensions } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
+import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
 
-const breadcrumbs: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] = [
-  {
+const breadcrumbs = [
+  CreateBreadcrumb({ key: routes.main, icon: true }),
+  CreateBreadcrumb({
     key: routes.dashboard.index,
-    title: <Link href={routes.dashboard.index}>Dashboard</Link>,
-  },
-  {
+    text: 'Dashboard',
+  }),
+  CreateBreadcrumb({
     key: routes.dashboard.users.index,
-    title: 'Users',
-  },
+    text: 'Users',
+    withLink: false,
+  }),
 ];
 
 export const Users: FC = () => {

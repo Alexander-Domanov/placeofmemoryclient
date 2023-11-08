@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
+import {
+  ContactsOutlined,
+  FolderOpenOutlined,
+  LaptopOutlined,
+} from '@ant-design/icons';
 import { FaUsers } from 'react-icons/fa';
 import { MdOutlinePlace } from 'react-icons/md';
 import { GoPeople } from 'react-icons/go';
@@ -76,6 +80,11 @@ const DashboardSidebar: FC = () => {
       key: routes.dashboard.languages.index,
       label: <Link href={routes.dashboard.languages.index}>Languages</Link>,
       icon: <BsPencilSquare />,
+    },
+    {
+      key: routes.dashboard.contacts.index,
+      label: <Link href={routes.dashboard.contacts.index}>Contacts</Link>,
+      icon: <ContactsOutlined />,
     },
     {
       key: 'logout',
