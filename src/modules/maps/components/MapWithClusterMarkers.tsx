@@ -10,8 +10,6 @@ const containerStyle = {
   height: '60vh',
   width: '100%',
   borderRadius: '10px',
-  // position: 'absolute',
-  // overflow: 'none',
 };
 
 const defaultMapOptions = {
@@ -156,7 +154,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
               allowClear
               title={inputValue}
               style={{
-                width: 400,
+                width: '300px',
                 textOverflow: `ellipses`,
               }}
               value={inputValue}

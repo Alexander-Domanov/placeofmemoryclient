@@ -8,15 +8,6 @@ const containerStyle = {
   height: '50vh',
   width: '100%',
   borderRadius: '10px',
-  // position: 'absolute',
-  // overflow: 'none',
-};
-
-const defaultMapOptions = {
-  terrain: 'road',
-  disableDefaultUI: true,
-  fullscreenControl: false,
-  streetViewControl: false,
 };
 
 interface MapWithMarkersProps {
@@ -116,7 +107,6 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        // options={mapOptions}
       >
         <MarkerF
           key="center"
