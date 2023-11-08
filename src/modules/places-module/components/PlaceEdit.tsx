@@ -299,6 +299,7 @@ export const PlaceEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={[{ required: true, whitespace: true }]}
+                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each place."
                     hasFeedback
                   >
                     <Input
@@ -309,6 +310,15 @@ export const PlaceEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Owner: &nbsp;
+                          </span>
+                          {selectedPlace?.owner?.userName}
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
@@ -350,6 +360,7 @@ export const PlaceEdit: FC = () => {
                     name="location"
                     rules={[{ required: true }]}
                     hasFeedback
+                    tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <Form.Item>
                       <List split={false}>

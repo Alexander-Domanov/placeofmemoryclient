@@ -223,7 +223,10 @@ export const CreatePerson: FC = () => {
               </Card>
 
               <Card>
-                <Form.Item label="Place">
+                <Form.Item
+                  label="Place"
+                  tooltip="Select a location from the list to link it to a specific location on the map."
+                >
                   <TitlePlaces onFinishValue={setSelectedPlace} />
 
                   <Form.Item style={{ marginBottom: 0 }}>
@@ -262,6 +265,7 @@ export const CreatePerson: FC = () => {
                   name="location"
                   rules={[{ required: true }]}
                   hasFeedback
+                  tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
                   <List split={false}>
                     <List.Item>

@@ -299,6 +299,8 @@ export const PersonEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={[{ required: true, whitespace: true }]}
+                    hasFeedback
+                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each person"
                   >
                     <Input
                       placeholder="This field is auto generated"
@@ -308,6 +310,15 @@ export const PersonEdit: FC = () => {
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Owner: &nbsp;
+                          </span>
+                          {selectedPerson?.owner?.userName}
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
@@ -343,7 +354,10 @@ export const PersonEdit: FC = () => {
                 </Card>
 
                 <Card>
-                  <Form.Item label="Place">
+                  <Form.Item
+                    label="Place"
+                    tooltip="Select a location from the list to link it to a specific location on the map."
+                  >
                     <TitlePlaces onFinishValue={setSelectedPlace} />
 
                     <Form.Item style={{ marginBottom: 0 }}>
@@ -382,6 +396,7 @@ export const PersonEdit: FC = () => {
                     name="location"
                     rules={[{ required: true }]}
                     hasFeedback
+                    tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <Form.Item>
                       <List split={false}>

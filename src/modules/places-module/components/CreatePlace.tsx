@@ -223,6 +223,7 @@ export const CreatePlace: FC = () => {
                   name="location"
                   rules={[{ required: true }]}
                   hasFeedback
+                  tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
                   <List split={false}>
                     <List.Item>

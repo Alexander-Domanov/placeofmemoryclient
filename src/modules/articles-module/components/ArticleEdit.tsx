@@ -244,12 +244,22 @@ export const ArticleEdit: FC = () => {
                     name="slug"
                     rules={[{ required: true }]}
                     hasFeedback
+                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each article"
                   >
                     <Input placeholder="Slug" />
                   </Form.Item>
 
                   <Form.Item>
                     <List split={false}>
+                      <List.Item draggable>
+                        <Typography.Text>
+                          <span className="text-neutral-400">
+                            Owner: &nbsp;
+                          </span>
+                          {article?.owner?.userName}
+                        </Typography.Text>
+                      </List.Item>
+
                       <List.Item>
                         <Typography.Text>
                           <span className="font-normal text-neutral-400">
