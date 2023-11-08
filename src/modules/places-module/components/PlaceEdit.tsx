@@ -318,7 +318,7 @@ export const PlaceEdit: FC = () => {
                           </span>
                           <Link
                             href={{
-                              pathname: routes.place.getPlace(
+                              pathname: routes.places.getPlace(
                                 selectedPlace?.slug || ''
                               ),
                             }}

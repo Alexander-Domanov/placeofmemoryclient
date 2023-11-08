@@ -25,8 +25,9 @@ export const routes = {
     index: '/articles',
     getArticle: (slug: string) => `${routes.articles.index}/${slug}`,
   },
-  place: {
+  places: {
     index: '/place',
+    getPlace: (slug: string) => `${routes.places.index}/${slug}`,
   },
   people: {
     index: '/people',
