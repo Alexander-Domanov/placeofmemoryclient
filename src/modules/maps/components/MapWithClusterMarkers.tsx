@@ -4,7 +4,6 @@ import { Button, Flex, Input } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
-import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
   height: '60vh',
@@ -63,7 +62,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
   const panTo = useCallback(({ lat, lng }: { lat: number; lng: number }) => {
     if (mapRef.current) {
       mapRef.current.panTo({ lat, lng });
-      mapRef.current.setZoom(7);
+      mapRef.current.setZoom(6);
     }
   }, []);
 
@@ -94,7 +93,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
 <div class="flex gap-2 flex-col">
   <img src="${p.url}" alt="${p.firstName} ${
           p.lastName
-        }" class="max-w-full max-h-full object-contain rounded-md">
+        }" class="max-w-60 max-h-full object-contain rounded-md">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
@@ -138,6 +137,10 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
       };
       setSelectedCenter(position);
       setInputValue(place.formatted_address || '');
+      if (mapRef.current) {
+        mapRef.current.panTo({ lat: position.lat, lng: position.lng });
+        mapRef.current.setZoom(13);
+      }
     }
   };
 
@@ -176,7 +179,8 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
         zoom={7}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        options={{ ...mapOptions, ...defaultMapOptions }}
+        // options={{ ...mapOptions, ...defaultMapOptions }}
+        options={{ ...defaultMapOptions }}
       />
     </Flex>
   ) : (

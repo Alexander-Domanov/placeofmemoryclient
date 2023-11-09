@@ -91,7 +91,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
 <div class="flex gap-2 flex-col">
   <img src="${p.url}" alt="${p.firstName} ${
           p.lastName
-        }" class="max-w-full max-h-full object-contain rounded-md">
+        }" class="max-w-60 max-h-full object-contain rounded-md">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
@@ -137,7 +137,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
       setInputValue(place.formatted_address || '');
       if (mapRef.current) {
         mapRef.current.panTo({ lat: position.lat, lng: position.lng });
-        mapRef.current.setZoom(11);
+        mapRef.current.setZoom(13);
       }
     }
   };
