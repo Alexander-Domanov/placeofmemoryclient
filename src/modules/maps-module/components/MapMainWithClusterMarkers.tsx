@@ -1,15 +1,17 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { Flex, Input } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { BsSearch } from 'react-icons/bs';
+import Link from 'next/link';
+import { AiFillHome } from 'react-icons/ai';
 import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
+import { routes } from '@/common/routing/routes';
 
 const containerStyle = {
   height: '60vh',
-  width: '100%',
+  width: '90%',
   borderRadius: '20px',
 };
 
@@ -141,51 +143,61 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   };
 
   return isLoaded ? (
-    <Flex gap="large" vertical>
-      <div>
+    <div className="flex flex-col">
+      <div className="flex items-center  text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
+        <Link href={routes.main} className="cursor-pointer">
+          <AiFillHome size={24} />
+        </Link>
+        /
+        <span className="cursor-pointer flex gap-3 items-center justify-center">
+          <span>Мапа</span>
+        </span>
+      </div>
+
+      <div className="flex items-center justify-start">
+        <h2 className="text-6xl text-light-100 leading-[60px]">
+          Інтэрактыўная Мапа
+        </h2>
+      </div>
+
+      <hr className="w-full mt-[28px] mb-8 transform rotate-180" />
+
+      <div className="ml-auto mb-8 flex items-center">
         <Autocomplete
           onPlaceChanged={onPlaceChanged}
           onLoad={onLoadAutoComplete}
         >
-          <Input
-            placeholder="  ПОШУК ПА ГОРАДУ"
-            allowClear
-            type="text"
-            title={inputValue}
-            prefix={<BsSearch />}
-            style={{
-              boxSizing: `border-box`,
-              border: `1px solid transparent`,
-              width: `340px`,
-              height: `38px`,
-              marginTop: `27px`,
-              padding: `0 12px`,
-              borderRadius: `60px`,
-              backgroundColor: '#565656',
-              borderColor: 'rgb(69, 69, 69)',
-              boxShadow: `0 2px 6px rgba(64, 64, 64, 0.3)`,
-              fontSize: `14px`,
-              outline: `none`,
-              textOverflow: `ellipses`,
-            }}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <BsSearch className="text-gray-600" />
+            </span>
+
+            <input
+              placeholder="ПОШУК ПА ГОРАДУ"
+              type="text"
+              title={inputValue}
+              className="border-2 border-transparent w-400 h-55 mt-27 px-12 rounded-3xl bg-custom-color text-gray-600 focus:outline-none focus:shadow-outline-gray"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </div>
         </Autocomplete>
       </div>
 
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={selectedCenter}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={{
-          ...mapOptions,
-          ...defaultMapOptions,
-        }}
-      />
-    </Flex>
+      <div className="flex items-center justify-center">
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={selectedCenter}
+          zoom={7}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={{
+            ...mapOptions,
+            ...defaultMapOptions,
+          }}
+        />
+      </div>
+    </div>
   ) : (
     <></>
   );
