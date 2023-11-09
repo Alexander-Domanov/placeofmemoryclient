@@ -10,9 +10,9 @@ import { Button } from '@/ui';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 export const PlaceMain = () => {
-  const { query, push } = useRouter();
+  const { query } = useRouter();
   const slug = query.slug as string;
-  const { dataPlace, isLoading } = useGetPlaceMain({ slug });
+  const { dataPlace } = useGetPlaceMain({ slug });
   const { width } = useWindowSize();
 
   // eslint-disable-next-line react/no-unstable-nested-components
