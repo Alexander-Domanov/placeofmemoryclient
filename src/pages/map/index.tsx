@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { getGlobalLayout } from '@/components';
+import { MapsMain } from '@/modules/maps-module/components/maps';
 
 const Map = () => {
   return (
@@ -7,7 +8,9 @@ const Map = () => {
       <Head>
         <title>МАПА | MOGILKI</title>
       </Head>
-      <div className="flex justify-center items-center ">МАПА</div>
+      {/* <div className="flex justify-center items-center ">МАПА</div> */}
+
+      <MapsMain />
     </>
   );
 };
