@@ -13,7 +13,6 @@ export const PlaceMain = () => {
   const { query, push } = useRouter();
   const slug = query.slug as string;
   const { dataPlace, isLoading } = useGetPlaceMain({ slug });
-  console.log('isLoading Place', isLoading);
   const { width } = useWindowSize();
 
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -34,11 +33,10 @@ export const PlaceMain = () => {
   );
   return (
     <div className="flex flex-col">
-      {width && width < 676 && prevPageLabel}
       {dataPlace && (
         <>
           <div className="flex flex-col">
-            <div className="flex items-center  text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
+            <div className="flex items-center sm:text-xs sm:justify-center md:justify-center lg:justify-center   text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
               <Link href={routes.main} className="cursor-pointer">
                 <AiFillHome size={24} />
               </Link>
@@ -53,7 +51,7 @@ export const PlaceMain = () => {
                 {dataPlace.nameCemetery}
               </span>
             </div>
-            <h2 className="text-6xl text-light-100 leading-[60px]">
+            <h2 className="text-6xl sm:text-3xl sm:text-center md:text-center lg:text-center text-light-100 leading-[60px]">
               Архіў
               <span className="text-dark-100 font-light ">_Могілка</span>
             </h2>
@@ -62,7 +60,7 @@ export const PlaceMain = () => {
           <div className="flex mt-[100px] lg:justify-center lg:flex-wrap gap-[100px]">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3">
-                <h2 className="leading-6 break-words text-light-300 font-normal text-5xl">
+                <h2 className="leading-6 sm:text-2xl break-words text-light-300 font-bold sm:leading-3 text-5xl">
                   {dataPlace.nameCemetery}
                 </h2>
               </div>
@@ -92,7 +90,7 @@ export const PlaceMain = () => {
               </div>
               <div className="flex flex-col gap-7">
                 <h2 className="text-5xl font-light leading-7 text-dark-100">
-                  Дэскрипшен
+                  Апісанне
                 </h2>
                 <div className="text-xl text-light-300 leading-7 break-words font-light">
                   <MarkupRenderer markup={dataPlace.description} />
@@ -118,7 +116,7 @@ export const PlaceMain = () => {
               </div>
             </div>
           </div>
-          {width && width > 676 && prevPageLabel}
+          {prevPageLabel}
         </>
       )}
     </div>
