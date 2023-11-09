@@ -11,7 +11,7 @@ import { routes } from '@/common/routing/routes';
 
 const containerStyle = {
   height: '60vh',
-  width: '90%',
+  width: '100%',
   borderRadius: '20px',
 };
 
@@ -146,11 +146,11 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     <div className="flex flex-col">
       <div className="flex items-center  text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
         <Link href={routes.main} className="cursor-pointer">
-          <AiFillHome size={24} />
+          <AiFillHome className="text-dark-100" size={24} />
         </Link>
         /
         <span className="cursor-pointer flex gap-3 items-center justify-center">
-          <span>Мапа</span>
+          Інтэрактыўная_Мапа
         </span>
       </div>
 
@@ -169,14 +169,14 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
         >
           <div className="relative">
             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <BsSearch className="text-gray-600" />
+              <BsSearch className="text-white" />
             </span>
 
             <input
-              placeholder="ПОШУК ПА ГОРАДУ"
+              placeholder="ПОШУК"
               type="text"
               title={inputValue}
-              className="border-2 border-transparent w-400 h-55 mt-27 px-12 rounded-3xl bg-custom-color text-gray-600 focus:outline-none focus:shadow-outline-gray"
+              className="border-8 border-transparent  mt-27 px-12 rounded-3xl bg-dark-300 text-white text-lg focus:outline-none focus:shadow-outline-gray"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
