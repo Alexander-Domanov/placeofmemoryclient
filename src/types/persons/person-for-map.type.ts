@@ -7,4 +7,5 @@ export interface IPersonForMap extends IBaseLocation {
   birthDate: string;
   deathDate: string;
   url: string;
+  slug: string;
 }
