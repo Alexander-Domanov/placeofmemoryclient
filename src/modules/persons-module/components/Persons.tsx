@@ -20,12 +20,13 @@ const breadcrumbs = [
     withLink: false,
   }),
 ];
+const defaultPageSize = 6;
 
 export const Persons: FC = () => {
   const router = useRouter();
   const [pagination, setPagination] = useState({
     page: 1,
-    pageSize: 18,
+    pageSize: defaultPageSize,
     searchTerm: '',
   });
   const [sorting, setSorting] = useState<{
@@ -124,7 +125,7 @@ export const Persons: FC = () => {
           current: pagination.page,
           onChange: onPageChange,
           defaultCurrent: 1,
-          defaultPageSize: 18,
+          defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
         }}
