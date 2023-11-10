@@ -19,7 +19,7 @@ export const PlacesMain = () => {
               >
                 <Link
                   href={{
-                    pathname: routes.places.getPlace(place.slug),
+                    pathname: routes.places.place(place.slug),
                   }}
                 >
                   <ImageComponent

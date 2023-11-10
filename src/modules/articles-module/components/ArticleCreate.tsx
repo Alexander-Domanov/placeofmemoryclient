@@ -173,6 +173,7 @@ export const ArticleCreate: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
+                  tooltip="You can upload up to one photo. After uploading, you should save the article."
                 >
                   <Upload {...uploadProps}>
                     <Button

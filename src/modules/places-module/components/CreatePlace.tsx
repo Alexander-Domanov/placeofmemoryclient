@@ -269,6 +269,7 @@ export const CreatePlace: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
+                  tooltip="You can upload up to one photo. After uploading, you should save the place."
                 >
                   <Upload {...uploadProps}>
                     <Button

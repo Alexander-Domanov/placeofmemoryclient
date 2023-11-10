@@ -334,6 +334,7 @@ export const ArticleEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
+                    tooltip="You can upload up to one photo. After uploading, you should save the article."
                   >
                     <Upload {...uploadProps}>
                       <Button

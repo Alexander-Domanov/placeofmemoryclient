@@ -318,7 +318,7 @@ export const PersonEdit: FC = () => {
                           </span>
                           <Link
                             href={{
-                              pathname: routes.people.getPerson(
+                              pathname: routes.people.person(
                                 selectedPerson?.slug || ''
                               ),
                             }}
@@ -459,12 +459,14 @@ export const PersonEdit: FC = () => {
                 <Flex vertical gap="middle">
                   <Card>
                     <Form.Item
-                      label="Photo"
+                      label="Photos"
                       name="photo"
                       hasFeedback
                       valuePropName="fileList"
                       getValueFromEvent={normFile}
                       rules={[{ required: true }]}
+                      tooltip="You can upload up to 3 photos, the first photo will be the main one.
+                      After uploading, you should save the person."
                     >
                       <Upload {...uploadProps} maxCount={3} multiple>
                         <Button

@@ -318,7 +318,7 @@ export const PlaceEdit: FC = () => {
                           </span>
                           <Link
                             href={{
-                              pathname: routes.places.getPlace(
+                              pathname: routes.places.place(
                                 selectedPlace?.slug || ''
                               ),
                             }}
@@ -427,6 +427,7 @@ export const PlaceEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
+                    tooltip="You can upload up to one photo. After uploading, you should save the place."
                   >
                     <Upload {...uploadProps}>
                       <Button

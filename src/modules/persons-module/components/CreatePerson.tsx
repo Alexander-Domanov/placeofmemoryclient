@@ -311,6 +311,8 @@ export const CreatePerson: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
+                  tooltip="You can upload up to 3 photos, the first photo will be the main one.
+                      After uploading, you should save the person."
                 >
                   <Upload {...uploadProps} maxCount={3} multiple>
                     <Button

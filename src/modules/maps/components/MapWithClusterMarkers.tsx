@@ -4,6 +4,7 @@ import { Button, Flex, Input } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 const containerStyle = {
   height: '60vh',
@@ -91,15 +92,15 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
 
         const contentString = `
 <div class="flex gap-2 flex-col">
-  <img src="${p.url}" alt="${p.firstName} ${
+  <img src="${p.url || pictureBackup}" alt="${p.firstName} ${
           p.lastName
         }" class="max-w-60 max-h-full object-contain rounded-md">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
   </div>
-  <a href="/peoples/${
-    p?.slug || ''
+  <a href="/dashboard/persons/${
+    p?.id || ''
   }" class="cursor-pointer text-blue-500 text-center">
     <span class="hover:underline">${p?.slug || ''}</span>
   </a>
