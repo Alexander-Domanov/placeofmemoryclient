@@ -78,7 +78,7 @@ export const CreatePlace: FC = () => {
   const { createPlaceMutate, isCreating } = useCreatePlace();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'place');
 
   useEffect(() => {
     if (selectedPlaceFromMap) {

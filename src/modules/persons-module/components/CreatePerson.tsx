@@ -85,7 +85,7 @@ export const CreatePerson: FC = () => {
   const { createPerson, isCreating } = useCreatePerson();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'person');
 
   useEffect(() => {
     if (selectedPlaceFromMap) {

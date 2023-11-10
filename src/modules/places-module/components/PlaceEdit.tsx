@@ -87,7 +87,7 @@ export const PlaceEdit: FC = () => {
   const { updateStatusPlace, isStatusUpdating } = useUpdatePlaceStatus();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'place');
 
   const [form] = Form.useForm();
 

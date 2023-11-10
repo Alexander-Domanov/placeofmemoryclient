@@ -63,7 +63,7 @@ export const ArticleCreate: FC = () => {
   const [contentCount, setContentCount] = useState<number>(0);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'article');
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {

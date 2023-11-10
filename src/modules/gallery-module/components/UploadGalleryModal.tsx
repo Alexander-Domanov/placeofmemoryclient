@@ -24,8 +24,8 @@ export const UploadGalleryModal: FC<Props> = ({
 
   const onAllFilesUploaded = () => {
     notification.success({
-      message: 'Файлы загружены',
-      description: 'Все ваши файлы успешно загружены!',
+      message: 'Files uploaded',
+      description: 'All files uploaded successfully',
     });
 
     refetch();
@@ -35,7 +35,7 @@ export const UploadGalleryModal: FC<Props> = ({
     name: 'file',
     listType: 'picture',
     multiple: true,
-    action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery`,
+    action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery?img=common`,
     beforeUpload(file) {
       const isImage = IMAGE_FORMATS.includes(file.type);
       const isLT10MB = file.size <= 10 * 1024 * 1024;

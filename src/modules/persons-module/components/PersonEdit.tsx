@@ -84,7 +84,7 @@ export const PersonEdit: FC = () => {
   const { updateStatusPerson, isStatusUpdating } = useUpdatePersonStatus();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'person');
 
   const [form] = Form.useForm();
 

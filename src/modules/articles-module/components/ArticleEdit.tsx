@@ -74,7 +74,7 @@ export const ArticleEdit: FC = () => {
   const { deleteArticleMutationAsync } = useDeleteArticle();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'article');
 
   const [form] = Form.useForm();
   const [status, setStatus] = useState('DRAFT');

@@ -6,6 +6,7 @@ import { IMAGE_FORMATS } from '@/common/constants';
 
 export const useUpload = (
   setFileList: (fileList: UploadFile[]) => void,
+  typeFile: string,
   multiple = false,
   maxCount = 1
 ) => {
@@ -25,7 +26,7 @@ export const useUpload = (
     name: 'file',
     listType: 'picture',
     multiple,
-    action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery`,
+    action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery?img=${typeFile}`,
     beforeUpload(file) {
       const isImage = IMAGE_FORMATS.includes(file.type);
       const isLT10MB = file.size <= 10 * 1024 * 1024;
