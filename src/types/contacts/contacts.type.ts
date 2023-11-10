@@ -14,8 +14,9 @@ export interface IContacts extends IBaseLocation, IBaseDateType {
 
 interface ISocial {
   facebook: string;
-  twitter: string;
-  linkedin: string;
+  telegram: string;
+  instagram: string;
+  partners: string;
 }
 
 export interface IContactsForm {
