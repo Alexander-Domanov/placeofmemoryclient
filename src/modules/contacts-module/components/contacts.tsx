@@ -110,29 +110,41 @@ export const Contacts: FC = () => {
             <Col span={24} lg={12}>
               <Card>
                 <Form.Item
-                  name="address"
-                  label="Address"
-                  rules={[{ whitespace: true, required: true }]}
-                  hasFeedback
-                >
-                  <Input placeholder="Input address" allowClear />
-                </Form.Item>
-
-                <Form.Item
-                  name="email"
-                  label="Email"
-                  rules={[{ whitespace: true, required: true }]}
-                  hasFeedback
-                >
-                  <Input placeholder="Input email" allowClear />
-                </Form.Item>
-
-                <Form.Item
-                  name="phone"
-                  label="Phone"
+                  name={['socialNetworks', 'facebook']}
+                  label="Facebook"
                   rules={[{ whitespace: true }]}
                   hasFeedback
-                  tooltip="This field is optional. If you want to show phone number on the site, you need to fill in this field."
+                  tooltip='You need to enter a link to the group or page in the format "https://www.facebook.com/...".'
+                >
+                  <Input placeholder="Input link" allowClear />
+                </Form.Item>
+
+                <Form.Item
+                  name={['socialNetworks', 'telegram']}
+                  label="Telegram"
+                  rules={[{ whitespace: true }]}
+                  hasFeedback
+                  tooltip='You need to enter a link to the group or channel in the format "https://t.me/...".'
+                >
+                  <Input placeholder="Input link" allowClear />
+                </Form.Item>
+
+                <Form.Item
+                  name={['socialNetworks', 'instagram']}
+                  label="Instagram"
+                  rules={[{ whitespace: true }]}
+                  hasFeedback
+                  tooltip='You need to enter a link to the group or page in the format "https://www.instagram.com/...".'
+                >
+                  <Input placeholder="Input link" allowClear />
+                </Form.Item>
+
+                <Form.Item
+                  name={['socialNetworks', 'partners']}
+                  label="Partners"
+                  rules={[{ whitespace: true }]}
+                  hasFeedback
+                  tooltip="You need to enter a link to the group or page."
                 >
                   <Input placeholder="Input phone" allowClear />
                 </Form.Item>
@@ -143,47 +155,35 @@ export const Contacts: FC = () => {
               <Flex vertical gap="middle">
                 <Card>
                   <Form.Item
-                    name={['socialNetworks', 'facebook']}
-                    label="Facebook"
-                    rules={[{ whitespace: true }]}
+                    name="address"
+                    label="Address"
+                    rules={[{ whitespace: true, required: true }]}
                     hasFeedback
-                    tooltip='You need to enter a link to the group or page in the format "https://www.facebook.com/...".'
                   >
-                    <Input placeholder="Input link" allowClear />
+                    <Input placeholder="Input address" allowClear />
                   </Form.Item>
 
                   <Form.Item
-                    name={['socialNetworks', 'telegram']}
-                    label="Telegram"
-                    rules={[{ whitespace: true }]}
+                    name="email"
+                    label="Email"
+                    rules={[{ whitespace: true, required: true }]}
                     hasFeedback
-                    tooltip='You need to enter a link to the group or channel in the format "https://t.me/...".'
                   >
-                    <Input placeholder="Input link" allowClear />
+                    <Input placeholder="Input email" allowClear />
                   </Form.Item>
 
-                  <Form.Item
-                    name={['socialNetworks', 'instagram']}
-                    label="Instagram"
-                    rules={[{ whitespace: true }]}
-                    hasFeedback
-                    tooltip='You need to enter a link to the group or page in the format "https://www.instagram.com/...".'
-                  >
-                    <Input placeholder="Input link" allowClear />
-                  </Form.Item>
-
-                  <Form.Item
-                    name={['socialNetworks', 'partners']}
-                    label="Partners"
-                    rules={[{ whitespace: true }]}
-                    hasFeedback
-                    tooltip="You need to enter a link to the group or page."
-                  >
-                    <Input placeholder="Input phone" allowClear />
-                  </Form.Item>
+                  {/* <Form.Item */}
+                  {/*  name="phone" */}
+                  {/*  label="Phone" */}
+                  {/*  rules={[{ whitespace: true }]} */}
+                  {/*  hasFeedback */}
+                  {/*  tooltip="This field is optional. If you want to show phone number on the site, you need to fill in this field." */}
+                  {/* > */}
+                  {/*  <Input placeholder="Input phone" allowClear /> */}
+                  {/* </Form.Item> */}
                 </Card>
 
-                <Card>
+                <Card style={{ marginTop: 4 }}>
                   <Form.Item>
                     <List split={false}>
                       <List.Item>
