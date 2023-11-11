@@ -1,15 +1,16 @@
-import React, { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { IPerson } from '@/types';
+import { FileStatuses, IPerson } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -34,7 +35,7 @@ export const Persons: FC = () => {
     order: string | null;
   }>({ field: null, order: null });
 
-  const [status, setStatus] = useState('all');
+  const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
   const search = useDebounce(pagination.searchTerm, 500);
 
@@ -84,7 +85,7 @@ export const Persons: FC = () => {
             type="primary"
             onClick={() => router.push(routes.dashboard.persons.create)}
           >
-            Add Person
+            + Add
           </Button>
         </div>
 
@@ -99,14 +100,11 @@ export const Persons: FC = () => {
           />
 
           <SelectInput
-            defaultValue={{ value: 'all', label: 'All' }}
-            options={[
-              { label: 'All', value: 'all' },
-              { label: 'Draft', value: 'draft' },
-              { label: 'PendingReview', value: 'pendingReview' },
-              { label: 'Published', value: 'published' },
-              { label: 'Archived', value: 'archived' },
-            ]}
+            defaultValue={{
+              value: FileStatuses.ALL,
+              label: 'All',
+            }}
+            options={fileStatusOptions}
             onChange={onStatusChange}
           />
         </Flex>

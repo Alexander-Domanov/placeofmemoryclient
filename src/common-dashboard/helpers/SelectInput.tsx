@@ -1,4 +1,5 @@
 import { Select } from 'antd';
+import { FC } from 'react';
 
 interface SelectInputProps {
   defaultValue: { value: string; label: string };
@@ -6,7 +7,7 @@ interface SelectInputProps {
   onChange: (value: { value: string; label: string }) => void;
 }
 
-const SelectInput: React.FC<SelectInputProps> = ({
+const SelectInput: FC<SelectInputProps> = ({
   defaultValue,
   options,
   onChange,
@@ -15,7 +16,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
     labelInValue
     defaultValue={defaultValue}
     style={{
-      width: 120,
+      width: 150,
       // boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
       borderRadius: '8px',
       marginLeft: '10px',
