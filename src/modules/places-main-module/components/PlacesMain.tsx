@@ -1,9 +1,5 @@
 import Link from 'next/link';
-import {
-  AiOutlineHome,
-  AiOutlineLeftCircle,
-  AiOutlineRightCircle,
-} from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
 import { useGetPlacesMain } from '@/modules/places-main-module';
@@ -15,25 +11,25 @@ export const PlacesMain = () => {
   const { dataPlaces } = useGetPlacesMain();
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col">
-        <div className="flex items-center sm:text-xs sm:justify-center md:justify-center lg:justify-center text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
-          <Link href={routes.main} className="cursor-pointer">
-            <AiOutlineHome className="text-dark-100" size={22} />
-          </Link>
-          /
-          <Link
-            href={routes.places.index}
-            className="cursor-pointer flex gap-3 items-center justify-center"
-          >
-            <span className="text-accent-100">Архіў_Месца</span>
-          </Link>
-        </div>
-        <h2 className="text-6xl sm:text-3xl sm:text-center md:text-center lg:text-center text-light-100 leading-[60px]">
+      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
+        <Link href={routes.main} className="cursor-pointer">
+          <AiOutlineHome size={22} />
+        </Link>
+
+        <div>/</div>
+
+        <span className="text-accent-100">Архіў_Месцаў</span>
+      </div>
+
+      <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
+        <h2 className="text-light-300 text-5xl sm:text-3xl">
           Архіў
-          <span className="text-dark-100 font-light ">_Могілка</span>
+          <span className="text-dark-100 font-light ">_Месцаў</span>
         </h2>
       </div>
-      <hr className="w-full mt-[28px] transform rotate-180" />
+
+      <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" />
+
       <div className="flex gap-4 mt-14">
         <div>
           <Input label="Назва" className="w-[166px] h-[36px]" />

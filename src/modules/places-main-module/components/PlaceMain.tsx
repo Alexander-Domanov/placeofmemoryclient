@@ -30,25 +30,32 @@ export const PlaceMain = () => {
       {dataPlace && (
         <>
           <div className="flex flex-col">
-            <div className="flex items-center sm:text-xs sm:justify-center md:justify-center lg:justify-center   text-dark-100 gap-3 mb-5 text-xl leading-[64px] font-light">
+            <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
               <Link href={routes.main} className="cursor-pointer">
-                <AiOutlineHome className="text-dark-100" size={22} />
+                <AiOutlineHome size={22} />
               </Link>
-              /
-              <Link
-                href={routes.places.index}
-                className="cursor-pointer flex gap-3 items-center justify-center"
-              >
-                <span>Архіў_Месца</span>/
+
+              <div>/</div>
+
+              <Link href={routes.places.index} className="cursor-pointer">
+                Архіў_Месцаў
               </Link>
+
+              <div>/</div>
+
               <span className="text-accent-100">{dataPlace.nameCemetery}</span>
             </div>
-            <h2 className="text-6xl sm:text-3xl sm:text-center md:text-center lg:text-center text-light-100 leading-[60px]">
-              Архіў
-              <span className="text-dark-100 font-light ">_Могілка</span>
-            </h2>
+
+            <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
+              <h2 className="text-light-300 text-5xl sm:text-3xl">
+                Архіў
+                <span className="text-dark-100 font-light ">_Могілка</span>
+              </h2>
+            </div>
           </div>
-          <hr className="w-full mt-[28px] transform rotate-180" />
+
+          <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" />
+
           <div className="flex mt-[100px] lg:justify-center lg:flex-wrap gap-[100px]">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3">
@@ -71,6 +78,7 @@ export const PlaceMain = () => {
                 </div>
               </div>
             </div>
+
             <div className="flex flex-col gap-[70px]">
               <div className="flex flex-col gap-7 md:gap-3 sm:gap-3">
                 <h2 className="text-5xl text-dark-100 font-light leading-7">
