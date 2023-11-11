@@ -144,7 +144,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
 
   return isLoaded ? (
     <div className="flex flex-col">
-      <div className="flex items-center gap-3 text-xl leading-[64px] font-light">
+      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4">
         <Link href={routes.main} className="cursor-pointer">
           <AiOutlineHome className="text-dark-100" size={22} />
         </Link>
@@ -154,10 +154,12 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
         </span>
       </div>
 
-      <div className="flex justify-between md:flex-row md:justify-center md:flex-wrap">
-        <h2 className="text-[#FAFAFA] text-5xl">Інтэрактыўная Мапа</h2>
+      <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
+        <h2 className="text-[#FAFAFA] text-5xl sm:text-3xl">
+          Інтэрактыўная Мапа
+        </h2>
 
-        <div className="flex items-center md:mt-5">
+        <div className="flex items-center">
           <Autocomplete
             onPlaceChanged={onPlaceChanged}
             onLoad={onLoadAutoComplete}
@@ -171,7 +173,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
                 placeholder="ЗНАЙСЦІ"
                 type="text"
                 title={inputValue}
-                className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md px-12"
+                className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md px-12 sm:w-60 sm:h-8 sm:px-10"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
