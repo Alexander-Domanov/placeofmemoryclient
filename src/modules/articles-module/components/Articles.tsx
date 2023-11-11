@@ -1,15 +1,16 @@
-import React, { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { IPlace } from '@/types';
+import { FileStatuses, IPlace } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { routes } from '@/common/routing/routes';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -33,7 +34,7 @@ export const Articles: FC = () => {
     order: string | null;
   }>({ field: null, order: null });
 
-  const [status, setStatus] = useState('all');
+  const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
   const search = useDebounce(pagination.searchTerm, 500);
 
@@ -53,7 +54,7 @@ export const Articles: FC = () => {
     setPagination({ ...pagination, page: 1, pageSize: size });
   };
 
-  const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
+  const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
   };
@@ -83,11 +84,11 @@ export const Articles: FC = () => {
             type="primary"
             onClick={() => router.push(routes.dashboard.articles.create)}
           >
-            Add Article
+            + Add
           </Button>
         </div>
 
-        <Flex align="center">
+        <Flex align="center" gap="middle">
           <Input
             placeholder="Search by title"
             allowClear
@@ -98,14 +99,11 @@ export const Articles: FC = () => {
           />
 
           <SelectInput
-            defaultValue={{ value: 'all', label: 'All' }}
-            options={[
-              { label: 'All', value: 'all' },
-              { label: 'Draft', value: 'draft' },
-              { label: 'PendingReview', value: 'pendingReview' },
-              { label: 'Published', value: 'published' },
-              { label: 'Archived', value: 'archived' },
-            ]}
+            defaultValue={{
+              value: FileStatuses.ALL,
+              label: 'All',
+            }}
+            options={fileStatusOptions}
             onChange={onStatusChange}
           />
         </Flex>

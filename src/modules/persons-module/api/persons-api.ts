@@ -1,21 +1,17 @@
 import { authInstance } from '@/services';
-import { ICreatePerson, IGetPersonsResponse, IPerson } from '@/types';
+import {
+  ICreatePerson,
+  IGetPersonsResponse,
+  IPaginationPersons,
+  IPerson,
+} from '@/types';
 
-export const getPersons = (
-  page: number,
-  pageSize: number,
-  status: string,
-  name: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const getPersons = (data: IPaginationPersons) => {
   return authInstance.get<IGetPersonsResponse>('persons', {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      name,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };
