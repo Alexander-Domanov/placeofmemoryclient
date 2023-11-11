@@ -2,17 +2,17 @@ import { FC, ReactNode, useState } from 'react';
 import {
   Breadcrumb,
   Button,
-  DatePicker,
-  DatePickerProps,
   Flex,
   Input,
+  InputNumber,
+  Select,
   Table,
 } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, IPerson } from '@/types';
+import { FileStatuses, FilterCondition, IPerson } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
@@ -35,8 +35,10 @@ interface IPagination {
   pageSize: number;
   searchName: string;
   searchLastName: string;
-  startDate?: string | null;
-  endDate?: string | null;
+  birthDate?: string | null;
+  deathDate?: string | null;
+  filterConditionBirthDate?: FilterCondition;
+  filterConditionDeathDate?: FilterCondition;
 }
 
 export const Persons: FC = () => {
@@ -46,6 +48,8 @@ export const Persons: FC = () => {
     pageSize: defaultPageSize,
     searchName: '',
     searchLastName: '',
+    filterConditionBirthDate: FilterCondition.gte,
+    filterConditionDeathDate: FilterCondition.lte,
   });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
@@ -64,8 +68,10 @@ export const Persons: FC = () => {
     name,
     lastName,
     sorting,
-    startDate: pagination.startDate,
-    endDate: pagination.endDate,
+    birthDate: pagination.birthDate,
+    deathDate: pagination.deathDate,
+    filterConditionBirthDate: pagination.filterConditionBirthDate,
+    filterConditionDeathDate: pagination.filterConditionDeathDate,
   });
 
   const onPageChange = (_page: number) => {
@@ -81,25 +87,21 @@ export const Persons: FC = () => {
     setStatus(value.value);
   };
 
-  const onChangeBirthDate: DatePickerProps['onChange'] = (
-    date: any,
-    dateString: string
-  ) => {
-    if (dateString) {
-      setPagination({ ...pagination, startDate: dateString });
+  const onChangeBirthDate = (value: number | null) => {
+    if (value) {
+      value.toString().length === 4 &&
+        setPagination({ ...pagination, birthDate: value.toString() });
     } else {
-      setPagination({ ...pagination, startDate: null });
+      setPagination({ ...pagination, birthDate: null });
     }
   };
 
-  const onChangeDeathDate: DatePickerProps['onChange'] = (
-    date: any,
-    dateString: string
-  ) => {
-    if (dateString) {
-      setPagination({ ...pagination, endDate: dateString });
+  const onChangeDeathDate = (value: number | null) => {
+    if (value) {
+      value.toString().length === 4 &&
+        setPagination({ ...pagination, deathDate: value.toString() });
     } else {
-      setPagination({ ...pagination, endDate: null });
+      setPagination({ ...pagination, deathDate: null });
     }
   };
 
@@ -115,6 +117,41 @@ export const Persons: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
+  const onChangeBirthDateFilter = (value: string) => {
+    setPagination({
+      ...pagination,
+      filterConditionBirthDate: value as FilterCondition,
+    });
+  };
+
+  const onChangeDeathDateFilter = (value: string) => {
+    setPagination({
+      ...pagination,
+      filterConditionDeathDate: value as FilterCondition,
+    });
+  };
+
+  const selectConditionBirthDate = (
+    <Select
+      style={{ width: 80 }}
+      defaultValue="gte"
+      onChange={onChangeBirthDateFilter}
+    >
+      <Select.Option value="gte">More</Select.Option>
+      <Select.Option value="lte">Less</Select.Option>
+    </Select>
+  );
+
+  const selectConditionDeathDate = (
+    <Select
+      style={{ width: 80 }}
+      defaultValue="lte"
+      onChange={onChangeDeathDateFilter}
+    >
+      <Select.Option value="gte">More</Select.Option>
+      <Select.Option value="lte">Less</Select.Option>
+    </Select>
+  );
 
   return (
     <Flex gap="large" vertical>
@@ -151,18 +188,20 @@ export const Persons: FC = () => {
             style={{ width: 200 }}
           />
 
-          <DatePicker
+          <InputNumber
+            addonBefore={selectConditionBirthDate}
+            maxLength={4}
+            placeholder="Birth"
+            style={{ width: 160 }}
             onChange={onChangeBirthDate}
-            placeholder="Year of birth"
-            picker="year"
-            allowClear
           />
 
-          <DatePicker
+          <InputNumber
+            addonBefore={selectConditionDeathDate}
+            maxLength={4}
+            style={{ width: 160 }}
+            placeholder="Death"
             onChange={onChangeDeathDate}
-            placeholder="Year of death"
-            picker="year"
-            allowClear
           />
 
           <SelectInput
