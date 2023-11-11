@@ -1,5 +1,13 @@
 import { FC, ReactNode, useState } from 'react';
-import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
+import {
+  Breadcrumb,
+  Button,
+  DatePicker,
+  DatePickerProps,
+  Flex,
+  Input,
+  Table,
+} from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
@@ -21,14 +29,15 @@ const breadcrumbs = [
     withLink: false,
   }),
 ];
-const defaultPageSize = 10;
+const defaultPageSize = 11;
 
 export const Persons: FC = () => {
   const router = useRouter();
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: defaultPageSize,
-    searchTerm: '',
+    searchName: '',
+    searchLastName: '',
   });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
@@ -37,15 +46,17 @@ export const Persons: FC = () => {
 
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchName, 500);
+  const lastName = useDebounce(pagination.searchLastName, 500);
 
-  const { persons, isFetching } = usePersons(
-    pagination.page,
-    pagination.pageSize,
+  const { persons, isFetching } = usePersons({
+    page: pagination.page,
+    pageSize: pagination.pageSize,
     status,
-    search,
-    sorting
-  );
+    name,
+    lastName,
+    sorting,
+  });
 
   const onPageChange = (_page: number) => {
     setPagination({ ...pagination, page: _page });
@@ -58,6 +69,20 @@ export const Persons: FC = () => {
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
+  };
+
+  const onChangeBirthDate: DatePickerProps['onChange'] = (
+    date: any,
+    dateString: string
+  ) => {
+    console.log(dateString, 'dateBirth');
+  };
+
+  const onChangeDeathDate: DatePickerProps['onChange'] = (
+    date: any,
+    dateString: string
+  ) => {
+    console.log(dateString, 'dateDeath');
   };
 
   const handleTableChange = (
@@ -89,14 +114,37 @@ export const Persons: FC = () => {
           </Button>
         </div>
 
-        <Flex align="center">
+        <Flex align="center" gap="middle">
           <Input
-            placeholder="Search by name"
+            placeholder="First Name"
             allowClear
             onChange={(e) =>
-              setPagination({ ...pagination, searchTerm: e.target.value })
+              setPagination({ ...pagination, searchName: e.target.value })
             }
             style={{ width: 200 }}
+          />
+
+          <Input
+            placeholder="Last Name"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchLastName: e.target.value })
+            }
+            style={{ width: 200 }}
+          />
+
+          <DatePicker
+            onChange={onChangeBirthDate}
+            placeholder="Year of birth"
+            picker="year"
+            allowClear
+          />
+
+          <DatePicker
+            onChange={onChangeDeathDate}
+            placeholder="Year of death"
+            picker="year"
+            allowClear
           />
 
           <SelectInput
