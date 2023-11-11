@@ -21,7 +21,7 @@ const breadcrumbs = [
   }),
 ];
 
-const defaultPageSize = 6;
+const defaultPageSize = 10;
 
 export const Places: FC = () => {
   const router = useRouter();
@@ -159,6 +159,7 @@ export const Places: FC = () => {
           defaultCurrent: 1,
           defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
+          showSizeChanger: true,
           onShowSizeChange: onPageSizeChange,
         }}
         scroll={{ x: 1000 }}

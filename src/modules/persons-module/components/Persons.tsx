@@ -20,7 +20,7 @@ const breadcrumbs = [
     withLink: false,
   }),
 ];
-const defaultPageSize = 6;
+const defaultPageSize = 10;
 
 export const Persons: FC = () => {
   const router = useRouter();
