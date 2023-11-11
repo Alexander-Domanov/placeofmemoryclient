@@ -41,9 +41,7 @@ export const PlaceMain = () => {
               >
                 <span>Архіў_Месца</span>/
               </Link>
-              <span className="text-accent-100 underline">
-                {dataPlace.nameCemetery}
-              </span>
+              <span className="text-accent-100">{dataPlace.nameCemetery}</span>
             </div>
             <h2 className="text-6xl sm:text-3xl sm:text-center md:text-center lg:text-center text-light-100 leading-[60px]">
               Архіў
@@ -64,7 +62,7 @@ export const PlaceMain = () => {
                     <ImageComponent
                       key={dataPlace.id}
                       alt={photo.alt}
-                      className="object-cover "
+                      className="object-cover"
                       width={width && width < 1023 ? 200 : 400}
                       height={width && width < 1023 ? 250 : 500}
                       src={photo.versions.huge.url}
