@@ -144,18 +144,18 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
 
   return isLoaded ? (
     <div className="flex flex-col">
-      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4">
+      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
         <Link href={routes.main} className="cursor-pointer">
           <AiOutlineHome className="text-dark-100" size={22} />
         </Link>
-        <span className="text-[#BDBDBD]">/</span>
-        <span className="cursor-pointer flex gap-3 items-center justify-center text-[#69AEFF]">
-          Інтэрактыўная_Мапа
-        </span>
+
+        <div>/</div>
+
+        <span className="text-accent-100">Інтэрактыўная_Мапа</span>
       </div>
 
       <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
-        <h2 className="text-[#FAFAFA] text-5xl sm:text-3xl">
+        <h2 className="text-light-300 text-5xl sm:text-3xl">
           Інтэрактыўная Мапа
         </h2>
 
