@@ -15,12 +15,7 @@ const SelectInput: FC<SelectInputProps> = ({
   <Select
     labelInValue
     defaultValue={defaultValue}
-    style={{
-      width: 150,
-      // boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-      borderRadius: '8px',
-      marginLeft: '10px',
-    }}
+    style={{ width: 150 }}
     onChange={onChange}
     options={options}
   >

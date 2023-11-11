@@ -88,7 +88,7 @@ export const Articles: FC = () => {
           </Button>
         </div>
 
-        <Flex align="center">
+        <Flex align="center" gap="middle">
           <Input
             placeholder="Search by title"
             allowClear
