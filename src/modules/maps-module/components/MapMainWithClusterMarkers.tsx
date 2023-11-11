@@ -146,7 +146,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     <div className="flex flex-col">
       <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
         <Link href={routes.main} className="cursor-pointer">
-          <AiOutlineHome className="text-dark-100" size={22} />
+          <AiOutlineHome size={22} />
         </Link>
 
         <div>/</div>
