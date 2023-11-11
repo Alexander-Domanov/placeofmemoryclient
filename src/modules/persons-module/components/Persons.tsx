@@ -30,10 +30,18 @@ const breadcrumbs = [
   }),
 ];
 const defaultPageSize = 11;
+interface IPagination {
+  page: number;
+  pageSize: number;
+  searchName: string;
+  searchLastName: string;
+  startDate?: string | null;
+  endDate?: string | null;
+}
 
 export const Persons: FC = () => {
   const router = useRouter();
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<IPagination>({
     page: 1,
     pageSize: defaultPageSize,
     searchName: '',
@@ -56,6 +64,8 @@ export const Persons: FC = () => {
     name,
     lastName,
     sorting,
+    startDate: pagination.startDate,
+    endDate: pagination.endDate,
   });
 
   const onPageChange = (_page: number) => {
@@ -75,14 +85,22 @@ export const Persons: FC = () => {
     date: any,
     dateString: string
   ) => {
-    console.log(dateString, 'dateBirth');
+    if (dateString) {
+      setPagination({ ...pagination, startDate: dateString });
+    } else {
+      setPagination({ ...pagination, startDate: null });
+    }
   };
 
   const onChangeDeathDate: DatePickerProps['onChange'] = (
     date: any,
     dateString: string
   ) => {
-    console.log(dateString, 'dateDeath');
+    if (dateString) {
+      setPagination({ ...pagination, endDate: dateString });
+    } else {
+      setPagination({ ...pagination, endDate: null });
+    }
   };
 
   const handleTableChange = (
