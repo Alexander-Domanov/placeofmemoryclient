@@ -41,19 +41,18 @@ const DashboardSidebar: FC = () => {
   const isLT1024px = useMediaQuery('(max-width: 1023px)');
 
   return (
-    <Sider
-      width={200}
-      collapsedWidth={60}
-      className={styles.sidebar}
-      collapsed={isLT1024px}
-    >
-      <Menu
-        mode="inline"
-        className={styles.menu}
-        items={items}
-        selectedKeys={[router.asPath]}
-      />
-    </Sider>
+    <>
+      {isLT1024px ? null : (
+        <Sider width={200} collapsedWidth={60} className={styles.sidebar}>
+          <Menu
+            mode="inline"
+            className={styles.menu}
+            items={items}
+            selectedKeys={[router.asPath]}
+          />
+        </Sider>
+      )}
+    </>
   );
 };
 
