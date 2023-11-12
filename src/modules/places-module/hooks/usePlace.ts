@@ -29,5 +29,5 @@ export const usePlace = (id: string) => {
     }
   }, [error]);
 
-  return { place, isLoading, isSuccess };
+  return { place, isLoading, isSuccess, me };
 };

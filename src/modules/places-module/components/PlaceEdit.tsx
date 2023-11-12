@@ -20,14 +20,7 @@ import {
 } from 'antd';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
-import {
-  ClockCircleOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  InboxOutlined,
-  SaveOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
@@ -41,6 +34,7 @@ import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePla
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
 const { Option } = Select;
 
@@ -82,7 +76,7 @@ export const PlaceEdit: FC = () => {
   const router = useRouter();
   const { placeId } = router.query as { placeId: string };
 
-  const { place, isLoading } = usePlace(placeId);
+  const { place, isLoading, me } = usePlace(placeId);
   const { updatePlaceMutate, isUpdating } = useUpdatePlace();
   const { updateStatusPlace, isStatusUpdating } = useUpdatePlaceStatus();
 
@@ -192,6 +186,8 @@ export const PlaceEdit: FC = () => {
     );
   };
 
+  const updateOptions = GetUpdateOptions(me);
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -281,18 +277,7 @@ export const PlaceEdit: FC = () => {
                       loading={isStatusUpdating}
                       disabled={isStatusUpdating}
                     >
-                      <Option value="DRAFT">
-                        <EyeInvisibleOutlined /> Draft
-                      </Option>
-                      <Option value="PENDING_REVIEW">
-                        <ClockCircleOutlined /> Send for review
-                      </Option>
-                      <Option value="PUBLISHED">
-                        <EyeOutlined /> Publish
-                      </Option>
-                      <Option value="ARCHIVED">
-                        <InboxOutlined /> Archive
-                      </Option>
+                      {updateOptions}
                     </Select>
                   </Form.Item>
 
