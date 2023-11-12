@@ -19,14 +19,7 @@ import {
   Upload,
 } from 'antd';
 import { useRouter } from 'next/router';
-import {
-  ClockCircleOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  InboxOutlined,
-  SaveOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
@@ -44,6 +37,7 @@ import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
 const { Option } = Select;
 
@@ -79,7 +73,7 @@ export const PersonEdit: FC = () => {
   const router = useRouter();
   const { personId } = router.query as { personId: string };
 
-  const { person, isLoading } = usePerson(personId);
+  const { person, isLoading, me } = usePerson(personId);
   const { updatePersonMutation, isUpdating } = useUpdatePerson();
   const { updateStatusPerson, isStatusUpdating } = useUpdatePersonStatus();
 
@@ -114,6 +108,7 @@ export const PersonEdit: FC = () => {
   useEffect(() => {
     if (person) {
       setSelectedPerson(person);
+      setStatus(person.status);
       form.setFieldsValue({
         firstName: person.firstName,
         lastName: person.lastName,
@@ -204,6 +199,8 @@ export const PersonEdit: FC = () => {
     );
   };
 
+  const updateOptions = GetUpdateOptions(me);
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -281,18 +278,7 @@ export const PersonEdit: FC = () => {
                       loading={isStatusUpdating}
                       disabled={isStatusUpdating}
                     >
-                      <Option value="DRAFT">
-                        <EyeInvisibleOutlined /> Draft
-                      </Option>
-                      <Option value="PENDING_REVIEW">
-                        <ClockCircleOutlined /> Send for review
-                      </Option>
-                      <Option value="PUBLISHED">
-                        <EyeOutlined /> Publish
-                      </Option>
-                      <Option value="ARCHIVED">
-                        <InboxOutlined /> Archive
-                      </Option>
+                      {updateOptions}
                     </Select>
                   </Form.Item>
 

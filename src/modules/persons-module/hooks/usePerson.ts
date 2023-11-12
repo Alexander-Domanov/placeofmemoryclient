@@ -29,5 +29,5 @@ export const usePerson = (id: string | undefined | string[]) => {
     }
   }, [error]);
 
-  return { person, isLoading, isSuccess };
+  return { person, isLoading, isSuccess, me };
 };

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
-import {
-  ClockCircleOutlined,
-  EditOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  InboxOutlined,
-} from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { IPerson } from '@/types';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
+import { useMeQuery } from '@/services';
+import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
 const { Option } = Select;
 
@@ -18,6 +14,8 @@ interface UpdatePersonStatusComponentProps {
 const UpdatePersonStatusComponent: React.FC<
   UpdatePersonStatusComponentProps
 > = ({ person }) => {
+  const { data: me } = useMeQuery();
+
   const { id, status } = person || { id: null, status: null };
   const stringId = id !== null ? id.toString() : null;
   const [isModalVisible, setModalVisible] = useState(false);
@@ -48,6 +46,8 @@ const UpdatePersonStatusComponent: React.FC<
     );
   };
 
+  const updateOptions = GetUpdateOptions(me);
+
   return (
     <>
       <List.Item
@@ -69,18 +69,7 @@ const UpdatePersonStatusComponent: React.FC<
       >
         <Form.Item label="Current status" style={{ marginBottom: 10 }}>
           <Select value={newStatus} onChange={handleMenuStatusClick}>
-            <Option value="DRAFT">
-              <EyeInvisibleOutlined /> Draft
-            </Option>
-            <Option value="PENDING_REVIEW">
-              <ClockCircleOutlined /> Send for review
-            </Option>
-            <Option value="PUBLISHED">
-              <EyeOutlined /> Publish
-            </Option>
-            <Option value="ARCHIVED">
-              <InboxOutlined /> Archive
-            </Option>
+            {updateOptions}
           </Select>
         </Form.Item>
       </Modal>
