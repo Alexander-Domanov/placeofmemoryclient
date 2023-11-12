@@ -9,22 +9,20 @@ import {
   Menu,
   Modal,
   notification,
+  Tooltip,
   Typography,
 } from 'antd';
 import Link from 'next/link';
-import { FaBars, FaNewspaper, FaRightFromBracket } from 'react-icons/fa6';
-import { FolderOpenOutlined, LaptopOutlined } from '@ant-design/icons';
-import { FaUsers } from 'react-icons/fa';
-import { MdOutlinePlace } from 'react-icons/md';
-import { GoPeople } from 'react-icons/go';
-import { BsPencilSquare } from 'react-icons/bs';
+import { FaBars } from 'react-icons/fa6';
 import { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
+import { UserOutlined } from '@ant-design/icons';
 import { useMeQuery } from '@/services';
 import { DashboardSelectLanguage } from '@/components';
 import styles from './DashboardHeader.module.scss';
 import { routes } from '@/common/routing/routes';
 import { useLogout } from '@/modules/auth-modules/logout-module';
+import { GetMenuItems } from '@/components/layouts/components/GetMenuItems';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -65,50 +63,7 @@ export const DashboardHeader: FC = () => {
     }
   };
 
-  const items: MenuItem[] = [
-    {
-      key: routes.dashboard.index,
-      label: <Link href={routes.dashboard.index}>Dashboard</Link>,
-      icon: <LaptopOutlined />,
-    },
-    {
-      key: routes.dashboard.gallery,
-      label: <Link href={routes.dashboard.gallery}>Gallery</Link>,
-      icon: <FolderOpenOutlined />,
-    },
-    {
-      key: routes.dashboard.users.index,
-      label: <Link href={routes.dashboard.users.index}>Users</Link>,
-      icon: <FaUsers />,
-    },
-    {
-      key: routes.dashboard.places.index,
-      label: <Link href={routes.dashboard.places.index}>Places</Link>,
-      icon: <MdOutlinePlace />,
-    },
-    {
-      key: routes.dashboard.persons.index,
-      label: <Link href={routes.dashboard.persons.index}>Persons</Link>,
-      icon: <GoPeople />,
-    },
-    {
-      key: routes.dashboard.articles.index,
-      label: <Link href={routes.dashboard.articles.index}>Articles</Link>,
-      icon: <FaNewspaper />,
-    },
-    {
-      key: routes.dashboard.languages.index,
-      label: <Link href={routes.dashboard.languages.index}>Languages</Link>,
-      icon: <BsPencilSquare />,
-    },
-    {
-      key: 'logout',
-      label: 'Logout',
-      icon: <FaRightFromBracket />,
-      danger: true,
-      onClick: onLogout,
-    },
-  ];
+  const items: MenuItem[] = GetMenuItems(me, onLogout);
 
   return (
     <>
@@ -124,7 +79,13 @@ export const DashboardHeader: FC = () => {
             <DashboardSelectLanguage />
 
             <Flex align="center" gap="small" className={styles.userInfo}>
-              <Avatar src={me?.urlAvatar} />
+              <Tooltip
+                title={`role: ${me?.role}`}
+                placement="bottom"
+                color="#1087f6"
+              >
+                <Avatar src={me?.urlAvatar} icon={<UserOutlined />} />
+              </Tooltip>
 
               <Text className={styles.username}>{me?.userName}</Text>
             </Flex>
