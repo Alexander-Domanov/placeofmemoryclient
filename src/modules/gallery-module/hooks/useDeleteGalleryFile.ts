@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteGalleryFile } from '@/modules/gallery-module/api/gallery-api';
+import { IResponseError } from '@/types/response-error-message.type';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useDeleteGalleryFile = () => {
   const client = useQueryClient();
@@ -13,6 +15,9 @@ export const useDeleteGalleryFile = () => {
     mutationFn: (id: string | undefined) => deleteGalleryFile(id),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['gallery'] });
+    },
+    onError: (error: IResponseError) => {
+      ErrorNotification(error);
     },
   });
 

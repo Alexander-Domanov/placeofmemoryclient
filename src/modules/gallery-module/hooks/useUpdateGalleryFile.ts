@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateGalleryFile } from '@/modules/gallery-module/api/gallery-api';
+import { IResponseError } from '@/types/response-error-message.type';
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useUpdateGalleryFile = (id: string | null) => {
   const client = useQueryClient();
@@ -14,6 +16,9 @@ export const useUpdateGalleryFile = (id: string | null) => {
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['gallery-file', { id }] });
       client.invalidateQueries({ queryKey: ['gallery'] });
+    },
+    onError: (error: IResponseError) => {
+      ErrorNotification(error);
     },
   });
 

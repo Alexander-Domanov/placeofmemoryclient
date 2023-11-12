@@ -63,7 +63,7 @@ export const ArticleCreate: FC = () => {
   const [contentCount, setContentCount] = useState<number>(0);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'article');
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -173,6 +173,7 @@ export const ArticleCreate: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
+                  tooltip="You can upload up to one photo. After uploading, you should save the article."
                 >
                   <Upload {...uploadProps}>
                     <Button

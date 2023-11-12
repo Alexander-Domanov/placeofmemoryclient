@@ -27,11 +27,11 @@ export const routes = {
   },
   places: {
     index: '/places',
-    getPlace: (slug: string) => `${routes.places.index}/${slug}`,
+    place: (slug: string) => `${routes.places.index}/${slug}`,
   },
   people: {
     index: '/people',
-    getPerson: (slug: string) => `${routes.people.index}/${slug}`,
+    person: (slug: string) => `${routes.people.index}/${slug}`,
   },
   aboutTheProject: {
     index: 'about-the-project',

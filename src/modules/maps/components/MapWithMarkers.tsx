@@ -3,6 +3,7 @@ import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import { Button, Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 const containerStyle = {
   height: '50vh',
@@ -61,7 +62,10 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
       const infoWindow = new google.maps.InfoWindow();
 
       const markers = selectedLocations.map((p) => {
-        const { url } = p.photos[0].versions.large;
+        const url =
+          p.photos && p.photos.length > 0
+            ? p.photos[0].versions.medium.url
+            : pictureBackup;
         const marker = new google.maps.Marker({
           position: {
             lat: p.location.lat,
@@ -72,14 +76,20 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         });
 
         const contentString = `
-<Flex gap="large" vertical>
-<img src="${url}" alt="${p.firstName} ${
+<div class="flex gap-2 flex-col">
+  <img src="${url}" alt="${p.firstName} ${
           p.lastName
-        }" style="max-width: 100px; max-height: 100px;">
-<p>${p.firstName} ${p.lastName}: ${p.birthDate || 'n/a'} - ${
-          p.deathDate || 'n/a'
-        }</p>
-</Flex>`;
+        }" class="max-w-60 max-h-full object-contain rounded-md">
+  <div class="text-black text-center">
+    <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
+    <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
+  </div>
+  <a href="/dashboard/persons/${
+    p?.id || ''
+  }" class="cursor-pointer text-blue-500 text-center">
+    <span class="hover:underline">${p?.slug || ''}</span>
+  </a>
+</div>`;
 
         marker.addListener('click', () => {
           infoWindow.close();

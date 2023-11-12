@@ -1,15 +1,16 @@
-import React, { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { IPlace } from '@/types';
+import { FileStatuses, IPlace } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -21,11 +22,13 @@ const breadcrumbs = [
   }),
 ];
 
+const defaultPageSize = 11;
+
 export const Places: FC = () => {
   const router = useRouter();
   const [pagination, setPagination] = useState({
     page: 1,
-    pageSize: 18,
+    pageSize: defaultPageSize,
     searchTerm: '',
   });
   const [sorting, setSorting] = useState<{
@@ -33,7 +36,7 @@ export const Places: FC = () => {
     order: string | null;
   }>({ field: null, order: null });
 
-  const [status, setStatus] = useState('all');
+  const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
   const search = useDebounce(pagination.searchTerm, 500);
 
@@ -53,7 +56,7 @@ export const Places: FC = () => {
     setPagination({ ...pagination, page: 1, pageSize: size });
   };
 
-  const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
+  const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
   };
@@ -100,7 +103,7 @@ export const Places: FC = () => {
             type="primary"
             onClick={() => router.push(routes.dashboard.places.create)}
           >
-            Add Place
+            + Add
           </Button>
 
           {/* <Button */}
@@ -115,7 +118,7 @@ export const Places: FC = () => {
           {/* <DeletePlaceComponent place={selectedRowKeys} /> */}
         </div>
 
-        <Flex align="center">
+        <Flex align="center" gap="middle">
           <Input
             placeholder="Search by name"
             allowClear
@@ -126,14 +129,8 @@ export const Places: FC = () => {
           />
 
           <SelectInput
-            defaultValue={{ value: 'all', label: 'All' }}
-            options={[
-              { label: 'All', value: 'all' },
-              { label: 'Draft', value: 'draft' },
-              { label: 'PendingReview', value: 'pendingReview' },
-              { label: 'Published', value: 'published' },
-              { label: 'Archived', value: 'archived' },
-            ]}
+            defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
+            options={fileStatusOptions}
             onChange={onStatusChange}
           />
         </Flex>
@@ -155,7 +152,7 @@ export const Places: FC = () => {
           current: pagination.page,
           onChange: onPageChange,
           defaultCurrent: 1,
-          defaultPageSize: 18,
+          defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
         }}

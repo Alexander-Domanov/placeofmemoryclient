@@ -74,7 +74,7 @@ export const ArticleEdit: FC = () => {
   const { deleteArticleMutationAsync } = useDeleteArticle();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'article');
 
   const [form] = Form.useForm();
   const [status, setStatus] = useState('DRAFT');
@@ -334,6 +334,7 @@ export const ArticleEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
+                    tooltip="You can upload up to one photo. After uploading, you should save the article."
                   >
                     <Upload {...uploadProps}>
                       <Button

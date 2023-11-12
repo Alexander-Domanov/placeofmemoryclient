@@ -1,14 +1,20 @@
-import React, { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useUsers } from '@/modules/users-module/hooks/useUsers';
-import { IUserWithShortExtensions } from '@/types';
+import {
+  IUserWithShortExtensions,
+  UserRolesForSelect,
+  UserStatusesForSelect,
+} from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
+import { userStatusOptions } from '@/modules/users-module/components/helpers/options-user-statuses-select-input';
+import { userRolesOptions } from '@/modules/users-module/components/helpers/options-user-roles-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -34,8 +40,8 @@ export const Users: FC = () => {
     order: string | null;
   }>({ field: null, order: null });
 
-  const [status, setStatus] = useState('all');
-  const [role, setRole] = useState('all');
+  const [status, setStatus] = useState(UserStatusesForSelect.ALL.toLowerCase());
+  const [role, setRole] = useState(UserRolesForSelect.ALL.toLowerCase());
 
   const search = useDebounce(pagination.searchTerm, 500);
 
@@ -56,11 +62,11 @@ export const Users: FC = () => {
     setPagination({ ...pagination, page: 1, pageSize: size });
   };
 
-  const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
+  const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setStatus(value.value);
   };
-  const onRoleChange = (value: { value: string; label: React.ReactNode }) => {
+  const onRoleChange = (value: { value: string; label: ReactNode }) => {
     setPagination({ ...pagination, page: 1 });
     setRole(value.value);
   };
@@ -96,25 +102,14 @@ export const Users: FC = () => {
           />
 
           <SelectInput
-            defaultValue={{ value: 'all', label: 'All' }}
-            options={[
-              { label: 'All', value: 'all' },
-              { label: 'Active', value: 'active' },
-              { label: 'Banned', value: 'banned' },
-              { label: 'Pending', value: 'pending' },
-            ]}
+            defaultValue={{ value: UserStatusesForSelect.ALL, label: 'All' }}
+            options={userStatusOptions}
             onChange={onStatusChange}
           />
 
           <SelectInput
-            defaultValue={{ value: 'all', label: 'All' }}
-            options={[
-              { label: 'All', value: 'all' },
-              { label: 'Admin', value: 'ADMIN' },
-              { label: 'Editor', value: 'EDITOR' },
-              { label: 'Author', value: 'AUTHOR' },
-              { label: 'User', value: 'USER' },
-            ]}
+            defaultValue={{ value: UserRolesForSelect.ALL, label: 'All' }}
+            options={userRolesOptions}
             onChange={onRoleChange}
           />
         </Flex>

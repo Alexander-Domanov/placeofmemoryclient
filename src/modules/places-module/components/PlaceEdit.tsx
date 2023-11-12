@@ -87,7 +87,7 @@ export const PlaceEdit: FC = () => {
   const { updateStatusPlace, isStatusUpdating } = useUpdatePlaceStatus();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'place');
 
   const [form] = Form.useForm();
 
@@ -318,7 +318,7 @@ export const PlaceEdit: FC = () => {
                           </span>
                           <Link
                             href={{
-                              pathname: routes.places.getPlace(
+                              pathname: routes.places.place(
                                 selectedPlace?.slug || ''
                               ),
                             }}
@@ -427,6 +427,7 @@ export const PlaceEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
+                    tooltip="You can upload up to one photo. After uploading, you should save the place."
                   >
                     <Upload {...uploadProps}>
                       <Button

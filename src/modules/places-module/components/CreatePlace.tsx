@@ -78,7 +78,7 @@ export const CreatePlace: FC = () => {
   const { createPlaceMutate, isCreating } = useCreatePlace();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { uploadProps } = useUpload(setFileList);
+  const { uploadProps } = useUpload(setFileList, 'place');
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
@@ -269,6 +269,7 @@ export const CreatePlace: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
+                  tooltip="You can upload up to one photo. After uploading, you should save the place."
                 >
                   <Upload {...uploadProps}>
                     <Button

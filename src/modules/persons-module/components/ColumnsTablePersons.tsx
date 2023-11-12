@@ -43,7 +43,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
   {
     title: 'First Name',
     dataIndex: 'firstName',
-    key: 'firstName',
+    key: 'name',
     width: 150,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
