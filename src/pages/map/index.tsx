@@ -8,7 +8,6 @@ const Map = () => {
       <Head>
         <title>МАПА | MOGILKI</title>
       </Head>
-      {/* <div className="flex justify-center items-center ">МАПА</div> */}
 
       <MapsMain />
     </>
