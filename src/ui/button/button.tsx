@@ -4,13 +4,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/common/utils/cn';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center text-xs tracking-[2.4px] font-medium ring-offset-background transition-colors',
+  'inline-flex items-center rounded-full justify-center text-xs tracking-[2.4px] font-medium ring-offset-background transition-colors',
   {
     variants: {
       variant: {
         default:
-          'bg-light-100 text-xs font-normal text-dark-200 leading-3 uppercase',
-        dark: 'bg-dark-200 text-xs font-normal text-light-100 leading-3 uppercase',
+          'bg-[#777777] text-sm font-normal text-light-200 leading-3 uppercase',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
@@ -21,7 +20,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-[71px] p-8 pr-5',
+        default: 'h-[56px] sm:h-[24px] sm:text-xs normal-case sm:p-4 p-8',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',

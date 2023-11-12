@@ -1,88 +1,47 @@
-import { ChangeEvent, useRef, useState } from 'react';
-import { AvatarComponent, Button, Input } from '@/ui';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  useDeleteAvatar,
-  useUploadAvatar,
+  AccountSettingForm,
+  AvatarBlock,
+  editAccountData,
+  ResponseError,
+  useGetProfile,
 } from '@/modules/account-modules/edit-profile-module';
-import { useUserStore } from '@/store/userStore';
+
+import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const EditProfile = () => {
-  const [showErrorSizeImage, setShowErrorSizeImage] = useState<boolean>(false);
-  const { urlAvatar } = useUserStore();
-  const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
-    useUploadAvatar();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
-    useDeleteAvatar();
-  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
+  const { profileData, isLoading: isProfileLoading } = useGetProfile();
+  const client = useQueryClient();
 
-      if (file.size <= 2 * 1024 * 1024) {
-        setShowErrorSizeImage(false);
-        const formData = new FormData();
-        formData.append('file', file);
-        uploadAvatar(formData);
-      } else {
-        setShowErrorSizeImage(true);
-      }
+  const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation(
+    {
+      mutationFn: editAccountData,
+      onSuccess: async () => {
+        await client.invalidateQueries(['get-profile-page']);
+      },
+      onError: async (error: ResponseError) => {
+        ErrorNotification(error);
+
+        await client.invalidateQueries(['get-profile-page']);
+      },
     }
-  };
-  const isDisabled = isLoadingUploadAvatar || isLoadingDeleteAvatar;
+  );
 
-  const onSelectClick = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
+  const settingFormSubmit = (data: any) => {
+    editeProfile(data);
   };
+
   return (
-    <section className="flex flex-col items-center">
-      <span>Edit Profile</span>
-      <div className="flex pt-3 items-center gap-3">
-        <AvatarComponent src={urlAvatar} alt="user-avatar" />
-        <Button
-          disabled={isLoadingUploadAvatar}
-          type="button"
-          onClick={onSelectClick}
-        >
-          Upload new picture
-        </Button>
-        <Input
-          type="file"
-          accept="image/jpeg,image/png, image/jpeg, image/tif"
-          ref={fileInputRef}
-          className="hidden"
-          id="fileInput"
-          onChange={handleFileUpload}
-          multiple
-        />
-        <Button
-          type="button"
-          disabled={isDisabled}
-          onClick={() => deleteAvatar()}
-        >
-          Delete
-        </Button>
-      </div>
-      <div className="flex gap-3 flex-col align-middle items-center text-sm pt-3">
-        <span>JPG, GIF or PNG. Max size of 2Mb</span>
-        {showErrorSizeImage && (
-          <span className="text-red-500">File size exceeds 2 megabytes</span>
-        )}
-      </div>
-      <form className="flex flex-col align-middle w-[416px] pt-3 gap-3">
-        <Input type="text" label="Username" />
-        <Input type="text" label="firstname" />
-        <Input type="text" label="lastname" />
-        <span>DatePicker???</span>
-
-        <Input type="text" label="city" />
-        <Button
-          type="submit"
-          variant="default"
-          className="xsm:ml-0 ml-auto mt-[30px] text-[16px]"
-        >
-          Save changes
-        </Button>
-      </form>
+    <section className="flex flex-col gap-4 items-center">
+      <span className="text-3xl font-semibold sm:text-xl">
+        Рэдактаваць акаўнт
+      </span>
+      <AvatarBlock />
+      <AccountSettingForm
+        isEditProfileLoading={isEditProfileLoading}
+        profileData={profileData}
+        settingFormSubmit={settingFormSubmit}
+      />
     </section>
   );
 };
