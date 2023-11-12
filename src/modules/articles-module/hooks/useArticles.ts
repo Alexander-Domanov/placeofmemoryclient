@@ -41,5 +41,5 @@ export const useArticles = (
     }
   }, [error]);
 
-  return { articles, isLoading, refetch, isFetching };
+  return { articles, isLoading, refetch, isFetching, me };
 };

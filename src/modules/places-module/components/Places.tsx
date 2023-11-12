@@ -4,7 +4,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, IPlace } from '@/types';
+import { FileStatuses, IPlace, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
@@ -40,7 +40,7 @@ export const Places: FC = () => {
 
   const search = useDebounce(pagination.searchTerm, 500);
 
-  const { places, isFetching } = usePlaces(
+  const { places, isFetching, me } = usePlaces(
     pagination.page,
     pagination.pageSize,
     status,
@@ -91,6 +91,17 @@ export const Places: FC = () => {
   //
   // const hasSelected = selectedRowKeys.length > 0;
 
+  const selectInputOptions =
+    me?.role === Role.ADMIN
+      ? [
+          ...fileStatusOptions,
+          {
+            label: 'Archived',
+            value: FileStatuses.ARCHIVED,
+          },
+        ]
+      : fileStatusOptions;
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -130,7 +141,7 @@ export const Places: FC = () => {
 
           <SelectInput
             defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
-            options={fileStatusOptions}
+            options={selectInputOptions}
             onChange={onStatusChange}
           />
         </Flex>

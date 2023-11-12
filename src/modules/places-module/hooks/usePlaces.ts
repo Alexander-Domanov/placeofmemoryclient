@@ -39,5 +39,5 @@ export const usePlaces = (
     }
   }, [error]);
 
-  return { places, isFetching, isLoading };
+  return { places, isFetching, isLoading, me };
 };

@@ -4,7 +4,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, IPlace } from '@/types';
+import { FileStatuses, IPlace, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
@@ -38,7 +38,7 @@ export const Articles: FC = () => {
 
   const search = useDebounce(pagination.searchTerm, 500);
 
-  const { articles, isFetching } = useArticles(
+  const { articles, isFetching, me } = useArticles(
     pagination.page,
     pagination.pageSize,
     status,
@@ -72,6 +72,17 @@ export const Articles: FC = () => {
     }
   };
 
+  const selectInputOptions =
+    me?.role === Role.ADMIN
+      ? [
+          ...fileStatusOptions,
+          {
+            label: 'Archived',
+            value: FileStatuses.ARCHIVED,
+          },
+        ]
+      : fileStatusOptions;
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -103,7 +114,7 @@ export const Articles: FC = () => {
               value: FileStatuses.ALL,
               label: 'All',
             }}
-            options={fileStatusOptions}
+            options={selectInputOptions}
             onChange={onStatusChange}
           />
         </Flex>
