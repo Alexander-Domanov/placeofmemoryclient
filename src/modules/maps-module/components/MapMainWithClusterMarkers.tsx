@@ -8,6 +8,7 @@ import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 import { routes } from '@/common/routing/routes';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 const containerStyle = {
   height: '60vh',
@@ -142,11 +143,16 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     }
   };
 
+  const { width } = useWindowSize();
+
   return isLoaded ? (
     <div className="flex flex-col">
       <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
         <Link href={routes.main} className="cursor-pointer">
-          <AiOutlineHome size={22} />
+          <AiOutlineHome
+            className="text-dark-100"
+            size={width && width > 639 ? 22 : 16}
+          />
         </Link>
 
         <div>/</div>
