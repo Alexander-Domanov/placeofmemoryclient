@@ -32,5 +32,5 @@ export const usePersons = (data: IPaginationPersons) => {
     }
   }, [error]);
 
-  return { persons, isFetching, isLoading };
+  return { persons, isFetching, isLoading, me };
 };

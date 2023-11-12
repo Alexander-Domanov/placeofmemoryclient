@@ -5,5 +5,4 @@ export const fileStatusOptions = [
   { label: 'Draft', value: FileStatuses.DRAFT },
   { label: 'PendingReview', value: FileStatuses.PENDING_REVIEW },
   { label: 'Published', value: FileStatuses.PUBLISHED },
-  { label: 'Archived', value: FileStatuses.ARCHIVED },
 ];
