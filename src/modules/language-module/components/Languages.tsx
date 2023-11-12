@@ -48,7 +48,7 @@ export const Languages = () => {
 
       <Flex justify="space-between" align="center" gap="middle">
         <Button type="primary" onClick={() => setIsModalOpen(true)}>
-          Add Language
+          + Add
         </Button>
       </Flex>
 

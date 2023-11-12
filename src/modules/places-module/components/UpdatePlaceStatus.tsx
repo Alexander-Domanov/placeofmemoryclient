@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
-import {
-  ClockCircleOutlined,
-  EditOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  InboxOutlined,
-} from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { IPlace } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
-
-const { Option } = Select;
+import { useMeQuery } from '@/services';
+import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
@@ -18,6 +12,8 @@ interface UpdatePlaceStatusComponentProps {
 const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
   place,
 }) => {
+  const { data: me } = useMeQuery();
+
   const { id, status } = place || {
     id: null,
     status: null,
@@ -51,6 +47,8 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
     );
   };
 
+  const updateOptions = GetUpdateOptions(me);
+
   return (
     <>
       <List.Item
@@ -73,18 +71,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
       >
         <Form.Item label="Current status" style={{ marginBottom: 10 }}>
           <Select value={newStatus} onChange={handleMenuStatusClick}>
-            <Option value="DRAFT">
-              <EyeInvisibleOutlined /> Draft
-            </Option>
-            <Option value="PENDING_REVIEW">
-              <ClockCircleOutlined /> Send for review
-            </Option>
-            <Option value="PUBLISHED">
-              <EyeOutlined /> Publish
-            </Option>
-            <Option value="ARCHIVED">
-              <InboxOutlined /> Archive
-            </Option>
+            {updateOptions}
           </Select>
         </Form.Item>
       </Modal>

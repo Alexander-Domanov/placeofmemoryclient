@@ -12,7 +12,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, FilterCondition, IPerson } from '@/types';
+import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
@@ -61,7 +61,7 @@ export const Persons: FC = () => {
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
 
-  const { persons, isFetching } = usePersons({
+  const { persons, isFetching, me } = usePersons({
     page: pagination.page,
     pageSize: pagination.pageSize,
     status,
@@ -152,6 +152,13 @@ export const Persons: FC = () => {
       <Select.Option value="lte">Less</Select.Option>
     </Select>
   );
+
+  if (me?.role === Role.ADMIN) {
+    fileStatusOptions.push({
+      label: 'Archived',
+      value: FileStatuses.ARCHIVED,
+    });
+  }
 
   return (
     <Flex gap="large" vertical>

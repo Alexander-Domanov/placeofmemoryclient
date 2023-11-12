@@ -1,4 +1,12 @@
 export { sendAvatar, deleteAvatar } from './api/avatar-api';
+export { editAccountData } from './api/edit-account-data';
+export { getAccountData } from './api/get-account-data';
 export { EditProfile } from './components/EditProifle';
+export { AccountSettingForm } from './components/AccountSetteingForm';
+export { AvatarBlock } from './components/AvatarBlock';
 export { useUploadAvatar } from './hooks/useUploadAvatar';
 export { useDeleteAvatar } from './hooks/useDeleteAvatar';
+export { useGetProfileData } from './hooks/useGetProfileData';
+export { useGetProfile } from './hooks/useGetProfile';
+export type { ResponseError, RootProfile } from './types/profile-type';
+export { settingsSchema } from './constants/settings-account-schema';
