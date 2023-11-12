@@ -4,7 +4,6 @@ import {
   FaFacebookF,
   FaLinkedin,
   FaLocationDot,
-  FaPhone,
   FaRegEnvelope,
 } from 'react-icons/fa6';
 import { FaTwitter } from 'react-icons/fa';
@@ -48,16 +47,6 @@ export const SiteFooter: FC = () => {
 
                   <div className="text-sm font-light leading-6">
                     1234 Sample Street Austin Texas 78704
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-[20px_1fr] items-center gap-4">
-                  <div className="flex justify-items-center">
-                    <FaPhone size={16} />
-                  </div>
-
-                  <div className="text-sm font-light leading-none">
-                    512.333.2222
                   </div>
                 </div>
 

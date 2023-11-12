@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { PropsWithChildren, ReactElement } from 'react';
-import { Roboto } from '@next/font/google';
+import { Roboto } from 'next/font/google';
 import { Header } from '@/components';
 import { SiteFooter } from '@/components/layouts/components/SiteFooter';
 
