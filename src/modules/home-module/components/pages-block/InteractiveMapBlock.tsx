@@ -31,7 +31,7 @@ export const InteractiveMapBlock = () => {
             sampleemail@gmail.com
           </span>
           <Button
-            variant="dark"
+            // variant="dark"
             className="w-[200px] flex gap-4"
             onClick={() => push(routes.map.index)}
           >
