@@ -8,6 +8,7 @@ import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
+import { Spinner } from '@/ui/spinner/Spinner';
 
 export const SignIn = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
@@ -32,7 +33,6 @@ export const SignIn = () => {
     });
   };
 
-  // Получение статуса при логинизации или регистрации в google
   const [viewQueryStatus, setViewQueryStatus] = useState<string | null>(null);
   const queryStatus = query.status_code as string;
 
@@ -52,18 +52,19 @@ export const SignIn = () => {
     }
   }, [queryStatus]);
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <AuthLayout>
       {viewQueryStatus && <span>{viewQueryStatus}</span>}
-      <h1 className="font-bold text-xl mb-10">Sign in to Minsk</h1>
+      <h1 className="font-semibold text-center sm:text-2xl text-4xl">
+        Рэдактаваць акаўнт
+      </h1>
+      <hr className="w-full mt-8 mb-8 transform bg-[#565656]" />
       <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
-        Sign in with Google
+        Увайдзіце праз Google
       </Button>
       <div>
-        <div className="flex justify-center text-sm mb-7 mt-7">
-          <span>or sign in with email</span>
+        <div className="flex justify-center align-middle text-center text-sm mb-7 mt-7">
+          <span>або ўвайдзіце з дапамогай электроннай пошты</span>
         </div>
         <form
           className="flex flex-col gap-3"
@@ -72,7 +73,7 @@ export const SignIn = () => {
           <Input
             type="email"
             id="email"
-            label="Email"
+            label="Электронная пошта"
             error={errors?.email?.message}
             {...register('email')}
           />
@@ -80,7 +81,7 @@ export const SignIn = () => {
             type="password"
             id="password"
             error={errors?.password?.message}
-            label="Password"
+            label="Пароль"
             {...register('password')}
           />
           <div className="flex text-sm justify-end">
@@ -88,18 +89,18 @@ export const SignIn = () => {
               className="text-xs underline"
               href={routes.auth.forgotPassword}
             >
-              Forgot?
+              Забыўся?
             </Link>
           </div>
-          <Button className="mt-1" type="submit">
-            Sign In
+          <Button disabled={isLoading} className="mt-1" type="submit">
+            {isLoading ? <Spinner /> : 'Увайсці'}
           </Button>
         </form>
       </div>
       <div className="flex gap-1 text-sm justify-center">
-        <span> Don't have an account?</span>
+        <span> У вас няма акаўнта?</span>
         <Link className="underline" href={routes.auth.signUp}>
-          Sign up
+          Зарэгістравацца
         </Link>
       </div>
     </AuthLayout>

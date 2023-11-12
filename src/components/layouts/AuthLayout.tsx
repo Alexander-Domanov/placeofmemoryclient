@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Container } from '@/components';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 interface IAuthLayoutProps {
   children: ReactNode;
@@ -13,22 +14,27 @@ export const AuthLayout = ({
   children,
   videoSrc = baseVideoSrc,
 }: IAuthLayoutProps) => {
+  const { width } = useWindowSize();
   return (
     <Container types="auth">
-      <section className="w-[450px] h-screen">
-        <video
-          playsInline
-          className="auth-sidebar-video object-cover w-full h-full"
-          autoPlay
-          loop
-          muted
-          src={videoSrc}
-        >
-          Your browser does not support the video tag.
-        </video>
-      </section>
+      {width && width > 1023 && (
+        <section className="w-[450px] h-screen">
+          <video
+            playsInline
+            className="auth-sidebar-video object-cover w-full h-full"
+            autoPlay
+            loop
+            muted
+            src={videoSrc}
+          >
+            Your browser does not support the video tag.
+          </video>
+        </section>
+      )}
       <section className="flex-grow flex align-middle justify-center">
-        <div className="flex flex-col gap-3 w-[416px]">{children}</div>
+        <div className="flex flex-col gap-3 sm:w-[320px] ms:w-[360px] w-[416px]">
+          {children}
+        </div>
       </section>
     </Container>
   );
