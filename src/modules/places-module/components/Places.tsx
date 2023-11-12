@@ -118,7 +118,7 @@ export const Places: FC = () => {
           {/* <DeletePlaceComponent place={selectedRowKeys} /> */}
         </div>
 
-        <Flex align="center" gap="middle">
+        <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by name"
             allowClear
