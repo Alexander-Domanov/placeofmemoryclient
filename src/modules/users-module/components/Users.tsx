@@ -90,29 +90,27 @@ export const Users: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Flex justify="flex-end" align="center" gap="middle">
-        <Flex align="center" justify="end" wrap="wrap">
-          <Input
-            placeholder="Search by name"
-            allowClear
-            onChange={(e) =>
-              setPagination({ ...pagination, searchTerm: e.target.value })
-            }
-            style={{ width: 200 }}
-          />
+      <Flex align="center" justify="end" gap="middle" wrap="wrap">
+        <Input
+          placeholder="Search by name"
+          allowClear
+          onChange={(e) =>
+            setPagination({ ...pagination, searchTerm: e.target.value })
+          }
+          style={{ width: 200 }}
+        />
 
-          <SelectInput
-            defaultValue={{ value: UserStatusesForSelect.ALL, label: 'All' }}
-            options={userStatusOptions}
-            onChange={onStatusChange}
-          />
+        <SelectInput
+          defaultValue={{ value: UserStatusesForSelect.ALL, label: 'All' }}
+          options={userStatusOptions}
+          onChange={onStatusChange}
+        />
 
-          <SelectInput
-            defaultValue={{ value: UserRolesForSelect.ALL, label: 'All' }}
-            options={userRolesOptions}
-            onChange={onRoleChange}
-          />
-        </Flex>
+        <SelectInput
+          defaultValue={{ value: UserRolesForSelect.ALL, label: 'All' }}
+          options={userRolesOptions}
+          onChange={onRoleChange}
+        />
       </Flex>
 
       <Table
