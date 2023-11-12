@@ -1,5 +1,4 @@
 import { ChangeEvent, useRef, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   useDeleteAvatar,
   useUploadAvatar,

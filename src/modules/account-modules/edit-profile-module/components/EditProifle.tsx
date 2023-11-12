@@ -10,7 +10,7 @@ import {
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const EditProfile = () => {
-  const { profileData, isLoading: isProfileLoading } = useGetProfile();
+  const { profileData } = useGetProfile();
   const client = useQueryClient();
 
   const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation(

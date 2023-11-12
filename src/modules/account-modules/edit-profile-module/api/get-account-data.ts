@@ -1,6 +1,6 @@
-import { RootProfile } from '@/modules/my-profile-modules/settings-edit-profile-module/types/profile-type'
-import { authInstance } from '@/services'
+import { authInstance } from '@/services';
+import { RootProfile } from '@/modules/account-modules/edit-profile-module';
 
 export const getAccountData = (): Promise<RootProfile> => {
-  return authInstance.get(`users/profile`)
-}
+  return authInstance.get(`users/profile`);
+};
