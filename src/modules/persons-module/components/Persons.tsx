@@ -153,12 +153,16 @@ export const Persons: FC = () => {
     </Select>
   );
 
-  if (me?.role === Role.ADMIN) {
-    fileStatusOptions.push({
-      label: 'Archived',
-      value: FileStatuses.ARCHIVED,
-    });
-  }
+  const selectInputOptions =
+    me?.role === Role.ADMIN
+      ? [
+          ...fileStatusOptions,
+          {
+            label: 'Archived',
+            value: FileStatuses.ARCHIVED,
+          },
+        ]
+      : fileStatusOptions;
 
   return (
     <Flex gap="large" vertical>
@@ -216,7 +220,7 @@ export const Persons: FC = () => {
               value: FileStatuses.ALL,
               label: 'All',
             }}
-            options={fileStatusOptions}
+            options={selectInputOptions}
             onChange={onStatusChange}
           />
         </Flex>
