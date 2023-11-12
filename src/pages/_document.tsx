@@ -5,9 +5,14 @@ import type { DocumentContext } from 'next/document';
 const MyDocument = () => {
   return (
     <Html lang="en">
-      <Head />
-      <body className="debug-screens w-full">
+      <Head>
+        <meta name="description" content="Mogilki" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <body className="debug-screens">
         <Main />
+
         <NextScript />
       </body>
     </Html>
