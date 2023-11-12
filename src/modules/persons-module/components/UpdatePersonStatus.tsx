@@ -6,8 +6,6 @@ import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdateP
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
-const { Option } = Select;
-
 interface UpdatePersonStatusComponentProps {
   person: IPerson | null;
 }

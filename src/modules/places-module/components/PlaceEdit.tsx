@@ -36,8 +36,6 @@ import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
-const { Option } = Select;
-
 interface IPlaceEditForm {
   country: string;
   city: string;

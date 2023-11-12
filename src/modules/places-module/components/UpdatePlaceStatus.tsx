@@ -6,8 +6,6 @@ import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePla
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
-const { Option } = Select;
-
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
 }

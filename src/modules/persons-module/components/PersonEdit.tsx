@@ -39,8 +39,6 @@ import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 
-const { Option } = Select;
-
 function breadcrumbs(name: string) {
   return [
     CreateBreadcrumb({ key: routes.main, icon: true }),
