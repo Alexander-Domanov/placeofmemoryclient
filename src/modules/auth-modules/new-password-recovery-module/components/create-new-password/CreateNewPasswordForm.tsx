@@ -3,13 +3,16 @@ import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { Button, Input } from '@/ui';
 import { createNewPasswordSchema } from '@/modules/auth-modules/new-password-recovery-module';
+import { Spinner } from '@/ui/spinner/Spinner';
 
 interface ICreateNewPasswordFormProps {
   onSubmitHandler: (password: string) => void;
+  isLoading: boolean;
 }
 
 export const CreateNewPasswordForm = ({
   onSubmitHandler,
+  isLoading,
 }: ICreateNewPasswordFormProps) => {
   const { errors, register, reset, handleSubmit } = useGlobalForm(
     createNewPasswordSchema
@@ -24,23 +27,23 @@ export const CreateNewPasswordForm = ({
   return (
     <>
       <form
-        className="flex flex-col w-full gap-3"
+        className="flex flex-col w-full gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
-          label="New password"
+          label="Новы пароль"
           id="password"
-          placeholder="6+ characters"
+          placeholder="6+ персанажаў"
           error={errors?.password?.message}
           {...register('password')}
         />
         <div className="flex justify-center text-sm">
           <span>
-            Password must contain 1-9, a-z, A-Z, and specified symbols
+            Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы{' '}
           </span>
         </div>
-        <Button className="mt-1" type="submit">
-          Create new password
+        <Button disabled={isLoading} className="mt-1" type="submit">
+          {isLoading ? <Spinner /> : 'Стварыце новы пароль'}
         </Button>
       </form>
     </>

@@ -6,7 +6,7 @@ const Settings = () => {
   return (
     <>
       <Head>
-        <title>Edit Profile | Minsk</title>
+        <title>Рэдагаваць профіль| Mogilki</title>
       </Head>
       <EditProfile />
     </>

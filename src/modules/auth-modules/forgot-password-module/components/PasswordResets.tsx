@@ -11,6 +11,7 @@ import {
   emailSchema,
   useForgotPassword,
 } from '@/modules/auth-modules/forgot-password-module';
+import { Spinner } from '@/ui/spinner/Spinner';
 
 export const PasswordResets = () => {
   const [captcha, setCaptcha] = useState('');
@@ -34,45 +35,54 @@ export const PasswordResets = () => {
     reset();
   };
 
-  if (isLoading) <div>Loading...</div>;
   return (
     <AuthLayout>
       {showMessage ? (
-        <>
+        <div className="text-justify sm:text-xs text-sm flex gap-3 flex-col">
           <p>
-            if this email address was used to create an account, instructions to
-            reset your password will be sent to you. Please check your email.
+            калі гэты адрас электроннай пошты выкарыстоўваўся для стварэння
+            ўліковага запісу, інструкцыі па для скіду пароля будзе адпраўлена
+            вам. Праверце сваю электронную пошту.{' '}
           </p>
           <Link
             className="underline text-sm font-bold"
             href={routes.auth.signIn}
           >
-            Go to Sign In
+            Перайдзіце да ўваходу
           </Link>
-        </>
+        </div>
       ) : (
         <>
-          <h1 className="font-bold text-xl mb-10">Forgot Password?</h1>
-          <div className="break-normal text-sm w-[416px]">
+          <h1 className="font-semibold text-center sm:text-2xl text-4xl">
+            Забыліся на пароль
+          </h1>
+          <hr className="w-full mt-8 mb-8 transform bg-[#565656]" />
+          <div className="break-normal mb-3 sm:text-xs text-justify sm:w-[320px] text-sm w-[416px]">
             <p>
-              Enter the email address you used when you joined and we’ll send
-              you instructions to reset your password.
+              Увядзіце адрас электроннай пошты, які вы выкарыстоўвалі, калі
+              далучыліся, і мы вышлем інструкцыі па скідзе пароля.
             </p>
             <p className="mt-3">
-              For security reasons, we do NOT store your password. So rest
-              assured that we will never send your password via email.
+              У мэтах бяспекі мы НЕ захоўваем ваш пароль. Так што адпачывайце
+              запэўніў, што мы ніколі не адправім ваш пароль па электроннай
+              пошце.
             </p>
           </div>
-          <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="flex flex-col gap-3"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Input
               type="email"
               id="email"
-              label="Email Address"
+              label="Адрас электроннай пошты"
               error={errors?.email?.message}
               {...register('email')}
             />
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
-            <Button className="mt-1">Send Reset Instructions</Button>
+            <Button disabled={isLoading} className="mt-1">
+              {isLoading ? <Spinner /> : 'Адправіць інструкцыі па скіду'}
+            </Button>
           </form>
           <div />
         </>

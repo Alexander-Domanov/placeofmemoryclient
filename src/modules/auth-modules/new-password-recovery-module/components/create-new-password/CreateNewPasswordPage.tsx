@@ -30,11 +30,13 @@ export const CreateNewPasswordPage = ({
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
   if (isSuccess) router.push(routes.auth.signIn);
   return (
     <AuthLayout>
-      <CreateNewPasswordForm onSubmitHandler={onSubmitHandler} />
+      <CreateNewPasswordForm
+        isLoading={isLoading}
+        onSubmitHandler={onSubmitHandler}
+      />
     </AuthLayout>
   );
 };
