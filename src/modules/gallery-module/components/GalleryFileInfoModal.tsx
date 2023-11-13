@@ -18,7 +18,7 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
+import { FileStatuses } from '@/types';
 
 const { Option } = Select;
 
@@ -26,7 +26,7 @@ const { confirm } = Modal;
 
 type FormValues = {
   alt: string;
-  status: GalleryFileStatuses;
+  status: FileStatuses;
 };
 
 export const GalleryFileInfoModal: FC = () => {
@@ -124,21 +124,21 @@ export const GalleryFileInfoModal: FC = () => {
                       <Input placeholder="Alt" />
                     </Form.Item>
 
-                    <Form.Item
-                      label="Status"
-                      name="status"
-                      style={{ marginBottom: 0 }}
-                    >
-                      <Select>
-                        <Option value={GalleryFileStatuses.DRAFT}>Draft</Option>
-                        <Option value={GalleryFileStatuses.PENDING_REVIEW}>
-                          Pending Review
-                        </Option>
-                        <Option value={GalleryFileStatuses.PUBLISHED}>
-                          Published
-                        </Option>
-                      </Select>
-                    </Form.Item>
+                    {/* <Form.Item */}
+                    {/*  label="Status" */}
+                    {/*  name="status" */}
+                    {/*  style={{ marginBottom: 0 }} */}
+                    {/* > */}
+                    {/*  <Select> */}
+                    {/*    <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
+                    {/*    <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
+                    {/*      Pending Review */}
+                    {/*    </Option> */}
+                    {/*    <Option value={GalleryFileStatuses.PUBLISHED}> */}
+                    {/*      Published */}
+                    {/*    </Option> */}
+                    {/*  </Select> */}
+                    {/* </Form.Item> */}
 
                     <List>
                       <List.Item>Type: {file?.typeFile}</List.Item>

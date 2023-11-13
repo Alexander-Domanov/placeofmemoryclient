@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import {
   Breadcrumb,
   Card,
@@ -8,15 +8,16 @@ import {
   Pagination,
   Row,
   Select,
-  Space,
   Spin,
 } from 'antd';
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
-import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
+import { FileStatuses, Role } from '@/types';
+import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
+import SelectInput from '@/common-dashboard/helpers/SelectInput';
 
 const { Option } = Select;
 
@@ -33,10 +34,9 @@ const breadcrumbs = [
 export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
-  const [status, setStatus] = useState<string>(
-    GalleryFileStatuses.ALL.toLowerCase()
-  );
-  const { gallery, isFetching, isSuccess, refetch } = useGallery(
+  const [status, setStatus] = useState<string>(FileStatuses.ALL.toLowerCase());
+
+  const { gallery, isFetching, isSuccess, refetch, me } = useGallery(
     page,
     pageSize,
     status
@@ -53,10 +53,21 @@ export const Gallery: FC = () => {
     setPageSize(size);
   };
 
-  const onStatusChange = (value: string) => {
+  const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPage(1);
-    setStatus(value);
+    setStatus(value.value);
   };
+
+  const selectInputOptions =
+    me?.role === Role.ADMIN
+      ? [
+          ...fileStatusOptions,
+          {
+            label: 'Archived',
+            value: FileStatuses.ARCHIVED,
+          },
+        ]
+      : fileStatusOptions;
 
   return (
     <Flex gap="large" vertical>
@@ -64,8 +75,9 @@ export const Gallery: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-        <Flex justify="end" align="center" gap="middle">
+      <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
+        <div>
+          {/* <Flex justify="end" align="center" gap="middle" wrap="wrap"> */}
           {/* <div> */}
           {/*  <Button */}
           {/*    type="primary" */}
@@ -75,32 +87,29 @@ export const Gallery: FC = () => {
           {/*    Add File */}
           {/*  </Button> */}
           {/* </div> */}
+        </div>
 
-          <Space size="middle">
-            <Select
-              value={status}
-              style={{ width: 150 }}
-              onChange={onStatusChange}
-            >
-              <Option value={GalleryFileStatuses.ALL}>All</Option>
-              <Option value={GalleryFileStatuses.DRAFT}>Draft</Option>
-              <Option value={GalleryFileStatuses.PENDING_REVIEW}>
-                Pending Review
-              </Option>
-              <Option value={GalleryFileStatuses.PUBLISHED}>Published</Option>
-              <Option value={GalleryFileStatuses.ARCHIVED}>Archived</Option>
-            </Select>
+        <Flex align="center" gap="middle" wrap="wrap">
+          <SelectInput
+            defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
+            options={selectInputOptions}
+            onChange={onStatusChange}
+          />
 
-            <Pagination
-              total={gallery?.totalCount || 1}
-              current={page}
-              onChange={onPageChange}
-              defaultCurrent={1}
-              defaultPageSize={18}
-              pageSizeOptions={[18, 24, 36, 48, 96]}
-              onShowSizeChange={onPageSizeChange}
-            />
-          </Space>
+          <Pagination
+            size="small"
+            total={gallery?.totalCount || 1}
+            current={page}
+            onChange={onPageChange}
+            defaultCurrent={1}
+            defaultPageSize={18}
+            pageSizeOptions={[18, 24, 36, 48, 96]}
+            onShowSizeChange={onPageSizeChange}
+            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`}
+            simple
+            showSizeChanger
+          />
+          {/* </Flex> */}
         </Flex>
 
         <Spin spinning={isFetching} size="large">
@@ -125,7 +134,7 @@ export const Gallery: FC = () => {
             )}
           </Card>
         </Spin>
-      </Space>
+      </Flex>
 
       <UploadGalleryModal
         isOpen={isUploadGalleryOpen}

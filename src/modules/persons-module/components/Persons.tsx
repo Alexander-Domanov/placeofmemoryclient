@@ -29,10 +29,10 @@ const breadcrumbs = [
     withLink: false,
   }),
 ];
-const defaultPageSize = 11;
+
+const defaultPageSize = 10;
+
 interface IPagination {
-  page: number;
-  pageSize: number;
   searchName: string;
   searchLastName: string;
   birthDate?: string | null;
@@ -43,9 +43,8 @@ interface IPagination {
 
 export const Persons: FC = () => {
   const router = useRouter();
+
   const [pagination, setPagination] = useState<IPagination>({
-    page: 1,
-    pageSize: defaultPageSize,
     searchName: '',
     searchLastName: '',
     filterConditionBirthDate: FilterCondition.gte,
@@ -55,15 +54,16 @@ export const Persons: FC = () => {
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
 
   const { persons, isFetching, me } = usePersons({
-    page: pagination.page,
-    pageSize: pagination.pageSize,
+    page,
+    pageSize,
     status,
     name,
     lastName,
@@ -75,15 +75,19 @@ export const Persons: FC = () => {
   });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPagination({ ...pagination });
+    setPage(_page);
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPagination({ ...pagination });
+    setPage(1);
     setStatus(value.value);
   };
 
@@ -234,14 +238,17 @@ export const Persons: FC = () => {
         dataSource={persons?.items}
         loading={isFetching}
         pagination={{
-          position: ['bottomCenter'],
           total: persons?.totalCount || 1,
-          current: pagination.page,
+          current: page,
           onChange: onPageChange,
           defaultCurrent: 1,
           defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
+          simple: true,
+          showSizeChanger: true,
+          position: ['bottomCenter'],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
         scroll={{ x: 1300 }}
         onChange={handleTableChange}
