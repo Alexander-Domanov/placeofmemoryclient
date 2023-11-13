@@ -2,27 +2,34 @@ import { RiLogoutBoxRLine } from 'react-icons/Ri';
 import { PiListBold } from 'react-icons/pi';
 import { AvatarMenuHeader } from '@/components';
 import { LogoutButton } from '@/modules/auth-modules/logout-module';
-import { DropdownMenuComponent, DropdownMenuSeparator } from '@/ui';
+import { DropdownMenuComponent } from '@/ui';
 
 import { routes } from '@/common/routing/routes';
 import { IDropdownMenuItems } from '@/types';
-import { NAVIGATION_LINK } from '@/common/constants';
+import { AUTH_LINK, NAVIGATION_LINK } from '@/common/constants';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { useUserStore } from '@/store/userStore';
 
-const menuHeader: IDropdownMenuItems[] = [
+const MENU_HEADER: IDropdownMenuItems[] = [
   { title: 'Прыборная панэль', link: routes.dropdownMenuHeader.dashboard },
   { title: 'Наладжваньне', link: routes.dropdownMenuHeader.settings },
   { content: <LogoutButton /> },
 ];
 
 export const DropdownMenuHeader = () => {
+  const { userName } = useUserStore();
   const { width } = useWindowSize();
-  const navigation =
-    width && width < 767 ? [...NAVIGATION_LINK, ...menuHeader] : menuHeader;
+
+  const NAVIGATION_USER_NAME = userName
+    ? [...NAVIGATION_LINK, ...MENU_HEADER]
+    : [...NAVIGATION_LINK, ...AUTH_LINK];
 
   return (
-    <DropdownMenuComponent menuLabel={<AvatarMenuHeader />} items={navigation}>
-      {width && width < 767 ? (
+    <DropdownMenuComponent
+      menuLabel={userName ? <AvatarMenuHeader /> : null}
+      items={NAVIGATION_USER_NAME}
+    >
+      {width && width < 1023 ? (
         <PiListBold size={24} />
       ) : (
         <RiLogoutBoxRLine size={24} />
