@@ -142,7 +142,7 @@ export const Places: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by name"
+            placeholder="Search by name lowercase"
             title="Search by name lowercase"
             allowClear
             onChange={(e) =>

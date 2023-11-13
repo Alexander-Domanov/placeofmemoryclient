@@ -99,6 +99,7 @@ export const Articles: FC = () => {
         <div>
           <Button
             type="primary"
+            title="Add new article"
             onClick={() => router.push(routes.dashboard.articles.create)}
           >
             + Add
@@ -107,7 +108,7 @@ export const Articles: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by title"
+            placeholder="Search by title lowercase"
             title="Search by title lowercase"
             allowClear
             onChange={(e) =>
