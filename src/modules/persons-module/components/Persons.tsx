@@ -12,6 +12,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
+import { FaArrowDownShortWide, FaArrowDownWideShort } from 'react-icons/fa6';
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
@@ -61,6 +62,9 @@ export const Persons: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
+
+  const [isShowMoreFilters, setIsShowMoreFilters] = useState(false);
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
@@ -143,6 +147,10 @@ export const Persons: FC = () => {
     });
   };
 
+  const onShowMoreFilters = () => {
+    setIsShowMoreFilters(!isShowMoreFilters);
+  };
+
   const selectConditionBirthDate = (
     <Select
       style={{ width: 80 }}
@@ -183,7 +191,7 @@ export const Persons: FC = () => {
       </div>
 
       <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
-        <div>
+        <Flex align="center" gap="middle">
           <Button
             type="primary"
             title="Add new person"
@@ -191,7 +199,26 @@ export const Persons: FC = () => {
           >
             + Add
           </Button>
-        </div>
+
+          <Button
+            type={isButtonActive ? 'dashed' : 'default'}
+            title="Show more filters"
+            icon={
+              isButtonActive ? (
+                <FaArrowDownWideShort />
+              ) : (
+                <FaArrowDownShortWide />
+              )
+            }
+            onClick={() => {
+              onShowMoreFilters();
+              setIsButtonActive(!isButtonActive);
+            }}
+            className={isButtonActive ? 'active-button' : ''}
+          >
+            Filters
+          </Button>
+        </Flex>
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
@@ -214,44 +241,6 @@ export const Persons: FC = () => {
             style={{ width: 180 }}
           />
 
-          <InputNumber
-            addonBefore={selectConditionBirthDate}
-            maxLength={4}
-            placeholder="Year of birth"
-            title="Search by year of birth"
-            style={{ width: 190 }}
-            onChange={onChangeBirthDate}
-          />
-
-          <InputNumber
-            addonBefore={selectConditionDeathDate}
-            maxLength={4}
-            style={{ width: 190 }}
-            placeholder="Year of death"
-            title="Search by year of death"
-            onChange={onChangeDeathDate}
-          />
-
-          <Input
-            placeholder="Country"
-            title="Search by country"
-            allowClear
-            onChange={(e) =>
-              setPagination({ ...pagination, searchCountry: e.target.value })
-            }
-            style={{ width: 160 }}
-          />
-
-          <Input
-            placeholder="City"
-            title="Search by city"
-            allowClear
-            onChange={(e) =>
-              setPagination({ ...pagination, searchCity: e.target.value })
-            }
-            style={{ width: 160 }}
-          />
-
           <SelectInput
             defaultValue={{
               value: FileStatuses.ALL,
@@ -262,6 +251,50 @@ export const Persons: FC = () => {
           />
         </Flex>
       </Flex>
+
+      {isShowMoreFilters && (
+        <Flex justify="end" align="center" gap="middle" wrap="wrap">
+          <Flex align="center" gap="middle" wrap="wrap">
+            <InputNumber
+              addonBefore={selectConditionBirthDate}
+              maxLength={4}
+              placeholder="Year of birth"
+              title="Search by year of birth"
+              style={{ width: 190 }}
+              onChange={onChangeBirthDate}
+            />
+
+            <InputNumber
+              addonBefore={selectConditionDeathDate}
+              maxLength={4}
+              style={{ width: 190 }}
+              placeholder="Year of death"
+              title="Search by year of death"
+              onChange={onChangeDeathDate}
+            />
+
+            <Input
+              placeholder="Search by Country"
+              title="Search by country"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchCountry: e.target.value })
+              }
+              style={{ width: 160 }}
+            />
+
+            <Input
+              placeholder="Search by City"
+              title="Search by city"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchCity: e.target.value })
+              }
+              style={{ width: 160 }}
+            />
+          </Flex>
+        </Flex>
+      )}
 
       <Table
         bordered
