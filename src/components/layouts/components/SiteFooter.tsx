@@ -14,8 +14,8 @@ export const SiteFooter: FC = () => {
   return (
     <footer className="bg-dark-900 py-16">
       <div className="container">
-        <div className="grid grid-cols-[160px_160px_300px_1fr] gap-24">
-          <div className="font-kelsi text-[32px]">
+        <div className="grid grid-cols-[160px_160px_300px_1fr] gap-24 lg:grid-cols-[120px_150px_200px_1fr] lg:gap-6">
+          <div className="font-kelsi text-[32px] lg:text-2xl">
             <Link href={routes.main}>MOGILKI</Link>
           </div>
 
@@ -69,7 +69,7 @@ export const SiteFooter: FC = () => {
             <div className="text-base font-bold">Сацыяльныя сеткі</div>
 
             <div className="mt-6">
-              <ul className="flex gap-11">
+              <ul className="flex gap-11 lg:gap-8">
                 <li>
                   <a
                     href="https://facebook.com/"
