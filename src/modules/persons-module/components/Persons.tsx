@@ -35,6 +35,8 @@ const defaultPageSize = 10;
 interface IPagination {
   searchName: string;
   searchLastName: string;
+  searchCountry: string;
+  searchCity: string;
   birthDate?: string | null;
   deathDate?: string | null;
   filterConditionBirthDate?: FilterCondition;
@@ -47,6 +49,8 @@ export const Persons: FC = () => {
   const [pagination, setPagination] = useState<IPagination>({
     searchName: '',
     searchLastName: '',
+    searchCountry: '',
+    searchCity: '',
     filterConditionBirthDate: FilterCondition.gte,
     filterConditionDeathDate: FilterCondition.lte,
   });
@@ -60,12 +64,16 @@ export const Persons: FC = () => {
 
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
+  const country = useDebounce(pagination.searchCountry, 500);
+  const city = useDebounce(pagination.searchCity, 500);
 
   const { persons, isFetching, me } = usePersons({
     pageNumber: page,
     pageSize,
     status,
     name,
+    country,
+    city,
     lastName,
     sorting,
     birthDate: pagination.birthDate,
@@ -222,6 +230,26 @@ export const Persons: FC = () => {
             placeholder="Year of death"
             title="Search by year of death"
             onChange={onChangeDeathDate}
+          />
+
+          <Input
+            placeholder="Country"
+            title="Search by country"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCountry: e.target.value })
+            }
+            style={{ width: 160 }}
+          />
+
+          <Input
+            placeholder="City"
+            title="Search by city"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCity: e.target.value })
+            }
+            style={{ width: 160 }}
           />
 
           <SelectInput
