@@ -195,23 +195,23 @@ export const Persons: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="First Name lowercase"
+            placeholder="First Name"
             title="Search by first name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchName: e.target.value })
             }
-            style={{ width: 200 }}
+            style={{ width: 180 }}
           />
 
           <Input
-            placeholder="Last Name lowercase"
+            placeholder="Last Name"
             title="Search by last name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchLastName: e.target.value })
             }
-            style={{ width: 200 }}
+            style={{ width: 180 }}
           />
 
           <InputNumber
