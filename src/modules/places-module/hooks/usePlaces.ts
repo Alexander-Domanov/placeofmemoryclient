@@ -10,6 +10,8 @@ export const usePlaces = (
   pageSize: number,
   status: string,
   name: string,
+  country: string,
+  city: string,
   sorting: { field: string | null | number | bigint; order: string | null }
 ) => {
   const { data: me } = useMeQuery();
@@ -21,9 +23,10 @@ export const usePlaces = (
   } = useQuery({
     queryKey: [
       'places',
-      { page, pageSize, status, name, sorting, lang: me?.lang },
+      { page, pageSize, status, name, country, city, sorting, lang: me?.lang },
     ],
-    queryFn: () => getPlaces(page, pageSize, status, name, sorting),
+    queryFn: () =>
+      getPlaces(page, pageSize, status, name, country, city, sorting),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,

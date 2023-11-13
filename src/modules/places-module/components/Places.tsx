@@ -29,6 +29,8 @@ export const Places: FC = () => {
 
   const [pagination, setPagination] = useState({
     searchTerm: '',
+    searchCountry: '',
+    searchCity: '',
   });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
@@ -39,12 +41,16 @@ export const Places: FC = () => {
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
   const search = useDebounce(pagination.searchTerm, 500);
+  const country = useDebounce(pagination.searchCountry, 500);
+  const city = useDebounce(pagination.searchCity, 500);
 
   const { places, isFetching, me } = usePlaces(
     page,
     pageSize,
     status,
     search,
+    country,
+    city,
     sorting
   );
 
@@ -139,6 +145,24 @@ export const Places: FC = () => {
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
+            }
+            style={{ width: 200 }}
+          />
+
+          <Input
+            placeholder="Search by country"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCountry: e.target.value })
+            }
+            style={{ width: 200 }}
+          />
+
+          <Input
+            placeholder="Search by city"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCity: e.target.value })
             }
             style={{ width: 200 }}
           />

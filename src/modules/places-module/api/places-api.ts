@@ -9,6 +9,8 @@ export const getPlaces = (
   pageSize: number,
   status: string,
   name: string,
+  country: string,
+  city: string,
   sorting: { field: string | null | number | bigint; order: string | null }
 ) => {
   return authInstance.get<IGetPlacesResponse>('places', {
@@ -17,6 +19,8 @@ export const getPlaces = (
       pageSize,
       status,
       name,
+      country,
+      city,
       sortBy: sorting.field,
       sortDirection: sorting.order,
     },

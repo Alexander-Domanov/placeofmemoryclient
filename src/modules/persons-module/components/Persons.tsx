@@ -206,16 +206,18 @@ export const Persons: FC = () => {
           <InputNumber
             addonBefore={selectConditionBirthDate}
             maxLength={4}
-            placeholder="Birth"
-            style={{ width: 160 }}
+            placeholder="Year of birth"
+            title="Year of birth"
+            style={{ width: 190 }}
             onChange={onChangeBirthDate}
           />
 
           <InputNumber
             addonBefore={selectConditionDeathDate}
             maxLength={4}
-            style={{ width: 160 }}
-            placeholder="Death"
+            style={{ width: 190 }}
+            placeholder="Year of death"
+            title="Year of death"
             onChange={onChangeDeathDate}
           />
 
