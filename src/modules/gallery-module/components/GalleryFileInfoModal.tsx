@@ -10,7 +10,6 @@ import {
   Modal,
   notification,
   Row,
-  Select,
   Space,
   Spin,
 } from 'antd';
@@ -19,8 +18,6 @@ import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
 import { FileStatuses } from '@/types';
-
-const { Option } = Select;
 
 const { confirm } = Modal;
 
@@ -124,21 +121,22 @@ export const GalleryFileInfoModal: FC = () => {
                       <Input placeholder="Alt" />
                     </Form.Item>
 
-                    {/* <Form.Item */}
-                    {/*  label="Status" */}
-                    {/*  name="status" */}
-                    {/*  style={{ marginBottom: 0 }} */}
-                    {/* > */}
-                    {/*  <Select> */}
-                    {/*    <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
-                    {/*    <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
-                    {/*      Pending Review */}
-                    {/*    </Option> */}
-                    {/*    <Option value={GalleryFileStatuses.PUBLISHED}> */}
-                    {/*      Published */}
-                    {/*    </Option> */}
-                    {/*  </Select> */}
-                    {/* </Form.Item> */}
+                    <Form.Item
+                      label="Status"
+                      name="status"
+                      style={{ marginBottom: 0 }}
+                    >
+                      <Input placeholder="Status" disabled />
+                      {/* <Select> */}
+                      {/*  <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
+                      {/*  <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
+                      {/*    Pending Review */}
+                      {/*  </Option> */}
+                      {/*  <Option value={GalleryFileStatuses.PUBLISHED}> */}
+                      {/*    Published */}
+                      {/*  </Option> */}
+                      {/* </Select> */}
+                    </Form.Item>
 
                     <List>
                       <List.Item>Type: {file?.typeFile}</List.Item>

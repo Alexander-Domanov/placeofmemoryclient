@@ -13,6 +13,7 @@ export * from './images/base-image.type';
 export * from './images/file-versions.type';
 export * from './images/gallery-file.type';
 export * from './images/get-gallery-response.type';
+export * from './images/image-resource.type';
 export * from './locations/location.type';
 export * from './persons/person.type';
 export * from './persons/create-persons.type';

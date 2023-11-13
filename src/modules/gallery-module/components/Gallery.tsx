@@ -7,7 +7,7 @@ import {
   Flex,
   Pagination,
   Row,
-  Select,
+  Space,
   Spin,
 } from 'antd';
 import { useGallery } from '../hooks/useGallery';
@@ -15,11 +15,12 @@ import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
-import { FileStatuses, Role } from '@/types';
-import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
+import { FileStatuses, ImageResourceType, Role } from '@/types';
+import {
+  fileStatusOptions,
+  typeFileOptions,
+} from '@/common-dashboard/options-file-statuses-select-input';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
-
-const { Option } = Select;
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -35,11 +36,15 @@ export const Gallery: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
   const [status, setStatus] = useState<string>(FileStatuses.ALL.toLowerCase());
+  const [type, setImageType] = useState<string>(
+    ImageResourceType.ALL.toLowerCase()
+  );
 
   const { gallery, isFetching, isSuccess, refetch, me } = useGallery(
     page,
     pageSize,
-    status
+    status,
+    type
   );
 
   const [isUploadGalleryOpen, setIsUploadGalleryOpen] = useState(false);
@@ -56,6 +61,11 @@ export const Gallery: FC = () => {
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
     setPage(1);
     setStatus(value.value);
+  };
+
+  const onTypeChange = (value: { value: string; label: ReactNode }) => {
+    setPage(1);
+    setImageType(value.value);
   };
 
   const selectInputOptions =
@@ -75,27 +85,36 @@ export const Gallery: FC = () => {
         <Breadcrumb items={breadcrumbs} />
       </div>
 
-      <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
-        <div>
-          {/* <Flex justify="end" align="center" gap="middle" wrap="wrap"> */}
-          {/* <div> */}
-          {/*  <Button */}
-          {/*    type="primary" */}
-          {/*    onClick={() => setIsUploadGalleryOpen(true)} */}
-          {/*    disabled */}
-          {/*  > */}
-          {/*    Add File */}
-          {/*  </Button> */}
-          {/* </div> */}
-        </div>
+      <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+        {/* <Space justify="end" align="center" gap="middle"> */}
+        {/* <div> */}
+        {/*  <Button */}
+        {/*    type="primary" */}
+        {/*    onClick={() => setIsUploadGalleryOpen(true)} */}
+        {/*    disabled */}
+        {/*  > */}
+        {/*    Add File */}
+        {/*  </Button> */}
+        {/* </div> */}
 
-        <Flex align="center" gap="middle" wrap="wrap">
+        <Flex justify="end" align="center" gap="middle" wrap="wrap">
+          {(me?.role === Role.ADMIN ||
+            me?.role === Role.AUTHOR ||
+            me?.role === Role.EDITOR) && (
+            <SelectInput
+              defaultValue={{ value: ImageResourceType.ALL, label: 'All' }}
+              options={typeFileOptions}
+              onChange={onTypeChange}
+            />
+          )}
+
           <SelectInput
             defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
             options={selectInputOptions}
             onChange={onStatusChange}
           />
 
+          {/* <Flex justify="end"> */}
           <Pagination
             size="small"
             total={gallery?.totalCount || 1}
@@ -109,6 +128,7 @@ export const Gallery: FC = () => {
             simple
             showSizeChanger
           />
+          {/* </Flex> */}
           {/* </Flex> */}
         </Flex>
 
@@ -134,7 +154,7 @@ export const Gallery: FC = () => {
             )}
           </Card>
         </Spin>
-      </Flex>
+      </Space>
 
       <UploadGalleryModal
         isOpen={isUploadGalleryOpen}
