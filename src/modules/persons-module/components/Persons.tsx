@@ -178,6 +178,7 @@ export const Persons: FC = () => {
         <div>
           <Button
             type="primary"
+            title="Add new person"
             onClick={() => router.push(routes.dashboard.persons.create)}
           >
             + Add
@@ -186,7 +187,8 @@ export const Persons: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="First Name"
+            placeholder="First Name lowercase"
+            title="Search by first name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchName: e.target.value })
@@ -195,7 +197,8 @@ export const Persons: FC = () => {
           />
 
           <Input
-            placeholder="Last Name"
+            placeholder="Last Name lowercase"
+            title="Search by last name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchLastName: e.target.value })
@@ -207,7 +210,7 @@ export const Persons: FC = () => {
             addonBefore={selectConditionBirthDate}
             maxLength={4}
             placeholder="Year of birth"
-            title="Year of birth"
+            title="Search by year of birth"
             style={{ width: 190 }}
             onChange={onChangeBirthDate}
           />
@@ -217,7 +220,7 @@ export const Persons: FC = () => {
             maxLength={4}
             style={{ width: 190 }}
             placeholder="Year of death"
-            title="Year of death"
+            title="Search by year of death"
             onChange={onChangeDeathDate}
           />
 
