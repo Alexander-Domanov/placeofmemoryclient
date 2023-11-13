@@ -16,6 +16,8 @@ export interface IPerson
   biography: string;
   birthDate: string;
   deathDate: string;
+  country: string;
+  city: string;
   slug: string;
   place: {
     id: number;

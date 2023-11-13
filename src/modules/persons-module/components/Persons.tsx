@@ -75,8 +75,8 @@ export const Persons: FC = () => {
   });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination });
     setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
