@@ -12,7 +12,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FaArrowDownShortWide, FaArrowDownWideShort } from 'react-icons/fa6';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
@@ -203,13 +203,7 @@ export const Persons: FC = () => {
           <Button
             type={isButtonActive ? 'dashed' : 'default'}
             title="Show more filters"
-            icon={
-              isButtonActive ? (
-                <FaArrowDownWideShort />
-              ) : (
-                <FaArrowDownShortWide />
-              )
-            }
+            icon={isButtonActive ? <CaretUpOutlined /> : <CaretDownOutlined />}
             onClick={() => {
               onShowMoreFilters();
               setIsButtonActive(!isButtonActive);
