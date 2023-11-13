@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'usehooks-ts';
-import { Layout, Menu, Modal, notification } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import type { MenuProps } from 'antd/es/menu';
 
 import styles from './DashboardSidebar.module.scss';
@@ -27,11 +27,6 @@ const DashboardSidebar: FC = () => {
       maskClosable: true,
       async onOk() {
         await sendLogoutAsync();
-
-        notification.success({
-          message: 'You was logged out',
-          placement: 'bottomLeft',
-        });
       },
     });
   };

@@ -3,7 +3,7 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
-import { IArticle } from '@/types/articles/article.type';
+import { IArticle } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticle';
 import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';

@@ -1,4 +1,4 @@
-import { IBaseLocation } from '@/types/locations/location.type';
+import { IBaseLocation } from '@/types';
 
 export interface IPersonForMap extends IBaseLocation {
   id: number;

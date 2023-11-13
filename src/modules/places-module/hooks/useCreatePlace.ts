@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPlace } from '@/modules/places-module/api/places-api';
-import { ICreatePlace } from '@/types/places/create-place.type';
+import { ICreatePlace } from '@/types';
 import { IResponseError } from '@/types/response-error-message.type';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 

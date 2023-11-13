@@ -4,16 +4,9 @@ import { noRefetch } from '@/common/helpers/noRefetch';
 import { getUser } from '@/modules/users-module/api/users-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { useMeQuery } from '@/services';
+import { IPaginationUser } from '@/types';
 
-export const useUser = (
-  id: string,
-  page: number,
-  pageSize: number,
-  status: string,
-  name: string,
-  sorting: { field: string | null | number | bigint; order: string | null },
-  extensions: string[] = []
-) => {
+export const useUser = (data: IPaginationUser) => {
   const { data: me } = useMeQuery();
   const {
     data: user,
@@ -21,13 +14,9 @@ export const useUser = (
     isSuccess,
     error,
   } = useQuery({
-    queryKey: [
-      'user',
-      { id, page, pageSize, status, name, sorting, extensions, lang: me?.lang },
-    ],
-    queryFn: () =>
-      getUser(id, page, pageSize, status, name, sorting, extensions),
-    enabled: !!id && !!me,
+    queryKey: ['user', { ...data, lang: me?.lang }],
+    queryFn: () => getUser({ ...data }),
+    enabled: !!data.id && !!me,
     select: (response) => response.data,
     ...noRefetch,
     retry: 0,

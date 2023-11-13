@@ -5,6 +5,8 @@ export interface ICreatePerson {
   biography: string;
   birthDate: Date;
   deathDate: Date;
+  country: string;
+  city: string;
   ids: string[];
   placeId: number | null;
   location: {

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Button,
   Col,
@@ -10,7 +10,6 @@ import {
   Modal,
   notification,
   Row,
-  Select,
   Space,
   Spin,
 } from 'antd';
@@ -18,15 +17,13 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { GalleryFileStatuses } from '@/types/images/gallery-file-update.type';
-
-const { Option } = Select;
+import { FileStatuses } from '@/types';
 
 const { confirm } = Modal;
 
 type FormValues = {
   alt: string;
-  status: GalleryFileStatuses;
+  status: FileStatuses;
 };
 
 export const GalleryFileInfoModal: FC = () => {
@@ -129,32 +126,55 @@ export const GalleryFileInfoModal: FC = () => {
                       name="status"
                       style={{ marginBottom: 0 }}
                     >
-                      <Select>
-                        <Option value={GalleryFileStatuses.DRAFT}>Draft</Option>
-                        <Option value={GalleryFileStatuses.PENDING_REVIEW}>
-                          Pending Review
-                        </Option>
-                        <Option value={GalleryFileStatuses.PUBLISHED}>
-                          Published
-                        </Option>
-                      </Select>
+                      <Input placeholder="Status" disabled />
+                      {/* <Select> */}
+                      {/*  <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
+                      {/*  <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
+                      {/*    Pending Review */}
+                      {/*  </Option> */}
+                      {/*  <Option value={GalleryFileStatuses.PUBLISHED}> */}
+                      {/*    Published */}
+                      {/*  </Option> */}
+                      {/* </Select> */}
                     </Form.Item>
 
                     <List>
-                      <List.Item>Type: {file?.typeFile}</List.Item>
-
-                      <List.Item>Mime: {file?.mime}</List.Item>
-
-                      <List.Item>
-                        File Size: {file?.versions?.huge?.fileSize}
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Type: &nbsp;</span>
+                        {file?.typeFile}
                       </List.Item>
 
-                      <List.Item>
-                        Dimensions: {file?.versions?.huge?.width} x{' '}
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Mime: &nbsp;</span>
+                        {file?.mime}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          File Size: &nbsp;
+                        </span>
+                        {file?.versions?.huge?.fileSize}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          Dimensions: &nbsp;
+                        </span>
+                        {file?.versions?.huge?.width} x{' '}
                         {file?.versions?.huge?.height}
                       </List.Item>
 
-                      <List.Item>Created: {file?.createdAt}</List.Item>
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Owner: &nbsp;</span>
+                        {file?.owner?.userName}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          Created At: &nbsp;
+                        </span>
+                        {file?.createdAt}
+                      </List.Item>
                     </List>
 
                     <Space wrap>

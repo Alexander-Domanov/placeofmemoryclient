@@ -14,6 +14,7 @@ const SelectInput: FC<SelectInputProps> = ({
 }) => (
   <Select
     labelInValue
+    title="Select a condition"
     defaultValue={defaultValue}
     style={{ width: 150 }}
     onChange={onChange}

@@ -1,5 +1,4 @@
-import { IBaseLocation } from '@/types/locations/location.type';
-import { IBaseDateType } from '@/types';
+import { IBaseDateType, IBaseLocation } from '@/types';
 
 export interface IKeyValueStrings {
   [key: string]: string;

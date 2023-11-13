@@ -4,14 +4,9 @@ import { noRefetch } from '@/common/helpers/noRefetch';
 import { getArticles } from '@/modules/articles-module/api/articles-api';
 import { useMeQuery } from '@/services';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
+import { IPaginationArticles } from '@/types';
 
-export const useArticles = (
-  page: number,
-  pageSize: number,
-  status: string,
-  title: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const useArticles = (data: IPaginationArticles) => {
   const { data: me } = useMeQuery();
 
   const {
@@ -21,11 +16,8 @@ export const useArticles = (
     isFetching,
     error,
   } = useQuery({
-    queryKey: [
-      'articles',
-      { page, pageSize, status, title, sorting, lang: me?.lang },
-    ],
-    queryFn: () => getArticles(page, pageSize, status, title, sorting),
+    queryKey: ['articles', { ...data, lang: me?.lang }],
+    queryFn: () => getArticles({ ...data }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
@@ -41,5 +33,5 @@ export const useArticles = (
     }
   }, [error]);
 
-  return { articles, isLoading, refetch, isFetching };
+  return { articles, isLoading, refetch, isFetching, me };
 };

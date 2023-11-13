@@ -57,6 +57,8 @@ interface IPersonEditForm {
   lastName: string;
   patronymic: string;
   biography: string;
+  country: string;
+  city: string;
   birthDate: Date;
   deathDate: Date;
   slug: string;
@@ -114,6 +116,8 @@ export const PersonEdit: FC = () => {
         ...(person.birthDate && {
           birthDate: dayjs(person.birthDate),
         }),
+        country: person.country,
+        city: person.city,
         ...(person.deathDate && {
           deathDate: dayjs(person.deathDate),
         }),
@@ -141,6 +145,8 @@ export const PersonEdit: FC = () => {
   useEffect(() => {
     if (selectedPlaceFromMap) {
       form.setFieldsValue({
+        country: selectedPlaceFromMap.country,
+        city: selectedPlaceFromMap.city,
         location: selectedPlaceFromMap.location.place,
       });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
@@ -173,6 +179,8 @@ export const PersonEdit: FC = () => {
       lastName: values.lastName,
       patronymic: values.patronymic,
       biography: values.biography,
+      country: values.country,
+      city: values.city,
       birthDate: values.birthDate,
       deathDate: values.deathDate,
       placeId: selectedPlace?.id as number,
@@ -248,6 +256,24 @@ export const PersonEdit: FC = () => {
                     <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                   </Form.Item>
                 </Flex>
+
+                <Form.Item
+                  name="country"
+                  label="Country"
+                  rules={[{ whitespace: true }]}
+                  hasFeedback
+                >
+                  <Input placeholder="n/a" disabled />
+                </Form.Item>
+
+                <Form.Item
+                  name="city"
+                  label="City"
+                  rules={[{ whitespace: true }]}
+                  hasFeedback
+                >
+                  <Input placeholder="n/a" disabled />
+                </Form.Item>
 
                 <Form.Item name="biography" label="Biography">
                   <ReactQuill

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { IArticle } from '@/types/articles/article.type';
+import { IArticle } from '@/types';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 
 interface DeleteArticleComponentProps {

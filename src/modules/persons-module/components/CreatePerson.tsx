@@ -45,6 +45,8 @@ interface IPersonForm {
   lastName: string;
   patronymic: string;
   biography: string;
+  country: string;
+  city: string;
   birthDate: Date;
   deathDate: Date;
   photo: UploadFile<IGalleryFile>[];
@@ -91,6 +93,8 @@ export const CreatePerson: FC = () => {
     if (selectedPlaceFromMap) {
       form.setFieldsValue({
         location: selectedPlaceFromMap.location.place,
+        country: selectedPlaceFromMap.country,
+        city: selectedPlaceFromMap.city,
       });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
@@ -115,6 +119,8 @@ export const CreatePerson: FC = () => {
       biography: values.biography,
       birthDate: values.birthDate,
       deathDate: values.deathDate,
+      country: values.country,
+      city: values.city,
       placeId: selectedPlace?.id as number,
       location: {
         place: selectedPlace?.value as string,
@@ -189,6 +195,24 @@ export const CreatePerson: FC = () => {
                   <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
                 </Form.Item>
               </Flex>
+
+              <Form.Item
+                name="country"
+                label="Country"
+                rules={[{ whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="n/a" disabled />
+              </Form.Item>
+
+              <Form.Item
+                name="city"
+                label="City"
+                rules={[{ whitespace: true }]}
+                hasFeedback
+              >
+                <Input placeholder="n/a" disabled />
+              </Form.Item>
 
               <Form.Item name="biography" label="Biography">
                 <ReactQuill

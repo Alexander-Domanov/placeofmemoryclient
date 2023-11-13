@@ -1,5 +1,5 @@
 import { authInstance } from '@/services';
-import { IGerPersonsForMapResponse } from '@/types/persons/get-persons-for-map-response.type';
+import { IGerPersonsForMapResponse } from '@/types';
 
 export const getPersonsForMap = (name?: string, lang?: string) => {
   return authInstance.get<IGerPersonsForMapResponse>(
