@@ -122,6 +122,7 @@ export const Places: FC = () => {
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button
             type="primary"
+            title="Add new place"
             onClick={() => router.push(routes.dashboard.places.create)}
           >
             + Add
@@ -142,6 +143,7 @@ export const Places: FC = () => {
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by name"
+            title="Search by name"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
@@ -150,21 +152,23 @@ export const Places: FC = () => {
           />
 
           <Input
-            placeholder="Search by country"
+            placeholder="Country"
+            title="Search by country"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchCountry: e.target.value })
             }
-            style={{ width: 200 }}
+            style={{ width: 160 }}
           />
 
           <Input
-            placeholder="Search by city"
+            placeholder="City"
+            title="Search by city"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchCity: e.target.value })
             }
-            style={{ width: 200 }}
+            style={{ width: 160 }}
           />
 
           <SelectInput
