@@ -39,4 +39,6 @@ export * from './users/user.type';
 export * from './users/user-roles-for-select.type';
 export * from './users/user-statuses-for-select.type';
 export * from './users/user-update.type';
+export * from './users/pagination-users.type';
+export * from './users/pagination-user.type';
 export * from './language/language.type';

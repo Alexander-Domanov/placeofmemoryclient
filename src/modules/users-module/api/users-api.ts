@@ -1,25 +1,17 @@
 import { authInstance } from '@/services';
-import { IGetUsersResponse, IUser } from '@/types';
+import {
+  IGetUsersResponse,
+  IPaginationUser,
+  IPaginationUsers,
+  IUser,
+} from '@/types';
 
-export const getUsers = (
-  page: number,
-  pageSize: number,
-  status: string,
-  role: string,
-  userName: string,
-  sorting: { field: string | null | number | bigint; order: string | null },
-  extensions: string[] = []
-) => {
+export const getUsers = (data: IPaginationUsers) => {
   return authInstance.get<IGetUsersResponse>('users', {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      role,
-      userName,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
-      extensions,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };
@@ -36,24 +28,12 @@ export const updateUserStatus = (id: number | null, status: string) => {
   return authInstance.put(`users/${id}/status`, { status });
 };
 
-export const getUser = (
-  id: string,
-  page: number,
-  pageSize: number,
-  status: string,
-  name: string,
-  sorting: { field: string | null | number | bigint; order: string | null },
-  extensions: string[] = []
-) => {
-  return authInstance.get<IUser>(`users/${id}`, {
+export const getUser = (data: IPaginationUser) => {
+  return authInstance.get<IUser>(`users/${data.id}`, {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      name,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
-      extensions,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };
