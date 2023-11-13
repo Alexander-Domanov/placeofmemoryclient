@@ -1,7 +1,9 @@
-import { IBaseLocation } from '@/types/locations/location.type';
-import { IBaseOwnerInfo } from '@/types/common/owner-info.type';
-import { IBaseDateType } from '@/types';
-import { IBasePhotos } from '@/types/common/base-photos.type';
+import {
+  IBaseDateType,
+  IBaseLocation,
+  IBaseOwnerInfo,
+  IBasePhotos,
+} from '@/types';
 
 export interface IPerson
   extends IBaseLocation,

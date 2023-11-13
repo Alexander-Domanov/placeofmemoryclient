@@ -1,4 +1,4 @@
-import { IPagination } from '@/types/common/pagination.type';
+import { IPagination } from '@/types';
 
 export interface IPaginationPlaces extends IPagination {
   country: string;

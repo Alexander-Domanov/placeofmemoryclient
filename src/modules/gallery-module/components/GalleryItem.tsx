@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Image, Tooltip } from 'antd';
 import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
-import { IGalleryFile } from '@/types/images/gallery-file.type';
+import { IGalleryFile } from '@/types';
 
 interface Props {
   file: IGalleryFile;

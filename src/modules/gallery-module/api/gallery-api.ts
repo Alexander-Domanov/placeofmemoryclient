@@ -1,6 +1,5 @@
 import { authInstance } from '@/services';
-import { IGalleryFile } from '@/types/images/gallery-file.type';
-import { IGetGalleryResponse } from '@/types/images/get-gallery-response.type';
+import { IGalleryFile, IGetGalleryResponse } from '@/types';
 
 export const getGallery = (
   page: number,

@@ -1,6 +1,5 @@
 import { authInstance } from '@/services';
-import { IGetUsersResponse } from '@/types/users/get-users-response.type';
-import { IUser } from '@/types';
+import { IGetUsersResponse, IUser } from '@/types';
 
 export const getUsers = (
   page: number,

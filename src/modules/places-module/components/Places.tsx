@@ -143,7 +143,7 @@ export const Places: FC = () => {
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by name"
-            title="Search by name"
+            title="Search by name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })

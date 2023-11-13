@@ -1,5 +1,4 @@
-import { IFileVersions, IVersionsType } from '@/types';
-import { IBaseOwnerInfo } from '@/types/common/owner-info.type';
+import { IBaseOwnerInfo, IFileVersions, IVersionsType } from '@/types';
 
 export interface IGalleryFile
   extends IVersionsType<IFileVersions>,

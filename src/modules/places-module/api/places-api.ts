@@ -1,8 +1,11 @@
 import { authInstance } from '@/services';
-import { IGetPlacesResponse } from '@/types/places/get-places-response.type';
-import { IPaginationPlaces, IPlace } from '@/types';
-import { ICreatePlace } from '@/types/places/create-place.type';
-import { IGetTitlePlacesResponse } from '@/types/places/get-title-places-response.type';
+import {
+  ICreatePlace,
+  IGetPlacesResponse,
+  IGetTitlePlacesResponse,
+  IPaginationPlaces,
+  IPlace,
+} from '@/types';
 
 export const getPlaces = (data: IPaginationPlaces) => {
   return authInstance.get<IGetPlacesResponse>('places', {
