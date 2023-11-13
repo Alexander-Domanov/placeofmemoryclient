@@ -1,8 +1,9 @@
 import { NextPage } from 'next';
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren } from 'react';
 import { Roboto } from 'next/font/google';
 import { Header } from '@/components';
 import { SiteFooter } from '@/components/layouts/components/SiteFooter';
+import { IContacts } from '@/types';
 
 const roboto = Roboto({
   weight: ['100', '300', '400', '700'],
@@ -10,18 +11,25 @@ const roboto = Roboto({
   variable: '--font-roboto',
 });
 
-const SiteLayout: NextPage<PropsWithChildren> = ({ children }) => {
+interface Props {
+  contacts: IContacts;
+}
+
+export const SiteLayout: NextPage<PropsWithChildren<Props>> = ({
+  children,
+  contacts,
+}) => {
   return (
     <>
       <Header />
 
       <main className={roboto.className}>{children}</main>
 
-      <SiteFooter />
+      <SiteFooter contacts={contacts} />
     </>
   );
 };
 
-export const getSiteLayout = (page: ReactElement) => {
-  return <SiteLayout>{page}</SiteLayout>;
-};
+// export const getSiteLayout = (page: ReactElement) => {
+//   return <SiteLayout contacts={null}>{page}</SiteLayout>;
+// };
