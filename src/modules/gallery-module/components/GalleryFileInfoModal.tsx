@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Button,
   Col,
@@ -139,20 +139,42 @@ export const GalleryFileInfoModal: FC = () => {
                     </Form.Item>
 
                     <List>
-                      <List.Item>Type: {file?.typeFile}</List.Item>
-
-                      <List.Item>Mime: {file?.mime}</List.Item>
-
-                      <List.Item>
-                        File Size: {file?.versions?.huge?.fileSize}
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Type: &nbsp;</span>
+                        {file?.typeFile}
                       </List.Item>
 
-                      <List.Item>
-                        Dimensions: {file?.versions?.huge?.width} x{' '}
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Mime: &nbsp;</span>
+                        {file?.mime}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          File Size: &nbsp;
+                        </span>
+                        {file?.versions?.huge?.fileSize}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          Dimensions: &nbsp;
+                        </span>
+                        {file?.versions?.huge?.width} x{' '}
                         {file?.versions?.huge?.height}
                       </List.Item>
 
-                      <List.Item>Created: {file?.createdAt}</List.Item>
+                      <List.Item draggable>
+                        <span className="text-neutral-400">Owner: &nbsp;</span>
+                        {file?.owner?.userName}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          Created At: &nbsp;
+                        </span>
+                        {file?.createdAt}
+                      </List.Item>
                     </List>
 
                     <Space wrap>
