@@ -1,27 +1,21 @@
 import { authInstance } from '@/services';
-import { IArticle } from '@/types/articles/article.type';
-import { IGetArticlesResponse } from '@/types/articles/get-articles-response.type';
-import { IArticleCreate } from '@/types/articles/create-articles.type';
+import {
+  IArticle,
+  IArticleCreate,
+  IGetArticlesResponse,
+  IPaginationArticles,
+} from '@/types';
 
 export const createArticle = (form: IArticleCreate) => {
   return authInstance.post<IArticle>('articles', form);
 };
 
-export const getArticles = (
-  page: number,
-  pageSize: number,
-  status: string,
-  title: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const getArticles = (data: IPaginationArticles) => {
   return authInstance.get<IGetArticlesResponse>('articles', {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      title,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };

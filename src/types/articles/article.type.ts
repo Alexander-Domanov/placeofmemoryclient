@@ -1,5 +1,4 @@
-import { IGalleryFile } from '@/types/images/gallery-file.type';
-import { IBaseDateType } from '@/types/common/base-date.type';
+import { IBaseDateType, IGalleryFile } from '@/types';
 import { IBaseOwnerInfo } from '@/types/common/owner-info.type';
 
 export interface IArticle extends IBaseDateType, IBaseOwnerInfo {

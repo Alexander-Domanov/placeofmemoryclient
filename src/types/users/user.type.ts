@@ -1,11 +1,11 @@
 import {
   IAvatarVersions,
+  IGetArticlesResponse,
   IGetPersonsResponse,
   IGetPlacesResponse,
 } from '@/types';
 import { IBaseDateType } from '@/types/common/base-date.type';
 import { ISummaryStatusGroupDto } from '@/types/common/summary-status-group.type';
-import { IGetArticlesResponse } from '@/types/articles/get-articles-response.type';
 
 interface IBaseUserType {
   id: number;

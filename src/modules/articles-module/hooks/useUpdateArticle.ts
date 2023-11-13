@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateArticle } from '@/modules/articles-module/api/articles-api';
 
-import { IArticleCreate } from '@/types/articles/create-articles.type';
+import { IArticleCreate } from '@/types';
 import { IResponseError } from '@/types/response-error-message.type';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 

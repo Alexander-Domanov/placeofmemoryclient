@@ -7,7 +7,7 @@ import {
   EyeOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
-import { IArticle } from '@/types/articles/article.type';
+import { IArticle } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 
 const { Option } = Select;
