@@ -4,16 +4,9 @@ import { getPlaces } from '@/modules/places-module/api/places-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { useMeQuery } from '@/services';
+import { IPaginationPlaces } from '@/types';
 
-export const usePlaces = (
-  page: number,
-  pageSize: number,
-  status: string,
-  name: string,
-  country: string,
-  city: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const usePlaces = (data: IPaginationPlaces) => {
   const { data: me } = useMeQuery();
   const {
     data: places,
@@ -21,12 +14,8 @@ export const usePlaces = (
     error,
     isFetching,
   } = useQuery({
-    queryKey: [
-      'places',
-      { page, pageSize, status, name, country, city, sorting, lang: me?.lang },
-    ],
-    queryFn: () =>
-      getPlaces(page, pageSize, status, name, country, city, sorting),
+    queryKey: ['places', { ...data, lang: me?.lang }],
+    queryFn: () => getPlaces({ ...data }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,

@@ -24,6 +24,7 @@ export * from './places/create-place.type';
 export * from './places/get-places-response.type';
 export * from './places/get-title-places-response.type';
 export * from './places/title-place.type';
+export * from './places/pagination-places.type';
 export * from './users/user.type';
 export * from './users/get-users-response.type';
 export * from './users/avatar.type';

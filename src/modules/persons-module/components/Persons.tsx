@@ -62,7 +62,7 @@ export const Persons: FC = () => {
   const lastName = useDebounce(pagination.searchLastName, 500);
 
   const { persons, isFetching, me } = usePersons({
-    page,
+    pageNumber: page,
     pageSize,
     status,
     name,

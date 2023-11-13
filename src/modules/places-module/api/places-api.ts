@@ -1,28 +1,15 @@
 import { authInstance } from '@/services';
 import { IGetPlacesResponse } from '@/types/places/get-places-response.type';
-import { IPlace } from '@/types';
+import { IPaginationPlaces, IPlace } from '@/types';
 import { ICreatePlace } from '@/types/places/create-place.type';
 import { IGetTitlePlacesResponse } from '@/types/places/get-title-places-response.type';
 
-export const getPlaces = (
-  page: number,
-  pageSize: number,
-  status: string,
-  name: string,
-  country: string,
-  city: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const getPlaces = (data: IPaginationPlaces) => {
   return authInstance.get<IGetPlacesResponse>('places', {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      name,
-      country,
-      city,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };

@@ -40,19 +40,19 @@ export const Places: FC = () => {
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchTerm, 500);
   const country = useDebounce(pagination.searchCountry, 500);
   const city = useDebounce(pagination.searchCity, 500);
 
-  const { places, isFetching, me } = usePlaces(
-    page,
+  const { places, isFetching, me } = usePlaces({
+    pageNumber: page,
     pageSize,
     status,
-    search,
+    name,
     country,
     city,
-    sorting
-  );
+    sorting,
+  });
 
   const onPageChange = (_page: number) => {
     setPage(_page);
