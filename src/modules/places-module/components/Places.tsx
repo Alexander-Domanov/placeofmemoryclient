@@ -142,7 +142,7 @@ export const Places: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by name lowercase"
+            placeholder="Search by Name"
             title="Search by name lowercase"
             allowClear
             onChange={(e) =>
@@ -152,7 +152,7 @@ export const Places: FC = () => {
           />
 
           <Input
-            placeholder="Country"
+            placeholder="Search by Country"
             title="Search by country"
             allowClear
             onChange={(e) =>
@@ -162,7 +162,7 @@ export const Places: FC = () => {
           />
 
           <Input
-            placeholder="City"
+            placeholder="Search by City"
             title="Search by city"
             allowClear
             onChange={(e) =>
@@ -202,7 +202,7 @@ export const Places: FC = () => {
           position: ['bottomCenter'],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: 1280 }}
         onChange={handleTableChange}
       />
     </Flex>

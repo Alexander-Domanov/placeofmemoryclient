@@ -15,7 +15,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
-    width: 60,
+    width: 50,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -26,7 +26,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'owner',
     key: 'ownerId',
     align: 'center',
-    width: 80,
+    width: 60,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -86,7 +86,8 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     sorter: true,
-    width: 120,
+    width: 90,
+    align: 'center',
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => convertDateToFormat(text),
   },
@@ -94,8 +95,9 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
-    width: 120,
+    width: 90,
     sorter: true,
+    align: 'center',
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => convertDateToFormat(text),
   },
@@ -104,17 +106,17 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'status',
     key: 'status',
     align: 'center',
-    width: 130,
+    width: 60,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusTag(text),
   },
   {
-    title: 'Photos',
+    title: 'Photo',
     dataIndex: 'photos',
     key: 'photos',
     align: 'center',
-    width: 80,
+    width: 60,
     render: (text, record: IPlace) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
@@ -137,7 +139,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'persons',
     key: 'persons',
     align: 'center',
-    width: 80,
+    width: 60,
     render: (text, record) => (
       <Typography.Text>{record.personsLocation.length}</Typography.Text>
     ),
@@ -147,7 +149,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
-    width: 90,
+    width: 80,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePlaceStatus place={record} />

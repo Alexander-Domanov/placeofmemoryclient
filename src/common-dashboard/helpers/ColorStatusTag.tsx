@@ -1,4 +1,4 @@
-import { Tag } from 'antd';
+import { Tag, Tooltip } from 'antd';
 import {
   ClockCircleOutlined,
   EyeInvisibleOutlined,
@@ -34,8 +34,10 @@ export const getColorStatus = (status: string | null) => {
 export const ColorStatusTag = (status: string | null) => {
   const statusTagProps = getColorStatus(status);
   return (
-    <Tag color={statusTagProps.color} className="ant-dropdown-link">
-      {statusTagProps.icon} {statusTagProps.text}
-    </Tag>
+    <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+      <Tag color={statusTagProps.color} className="ant-dropdown-link">
+        {statusTagProps.icon}
+      </Tag>
+    </Tooltip>
   );
 };

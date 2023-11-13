@@ -51,6 +51,7 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
         actions={[
           <Button
             key={0}
+            title="Change status of article"
             icon={<EditOutlined />}
             onClick={handleEditClick}
             type="text"

@@ -60,6 +60,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     key: 'createdAt',
     width: 120,
     sorter: true,
+    align: 'center',
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => convertDateToFormat(text),
   },

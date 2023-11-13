@@ -108,7 +108,7 @@ export const Articles: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by title lowercase"
+            placeholder="Search by Title"
             title="Search by title lowercase"
             allowClear
             onChange={(e) =>

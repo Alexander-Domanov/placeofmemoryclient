@@ -195,7 +195,7 @@ export const Persons: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="First Name"
+            placeholder="Search by First Name"
             title="Search by first name lowercase"
             allowClear
             onChange={(e) =>
@@ -205,7 +205,7 @@ export const Persons: FC = () => {
           />
 
           <Input
-            placeholder="Last Name"
+            placeholder="Search by Last Name"
             title="Search by last name lowercase"
             allowClear
             onChange={(e) =>
