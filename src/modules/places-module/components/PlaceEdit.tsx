@@ -142,6 +142,13 @@ export const PlaceEdit: FC = () => {
     }
   }, [selectedPlaceFromMap]);
 
+  const ellipsisSlug = useMemo(() => {
+    if (place?.slug && place?.slug.length > 30) {
+      return `${place?.slug.slice(0, 30)}...`;
+    }
+    return place?.slug;
+  }, [place?.slug]);
+
   const handleStatusChange = (selectedStatus: string) => {
     setStatus(selectedStatus);
 
@@ -309,8 +316,9 @@ export const PlaceEdit: FC = () => {
                             <Typography.Text
                               ellipsis
                               style={{ cursor: 'pointer', color: '#1087f6' }}
+                              title={selectedPlace?.slug}
                             >
-                              {selectedPlace?.slug || ''}
+                              {ellipsisSlug}
                             </Typography.Text>
                           </Link>
                         </Typography.Text>

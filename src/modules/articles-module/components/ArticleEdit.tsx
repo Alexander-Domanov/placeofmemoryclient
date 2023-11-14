@@ -127,6 +127,13 @@ export const ArticleEdit: FC = () => {
     }
   }, [article]);
 
+  const ellipsisSlug = useMemo(() => {
+    if (article?.slug && article?.slug.length > 30) {
+      return `${article?.slug.slice(0, 30)}...`;
+    }
+    return article?.slug;
+  }, [article?.slug]);
+
   const onSubmit = (values: any) => {
     const data = {
       title: values.title,
@@ -174,7 +181,7 @@ export const ArticleEdit: FC = () => {
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onSubmit}>
           <Row gutter={[16, 16]}>
-            <Col span={24} lg={16}>
+            <Col span={24} md={12} lg={16}>
               <Card bodyStyle={{ marginBottom: -30 }}>
                 <Form.Item
                   label="Title"
@@ -267,8 +274,9 @@ export const ArticleEdit: FC = () => {
                             <Typography.Text
                               ellipsis
                               style={{ cursor: 'pointer', color: '#1087f6' }}
+                              title={article?.slug}
                             >
-                              {article?.slug || ''}
+                              {ellipsisSlug}
                             </Typography.Text>
                           </Link>
                         </Typography.Text>
