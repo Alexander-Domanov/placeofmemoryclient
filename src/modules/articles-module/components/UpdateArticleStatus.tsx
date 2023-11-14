@@ -7,7 +7,7 @@ import {
   EyeOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
-import { IArticle } from '@/types/articles/article.type';
+import { IArticle } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 
 const { Option } = Select;
@@ -51,6 +51,7 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
         actions={[
           <Button
             key={0}
+            title="Change status of article"
             icon={<EditOutlined />}
             onClick={handleEditClick}
             type="text"

@@ -1,5 +1,4 @@
-import { IAvatarVersions, IVersionsType } from '@/types';
-import { IBaseDateType } from '@/types/common/base-date.type';
+import { IAvatarVersions, IBaseDateType, IVersionsType } from '@/types';
 
 export interface IAvatarType
   extends IVersionsType<IAvatarVersions>,

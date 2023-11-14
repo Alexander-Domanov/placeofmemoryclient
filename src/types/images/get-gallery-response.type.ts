@@ -1,5 +1,4 @@
-import { IGalleryFile } from '@/types';
-import { IGetPaginationResponse } from '@/types/common/get-pagination-response.type';
+import { IGalleryFile, IGetPaginationResponse } from '@/types';
 
 export interface IGetGalleryResponse
   extends IGetPaginationResponse<IGalleryFile[]> {}

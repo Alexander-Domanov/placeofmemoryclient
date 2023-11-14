@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Image, Tooltip } from 'antd';
 import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
-import { IGalleryFile } from '@/types/images/gallery-file.type';
+import { IGalleryFile } from '@/types';
 
 interface Props {
   file: IGalleryFile;
@@ -26,7 +26,6 @@ const getStatusIcon = (status: string) => {
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEye color="orange" size={24} />
-          );
         </Tooltip>
       );
     case 'ARCHIVED':

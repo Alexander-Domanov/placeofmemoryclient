@@ -22,42 +22,52 @@ const breadcrumbs = [
   }),
 ];
 
-const defaultPageSize = 11;
+const defaultPageSize = 10;
 
 export const Places: FC = () => {
   const router = useRouter();
+
   const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: defaultPageSize,
     searchTerm: '',
+    searchCountry: '',
+    searchCity: '',
   });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchTerm, 500);
+  const country = useDebounce(pagination.searchCountry, 500);
+  const city = useDebounce(pagination.searchCity, 500);
 
-  const { places, isFetching, me } = usePlaces(
-    pagination.page,
-    pagination.pageSize,
+  const { places, isFetching, me } = usePlaces({
+    pageNumber: page,
+    pageSize,
     status,
-    search,
-    sorting
-  );
+    name,
+    country,
+    city,
+    sorting,
+  });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPagination({ ...pagination });
+    setPage(1);
     setStatus(value.value);
   };
 
@@ -112,6 +122,7 @@ export const Places: FC = () => {
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button
             type="primary"
+            title="Add new place"
             onClick={() => router.push(routes.dashboard.places.create)}
           >
             + Add
@@ -131,12 +142,33 @@ export const Places: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by name"
+            placeholder="Search by Name"
+            title="Search by name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
             }
             style={{ width: 200 }}
+          />
+
+          <Input
+            placeholder="Search by Country"
+            title="Search by country"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCountry: e.target.value })
+            }
+            style={{ width: 160 }}
+          />
+
+          <Input
+            placeholder="Search by City"
+            title="Search by city"
+            allowClear
+            onChange={(e) =>
+              setPagination({ ...pagination, searchCity: e.target.value })
+            }
+            style={{ width: 160 }}
           />
 
           <SelectInput
@@ -158,16 +190,19 @@ export const Places: FC = () => {
         dataSource={places?.items}
         loading={isFetching}
         pagination={{
-          position: ['bottomCenter'],
           total: places?.totalCount || 1,
-          current: pagination.page,
+          current: page,
           onChange: onPageChange,
           defaultCurrent: 1,
           defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
+          simple: true,
+          showSizeChanger: true,
+          position: ['bottomCenter'],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: 1280 }}
         onChange={handleTableChange}
       />
     </Flex>

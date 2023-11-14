@@ -29,10 +29,10 @@ const breadcrumbs = [
   }),
 ];
 
+const defaultPageSize = 10;
+
 export const Users: FC = () => {
   const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 11,
     searchTerm: '',
   });
   const [sorting, setSorting] = useState<{
@@ -40,34 +40,42 @@ export const Users: FC = () => {
     order: string | null;
   }>({ field: null, order: null });
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
+
   const [status, setStatus] = useState(UserStatusesForSelect.ALL.toLowerCase());
   const [role, setRole] = useState(UserRolesForSelect.ALL.toLowerCase());
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const userName = useDebounce(pagination.searchTerm, 500);
 
-  const { users, isFetching } = useUsers(
-    pagination.page,
-    pagination.pageSize,
+  const { users, isFetching } = useUsers({
+    pageNumber: page,
+    pageSize,
     status,
     role,
-    search,
-    sorting
-  );
+    userName,
+    sorting,
+  });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPage(1);
+    setPagination({ ...pagination });
     setStatus(value.value);
   };
   const onRoleChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPage(1);
+    setPagination({ ...pagination });
     setRole(value.value);
   };
 
@@ -93,6 +101,7 @@ export const Users: FC = () => {
       <Flex align="center" justify="end" gap="middle" wrap="wrap">
         <Input
           placeholder="Search by name"
+          title="Search by name"
           allowClear
           onChange={(e) =>
             setPagination({ ...pagination, searchTerm: e.target.value })
@@ -121,14 +130,17 @@ export const Users: FC = () => {
         dataSource={users?.items}
         loading={isFetching}
         pagination={{
-          position: ['bottomCenter'],
           total: users?.totalCount || 1,
-          current: pagination.page,
+          current: page,
           onChange: onPageChange,
           defaultCurrent: 1,
-          defaultPageSize: 11,
+          defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
+          simple: true,
+          showSizeChanger: true,
+          position: ['bottomCenter'],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
         scroll={{ x: 1000 }}
         onChange={handleTableChange}

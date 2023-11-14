@@ -63,16 +63,18 @@ function breadcrumbs(sectionName: string) {
   ];
 }
 
+const defaultPageSize = 10;
+
 export const UserList: FC = () => {
   const router = useRouter();
   const { userId } = router.query as { userId: string };
 
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 18,
     searchTerm: '',
   });
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
     order: string | null;
@@ -80,17 +82,17 @@ export const UserList: FC = () => {
   const [status, setStatus] = useState('all');
   const [extensions, setExtensions] = useState<string[]>([]);
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchTerm, 500);
 
-  const { user, isLoading } = useUser(
-    userId,
-    pagination.page,
-    pagination.pageSize,
+  const { user, isLoading } = useUser({
+    id: userId,
+    pageNumber: page,
+    pageSize,
     status,
-    search,
+    name,
     sorting,
-    extensions
-  );
+    extensions,
+  });
 
   useEffect(() => {
     if (user) {
@@ -99,15 +101,19 @@ export const UserList: FC = () => {
   }, [user]);
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: React.ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPage(1);
+    setPagination({ ...pagination });
     setStatus(value.value);
   };
 
@@ -235,16 +241,20 @@ export const UserList: FC = () => {
             dataSource={selectedUser?.places.items}
             loading={isLoading}
             pagination={{
-              position: ['bottomCenter'],
               total: user?.places?.totalCount || 1,
-              current: pagination.page,
+              current: page,
               onChange: onPageChange,
               defaultCurrent: 1,
-              defaultPageSize: 18,
+              defaultPageSize,
               pageSizeOptions: [10, 20, 30, 50, 100],
               onShowSizeChange: onPageSizeChange,
+              simple: true,
+              showSizeChanger: true,
+              position: ['bottomCenter'],
+              showTotal: (total, range) =>
+                `${range[0]}-${range[1]} of ${total}`,
             }}
-            scroll={{ x: 1000 }}
+            scroll={{ x: 1300 }}
             onChange={handleTableChange}
           />
         </Flex>
@@ -286,14 +296,18 @@ export const UserList: FC = () => {
             dataSource={selectedUser?.persons.items}
             loading={isLoading}
             pagination={{
-              position: ['bottomCenter'],
               total: selectedUser?.persons?.totalCount || 1,
-              current: pagination.page,
+              current: page,
               onChange: onPageChange,
               defaultCurrent: 1,
-              defaultPageSize: 18,
+              defaultPageSize,
               pageSizeOptions: [10, 20, 30, 50, 100],
               onShowSizeChange: onPageSizeChange,
+              simple: true,
+              showSizeChanger: true,
+              position: ['bottomCenter'],
+              showTotal: (total, range) =>
+                `${range[0]}-${range[1]} of ${total}`,
             }}
             scroll={{ x: 1300 }}
             onChange={handleTableChange}
@@ -336,14 +350,18 @@ export const UserList: FC = () => {
             dataSource={selectedUser?.articles.items}
             loading={isLoading}
             pagination={{
-              position: ['bottomCenter'],
               total: selectedUser?.articles.totalCount || 1,
-              current: pagination.page,
+              current: page,
               onChange: onPageChange,
               defaultCurrent: 1,
-              defaultPageSize: 18,
+              defaultPageSize,
               pageSizeOptions: [10, 20, 30, 50, 100],
               onShowSizeChange: onPageSizeChange,
+              simple: true,
+              showSizeChanger: true,
+              position: ['bottomCenter'],
+              showTotal: (total, range) =>
+                `${range[0]}-${range[1]} of ${total}`,
             }}
             scroll={{ x: 900 }}
             onChange={handleTableChange}
@@ -359,15 +377,13 @@ export const UserList: FC = () => {
         <Breadcrumb items={breadcrumbs(`${selectedUser?.userName}`)} />
       </div>
 
-      <Spin spinning={isLoading}>
-        <Row gutter={[8, 8]}>
-          <Col span={24}>
-            <Card>
-              <Tabs onChange={onChangeExtensions} type="card" items={items} />
-            </Card>
-          </Col>
-        </Row>
-      </Spin>
+      <Row gutter={[8, 8]}>
+        <Col span={24}>
+          <Card>
+            <Tabs onChange={onChangeExtensions} type="card" items={items} />
+          </Card>
+        </Col>
+      </Row>
     </Flex>
   );
 };

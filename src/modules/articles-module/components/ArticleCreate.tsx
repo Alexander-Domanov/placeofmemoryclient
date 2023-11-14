@@ -112,7 +112,7 @@ export const ArticleCreate: FC = () => {
       >
         <Row gutter={[16, 16]}>
           <Col span={16}>
-            <Card>
+            <Card bodyStyle={{ marginBottom: -30 }}>
               <Form.Item
                 label="Title"
                 name="title"
@@ -165,7 +165,7 @@ export const ArticleCreate: FC = () => {
                 </Button>
               </Card>
 
-              <Card>
+              <Card bodyStyle={{ marginBottom: -20 }}>
                 <Form.Item
                   label="Photo"
                   name="photo"

@@ -12,6 +12,7 @@ import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
@@ -29,12 +30,14 @@ const breadcrumbs = [
     withLink: false,
   }),
 ];
-const defaultPageSize = 11;
+
+const defaultPageSize = 10;
+
 interface IPagination {
-  page: number;
-  pageSize: number;
   searchName: string;
   searchLastName: string;
+  searchCountry: string;
+  searchCity: string;
   birthDate?: string | null;
   deathDate?: string | null;
   filterConditionBirthDate?: FilterCondition;
@@ -43,11 +46,12 @@ interface IPagination {
 
 export const Persons: FC = () => {
   const router = useRouter();
+
   const [pagination, setPagination] = useState<IPagination>({
-    page: 1,
-    pageSize: defaultPageSize,
     searchName: '',
     searchLastName: '',
+    searchCountry: '',
+    searchCity: '',
     filterConditionBirthDate: FilterCondition.gte,
     filterConditionDeathDate: FilterCondition.lte,
   });
@@ -55,17 +59,25 @@ export const Persons: FC = () => {
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
+
+  const [isShowMoreFilters, setIsShowMoreFilters] = useState(false);
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
+  const country = useDebounce(pagination.searchCountry, 500);
+  const city = useDebounce(pagination.searchCity, 500);
 
   const { persons, isFetching, me } = usePersons({
-    page: pagination.page,
-    pageSize: pagination.pageSize,
+    pageNumber: page,
+    pageSize,
     status,
     name,
+    country,
+    city,
     lastName,
     sorting,
     birthDate: pagination.birthDate,
@@ -75,15 +87,19 @@ export const Persons: FC = () => {
   });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPagination({ ...pagination });
+    setPage(1);
     setStatus(value.value);
   };
 
@@ -131,6 +147,10 @@ export const Persons: FC = () => {
     });
   };
 
+  const onShowMoreFilters = () => {
+    setIsShowMoreFilters(!isShowMoreFilters);
+  };
+
   const selectConditionBirthDate = (
     <Select
       style={{ width: 80 }}
@@ -171,48 +191,48 @@ export const Persons: FC = () => {
       </div>
 
       <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
-        <div>
+        <Flex align="center" gap="middle">
           <Button
             type="primary"
+            title="Add new person"
             onClick={() => router.push(routes.dashboard.persons.create)}
           >
             + Add
           </Button>
-        </div>
+
+          <Button
+            type={isButtonActive ? 'dashed' : 'default'}
+            title="Show more filters"
+            icon={isButtonActive ? <CaretUpOutlined /> : <CaretDownOutlined />}
+            onClick={() => {
+              onShowMoreFilters();
+              setIsButtonActive(!isButtonActive);
+            }}
+            className={isButtonActive ? 'active-button' : ''}
+          >
+            Filters
+          </Button>
+        </Flex>
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="First Name"
+            placeholder="Search by First Name"
+            title="Search by first name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchName: e.target.value })
             }
-            style={{ width: 200 }}
+            style={{ width: 180 }}
           />
 
           <Input
-            placeholder="Last Name"
+            placeholder="Search by Last Name"
+            title="Search by last name lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchLastName: e.target.value })
             }
-            style={{ width: 200 }}
-          />
-
-          <InputNumber
-            addonBefore={selectConditionBirthDate}
-            maxLength={4}
-            placeholder="Birth"
-            style={{ width: 160 }}
-            onChange={onChangeBirthDate}
-          />
-
-          <InputNumber
-            addonBefore={selectConditionDeathDate}
-            maxLength={4}
-            style={{ width: 160 }}
-            placeholder="Death"
-            onChange={onChangeDeathDate}
+            style={{ width: 180 }}
           />
 
           <SelectInput
@@ -226,6 +246,50 @@ export const Persons: FC = () => {
         </Flex>
       </Flex>
 
+      {isShowMoreFilters && (
+        <Flex justify="end" align="center" gap="middle" wrap="wrap">
+          <Flex align="center" gap="middle" wrap="wrap">
+            <InputNumber
+              addonBefore={selectConditionBirthDate}
+              maxLength={4}
+              placeholder="Year of birth"
+              title="Search by year of birth"
+              style={{ width: 190 }}
+              onChange={onChangeBirthDate}
+            />
+
+            <InputNumber
+              addonBefore={selectConditionDeathDate}
+              maxLength={4}
+              style={{ width: 190 }}
+              placeholder="Year of death"
+              title="Search by year of death"
+              onChange={onChangeDeathDate}
+            />
+
+            <Input
+              placeholder="Search by Country"
+              title="Search by country"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchCountry: e.target.value })
+              }
+              style={{ width: 160 }}
+            />
+
+            <Input
+              placeholder="Search by City"
+              title="Search by city"
+              allowClear
+              onChange={(e) =>
+                setPagination({ ...pagination, searchCity: e.target.value })
+              }
+              style={{ width: 160 }}
+            />
+          </Flex>
+        </Flex>
+      )}
+
       <Table
         bordered
         size="small"
@@ -234,14 +298,17 @@ export const Persons: FC = () => {
         dataSource={persons?.items}
         loading={isFetching}
         pagination={{
-          position: ['bottomCenter'],
           total: persons?.totalCount || 1,
-          current: pagination.page,
+          current: page,
           onChange: onPageChange,
           defaultCurrent: 1,
           defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
+          simple: true,
+          showSizeChanger: true,
+          position: ['bottomCenter'],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
         scroll={{ x: 1300 }}
         onChange={handleTableChange}

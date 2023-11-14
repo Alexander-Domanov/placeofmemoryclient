@@ -16,6 +16,7 @@ import { MenuProps } from 'antd/es/menu';
 import { IoImagesOutline } from 'react-icons/io5';
 import { GrMapLocation } from 'react-icons/gr';
 import { GiCandleFlame } from 'react-icons/gi';
+import { LuLayoutDashboard } from 'react-icons/lu';
 import { routes } from '@/common/routing/routes';
 import { Role } from '@/types';
 
@@ -42,7 +43,7 @@ const DIVIDER = { type: 'divider' };
 const menuItems = {
   common: [
     getItem(
-      <Link href={routes.dashboard.index}>Dashboard</Link>,
+      <Link href={routes.dashboard.index}>Map</Link>,
       routes.dashboard.index,
       <GrMapLocation />
     ),
@@ -81,6 +82,19 @@ const menuItems = {
   ],
 };
 
+const groupingCommon = (): MenuItem[] => {
+  const { common } = menuItems;
+  return [
+    getItem(
+      'Dashboard',
+      'dashboard',
+      <LuLayoutDashboard />,
+      [...common],
+      'group'
+    ),
+  ];
+};
+
 const groupingContent = (): MenuItem[] => {
   const { content, persons } = menuItems;
   return [
@@ -106,7 +120,7 @@ export const GetMenuItems = (
 
   const roleSpecificItems = {
     [Role.ADMIN]: [
-      ...common,
+      ...groupingCommon(),
       DIVIDER,
       ...groupingContent(),
       DIVIDER,
@@ -137,21 +151,21 @@ export const GetMenuItems = (
       ...logoutItem,
     ],
     [Role.AUTHOR]: [
-      ...common,
+      ...groupingCommon(),
       DIVIDER,
       ...groupingContent(),
       DIVIDER,
       ...logoutItem,
     ],
     [Role.EDITOR]: [
-      ...common,
+      ...groupingCommon(),
       DIVIDER,
       ...groupingContent(),
       DIVIDER,
       ...logoutItem,
     ],
     [Role.USER]: [
-      ...common,
+      ...groupingCommon(),
       DIVIDER,
       getItem(
         'Content',

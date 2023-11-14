@@ -175,7 +175,7 @@ export const ArticleEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onSubmit}>
           <Row gutter={[16, 16]}>
             <Col span={24} lg={16}>
-              <Card>
+              <Card bodyStyle={{ marginBottom: -30 }}>
                 <Form.Item
                   label="Title"
                   name="title"
@@ -327,7 +327,7 @@ export const ArticleEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card>
+                <Card bodyStyle={{ marginBottom: -20 }}>
                   <Form.Item
                     label="Photo"
                     name="photo"

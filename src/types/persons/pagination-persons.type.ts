@@ -1,4 +1,4 @@
-import { IPagination } from '@/types/common/pagination.type';
+import { IPagination } from '@/types';
 
 /**
  * Condition for filter.
@@ -18,6 +18,8 @@ export enum FilterCondition {
 
 export interface IPaginationPersons extends IPagination {
   lastName: string;
+  country: string;
+  city: string;
   birthDate?: string | null;
   deathDate?: string | null;
   filterConditionBirthDate?: FilterCondition;

@@ -22,40 +22,46 @@ const breadcrumbs = [
   }),
 ];
 
+const defaultPageSize = 10;
+
 export const Articles: FC = () => {
   const router = useRouter();
+
   const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 18,
     searchTerm: '',
   });
   const [sorting, setSorting] = useState<{
     field: string | null | number | bigint;
     order: string | null;
   }>({ field: null, order: null });
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const search = useDebounce(pagination.searchTerm, 500);
+  const title = useDebounce(pagination.searchTerm, 500);
 
-  const { articles, isFetching, me } = useArticles(
-    pagination.page,
-    pagination.pageSize,
+  const { articles, isFetching, me } = useArticles({
+    pageNumber: page,
+    pageSize,
     status,
-    search,
-    sorting
-  );
+    title,
+    sorting,
+  });
 
   const onPageChange = (_page: number) => {
-    setPagination({ ...pagination, page: _page });
+    setPage(_page);
+    setPagination({ ...pagination });
   };
 
   const onPageSizeChange = (_page: number, size: number) => {
-    setPagination({ ...pagination, page: 1, pageSize: size });
+    setPage(1);
+    setPageSize(size);
+    setPagination({ ...pagination });
   };
 
   const onStatusChange = (value: { value: string; label: ReactNode }) => {
-    setPagination({ ...pagination, page: 1 });
+    setPagination({ ...pagination });
+    setPage(1);
     setStatus(value.value);
   };
 
@@ -93,6 +99,7 @@ export const Articles: FC = () => {
         <div>
           <Button
             type="primary"
+            title="Add new article"
             onClick={() => router.push(routes.dashboard.articles.create)}
           >
             + Add
@@ -101,7 +108,8 @@ export const Articles: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by title"
+            placeholder="Search by Title"
+            title="Search by title lowercase"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
@@ -128,14 +136,17 @@ export const Articles: FC = () => {
         dataSource={articles?.items}
         loading={isFetching}
         pagination={{
-          position: ['bottomCenter'],
           total: articles?.totalCount || 1,
-          current: pagination.page,
+          current: page,
           onChange: onPageChange,
           defaultCurrent: 1,
-          defaultPageSize: 18,
+          defaultPageSize,
           pageSizeOptions: [10, 20, 30, 50, 100],
           onShowSizeChange: onPageSizeChange,
+          simple: true,
+          showSizeChanger: true,
+          position: ['bottomCenter'],
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
         scroll={{ x: 1000 }}
         onChange={handleTableChange}

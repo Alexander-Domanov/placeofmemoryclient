@@ -1,27 +1,22 @@
+import axios from 'axios';
 import { authInstance } from '@/services';
-import { IArticle } from '@/types/articles/article.type';
-import { IGetArticlesResponse } from '@/types/articles/get-articles-response.type';
-import { IArticleCreate } from '@/types/articles/create-articles.type';
+import {
+  IArticle,
+  IArticleCreate,
+  IGetArticlesResponse,
+  IPaginationArticles,
+} from '@/types';
 
 export const createArticle = (form: IArticleCreate) => {
   return authInstance.post<IArticle>('articles', form);
 };
 
-export const getArticles = (
-  page: number,
-  pageSize: number,
-  status: string,
-  title: string,
-  sorting: { field: string | null | number | bigint; order: string | null }
-) => {
+export const getArticles = (data: IPaginationArticles) => {
   return authInstance.get<IGetArticlesResponse>('articles', {
     params: {
-      pageNumber: page,
-      pageSize,
-      status,
-      title,
-      sortBy: sorting.field,
-      sortDirection: sorting.order,
+      ...data,
+      sortBy: data.sorting.field,
+      sortDirection: data.sorting.order,
     },
   });
 };
@@ -40,4 +35,16 @@ export const updateArticleStatus = (id: number | null, status: string) => {
 
 export const deleteArticle = (id: number | null) => {
   return authInstance.delete(`articles/${id}`);
+};
+
+export const getArticlesPublic = () => {
+  return axios.get<IGetArticlesResponse>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/articles/public/all`,
+    {
+      params: {
+        pageSize: 4,
+        status: 'published',
+      },
+    }
+  );
 };

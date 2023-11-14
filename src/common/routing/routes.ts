@@ -34,10 +34,10 @@ export const routes = {
     person: (slug: string) => `${routes.people.index}/${slug}`,
   },
   aboutTheProject: {
-    index: 'about-the-project',
+    index: '/about-the-project',
   },
   map: {
-    index: 'map',
+    index: '/map',
   },
   dashboard: {
     index: '/dashboard',
