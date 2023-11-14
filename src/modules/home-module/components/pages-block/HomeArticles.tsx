@@ -12,7 +12,7 @@ interface Props {
 export const HomeArticles: FC<Props> = ({ posts }) => {
   return (
     <>
-      {posts && (
+      {posts.items.length && (
         <div className="bg-dark-700 py-36 lg:py-16 sm:py-12">
           <div className="container">
             <div className="relative flex flex-col w-full">

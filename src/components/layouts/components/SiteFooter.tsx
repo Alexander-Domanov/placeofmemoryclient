@@ -23,8 +23,9 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
       <div className="container">
         <div
           className="
-          grid grid-cols-[160px_160px_300px_1fr] gap-24
-          lg:grid-cols-[120px_150px_200px_1fr] lg:gap-6
+          grid grid-cols-[160px_160px_1fr_200px] gap-24
+          xl:gap-20
+          lg:grid-cols-[120px_150px_1fr_150px] lg:gap-6
           sm:grid-cols-[120px_1fr] sm:gap-x-4 sm:gap-y-14"
         >
           <div className="sm:order-4 sm:col-span-2 sm:text-center">

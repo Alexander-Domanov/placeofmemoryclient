@@ -14,6 +14,7 @@ export const HomeHero: FC = () => {
         fill
         quality={85}
         className="object-cover object-[0_-200px] lg:object-top"
+        loading="eager"
       />
 
       <div className="container relative h-full w-full flex flex-col justify-center">
