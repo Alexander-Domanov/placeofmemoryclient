@@ -158,7 +158,7 @@ export const CreatePerson: FC = () => {
       >
         <Row gutter={[16, 16]}>
           <Col span={24} lg={16}>
-            <Card>
+            <Card bodyStyle={{ marginBottom: -30 }}>
               <Form.Item
                 name="firstName"
                 label="First Name"
@@ -246,7 +246,7 @@ export const CreatePerson: FC = () => {
                 </Space>
               </Card>
 
-              <Card>
+              <Card bodyStyle={{ marginBottom: -20 }}>
                 <Form.Item
                   label="Place"
                   tooltip="Select a location from the list to link it to a specific location on the map."
@@ -283,7 +283,7 @@ export const CreatePerson: FC = () => {
                 </Form.Item>
               </Card>
 
-              <Card>
+              <Card bodyStyle={{ marginBottom: -20 }}>
                 <Form.Item
                   label="Location"
                   name="location"
@@ -326,7 +326,7 @@ export const CreatePerson: FC = () => {
                 </Form.Item>
               </Card>
 
-              <Card>
+              <Card bodyStyle={{ marginBottom: -20 }}>
                 <Form.Item
                   label="Photos"
                   name="photo"

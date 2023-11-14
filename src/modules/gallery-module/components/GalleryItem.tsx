@@ -26,7 +26,6 @@ const getStatusIcon = (status: string) => {
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEye color="orange" size={24} />
-          );
         </Tooltip>
       );
     case 'ARCHIVED':

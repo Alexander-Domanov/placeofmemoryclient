@@ -196,7 +196,7 @@ export const PlaceEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
             <Col span={24} lg={14} md={12}>
-              <Card>
+              <Card bodyStyle={{ marginBottom: -30 }}>
                 <Form.Item
                   name="country"
                   label="Country"
@@ -360,7 +360,7 @@ export const PlaceEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card>
+                <Card bodyStyle={{ marginBottom: -20 }}>
                   <Form.Item
                     label="Location"
                     name="location"
@@ -403,7 +403,7 @@ export const PlaceEdit: FC = () => {
                   </Form.Item>
                 </Card>
 
-                <Card>
+                <Card bodyStyle={{ marginBottom: -20 }}>
                   <Form.Item
                     label="Photo"
                     name="photo"

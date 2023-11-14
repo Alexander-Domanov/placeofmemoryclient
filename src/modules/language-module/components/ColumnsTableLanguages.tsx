@@ -11,8 +11,6 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
-    sorter: true,
-    sortDirections: ['ascend', 'descend'],
     align: 'center',
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
@@ -20,13 +18,7 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    sorter: true,
-    sortDirections: ['ascend', 'descend'],
-    render: (text) => (
-      <Typography.Text ellipsis style={{ cursor: 'pointer', color: '#1087f6' }}>
-        {text}
-      </Typography.Text>
-    ),
+    render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
   },
   {
     title: 'Native',
@@ -38,6 +30,11 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     dataIndex: 'code',
     key: 'code',
     align: 'center',
+    render: (text) => (
+      <Typography.Text ellipsis style={{ color: '#1087f6' }}>
+        {text}
+      </Typography.Text>
+    ),
   },
   {
     title: 'Order',
@@ -49,12 +46,14 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     title: 'Сreated At',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    align: 'center',
     render: (text: string) => convertDateToFormat(text),
   },
   {
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    align: 'center',
     render: (text: string) => convertDateToFormat(text),
   },
 

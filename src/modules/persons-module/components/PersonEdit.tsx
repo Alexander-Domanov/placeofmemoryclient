@@ -219,7 +219,7 @@ export const PersonEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
             <Col span={24} lg={14} md={12}>
-              <Card>
+              <Card bodyStyle={{ marginBottom: -30 }}>
                 <Form.Item
                   name="firstName"
                   label="First Name"
@@ -386,7 +386,7 @@ export const PersonEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card>
+                <Card bodyStyle={{ marginBottom: -20 }}>
                   <Form.Item
                     label="Place"
                     tooltip="Select a location from the list to link it to a specific location on the map."
@@ -423,7 +423,7 @@ export const PersonEdit: FC = () => {
                   </Form.Item>
                 </Card>
 
-                <Card>
+                <Card bodyStyle={{ marginBottom: -20 }}>
                   <Form.Item
                     label="Location"
                     name="location"
@@ -467,7 +467,7 @@ export const PersonEdit: FC = () => {
                 </Card>
 
                 <Flex vertical gap="middle">
-                  <Card>
+                  <Card bodyStyle={{ marginBottom: -20 }}>
                     <Form.Item
                       label="Photos"
                       name="photo"
