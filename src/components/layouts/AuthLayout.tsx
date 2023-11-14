@@ -17,25 +17,26 @@ export const AuthLayout = ({
   const { width } = useWindowSize();
   return (
     <Container types="auth">
-      {width && width > 1023 && (
-        <section className="w-[450px] h-screen">
-          <video
-            playsInline
-            className="auth-sidebar-video object-cover w-full h-full"
-            autoPlay
-            loop
-            muted
-            src={videoSrc}
-          >
-            Your browser does not support the video tag.
-          </video>
-        </section>
-      )}
-      <section className="flex-grow flex align-middle justify-center">
-        <div className="flex flex-col gap-3 sm:w-[320px] ms:w-[360px] w-[416px]">
+      <div className="grid grid-cols-2 lg:flex lg:justify-center min-h-[calc(100vh-65px)] lg:pt-[70px] lg:pr-0 pr-10">
+        {width && width > 1023 && (
+          <section className="w-[450px] bg-accent-100 ">
+            <video
+              playsInline
+              className="auth-sidebar-video object-cover w-full h-full"
+              autoPlay
+              loop
+              muted
+              src={videoSrc}
+            >
+              Your browser does not support the video tag.
+            </video>
+          </section>
+        )}
+        <section className="flex flex-col gap-3 py-2 px-2 justify-center">
           {children}
-        </div>
-      </section>
+        </section>
+      </div>
     </Container>
   );
 };
+//
