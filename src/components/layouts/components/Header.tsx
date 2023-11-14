@@ -27,15 +27,22 @@ export function Header() {
           <nav>
             <ul className="flex gap-10 sm:gap-6 uppercase items-center">
               {width && width > 1023 ? (
-                NAVIGATION_USER_NAME.map(
-                  (navigationLink: INavigationLinks, index) => (
-                    <li key={index}>
-                      <Link key={index} href={navigationLink.link}>
-                        {navigationLink.title}
-                      </Link>
+                <>
+                  {NAVIGATION_USER_NAME.map(
+                    (navigationLink: INavigationLinks, index) => (
+                      <li key={index}>
+                        <Link key={index} href={navigationLink.link}>
+                          {navigationLink.title}
+                        </Link>
+                      </li>
+                    )
+                  )}
+                  {userName && (
+                    <li>
+                      <DropdownMenuHeader />
                     </li>
-                  )
-                )
+                  )}
+                </>
               ) : (
                 <li>
                   <DropdownMenuHeader />

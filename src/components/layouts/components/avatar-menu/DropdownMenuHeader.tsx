@@ -20,8 +20,11 @@ export const DropdownMenuHeader = () => {
   const { userName } = useUserStore();
   const { width } = useWindowSize();
 
+  // eslint-disable-next-line no-nested-ternary
   const NAVIGATION_USER_NAME = userName
-    ? [...NAVIGATION_LINK, ...MENU_HEADER]
+    ? width && width > 1023
+      ? MENU_HEADER
+      : [...NAVIGATION_LINK, ...MENU_HEADER]
     : [...NAVIGATION_LINK, ...AUTH_LINK];
 
   return (
