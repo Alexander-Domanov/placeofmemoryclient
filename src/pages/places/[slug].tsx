@@ -10,7 +10,7 @@ import {
 } from '@/modules/places-main-module/api/places-main-api';
 import { IPlacesMain } from '@/modules/places-main-module';
 import { getGlobalLayout } from '@/components';
-import Places from '@/pages/places/index';
+import { useTranslation } from '@/components/internationalization';
 
 export const getStaticProps: GetStaticProps = async (
   context
@@ -21,7 +21,8 @@ export const getStaticProps: GetStaticProps = async (
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(
     ['place-main', slug],
-    async (): Promise<IPlacesMain> => await getPlaceMainForSSR({ slug })
+    async (): Promise<IPlacesMain> =>
+      await getPlaceMainForSSR({ slug, lang: context.locale })
   );
 
   return {
@@ -45,10 +46,11 @@ export const getStaticPaths: GetStaticPaths<IParams> = async () => {
 };
 
 const Place = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <Head>
-        <title>МЕСЦА | MOGILKI</title>
+        <title>{t.places.place.indexTitle} | MOGILKI</title>
       </Head>
       <PlaceMain />
     </div>

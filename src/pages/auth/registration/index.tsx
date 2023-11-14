@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import { SignUp } from '@/modules/auth-modules/sign-up-module';
 import { getLayoutWithHeader } from '@/components';
+import { useTranslation } from '@/components/internationalization';
 
 const SignUpPage = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>Зарэгістравацца| Mogilki</title>
+        <title>{t.auth.signUp.indexTitle}| Mogilki</title>
       </Head>
       <SignUp />
     </>

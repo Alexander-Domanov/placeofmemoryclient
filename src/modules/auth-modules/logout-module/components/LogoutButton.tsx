@@ -1,10 +1,11 @@
 import { FC } from 'react';
 
 import { useLogout } from '@/modules/auth-modules/logout-module';
+import { useTranslation } from '@/components/internationalization';
 
 export const LogoutButton: FC = () => {
   const { sendLogout } = useLogout();
-
+  const { t } = useTranslation();
   const handleLogout = () => {
     sendLogout();
   };
@@ -12,7 +13,7 @@ export const LogoutButton: FC = () => {
   return (
     <>
       <button onClick={() => handleLogout()}>
-        <span>Выйсці</span>
+        <span>{t.header.logout}</span>
       </button>
     </>
   );
