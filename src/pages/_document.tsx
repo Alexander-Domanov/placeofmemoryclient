@@ -4,7 +4,7 @@ import type { DocumentContext } from 'next/document';
 
 const MyDocument = () => {
   return (
-    <Html lang="en">
+    <Html lang="by">
       <Head>
         <meta name="description" content="Mogilki" />
         <link rel="icon" href="/favicon.ico" />

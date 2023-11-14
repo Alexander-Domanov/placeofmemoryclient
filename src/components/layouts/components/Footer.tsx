@@ -5,8 +5,9 @@ import { CiLocationOn } from 'react-icons/ci';
 import { BsTelephone } from 'react-icons/bs';
 import { AiOutlineMail } from 'react-icons/ai';
 import { routes } from '@/common/routing/routes';
-import { INavigationLinks, NAVIGATION_LINK } from '@/common/constants';
+import { NAVIGATION_LINK } from '@/common/constants';
 import { Container } from '@/components';
+import { INavigationLinks } from '@/common/constants/NAVIGATION_LINK';
 
 export const Footer = () => {
   return (
@@ -19,7 +20,7 @@ export const Footer = () => {
           <nav className="flex flex-col gap-6">
             <span className="text-base font-semibold">Старонки</span>
             <ul className="flex flex-col gap-[14px]">
-              {NAVIGATION_LINK.map(
+              {NAVIGATION_LINK().map(
                 (navigationLink: INavigationLinks, index) => (
                   <li key={index}>
                     <Link key={index} href={navigationLink.link}>
