@@ -1,18 +1,22 @@
 import Head from 'next/head';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import { dehydrate, DehydratedState } from '@tanstack/query-core';
 import { QueryClient } from '@tanstack/react-query';
-import { ParsedUrlQuery } from 'node:querystring';
 import { getGlobalLayout } from '@/components';
 import { PlacesMain } from '@/modules/places-main-module/components/PlacesMain';
 import { getPlacesMainForSSR } from '@/modules/places-main-module/api/places-main-api';
+import { useTranslation } from '@/components/internationalization';
 
-export const getStaticProps: GetStaticProps = async (): Promise<{
+export const getStaticProps: GetStaticProps = async (
+  context
+): Promise<{
   props: { dehydratedState: DehydratedState };
 }> => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['places-main'], getPlacesMainForSSR);
+  await queryClient.prefetchQuery(['places-main'], () =>
+    getPlacesMainForSSR({ lang: context.locale })
+  );
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -20,10 +24,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   };
 };
 const Places = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>МЕСЦА | MOGILKI</title>
+        <title>{t.places.indexTitle} | MOGILKI</title>
       </Head>
       <PlacesMain />
     </>

@@ -10,12 +10,14 @@ import { FaTwitter } from 'react-icons/fa';
 import { NAVIGATION_LINK } from '@/common/constants';
 import { routes } from '@/common/routing/routes';
 import { IContacts } from '@/types';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   contacts: IContacts;
 }
 
 export const SiteFooter: FC<Props> = ({ contacts }) => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-dark-900 py-16">
       <div className="container">
@@ -32,11 +34,11 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
           </div>
 
           <div className="sm:order-2">
-            <div className="text-base font-bold">Старонкі</div>
+            <div className="text-base font-bold">{t.footer.pages}</div>
 
             <div className="mt-6">
               <ul className="text-sm font-light flex flex-col gap-4 sm:gap-3">
-                {NAVIGATION_LINK.map((navigationLink) => (
+                {NAVIGATION_LINK().map((navigationLink) => (
                   <li key={navigationLink.link}>
                     <Link href={navigationLink.link}>
                       {navigationLink.title}
@@ -48,7 +50,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
           </div>
 
           <div className="sm:order-3 sm:overflow-hidden">
-            <div className="text-base font-bold">Кантакты</div>
+            <div className="text-base font-bold">{t.footer.contacts}</div>
 
             <div className="mt-6">
               <div className="flex flex-col gap-6 sm:gap-3">
@@ -76,7 +78,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
           </div>
 
           <div className="sm:order-1 sm:flex sm:items-center sm:gap-8 sm:col-span-2">
-            <div className="text-base font-bold">Сацыяльныя сеткі</div>
+            <div className="text-base font-bold">{t.footer.socialNetworks}</div>
 
             <div className="mt-6 sm:mt-0">
               <ul className="flex gap-11 lg:gap-8">
