@@ -32,8 +32,10 @@ export const AuthLayout = ({
             </video>
           </section>
         )}
-        <section className="flex flex-col gap-3 py-2 px-2 justify-center">
-          {children}
+        <section className="flex flex-col py-2 px-2 justify-center">
+          <div className=" flex flex-col gap-3  align-middle sm:w-[320px] ms:w-[360px] w-[416px]">
+            {children}
+          </div>
         </section>
       </div>
     </Container>

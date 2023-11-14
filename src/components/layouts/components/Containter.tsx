@@ -24,7 +24,7 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
           className,
           types === 'auth'
             ? 'text-light-300 lg:pt-[28px] lg:pb-[48px] min-h-[calc(100vh-65px)]'
-            : 'mx-auto max-w-7xl px-10 '
+            : 'px-10 '
         )
       )}
     >
