@@ -1,4 +1,4 @@
-import { RiLogoutBoxRLine } from 'react-icons/Ri';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { PiListBold } from 'react-icons/pi';
 import { AvatarMenuHeader } from '@/components';
 import { LogoutButton } from '@/modules/auth-modules/logout-module';
