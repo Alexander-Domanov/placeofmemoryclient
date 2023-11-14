@@ -12,3 +12,8 @@ export const NAVIGATION_LINK: INavigationLinks[] = [
   { title: 'Пра праэкт', link: routes.aboutTheProject.index },
   { title: 'Мапа', link: routes.map.index },
 ];
+
+export const AUTH_LINK: INavigationLinks[] = [
+  { title: 'Уваход', link: routes.auth.signIn },
+  { title: 'Рэгістрацыя', link: routes.auth.signUp },
+];

@@ -12,6 +12,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ConfigProvider } from 'antd';
 import AuthProtection from '@/components/auth-protection/AuthProtection';
 import theme from '@/theme/themeConfig';
+import { useLoader } from '@/common/hooks/useLoader/useLoader';
+import '@/styles/nprogress.css';
 
 export type NextPageWithLayout<P = NonNullable<unknown>, IP = P> = NextPage<
   P,
@@ -27,7 +29,7 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient());
   const getLayout = Component.getLayout ?? ((page) => page);
-
+  useLoader();
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

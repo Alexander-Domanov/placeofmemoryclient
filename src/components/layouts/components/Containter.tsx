@@ -18,13 +18,13 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
   return (
     <div
       className={twMerge(
-        'max-w-7xl w-full text-light-300 px-10 bg-dark-700 text-base',
+        'text-light-300 bg-dark-700 text-base',
         className,
         clsx(
           className,
           types === 'auth'
-            ? 'flex text-light-300 px-0 xl:mx-auto mx-0 lg:pt-[28px] lg:pb-[48px] xl:justify-start justify-center items-center min-h-[calc(100vh-65px)] '
-            : 'mx-auto '
+            ? 'text-light-300 lg:pt-[28px] lg:pb-[48px] min-h-[calc(100vh-65px)]'
+            : 'px-10 '
         )
       )}
     >
