@@ -53,12 +53,14 @@ const menuItems = {
       <IoImagesOutline />
     ),
   ],
-  content: [
+  articles: [
     getItem(
       <Link href={routes.dashboard.articles.index}>Articles</Link>,
       routes.dashboard.articles.index,
       <FaNewspaper />
     ),
+  ],
+  places: [
     getItem(
       <Link href={routes.dashboard.places.index}>Places</Link>,
       routes.dashboard.places.index,
@@ -96,13 +98,13 @@ const groupingCommon = (): MenuItem[] => {
 };
 
 const groupingContent = (): MenuItem[] => {
-  const { content, persons } = menuItems;
+  const { articles, places, persons } = menuItems;
   return [
     getItem(
       'Content',
       'content',
       <AppstoreOutlined />,
-      [...content, ...persons],
+      [...articles, ...places, ...persons],
       'group'
     ),
   ];
@@ -112,7 +114,7 @@ export const GetMenuItems = (
   me?: { role: Role },
   onLogout?: () => void
 ): MenuItem[] => {
-  const { common, persons, logout } = menuItems;
+  const { common, persons, articles, logout } = menuItems;
 
   const logoutItem = [
     ...logout.map((item) => ({ ...item, onClick: onLogout })),
@@ -153,7 +155,13 @@ export const GetMenuItems = (
     [Role.AUTHOR]: [
       ...groupingCommon(),
       DIVIDER,
-      ...groupingContent(),
+      getItem(
+        'Content',
+        'content',
+        <AppstoreOutlined />,
+        [...articles, ...persons],
+        'group'
+      ),
       DIVIDER,
       ...logoutItem,
     ],
