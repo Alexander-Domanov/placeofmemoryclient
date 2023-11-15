@@ -1,5 +1,15 @@
 import React, { FC, useState } from 'react';
-import { Button, Col, Divider, Drawer, Flex, List, Row, Space } from 'antd';
+import {
+  Button,
+  Col,
+  Divider,
+  Drawer,
+  Flex,
+  List,
+  Row,
+  Space,
+  Typography,
+} from 'antd';
 import { IUserWithShortExtensions } from '@/types';
 import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
@@ -12,9 +22,9 @@ interface DescriptionItemProps {
 }
 
 const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
-  <div className="site-description-item-profile-wrapper">
+  <div>
     <span className="text-neutral-400">{title}: &nbsp;</span>
-    {content}
+    <Typography.Text>{content}</Typography.Text>
   </div>
 );
 
