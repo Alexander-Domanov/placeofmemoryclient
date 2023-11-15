@@ -13,9 +13,10 @@ export const getStaticProps: GetStaticProps = async (
   props: { dehydratedState: DehydratedState };
 }> => {
   const queryClient = new QueryClient();
-
   await queryClient.prefetchQuery(['places-main'], () =>
-    getPlacesMainForSSR({ lang: context.locale })
+    getPlacesMainForSSR({
+      lang: context.locale,
+    })
   );
   return {
     props: {
