@@ -89,6 +89,13 @@ export const Articles: FC = () => {
         ]
       : fileStatusOptions;
 
+  const selectColumnsTablePlaces =
+    me?.role === Role.AUTHOR
+      ? columnsTableArticles.filter(
+          (column) => column.key !== 'ownerId' && column.key !== 'id'
+        )
+      : columnsTableArticles;
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -132,7 +139,7 @@ export const Articles: FC = () => {
         bordered
         size="small"
         rowKey={(record) => record.id}
-        columns={columnsTableArticles}
+        columns={selectColumnsTablePlaces}
         dataSource={articles?.items}
         loading={isFetching}
         pagination={{

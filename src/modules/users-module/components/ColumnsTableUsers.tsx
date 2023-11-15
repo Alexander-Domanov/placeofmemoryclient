@@ -62,7 +62,14 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'Status',

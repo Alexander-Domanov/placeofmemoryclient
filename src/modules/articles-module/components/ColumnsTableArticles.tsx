@@ -66,7 +66,14 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'Updated At',
@@ -76,7 +83,14 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'Status',
