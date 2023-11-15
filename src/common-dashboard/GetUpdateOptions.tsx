@@ -11,7 +11,7 @@ import { Role } from '@/types';
 const { Option } = Select;
 
 export const GetUpdateOptions = (me?: { role: Role }) => {
-  const isAdminOrEditor = me?.role === Role.ADMIN || me?.role === Role.EDITOR;
+  const isAdminOrEditor = me?.role === Role.USER || me?.role === Role.AUTHOR;
   if (isAdminOrEditor) {
     return [
       <Option key="DRAFT" value="DRAFT">
@@ -20,12 +20,9 @@ export const GetUpdateOptions = (me?: { role: Role }) => {
       <Option key="PENDING_REVIEW" value="PENDING_REVIEW">
         <ClockCircleOutlined /> Send for review
       </Option>,
-      <Option key="PUBLISHED" value="PUBLISHED">
-        <EyeOutlined /> Publish
-      </Option>,
-      <Option key="ARCHIVED" value="ARCHIVED">
-        <InboxOutlined /> Archive
-      </Option>,
+      // <Option key="PUBLISHED" value="PUBLISHED">
+      //   <EyeOutlined /> Publish
+      // </Option>,
     ];
   }
 
@@ -38,6 +35,9 @@ export const GetUpdateOptions = (me?: { role: Role }) => {
     </Option>,
     <Option key="PUBLISHED" value="PUBLISHED">
       <EyeOutlined /> Publish
+    </Option>,
+    <Option key="ARCHIVED" value="ARCHIVED">
+      <InboxOutlined /> Archive
     </Option>,
   ];
 };

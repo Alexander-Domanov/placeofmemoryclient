@@ -5,3 +5,10 @@ export enum FileStatuses {
   PUBLISHED = 'published',
   ARCHIVED = 'archived',
 }
+
+export enum Statuses {
+  DRAFT = 'DRAFT',
+  PENDING_REVIEW = 'PENDING_REVIEW',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}

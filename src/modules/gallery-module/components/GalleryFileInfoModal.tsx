@@ -17,8 +17,9 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { FileStatuses, Role, Statuses } from '@/types';
+import { FileStatuses, Role } from '@/types';
 import { useMeQuery } from '@/services';
+import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
 
 const { confirm } = Modal;
 
@@ -85,9 +86,10 @@ export const GalleryFileInfoModal: FC = () => {
     });
   };
 
-  const isDisabled =
-    file?.status === Statuses.PUBLISHED &&
-    (me?.role === Role.AUTHOR || me?.role === Role.USER);
+  const isDisabled = GetDisabledStatus(
+    file?.status as string,
+    me?.role as Role
+  );
 
   return (
     <>
