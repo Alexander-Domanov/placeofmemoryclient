@@ -1,5 +1,12 @@
 import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
+import {
+  AiOutlineHome,
+  AiOutlineLeftCircle,
+  AiOutlineRightCircle,
+} from 'react-icons/ai';
+import { useDebounce } from 'usehooks-ts';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
 import { useGetPlacesMain } from '@/modules/places-main-module';
@@ -8,7 +15,35 @@ import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 import { Input } from '@/ui';
 
 export const PlacesMain = () => {
-  const { dataPlaces } = useGetPlacesMain();
+  const { push, query, pathname, replace } = useRouter();
+  const [page, setPage] = useState<number | string>('');
+  const [name, setName] = useState<string>('');
+  const [country, setCountry] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const vName = useDebounce(name, 1000);
+  const vCountry = useDebounce(country, 1000);
+  const vCity = useDebounce(city, 1000);
+
+  const { dataPlaces, isLoading } = useGetPlacesMain({
+    name: vName,
+    city: vCity,
+    country: vCountry,
+    pageNumber: Number(page),
+  });
+  const onHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (dataPlaces) {
+      // eslint-disable-next-line no-nested-ternary
+      Number(e.currentTarget.value) > dataPlaces.pagesCount
+        ? setPage(dataPlaces.pagesCount)
+        : Number(e.currentTarget.value) < 1
+        ? setPage('')
+        : setPage(Number(e.currentTarget.value));
+    }
+  };
+  useEffect(() => {
+    push(`/places?page=${page}`);
+  }, [page]);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
@@ -32,14 +67,25 @@ export const PlacesMain = () => {
 
       <div className="flex gap-4 mt-14">
         <div>
-          <Input label="Назва" className="w-[166px] h-[36px]" />
+          <Input
+            label="Назва"
+            className="w-[166px] h-[36px]"
+            onChange={(e) => setName(e.currentTarget.value)}
+          />
         </div>
         <div>
-          <Input label="Краіна" className="w-[166px] h-[36px]" />
+          <Input
+            label="Краіна"
+            className="w-[166px] h-[36px]"
+            onChange={(e) => setCountry(e.currentTarget.value)}
+          />
         </div>
         <div>
-          {' '}
-          <Input label="Горад" className="w-[166px] h-[36px]" />
+          <Input
+            label="Горад"
+            className="w-[166px] h-[36px]"
+            onChange={(e) => setCity(e.currentTarget.value)}
+          />
         </div>
       </div>
       {dataPlaces && dataPlaces.items.length > 0 ? (
@@ -79,6 +125,32 @@ export const PlacesMain = () => {
         ))
       ) : (
         <div>No Places</div>
+      )}
+      {dataPlaces && dataPlaces.items.length > 0 && (
+        <div className="flex align-middle mt-[82px] justify-between">
+          {Number(page) > 1 ? (
+            <AiOutlineLeftCircle
+              size={56}
+              fill="#bdc1c7"
+              onClick={() => setPage(Number(page) - 1)}
+            />
+          ) : (
+            <div />
+          )}
+          <div className="font-normal text-xs leading-6 text-light-100">
+            <Input type="number" value={page} onChange={onHandler} />/
+            <span className="text-dark-100">{dataPlaces.pagesCount}</span>
+          </div>
+          {page !== dataPlaces.pagesCount ? (
+            <AiOutlineRightCircle
+              size={56}
+              fill="#bdc1c7"
+              onClick={() => setPage(Number(page) + 1)}
+            />
+          ) : (
+            <div />
+          )}
+        </div>
       )}
     </div>
   );

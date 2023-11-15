@@ -9,13 +9,17 @@ import {
 export const getPlacesMain = async ({
   lang,
   name,
+  country,
+  city,
   pageNumber,
-  pageSize,
+  pageSize = 3,
 }: IPlacesProps | any) => {
   const res = await authInstance.get<IPlacesMainResponse>('places/public/all', {
     params: {
       lang,
       name,
+      country,
+      city,
       pageNumber,
       pageSize,
     },

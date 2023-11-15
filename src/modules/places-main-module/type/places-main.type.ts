@@ -102,8 +102,10 @@ interface IPlacesMainResponse extends IPlacesMainPagination {
 interface IPlacesProps {
   lang?: string;
   name?: string;
-  pageNumber?: string;
-  pageSize?: string;
+  country?: string;
+  city?: string;
+  pageNumber?: number;
+  pageSize?: number;
   slug?: string;
 }
 
