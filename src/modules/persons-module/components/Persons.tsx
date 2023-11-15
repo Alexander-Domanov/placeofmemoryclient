@@ -184,6 +184,22 @@ export const Persons: FC = () => {
         ]
       : fileStatusOptions;
 
+  const selectColumnsTablePlaces =
+    me?.role === Role.USER || me?.role === Role.AUTHOR
+      ? columnsTablePersons.filter(
+          (column) =>
+            column.key !== 'ownerId' &&
+            column.key !== 'id' &&
+            column.key !== 'updatedAt' &&
+            column.key !== 'place'
+        )
+      : columnsTablePersons;
+
+  const setScrollForTable =
+    me?.role === Role.USER || me?.role === Role.AUTHOR
+      ? { x: 1000 }
+      : { x: 1300 };
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -294,7 +310,7 @@ export const Persons: FC = () => {
         bordered
         size="small"
         rowKey={(record) => record.id}
-        columns={columnsTablePersons}
+        columns={selectColumnsTablePlaces}
         dataSource={persons?.items}
         loading={isFetching}
         pagination={{
@@ -310,7 +326,7 @@ export const Persons: FC = () => {
           position: ['bottomCenter'],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
         }}
-        scroll={{ x: 1300 }}
+        scroll={setScrollForTable}
         onChange={handleTableChange}
       />
     </Flex>

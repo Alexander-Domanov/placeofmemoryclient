@@ -1,8 +1,10 @@
 import { FC, useState } from 'react';
 import { Button, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { IPerson } from '@/types';
+import { IPerson, Role } from '@/types';
 import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
+import { useMeQuery } from '@/services';
+import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
 
 interface DeletePersonModalProps {
   person: IPerson | null;
@@ -17,6 +19,7 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
   const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
 
   const { deletePersonMutation } = useDeletePerson();
+  const { data: me } = useMeQuery();
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -38,10 +41,21 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
     setDeleteModalVisible(false);
   };
 
+  const isDisabled = GetDisabledStatus(
+    person?.status as string,
+    me?.role as Role
+  );
+
   const showButtonDelete = (showButton: boolean) => {
     const handleClick = () => {
       setSelectedPerson(person);
       showDeleteModal();
+    };
+
+    const buttonStyle = {
+      cursor: 'pointer',
+      color: '#ef2020',
+      ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
     };
 
     if (showButton) {
@@ -51,9 +65,10 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
           type="primary"
           title="Delete"
           icon={<DeleteOutlined />}
-          style={{ cursor: 'pointer', color: '#ef2020' }}
+          style={buttonStyle}
           onClick={handleClick}
           ghost
+          disabled={isDisabled}
         >
           Delete
         </Button>
@@ -63,9 +78,10 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
       <Button
         title="Delete"
         icon={<DeleteOutlined />}
-        style={{ cursor: 'pointer', color: '#ef2020' }}
+        style={buttonStyle}
         onClick={handleClick}
         ghost
+        disabled={isDisabled}
       />
     );
   };

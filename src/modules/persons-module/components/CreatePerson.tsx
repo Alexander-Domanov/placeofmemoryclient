@@ -188,11 +188,11 @@ export const CreatePerson: FC = () => {
 
               <Flex gap="large">
                 <Form.Item name="birthDate" label="Birth Date">
-                  <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
+                  <DatePicker placeholder="Input Date" format="DD.MM.YYYY" />
                 </Form.Item>
 
                 <Form.Item name="deathDate" label="Death Date">
-                  <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
+                  <DatePicker placeholder="Input Date" format="DD.MM.YYYY" />
                 </Form.Item>
               </Flex>
 

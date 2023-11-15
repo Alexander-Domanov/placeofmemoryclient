@@ -25,7 +25,7 @@ import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { ICreatePerson, IGalleryFile, ILocation, IPerson } from '@/types';
+import { ICreatePerson, IGalleryFile, ILocation, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
 import { useUpdatePerson } from '@/modules/persons-module/hooks/useUpdatePerson';
@@ -38,6 +38,7 @@ import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
+import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
 
 function breadcrumbs(name: string) {
   return [
@@ -214,6 +215,8 @@ export const PersonEdit: FC = () => {
 
   const updateOptions = GetUpdateOptions(me);
 
+  const isDisabled = GetDisabledStatus(status, me?.role as Role);
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -233,7 +236,11 @@ export const PersonEdit: FC = () => {
                   rules={[{ required: true, whitespace: true }]}
                   hasFeedback
                 >
-                  <Input placeholder="Input First Name" allowClear />
+                  <Input
+                    placeholder="Input First Name"
+                    allowClear
+                    disabled={isDisabled}
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -242,7 +249,11 @@ export const PersonEdit: FC = () => {
                   rules={[{ required: true, whitespace: true }]}
                   hasFeedback
                 >
-                  <Input placeholder="Input Last Name" allowClear />
+                  <Input
+                    placeholder="Input Last Name"
+                    allowClear
+                    disabled={isDisabled}
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -251,16 +262,28 @@ export const PersonEdit: FC = () => {
                   rules={[{ whitespace: true }]}
                   hasFeedback
                 >
-                  <Input placeholder="Input Patronymic" allowClear />
+                  <Input
+                    placeholder="Input Patronymic"
+                    allowClear
+                    disabled={isDisabled}
+                  />
                 </Form.Item>
 
                 <Flex gap="large">
                   <Form.Item name="birthDate" label="Birth Date">
-                    <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
+                    <DatePicker
+                      placeholder="Input Date"
+                      format="DD.MM.YYYY"
+                      disabled={isDisabled}
+                    />
                   </Form.Item>
 
                   <Form.Item name="deathDate" label="Death Date">
-                    <DatePicker placeholder="Input Date" format="YYYY-MM-DD" />
+                    <DatePicker
+                      placeholder="Input Date"
+                      format="DD.MM.YYYY"
+                      disabled={isDisabled}
+                    />
                   </Form.Item>
                 </Flex>
 
@@ -307,7 +330,7 @@ export const PersonEdit: FC = () => {
                       value={status}
                       onChange={handleStatusChange}
                       loading={isStatusUpdating}
-                      disabled={isStatusUpdating}
+                      disabled={isStatusUpdating || isDisabled}
                     >
                       {updateOptions}
                     </Select>
@@ -323,12 +346,13 @@ export const PersonEdit: FC = () => {
                     <Input
                       placeholder="This field is auto generated"
                       allowClear
+                      disabled={isDisabled}
                     />
                   </Form.Item>
 
                   <Form.Item>
                     <List split={false}>
-                      <List.Item draggable>
+                      <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
                             Public link: &nbsp;
@@ -351,7 +375,7 @@ export const PersonEdit: FC = () => {
                         </Typography.Text>
                       </List.Item>
 
-                      <List.Item draggable>
+                      <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
                             Owner: &nbsp;
@@ -387,6 +411,7 @@ export const PersonEdit: FC = () => {
                       title="Save"
                       icon={<SaveOutlined />}
                       loading={isUpdating}
+                      disabled={isDisabled}
                     >
                       Save
                     </Button>
@@ -399,7 +424,10 @@ export const PersonEdit: FC = () => {
                     label="Place"
                     tooltip="Select a location from the list to link it to a specific location on the map."
                   >
-                    <TitlePlaces onFinishValue={setSelectedPlace} />
+                    <TitlePlaces
+                      onFinishValue={setSelectedPlace}
+                      disabled={isDisabled}
+                    />
 
                     <Form.Item style={{ marginBottom: 0 }}>
                       <List split={false}>
@@ -470,7 +498,10 @@ export const PersonEdit: FC = () => {
                       </List>
                     </Form.Item>
 
-                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                    <MapDrawer
+                      onPlaceSelected={setSelectedPlaceFromMap}
+                      disabled={isDisabled}
+                    />
                   </Form.Item>
                 </Card>
 
@@ -486,10 +517,15 @@ export const PersonEdit: FC = () => {
                       tooltip="You can upload up to 3 photos, the first photo will be the main one.
                       After uploading, you should save the person."
                     >
-                      <Upload {...uploadProps} maxCount={3} multiple>
+                      <Upload
+                        {...uploadProps}
+                        maxCount={3}
+                        multiple
+                        disabled={isDisabled}
+                      >
                         <Button
                           icon={<UploadOutlined />}
-                          disabled={fileList.length > 2}
+                          disabled={fileList.length > 2 || isDisabled}
                         >
                           Click to upload
                         </Button>

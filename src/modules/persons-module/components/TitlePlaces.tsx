@@ -9,8 +9,12 @@ interface TitlePlacesFormProps {
     id: number;
     formattedAddress: string;
   }) => void;
+  disabled?: boolean;
 }
-export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
+export const TitlePlaces: FC<TitlePlacesFormProps> = ({
+  onFinishValue,
+  disabled,
+}) => {
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: 10,
@@ -60,6 +64,7 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({ onFinishValue }) => {
         }
       }}
       allowClear
+      disabled={disabled}
     />
   );
 };

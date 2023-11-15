@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import { IPerson } from '@/types';
+import { IPerson, Role } from '@/types';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
+import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
 
 interface UpdatePersonStatusComponentProps {
   person: IPerson | null;
@@ -46,6 +47,14 @@ const UpdatePersonStatusComponent: React.FC<
 
   const updateOptions = GetUpdateOptions(me);
 
+  const isDisabled = GetDisabledStatus(status as string, me?.role as Role);
+
+  const buttonStyle = {
+    cursor: 'pointer',
+    color: '#2c332c',
+    ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
+  };
+
   return (
     <>
       <List.Item
@@ -53,9 +62,10 @@ const UpdatePersonStatusComponent: React.FC<
           <Button
             key={0}
             icon={<EditOutlined />}
-            style={{ cursor: 'pointer', color: '#2c332c' }}
+            style={buttonStyle}
             onClick={handleEditClick}
             ghost
+            disabled={isDisabled}
           />,
         ]}
       />
@@ -65,11 +75,19 @@ const UpdatePersonStatusComponent: React.FC<
         onCancel={handleModalCancel}
         footer={null}
       >
-        <Form.Item label="Current status" style={{ marginBottom: 10 }}>
-          <Select value={newStatus} onChange={handleMenuStatusClick}>
-            {updateOptions}
-          </Select>
-        </Form.Item>
+        {isDisabled ? (
+          <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+            <Select value={newStatus} onChange={handleMenuStatusClick} disabled>
+              {updateOptions}
+            </Select>
+          </Form.Item>
+        ) : (
+          <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+            <Select value={newStatus} onChange={handleMenuStatusClick}>
+              {updateOptions}
+            </Select>
+          </Form.Item>
+        )}
       </Modal>
     </>
   );

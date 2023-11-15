@@ -80,6 +80,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
   {
     title: 'Death Date',
@@ -90,6 +91,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     sorter: true,
     ellipsis: true,
     sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
   {
     title: 'Country',
@@ -115,7 +117,14 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'Updated At',
@@ -125,7 +134,14 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'PlaceId',
@@ -139,7 +155,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
         placement="leftBottom"
         color="#1087f6"
       >
-        <Typography.Text>{text.id}</Typography.Text>
+        <span className="text-neutral-400">{text.id}</span>
       </Tooltip>
     ),
   },

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Image, Tooltip } from 'antd';
 import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
-import { IGalleryFile } from '@/types';
+import { IGalleryFile, Statuses } from '@/types';
 
 interface Props {
   file: IGalleryFile;
@@ -10,25 +10,25 @@ interface Props {
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case 'PUBLISHED':
+    case Statuses.PUBLISHED:
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEyeFill color="green" size={24} />
         </Tooltip>
       );
-    case 'DRAFT':
+    case Statuses.DRAFT:
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEyeSlashFill color="red" size={24} />
         </Tooltip>
       );
-    case 'PENDING_REVIEW':
+    case Statuses.PENDING_REVIEW:
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEye color="orange" size={24} />
         </Tooltip>
       );
-    case 'ARCHIVED':
+    case Statuses.ARCHIVED:
       return (
         <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
           <BsEyeSlashFill color="lightgrey" size={24} />
