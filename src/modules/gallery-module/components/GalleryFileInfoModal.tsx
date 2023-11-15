@@ -17,7 +17,8 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { FileStatuses } from '@/types';
+import { FileStatuses, Role, Statuses } from '@/types';
+import { useMeQuery } from '@/services';
 
 const { confirm } = Modal;
 
@@ -32,6 +33,7 @@ export const GalleryFileInfoModal: FC = () => {
   );
 
   const { file, isLoading, isSuccess } = useGalleryFile(uploadId);
+  const { data: me } = useMeQuery();
 
   const { updateGalleryFileMutateAsync, isUpdating } =
     useUpdateGalleryFile(uploadId);
@@ -83,6 +85,10 @@ export const GalleryFileInfoModal: FC = () => {
     });
   };
 
+  const isDisabled =
+    file?.status === Statuses.PUBLISHED &&
+    (me?.role === Role.AUTHOR || me?.role === Role.USER);
+
   return (
     <>
       <ConfigProvider
@@ -118,7 +124,7 @@ export const GalleryFileInfoModal: FC = () => {
                     style={{ display: 'flex' }}
                   >
                     <Form.Item label="Alt" name="alt">
-                      <Input placeholder="Alt" />
+                      <Input placeholder="Alt" disabled={isDisabled} />
                     </Form.Item>
 
                     <Form.Item
@@ -182,11 +188,17 @@ export const GalleryFileInfoModal: FC = () => {
                         type="primary"
                         htmlType="submit"
                         loading={isUpdating}
+                        disabled={isDisabled}
                       >
                         Save
                       </Button>
 
-                      <Button type="primary" danger onClick={onDelete}>
+                      <Button
+                        type="primary"
+                        danger
+                        onClick={onDelete}
+                        disabled={isDisabled}
+                      >
                         Delete
                       </Button>
                     </Space>
