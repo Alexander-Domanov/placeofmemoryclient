@@ -14,9 +14,10 @@ const styleButton = {
 
 interface MapDrawerProps {
   onPlaceSelected: (place: IPlaceResultAfterExtract) => void;
+  disabled?: boolean;
 }
 
-const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
+const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] =
     useState<IPlaceResultAfterExtract | null>(null);
@@ -86,6 +87,7 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected }) => {
           type="default"
           onClick={showDrawer}
           icon={<FaLocationDot />}
+          disabled={disabled}
           // style={{ cursor: 'pointer', color: '#74c782' }}
         >
           Open Map
