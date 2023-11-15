@@ -1,3 +1,13 @@
+import { useEffect, useRef } from 'react';
+
 export const MarkupRenderer = ({ markup }: { markup: string }) => {
-  return <div dangerouslySetInnerHTML={{ __html: markup }} />;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.innerHTML = markup;
+    }
+  }, [markup]);
+
+  return <div ref={containerRef} />;
 };
