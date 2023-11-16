@@ -37,12 +37,19 @@ import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArtic
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
+import {
+  CreateBreadcrumb,
+  GetCharacterCount,
+  GetEllipsisSlug,
+  QuillCharacterCount,
+  SupportedImageFormatsTooltip,
+} from '@/components';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { ArticleFormRules } from '@/modules/articles-module';
 
 const { Option } = Select;
-
 const { confirm } = Modal;
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 function breadcrumbs(name: string) {
   return [
@@ -81,7 +88,7 @@ export const ArticleEdit: FC = () => {
   const [status, setStatus] = useState('DRAFT');
 
   const [contentText, setContentText] = useState<string>('');
-  const [contentCount, setContentCount] = useState<number>(0);
+  const characterCount = GetCharacterCount(contentText);
 
   const onStatusChange = (status: string) => {
     setStatus(status);
@@ -108,32 +115,31 @@ export const ArticleEdit: FC = () => {
 
   useEffect(() => {
     if (article) {
-      form.setFieldValue('title', article.title);
-      form.setFieldValue('slug', article.slug);
-      form.setFieldValue('description', article.description);
-      // form.setFieldValue('content', article.content);
-      form.setFieldValue(
-        'photo',
-        article.photos.map((f) => ({
+      form.setFieldsValue({
+        title: article.title,
+        slug: article.slug,
+        description: article.description,
+        content: article.content,
+        photo: article.photos.map((f) => ({
           uid: f.uploadId,
           name: 'random.name',
           status: 'done',
           url: f.versions.huge.url,
           response: { ...f },
-        }))
-      );
+        })),
+      });
       setContentText(article.content || '');
-      setContentCount(article.content?.length || 0);
       setStatus(article.status);
     }
   }, [article]);
 
-  const ellipsisSlug = useMemo(() => {
-    if (article?.slug && article?.slug.length > 30) {
-      return `${article?.slug.slice(0, 30)}...`;
-    }
-    return article?.slug;
-  }, [article?.slug]);
+  const exceeded = isCharacterCountExceeded(
+    characterCount,
+    ArticleFormRules.content[1].max as number
+  );
+  const quillStyle = getQuillStyle(exceeded);
+
+  const ellipsisSlug = GetEllipsisSlug(article?.slug, 30);
 
   const onSubmit = (values: any) => {
     const data = {
@@ -183,43 +189,81 @@ export const ArticleEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onSubmit}>
           <Row gutter={[16, 16]}>
             <Col span={24} md={12} lg={16}>
-              <Card bodyStyle={{ marginBottom: -30 }}>
+              <Card>
                 <Form.Item
                   label="Title"
                   name="title"
-                  rules={[{ required: true }]}
+                  rules={ArticleFormRules.title}
+                  validateFirst
                   hasFeedback
+                  tooltip={
+                    <span>
+                      You can write up to {ArticleFormRules.title[1].max}{' '}
+                      characters. After writing, you should save the article.
+                    </span>
+                  }
                 >
-                  <Input placeholder="Title" />
+                  <Input.TextArea
+                    autoSize
+                    placeholder="Title"
+                    count={{
+                      show: true,
+                      max: ArticleFormRules.title[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   label="Short Description"
                   name="description"
-                  rules={[{ required: true }]}
+                  rules={ArticleFormRules.description}
+                  validateFirst
                   hasFeedback
+                  tooltip={
+                    <span>
+                      You can write up to {ArticleFormRules.description[1].max}{' '}
+                      characters. After writing, you should save the article.
+                    </span>
+                  }
                 >
-                  <Input.TextArea autoSize placeholder="Short Description" />
+                  <Input.TextArea
+                    autoSize
+                    placeholder="Short Description"
+                    count={{
+                      show: true,
+                      max: ArticleFormRules.description[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   label="Content"
                   name="content"
-                  rules={[{ required: true }]}
+                  validateFirst
+                  rules={ArticleFormRules.content}
+                  hasFeedback
+                  tooltip={
+                    <span>
+                      You can write up to {ArticleFormRules.content[1].max}{' '}
+                      characters. After writing, you should save the article.
+                    </span>
+                  }
                 >
                   <ReactQuill
                     theme="snow"
                     value={contentText}
                     onChange={(value) => {
                       setContentText(value);
-                      setContentCount(value.length);
                       form.setFieldValue('content', value);
                     }}
+                    style={quillStyle}
                   />
-                  <span className="font-normal text-neutral-400">
-                    Characters: {contentCount}
-                  </span>
                 </Form.Item>
+
+                <QuillCharacterCount
+                  characterCount={characterCount}
+                  maxCount={ArticleFormRules.content[1].max as number}
+                />
               </Card>
             </Col>
 
@@ -336,7 +380,7 @@ export const ArticleEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card bodyStyle={{ marginBottom: -20 }}>
+                <Card>
                   <Form.Item
                     label="Photo"
                     name="photo"
@@ -356,7 +400,7 @@ export const ArticleEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: 1)
+                        + Upload (Max: {ArticleFormRules.photo[1].max})
                       </Button>
                     </Upload>
                   </Form.Item>

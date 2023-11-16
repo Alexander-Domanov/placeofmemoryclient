@@ -20,8 +20,16 @@ import 'react-quill/dist/quill.snow.css';
 import { IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
+import {
+  CreateBreadcrumb,
+  GetCharacterCount,
+  QuillCharacterCount,
+  SupportedImageFormatsTooltip,
+} from '@/components';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { ArticleFormRules } from '@/modules/articles-module';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -61,7 +69,8 @@ export const ArticleCreate: FC = () => {
 
   const { mutate, isCreating } = useCreateArticle();
   const [contentText, setContentText] = useState<string>('');
-  const [contentCount, setContentCount] = useState<number>(0);
+
+  const characterCount = GetCharacterCount(contentText);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList, 'article');
@@ -96,6 +105,12 @@ export const ArticleCreate: FC = () => {
     });
   };
 
+  const exceeded = isCharacterCountExceeded(
+    characterCount,
+    ArticleFormRules.content[1].max as number
+  );
+  const quillStyle = getQuillStyle(exceeded);
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -113,43 +128,81 @@ export const ArticleCreate: FC = () => {
       >
         <Row gutter={[16, 16]}>
           <Col span={16}>
-            <Card bodyStyle={{ marginBottom: -30 }}>
+            <Card>
               <Form.Item
                 label="Title"
                 name="title"
-                rules={[{ required: true }]}
+                rules={ArticleFormRules.title}
+                validateFirst
                 hasFeedback
+                tooltip={
+                  <span>
+                    You can write up to {ArticleFormRules.title[1].max}{' '}
+                    characters. After writing, you should save the article.
+                  </span>
+                }
               >
-                <Input placeholder="Title" />
+                <Input.TextArea
+                  autoSize
+                  placeholder="Title"
+                  count={{
+                    show: true,
+                    max: ArticleFormRules.title[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 label="Short Description"
                 name="description"
-                rules={[{ required: true }]}
+                rules={ArticleFormRules.description}
+                validateFirst
                 hasFeedback
+                tooltip={
+                  <span>
+                    You can write up to {ArticleFormRules.description[1].max}{' '}
+                    characters. After writing, you should save the article.
+                  </span>
+                }
               >
-                <Input.TextArea autoSize placeholder="Short Description" />
+                <Input.TextArea
+                  autoSize
+                  placeholder="Short Description"
+                  count={{
+                    show: true,
+                    max: ArticleFormRules.description[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 label="Content"
                 name="content"
-                rules={[{ required: true }]}
+                validateFirst
+                rules={ArticleFormRules.content}
+                hasFeedback
+                tooltip={
+                  <span>
+                    You can write up to {ArticleFormRules.content[1].max}{' '}
+                    characters. After writing, you should save the article.
+                  </span>
+                }
               >
                 <ReactQuill
                   theme="snow"
                   value={contentText}
                   onChange={(value) => {
                     setContentText(value);
-                    setContentCount(value.length);
                     form.setFieldValue('content', value);
                   }}
+                  style={quillStyle}
                 />
-                <span className="font-normal text-neutral-400">
-                  Characters: {contentCount}
-                </span>
               </Form.Item>
+
+              <QuillCharacterCount
+                characterCount={characterCount}
+                maxCount={ArticleFormRules.content[1].max as number}
+              />
             </Card>
           </Col>
 
@@ -166,7 +219,7 @@ export const ArticleCreate: FC = () => {
                 </Button>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Photo"
                   name="photo"
@@ -186,7 +239,7 @@ export const ArticleCreate: FC = () => {
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      + Upload (Max: 1)
+                      + Upload (Max: {ArticleFormRules.photo[1].max})
                     </Button>
                   </Upload>
                 </Form.Item>
