@@ -66,8 +66,8 @@ export const Persons: FC = () => {
   const [isShowMoreFilters, setIsShowMoreFilters] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
 
-  const name = useDebounce(pagination.searchName, 500);
-  const lastName = useDebounce(pagination.searchLastName, 500);
+  const name = useDebounce(pagination.searchName.toLowerCase(), 500);
+  const lastName = useDebounce(pagination.searchLastName.toLowerCase(), 500);
   const country = useDebounce(pagination.searchCountry, 500);
   const city = useDebounce(pagination.searchCity, 500);
 
@@ -233,7 +233,7 @@ export const Persons: FC = () => {
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by First Name"
-            title="Search by first name lowercase"
+            title="Search by first Name"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchName: e.target.value })
@@ -243,7 +243,7 @@ export const Persons: FC = () => {
 
           <Input
             placeholder="Search by Last Name"
-            title="Search by last name lowercase"
+            title="Search by last Name"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchLastName: e.target.value })

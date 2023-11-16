@@ -38,7 +38,7 @@ export const Articles: FC = () => {
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const title = useDebounce(pagination.searchTerm, 500);
+  const title = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
   const { articles, isFetching, me } = useArticles({
     pageNumber: page,
@@ -116,7 +116,7 @@ export const Articles: FC = () => {
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by Title"
-            title="Search by title lowercase"
+            title="Search by title"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })

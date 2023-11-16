@@ -82,7 +82,7 @@ export const UserList: FC = () => {
   const [status, setStatus] = useState('all');
   const [extensions, setExtensions] = useState<string[]>([]);
 
-  const name = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
   const { user, isLoading } = useUser({
     id: userId,
@@ -212,7 +212,7 @@ export const UserList: FC = () => {
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by name"
+              placeholder="Search by Name"
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })
@@ -267,7 +267,7 @@ export const UserList: FC = () => {
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by name"
+              placeholder="Search by Name"
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })
@@ -322,7 +322,7 @@ export const UserList: FC = () => {
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by title"
+              placeholder="Search by Title"
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })

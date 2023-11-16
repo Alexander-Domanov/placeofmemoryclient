@@ -40,7 +40,7 @@ export const Places: FC = () => {
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
 
-  const name = useDebounce(pagination.searchTerm, 500);
+  const name = useDebounce(pagination.searchTerm.toLowerCase(), 500);
   const country = useDebounce(pagination.searchCountry, 500);
   const city = useDebounce(pagination.searchCity, 500);
 
@@ -143,7 +143,7 @@ export const Places: FC = () => {
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
             placeholder="Search by Name"
-            title="Search by name lowercase"
+            title="Search by Name"
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
