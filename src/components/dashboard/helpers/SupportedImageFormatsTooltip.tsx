@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMAGE_FORMATS } from '@/common/constants';
+import { IMAGE_FORMATS, MaxAllowedFileSize } from '@/common/constants';
 
 export const SupportedImageFormatsTooltip = () => {
   const formattedString = IMAGE_FORMATS.reduce((acc, format) => {
@@ -7,5 +7,11 @@ export const SupportedImageFormatsTooltip = () => {
     return acc === '' ? extension : `${acc}, ${extension}`;
   }, '');
 
-  return <span>Supported formats: {formattedString}</span>;
+  return (
+    <span>
+      <hr />
+      Supported formats: {formattedString}.<hr />
+      Max allowed file size: {MaxAllowedFileSize} MB
+    </span>
+  );
 };

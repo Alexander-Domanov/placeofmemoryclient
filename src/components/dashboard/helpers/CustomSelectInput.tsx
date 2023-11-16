@@ -7,7 +7,7 @@ interface SelectInputProps {
   onChange: (value: { value: string; label: string }) => void;
 }
 
-const SelectInput: FC<SelectInputProps> = ({
+export const CustomSelectInput: FC<SelectInputProps> = ({
   defaultValue,
   options,
   onChange,
@@ -27,4 +27,3 @@ const SelectInput: FC<SelectInputProps> = ({
     ))}
   </Select>
 );
-export default SelectInput;

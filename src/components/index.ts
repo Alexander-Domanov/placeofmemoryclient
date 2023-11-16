@@ -12,3 +12,13 @@ export { getHomeLayout } from './layouts/HomeLayout';
 
 // dashboard
 export { DashboardSelectLanguage } from './dashboard/dashboard-select-language/DashboardSelectLanguage';
+
+// dashboard helpers
+export * from './dashboard/helpers/ColorStatusTag';
+export * from './dashboard/helpers/CreateBreadcrumb';
+export * from './dashboard/helpers/GetCharacterCount.helper';
+export * from './dashboard/helpers/GetEllipsisSlug.helper';
+export * from './dashboard/helpers/QuillCharacterCount';
+export * from './dashboard/helpers/RenderImage';
+export * from './dashboard/helpers/CustomSelectInput';
+export * from './dashboard/helpers/SupportedImageFormatsTooltip';
