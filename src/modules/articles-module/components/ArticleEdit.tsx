@@ -38,6 +38,7 @@ import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdat
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
 
 const { Option } = Select;
 
@@ -342,14 +343,20 @@ export const ArticleEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
-                    tooltip="You can upload up to one photo. After uploading, you should save the article."
+                    tooltip={
+                      <span>
+                        You can upload up to one photo. After uploading, you
+                        should save the article.{' '}
+                        <SupportedImageFormatsTooltip />
+                      </span>
+                    }
                   >
                     <Upload {...uploadProps}>
                       <Button
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        Click to upload
+                        + Upload (Max: 1)
                       </Button>
                     </Upload>
                   </Form.Item>

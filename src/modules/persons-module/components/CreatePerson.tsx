@@ -28,6 +28,7 @@ import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson'
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -335,15 +336,20 @@ export const CreatePerson: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
-                  tooltip="You can upload up to 3 photos, the first photo will be the main one.
-                      After uploading, you should save the person."
+                  tooltip={
+                    <span>
+                      You can upload up to 3 photos, the first photo will be the
+                      main one. After uploading, you should save the person.{' '}
+                      <SupportedImageFormatsTooltip />
+                    </span>
+                  }
                 >
                   <Upload {...uploadProps} maxCount={3} multiple>
                     <Button
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 2}
                     >
-                      Click to upload
+                      + Upload (Max: 3)
                     </Button>
                   </Upload>
                 </Form.Item>

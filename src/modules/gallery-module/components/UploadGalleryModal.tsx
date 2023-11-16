@@ -3,6 +3,7 @@ import { message, Modal, notification, Upload, UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
 import { IGalleryFile } from '@/types';
+import { IMAGE_FORMATS } from '@/common/constants';
 
 interface Props {
   isOpen: boolean;
@@ -11,7 +12,6 @@ interface Props {
 }
 
 const MAX_UPLOAD_FILES = 5;
-const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
 
 const { Dragger } = Upload;
 

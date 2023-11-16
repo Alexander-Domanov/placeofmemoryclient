@@ -21,6 +21,7 @@ import { IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -173,14 +174,19 @@ export const ArticleCreate: FC = () => {
                   getValueFromEvent={normFile}
                   rules={[{ required: true }]}
                   shouldUpdate
-                  tooltip="You can upload up to one photo. After uploading, you should save the article."
+                  tooltip={
+                    <span>
+                      You can upload up to one photo. After uploading, you
+                      should save the article. <SupportedImageFormatsTooltip />
+                    </span>
+                  }
                 >
                   <Upload {...uploadProps}>
                     <Button
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      Click to upload
+                      + Upload (Max: 1)
                     </Button>
                   </Upload>
                 </Form.Item>

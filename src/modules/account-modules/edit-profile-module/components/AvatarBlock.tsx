@@ -6,6 +6,7 @@ import {
 import { useUserStore } from '@/store/userStore';
 import { AvatarComponent, Button, Input } from '@/ui';
 import { Spinner } from '@/ui/spinner/Spinner';
+import { IMAGE_FORMATS } from '@/common/constants';
 
 export const AvatarBlock = () => {
   const { urlAvatar, setUrlAvatar } = useUserStore();
@@ -47,7 +48,7 @@ export const AvatarBlock = () => {
         </Button>
         <Input
           type="file"
-          accept="image/jpeg,image/png, image/jpeg, image/tif"
+          accept={IMAGE_FORMATS.join(',')}
           ref={fileInputRef}
           className="hidden"
           id="fileInput"

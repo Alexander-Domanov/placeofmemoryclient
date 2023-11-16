@@ -35,6 +35,7 @@ import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
+import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
 
 interface IPlaceEditForm {
   country: string;
@@ -418,14 +419,19 @@ export const PlaceEdit: FC = () => {
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={[{ required: true }]}
-                    tooltip="You can upload up to one photo. After uploading, you should save the place."
+                    tooltip={
+                      <span>
+                        You can upload up to one photo. After uploading, you
+                        should save the place. <SupportedImageFormatsTooltip />
+                      </span>
+                    }
                   >
                     <Upload {...uploadProps}>
                       <Button
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        Click to upload
+                        + Upload (Max: 1)
                       </Button>
                     </Upload>
                   </Form.Item>

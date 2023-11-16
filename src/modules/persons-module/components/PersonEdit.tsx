@@ -39,6 +39,7 @@ import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
+import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
 
 function breadcrumbs(name: string) {
   return [
@@ -514,8 +515,13 @@ export const PersonEdit: FC = () => {
                       valuePropName="fileList"
                       getValueFromEvent={normFile}
                       rules={[{ required: true }]}
-                      tooltip="You can upload up to 3 photos, the first photo will be the main one.
-                      After uploading, you should save the person."
+                      tooltip={
+                        <span>
+                          You can upload up to 3 photos, the first photo will be
+                          the main one. After uploading, you should save the
+                          person. <SupportedImageFormatsTooltip />
+                        </span>
+                      }
                     >
                       <Upload
                         {...uploadProps}
@@ -527,7 +533,7 @@ export const PersonEdit: FC = () => {
                           icon={<UploadOutlined />}
                           disabled={fileList.length > 2 || isDisabled}
                         >
-                          Click to upload
+                          + Upload (Max: 3)
                         </Button>
                       </Upload>
                     </Form.Item>
