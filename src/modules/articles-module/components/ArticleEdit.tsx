@@ -118,9 +118,9 @@ export const ArticleEdit: FC = () => {
         content: article.content,
         photo: article.photos.map((f) => ({
           uid: f.uploadId,
-          name: 'random.name',
+          name: f.uploadId,
           status: 'done',
-          url: f.versions.huge.url,
+          url: f.versions.medium.url,
           response: { ...f },
         })),
       });
@@ -335,7 +335,7 @@ export const ArticleEdit: FC = () => {
                     name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={ArticleFormRules.photo}
+                    rules={ArticleFormRules.photo.rules}
                     tooltip={
                       <span>
                         You can upload up to one photo. After uploading, you
@@ -349,7 +349,7 @@ export const ArticleEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: {ArticleFormRules.photo[1].max})
+                        + Upload (Max: {ArticleFormRules.photo.maxFileSize})
                       </Button>
                     </Upload>
                   </Form.Item>

@@ -225,7 +225,7 @@ export const ArticleCreate: FC = () => {
                   name="photo"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={ArticleFormRules.photo}
+                  rules={ArticleFormRules.photo.rules}
                   shouldUpdate
                   tooltip={
                     <span>
@@ -239,7 +239,7 @@ export const ArticleCreate: FC = () => {
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      + Upload (Max: {ArticleFormRules.photo[1].max})
+                      + Upload (Max: {ArticleFormRules.photo.maxFileSize})
                     </Button>
                   </Upload>
                 </Form.Item>

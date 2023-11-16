@@ -11,5 +11,8 @@ export const ArticleFormRules = {
     { required: true },
     { max: 10000, message: `Content must be at most 10 000 characters` },
   ],
-  photo: [{ required: true }, { max: 1, message: `Photo must be at most 1` }],
+  photo: {
+    rules: [{ required: true }],
+    maxFileSize: 1,
+  },
 };
