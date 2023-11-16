@@ -14,12 +14,12 @@ import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
-import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
+import { CustomSelectInput } from '@/components';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -251,7 +251,7 @@ export const Persons: FC = () => {
             style={{ width: 180 }}
           />
 
-          <SelectInput
+          <CustomSelectInput
             defaultValue={{
               value: FileStatuses.ALL,
               label: 'All',

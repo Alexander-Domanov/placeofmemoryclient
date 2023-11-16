@@ -36,10 +36,10 @@ import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdateP
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
-import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
+import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
 
 function breadcrumbs(name: string) {
   return [

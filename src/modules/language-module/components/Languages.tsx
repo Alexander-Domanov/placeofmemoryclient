@@ -8,7 +8,7 @@ import {
 import { ILanguage } from '@/types';
 import { useGetListLanguages } from '@/services';
 import { columnsTableLanguages } from '@/modules/language-module/components/ColumnsTableLanguages';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
 
 const breadcrumbs = [

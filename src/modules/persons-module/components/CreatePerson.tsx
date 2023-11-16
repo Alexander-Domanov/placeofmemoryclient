@@ -27,8 +27,8 @@ import { routes } from '@/common/routing/routes';
 import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

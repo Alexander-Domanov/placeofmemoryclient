@@ -29,9 +29,9 @@ import { columnsTablePersons, Persons } from '@/modules/persons-module';
 import { Articles } from '@/modules/articles-module';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { columnsTablePlaces } from '@/modules/places-module';
-import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { CustomSelectInput } from '@/components';
 
 interface DescriptionItemProps {
   title: string;
@@ -220,7 +220,7 @@ export const UserList: FC = () => {
               style={{ width: 200 }}
             />
 
-            <SelectInput
+            <CustomSelectInput
               defaultValue={{ value: 'all', label: 'All' }}
               options={[
                 { label: 'All', value: 'all' },
@@ -275,7 +275,7 @@ export const UserList: FC = () => {
               style={{ width: 200 }}
             />
 
-            <SelectInput
+            <CustomSelectInput
               defaultValue={{ value: 'all', label: 'All' }}
               options={[
                 { label: 'All', value: 'all' },
@@ -330,7 +330,7 @@ export const UserList: FC = () => {
               style={{ width: 200 }}
             />
 
-            <SelectInput
+            <CustomSelectInput
               defaultValue={{ value: 'all', label: 'All' }}
               options={[
                 { label: 'All', value: 'all' },

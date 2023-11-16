@@ -5,12 +5,12 @@ import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { FileStatuses, IPlace, Role } from '@/types';
-import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
+import { CustomSelectInput } from '@/components';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -171,7 +171,7 @@ export const Places: FC = () => {
             style={{ width: 160 }}
           />
 
-          <SelectInput
+          <CustomSelectInput
             defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
             options={selectInputOptions}
             onChange={onStatusChange}

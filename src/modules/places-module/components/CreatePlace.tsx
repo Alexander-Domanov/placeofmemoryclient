@@ -25,8 +25,8 @@ import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/common-dashboard/helpers/SupportedImageFormatsTooltip';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

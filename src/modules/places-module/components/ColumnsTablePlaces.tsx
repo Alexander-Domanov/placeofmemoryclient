@@ -3,10 +3,10 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
-import { RenderImage } from '@/common-dashboard/helpers/RenderImage';
+import { RenderImage } from '@/components/dashboard/helpers/RenderImage';
 import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
 import UpdatePlaceStatus from '@/modules/places-module/components/UpdatePlaceStatus';
-import { ColorStatusTag } from '@/common-dashboard/helpers/ColorStatusTag';
+import { ColorStatusTag } from '@/components/dashboard/helpers/ColorStatusTag';
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 

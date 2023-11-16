@@ -9,12 +9,12 @@ import {
   UserRolesForSelect,
   UserStatusesForSelect,
 } from '@/types';
-import SelectInput from '@/common-dashboard/helpers/SelectInput';
 import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
 import { userStatusOptions } from '@/modules/users-module/components/helpers/options-user-statuses-select-input';
 import { userRolesOptions } from '@/modules/users-module/components/helpers/options-user-roles-select-input';
+import { CustomSelectInput } from '@/components';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -109,13 +109,13 @@ export const Users: FC = () => {
           style={{ width: 200 }}
         />
 
-        <SelectInput
+        <CustomSelectInput
           defaultValue={{ value: UserStatusesForSelect.ALL, label: 'All' }}
           options={userStatusOptions}
           onChange={onStatusChange}
         />
 
-        <SelectInput
+        <CustomSelectInput
           defaultValue={{ value: UserRolesForSelect.ALL, label: 'All' }}
           options={userRolesOptions}
           onChange={onRoleChange}
