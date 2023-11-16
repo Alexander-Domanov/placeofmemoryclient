@@ -8,3 +8,9 @@ export const IMAGE_FORMATS = [
 ];
 
 export const dateTimeFormat = 'DD.MM.YY HH:mm';
+
+export const MaxAllowedFileSize = 10;
+/**
+ * @description MAX size upload file
+ */
+export const MAX_FILE_SIZE = 1024 * 1024 * MaxAllowedFileSize;
