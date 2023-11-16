@@ -225,7 +225,7 @@ export const ArticleCreate: FC = () => {
                   name="photo"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={[{ required: true }]}
+                  rules={ArticleFormRules.photo}
                   shouldUpdate
                   tooltip={
                     <span>

@@ -22,3 +22,4 @@ export * from './dashboard/helpers/QuillCharacterCount';
 export * from './dashboard/helpers/RenderImage';
 export * from './dashboard/helpers/CustomSelectInput';
 export * from './dashboard/helpers/SupportedImageFormatsTooltip';
+export * from './dashboard/helpers/MetaInfoForm';

@@ -8,14 +8,12 @@ import {
   Flex,
   Form,
   Input,
-  List,
   Modal,
   notification,
   Row,
   Select,
   Space,
   Spin,
-  Typography,
   Upload,
 } from 'antd';
 import dynamic from 'next/dynamic';
@@ -29,18 +27,16 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import { UploadFile } from 'antd/es/upload/interface';
-import Link from 'next/link';
 import { useArticle } from '@/modules/articles-module/hooks/useArticle';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
-import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import {
   CreateBreadcrumb,
   GetCharacterCount,
-  GetEllipsisSlug,
+  MetaInfoForm,
   QuillCharacterCount,
   SupportedImageFormatsTooltip,
 } from '@/components';
@@ -138,8 +134,6 @@ export const ArticleEdit: FC = () => {
     ArticleFormRules.content[1].max as number
   );
   const quillStyle = getQuillStyle(exceeded);
-
-  const ellipsisSlug = GetEllipsisSlug(article?.slug, 30);
 
   const onSubmit = (values: any) => {
     const data = {
@@ -299,61 +293,16 @@ export const ArticleEdit: FC = () => {
                     hasFeedback
                     tooltip="This is a field for SEO and should be unique and contain only latin characters for each article"
                   >
-                    <Input placeholder="Slug" />
+                    <Input.TextArea placeholder="Slug" autoSize />
                   </Form.Item>
 
                   <Form.Item>
-                    <List split={false}>
-                      <List.Item draggable>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Public link: &nbsp;
-                          </span>
-                          <Link
-                            href={{
-                              pathname: routes.articles.getArticle(
-                                article?.slug || ''
-                              ),
-                            }}
-                          >
-                            <Typography.Text
-                              ellipsis
-                              style={{ cursor: 'pointer', color: '#1087f6' }}
-                              title={article?.slug}
-                            >
-                              {ellipsisSlug}
-                            </Typography.Text>
-                          </Link>
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item draggable>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Owner: &nbsp;
-                          </span>
-                          {article?.owner?.userName}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="font-normal text-neutral-400">
-                            Created At: &nbsp;
-                          </span>
-                          {convertDateToFormat(article?.createdAt)}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="font-normal text-neutral-400">
-                            Updated At: &nbsp;
-                          </span>
-                          {convertDateToFormat(article?.updatedAt)}
-                        </Typography.Text>
-                      </List.Item>
-                    </List>
+                    <MetaInfoForm
+                      slug={article?.slug}
+                      owner={article?.owner}
+                      createdAt={article?.createdAt}
+                      updatedAt={article?.updatedAt}
+                    />
                   </Form.Item>
 
                   <Space size="middle" wrap>
@@ -386,7 +335,7 @@ export const ArticleEdit: FC = () => {
                     name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[{ required: true }]}
+                    rules={ArticleFormRules.photo}
                     tooltip={
                       <span>
                         You can upload up to one photo. After uploading, you

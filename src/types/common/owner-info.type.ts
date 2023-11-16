@@ -1,6 +1,6 @@
 import { IAvatarVersions } from '@/types';
 
-interface IOwnerInfo {
+export interface IOwnerInfo {
   id: number;
   userName: string;
   avatars: IAvatarVersions;
