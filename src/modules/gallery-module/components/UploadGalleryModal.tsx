@@ -3,7 +3,7 @@ import { message, Modal, notification, Upload, UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
 import { IGalleryFile } from '@/types';
-import { IMAGE_FORMATS } from '@/common/constants';
+import { IMAGE_FORMATS, MAX_FILE_SIZE } from '@/common/constants';
 
 interface Props {
   isOpen: boolean;
@@ -38,7 +38,7 @@ export const UploadGalleryModal: FC<Props> = ({
     action: `${process.env.NEXT_PUBLIC_BASE_URL}/gallery?img=common`,
     beforeUpload(file) {
       const isImage = IMAGE_FORMATS.includes(file.type);
-      const isLT10MB = file.size <= 10 * 1024 * 1024;
+      const isLT10MB = file.size <= MAX_FILE_SIZE;
 
       if (!isImage) {
         message.error(`${file.name} is not a image`);

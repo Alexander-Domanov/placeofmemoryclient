@@ -13,14 +13,14 @@ import {
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
-import { CreateBreadcrumb } from '@/common-dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { routes } from '@/common/routing/routes';
 import { FileStatuses, ImageResourceType, Role } from '@/types';
 import {
   fileStatusOptions,
   typeFileOptions,
 } from '@/common-dashboard/options-file-statuses-select-input';
-import SelectInput from '@/common-dashboard/helpers/SelectInput';
+import { CustomSelectInput } from '@/components';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -101,14 +101,14 @@ export const Gallery: FC = () => {
           {(me?.role === Role.ADMIN ||
             me?.role === Role.AUTHOR ||
             me?.role === Role.EDITOR) && (
-            <SelectInput
+            <CustomSelectInput
               defaultValue={{ value: ImageResourceType.ALL, label: 'All' }}
               options={typeFileOptions}
               onChange={onTypeChange}
             />
           )}
 
-          <SelectInput
+          <CustomSelectInput
             defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
             options={selectInputOptions}
             onChange={onStatusChange}
