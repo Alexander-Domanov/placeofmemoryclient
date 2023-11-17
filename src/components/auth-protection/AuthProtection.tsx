@@ -24,10 +24,13 @@ const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   );
 
   useEffect(() => {
-    if (isSuccess && routes.unProtectedPaths.includes(pathname)) {
+    const res = routes.unProtectedPaths.some((unprotectedPath) =>
+      unprotectedPath.startsWith(pathname)
+    );
+    if (isSuccess && res) {
       replace(routes.main, undefined, { shallow: true });
     }
-    if (isError && !routes.unProtectedPaths.includes(pathname)) {
+    if (isError && !res) {
       replace(routes.auth.signIn, undefined, { shallow: true });
     }
   }, [isSuccess, isError]);

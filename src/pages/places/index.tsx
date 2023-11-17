@@ -31,7 +31,9 @@ const Places = () => {
       <Head>
         <title>{t.places.indexTitle} | MOGILKI</title>
       </Head>
-      <PlacesMain />
+      <div className="container">
+        <PlacesMain />
+      </div>
     </>
   );
 };

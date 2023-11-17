@@ -8,7 +8,7 @@ export const LayoutWithHeader: NextPage<PropsWithChildren> = ({ children }) => {
     <>
       <Header />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

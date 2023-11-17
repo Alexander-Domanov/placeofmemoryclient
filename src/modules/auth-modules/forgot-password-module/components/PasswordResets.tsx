@@ -56,7 +56,7 @@ export const PasswordResets = () => {
           <h1 className="font-semibold text-center sm:text-2xl text-4xl">
             Забыліся на пароль
           </h1>
-          <hr className="w-full mt-8 mb-8 transform bg-[#565656]" />
+          <hr className="w-full mt-8 mb-8 transform bg-light-900" />
           <div className="break-normal mb-3 sm:text-xs text-justify sm:w-[320px] text-sm w-[416px]">
             <p>
               Увядзіце адрас электроннай пошты, які вы выкарыстоўвалі, калі

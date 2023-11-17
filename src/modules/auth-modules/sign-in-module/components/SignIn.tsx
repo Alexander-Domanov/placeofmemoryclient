@@ -58,7 +58,7 @@ export const SignIn = () => {
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
         Рэдактаваць акаўнт
       </h1>
-      <hr className="w-full mt-8 mb-8 transform bg-[#565656]" />
+      <hr className="w-full mt-8 mb-8 transform bg-light-900" />
       <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
         Увайдзіце праз Google
       </Button>

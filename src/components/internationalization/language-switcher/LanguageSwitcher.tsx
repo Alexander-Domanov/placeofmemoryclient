@@ -14,8 +14,8 @@ interface Language {
 }
 
 const languages: Language[] = [
-  { slug: 'By', title: 'Бел' },
-  { slug: 'Ru', title: 'Рус' },
+  { slug: 'by', title: 'Бел' },
+  { slug: 'ru', title: 'Рус' },
 ];
 
 export const LanguageSwitcher: FC = () => {
@@ -37,7 +37,7 @@ export const LanguageSwitcher: FC = () => {
             onSelect={() => onSelectLanguage(item.slug)}
             key={index}
           >
-            {item.slug}
+            {item.title}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

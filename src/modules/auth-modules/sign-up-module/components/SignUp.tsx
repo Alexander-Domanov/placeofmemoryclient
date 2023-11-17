@@ -33,7 +33,7 @@ export const SignUp = () => {
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
         Рэгістрацыя акаўнта
       </h1>
-      <hr className="w-full mt-8 mb-8 transform bg-[#565656]" />
+      <hr className="w-full mt-8 mb-8 transform bg-light-900" />
       {!showOrHiddenForm && (
         <>
           <Button

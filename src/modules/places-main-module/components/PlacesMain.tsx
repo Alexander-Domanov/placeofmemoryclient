@@ -1,11 +1,7 @@
 import Link from 'next/link';
-import {
-  AiOutlineHome,
-  AiOutlineLeftCircle,
-  AiOutlineRightCircle,
-} from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
 import { useDebounce } from 'usehooks-ts';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
@@ -13,40 +9,40 @@ import { useGetPlacesMain } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 import { Input } from '@/ui';
+import PaginationCustom from '@/components/pagination/PaginationCustom';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 export const PlacesMain = () => {
-  const { push, query, pathname, replace } = useRouter();
-  const [page, setPage] = useState<number | string>('');
+  const { push, query } = useRouter();
+  const [page, setPage] = useState<number>();
   const [name, setName] = useState<string>('');
   const [country, setCountry] = useState<string>('');
   const [city, setCity] = useState<string>('');
   const vName = useDebounce(name, 1000);
   const vCountry = useDebounce(country, 1000);
   const vCity = useDebounce(city, 1000);
-
+  const pageParams = query.page as string;
+  const { width } = useWindowSize();
   const { dataPlaces, isLoading } = useGetPlacesMain({
     name: vName,
     city: vCity,
     country: vCountry,
     pageNumber: Number(page),
   });
-  const onHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (dataPlaces) {
-      // eslint-disable-next-line no-nested-ternary
-      Number(e.currentTarget.value) > dataPlaces.pagesCount
-        ? setPage(dataPlaces.pagesCount)
-        : Number(e.currentTarget.value) < 1
-        ? setPage('')
-        : setPage(Number(e.currentTarget.value));
-    }
+  const onPageChange = (newPage: number) => {
+    setPage(newPage);
+    push(`/places?page=${newPage}`, undefined, { shallow: true });
   };
   useEffect(() => {
-    push(`/places?page=${page}`);
-  }, [page]);
+    if (pageParams === undefined) {
+      setPage(1);
+      push(`/places?page=${1}`, undefined, { shallow: true });
+    }
+  }, []);
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
+      <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
         <Link href={routes.main} className="cursor-pointer">
           <AiOutlineHome size={22} />
         </Link>
@@ -56,16 +52,16 @@ export const PlacesMain = () => {
         <span className="text-accent-100">Архіў_Месцаў</span>
       </div>
 
-      <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
+      <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
         <h2 className="text-light-300 text-5xl sm:text-3xl">
           Архіў
           <span className="text-dark-100 font-light ">_Месцаў</span>
         </h2>
       </div>
 
-      <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" />
+      <hr className="w-full mt-[28px] mb-8 transform bg-light-900" />
 
-      <div className="flex gap-4 mt-14">
+      <div className="flex md:justify-center flex-wrap gap-4">
         <div>
           <Input
             label="Назва"
@@ -90,10 +86,13 @@ export const PlacesMain = () => {
       </div>
       {dataPlaces && dataPlaces.items.length > 0 ? (
         dataPlaces.items.map((place) => (
-          <div className="flex w-full items-center gap-16" key={place.id}>
+          <div
+            className="flex w-full md:justify-center items-center gap-16"
+            key={place.id}
+          >
             {place.photos.map((photo) => (
               <div
-                className="flex mt-12  bg-dark-900 justify-center w-[540px] h-[240px]"
+                className="flex md:relative mt-12  bg-dark-900 justify-center  w-[540px] h-[240px]"
                 key={place.id}
               >
                 <Link
@@ -102,55 +101,50 @@ export const PlacesMain = () => {
                   }}
                 >
                   <ImageComponent
-                    className="object-cover"
+                    className="md:absolute md:left-0 object-cover"
                     alt={photo.alt}
-                    width={540}
-                    height={240}
+                    width={width && width <= 767 ? 300 : 540}
+                    height={width && width <= 767 ? 100 : 240}
                     src={photo.versions.huge.url}
                   />
+                  {width && width <= 767 && (
+                    <div className="absolute px-3 py-3 bg-opacity-70 bg-[#292929] h-full tran left-0 flex justify-center align-middle gap-2 flex-col break-words">
+                      <h3 className="text-sm font-medium text-dark-100">
+                        {place.nameCemetery}
+                      </h3>
+                      <section className="text-base text-light-300 break-words font-light">
+                        <MarkupRenderer
+                          markup={`${place.description.substring(0, 140)}...`}
+                        />
+                      </section>
+                    </div>
+                  )}
                 </Link>
               </div>
             ))}
-            <div className="flex gap-10 max-w-[540px] flex-col break-words">
-              <h3 className="text-4xl font-light leading-7 text-dark-100">
-                {place.nameCemetery}
-              </h3>
-              <section className="text-xl text-light-300 leading-7 break-words font-light">
-                <MarkupRenderer
-                  markup={`${place.description.substring(0, 140)}...`}
-                />
-              </section>
-            </div>
+            {width && width > 767 && (
+              <div className="flex gap-10 flex-col break-words">
+                <h3 className="text-4xl font-light text-dark-100">
+                  {place.nameCemetery}
+                </h3>
+                <section className="text-xl text-light-300 break-words font-light">
+                  <MarkupRenderer
+                    markup={`${place.description.substring(0, 140)}...`}
+                  />
+                </section>
+              </div>
+            )}
           </div>
         ))
       ) : (
         <div>No Places</div>
       )}
       {dataPlaces && dataPlaces.items.length > 0 && (
-        <div className="flex align-middle mt-[82px] justify-between">
-          {Number(page) > 1 ? (
-            <AiOutlineLeftCircle
-              size={56}
-              fill="#bdc1c7"
-              onClick={() => setPage(Number(page) - 1)}
-            />
-          ) : (
-            <div />
-          )}
-          <div className="font-normal text-xs leading-6 text-light-100">
-            <Input type="number" value={page} onChange={onHandler} />/
-            <span className="text-dark-100">{dataPlaces.pagesCount}</span>
-          </div>
-          {page !== dataPlaces.pagesCount ? (
-            <AiOutlineRightCircle
-              size={56}
-              fill="#bdc1c7"
-              onClick={() => setPage(Number(page) + 1)}
-            />
-          ) : (
-            <div />
-          )}
-        </div>
+        <PaginationCustom
+          onPageChange={onPageChange}
+          page={Number(page)}
+          pageCount={dataPlaces.pagesCount}
+        />
       )}
     </div>
   );

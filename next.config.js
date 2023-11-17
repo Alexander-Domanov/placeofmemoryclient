@@ -12,8 +12,8 @@ const nextConfig = {
     ],
   },
   i18n: {
-    locales: ['By', 'Ru',],
-    defaultLocale: 'By',
+    locales: ['by', 'ru',],
+    defaultLocale: 'by',
   },
 };
 
