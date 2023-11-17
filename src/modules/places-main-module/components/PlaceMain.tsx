@@ -30,7 +30,7 @@ export const PlaceMain = () => {
       {dataPlace && (
         <>
           <div className="flex flex-col">
-            <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
+            <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
               <Link href={routes.main} className="cursor-pointer">
                 <AiOutlineHome size={22} />
               </Link>
@@ -46,7 +46,7 @@ export const PlaceMain = () => {
               <span className="text-accent-100">{dataPlace.nameCemetery}</span>
             </div>
 
-            <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
+            <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
               <h2 className="text-light-300 text-5xl sm:text-3xl">
                 Архіў
                 <span className="text-dark-100 font-light ">_Могілка</span>
@@ -54,12 +54,12 @@ export const PlaceMain = () => {
             </div>
           </div>
 
-          <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" />
+          <hr className="w-full mt-[28px] transform bg-light-900" />
 
-          <div className="flex mt-[100px] lg:justify-center lg:flex-wrap gap-[100px]">
+          <div className="flex mt-8 lg:justify-center lg:flex-wrap gap-[100px]">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3">
-                <h1 className="leading-6 sm:text-2xl break-words text-light-300 font-bold sm:leading-3 text-5xl">
+                <h1 className="sm:text-2xl break-words text-light-300 font-bold text-5xl">
                   {dataPlace.nameCemetery}
                 </h1>
               </div>
@@ -81,24 +81,20 @@ export const PlaceMain = () => {
 
             <div className="flex flex-col gap-[70px]">
               <div className="flex flex-col gap-7 md:gap-3 sm:gap-3">
-                <h2 className="text-5xl text-dark-100 font-light leading-7">
+                <h2 className="text-5xl text-dark-100 font-light">
                   Месца знаходжання
                 </h2>
-                <span className="text-xl font-light leading-7">
+                <span className="text-xl font-light">
                   {dataPlace.city}, {dataPlace.country}
                 </span>
               </div>
               <div className="flex flex-col gap-7 md:gap-3 sm:gap-3">
-                <h3 className="text-5xl font-light leading-7 text-dark-100">
-                  Апісанне
-                </h3>
-                <section className="text-xl text-light-300 leading-7 break-words font-light">
+                <h3 className="text-5xl font-light text-dark-100">Апісанне</h3>
+                <section className="text-xl text-light-300 break-words font-light">
                   <MarkupRenderer markup={dataPlace.description} />
                 </section>
                 <div className="flex gap-7 md:gap-3 sm:gap-3 flex-col mt-[70px]">
-                  <h3 className="text-5xl font-light leading-7 text-dark-100">
-                    На мапе
-                  </h3>
+                  <h3 className="text-5xl font-light text-dark-100">На мапе</h3>
                   <section className="">Карта</section>
                 </div>
               </div>

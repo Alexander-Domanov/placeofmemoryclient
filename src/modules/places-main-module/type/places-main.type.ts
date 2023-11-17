@@ -1,34 +1,11 @@
+import { IOwnerInfo } from '@/types';
+
 interface IThumbnail {
   url: string;
   fileName: string;
   width: number;
   height: number;
   fileSize: string;
-}
-
-interface IMedium {
-  url: string;
-  fileName: string;
-  width: number;
-  height: number;
-  fileSize: string;
-}
-
-interface IAvatars {
-  thumbnail: IThumbnail;
-  medium: IMedium;
-}
-
-interface IOwner {
-  id: number;
-  userName: string;
-  avatars: IAvatars;
-}
-
-interface ILocation {
-  place: string;
-  lat: number;
-  lng: number;
 }
 
 interface IVersions {
@@ -39,7 +16,7 @@ interface IVersions {
 interface IPhotos {
   typeFile: string;
   uploadId: string;
-  owner: IOwner;
+  owner: IOwnerInfo;
   status: string;
   mime: string;
   subType: string;
@@ -52,7 +29,7 @@ interface IPhotos {
 interface IPersonsLocation {
   status: string;
   id: number;
-  owner: IOwner;
+  owner: IOwnerInfo;
   firstName: string;
   lastName: string;
   patronymic: string;
@@ -74,7 +51,7 @@ interface IPersonsLocation {
 interface IPlacesMain {
   status: string;
   id: number;
-  owner: IOwner;
+  owner: IOwnerInfo;
   country: string;
   city: string;
   nameCemetery: string;

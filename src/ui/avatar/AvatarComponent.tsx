@@ -8,7 +8,11 @@ interface AvatarComponentProps {
 export const AvatarComponent = ({ src, alt }: AvatarComponentProps) => {
   return (
     <Avatar>
-      <AvatarImage src={src || undefined} alt={alt} />
+      <AvatarImage
+        className="w-[100px] h-[100px]"
+        src={src || undefined}
+        alt={alt}
+      />
       <AvatarFallback>Ava</AvatarFallback>
     </Avatar>
   );

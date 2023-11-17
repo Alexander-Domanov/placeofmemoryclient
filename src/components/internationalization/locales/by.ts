@@ -1,4 +1,4 @@
-export const By = {
+export const by = {
   header: {
     articles: 'Артыкулы',
     places: 'Месца',
@@ -56,4 +56,4 @@ export const By = {
   },
 };
 
-export type LocaleType = typeof By;
+export type LocaleType = typeof by;

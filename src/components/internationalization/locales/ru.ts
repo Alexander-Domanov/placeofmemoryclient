@@ -1,6 +1,6 @@
 import { LocaleType } from '@/components/internationalization';
 
-export const Ru: LocaleType = {
+export const ru: LocaleType = {
   header: {
     articles: 'Артикулы',
     places: 'Места',
