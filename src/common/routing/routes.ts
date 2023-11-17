@@ -14,7 +14,8 @@ export const routes = {
     '/about-the-project',
     '/articles',
     '/',
-    '/places',
+    '/places/[page]',
+    '/places/place/[slug]',
   ],
   dropdownMenuHeader: {
     settings: '/account',
@@ -27,7 +28,8 @@ export const routes = {
   },
   places: {
     index: '/places',
-    place: (slug: string) => `${routes.places.index}/${slug}`,
+    page: (page: string) => `${routes.places.index}/${page}`,
+    place: (slug: string) => `${routes.places.index}/place/${slug}`,
   },
   people: {
     index: '/people',

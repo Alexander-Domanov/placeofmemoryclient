@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import { dehydrate, DehydratedState } from '@tanstack/query-core';
 import { QueryClient } from '@tanstack/react-query';
-import { ParsedUrlQuery } from 'node:querystring';
 import { PlaceMain } from '@/modules/places-main-module/components/PlaceMain';
 import {
   getPlaceMainForSSR,
@@ -31,17 +30,20 @@ export const getStaticProps: GetStaticProps = async (
     },
   };
 };
-interface IParams extends ParsedUrlQuery {
-  slug: string;
-}
-export const getStaticPaths: GetStaticPaths<IParams> = async () => {
-  const res = await getPlacesMainForSSR({});
-  const paths = res.items.map((place) => ({
+export const getStaticPaths = async () => {
+  const resBy = await getPlacesMainForSSR({});
+  const resRu = await getPlacesMainForSSR({ lange: 'ru' });
+  const pathsBy = resBy.items.map((place) => ({
     params: { slug: place.slug },
+    locale: 'by',
+  }));
+  const pathsRu = resRu.items.map((place) => ({
+    params: { slug: place.slug },
+    locale: 'ru',
   }));
   return {
-    paths,
-    fallback: true,
+    paths: [...pathsBy, ...pathsRu],
+    fallback: 'blocking',
   };
 };
 

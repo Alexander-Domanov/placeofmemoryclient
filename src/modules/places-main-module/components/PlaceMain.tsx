@@ -10,7 +10,7 @@ import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 export const PlaceMain = () => {
   const { query } = useRouter();
   const slug = query.slug as string;
-  const { dataPlace } = useGetPlaceMain({ slug });
+  const { dataPlace, isLoading } = useGetPlaceMain({ slug });
   const { width } = useWindowSize();
 
   const prevPageLabel = (
