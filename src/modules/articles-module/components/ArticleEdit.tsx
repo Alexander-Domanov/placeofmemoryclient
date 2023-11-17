@@ -8,7 +8,6 @@ import {
   Flex,
   Form,
   Input,
-  Modal,
   notification,
   Row,
   Select,
@@ -19,7 +18,6 @@ import {
 import dynamic from 'next/dynamic';
 import {
   ClockCircleOutlined,
-  DeleteOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
   InboxOutlined,
@@ -32,7 +30,6 @@ import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
-import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import {
   CreateBreadcrumb,
   GetCharacterCount,
@@ -42,9 +39,11 @@ import {
 } from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
+import DeleteArticleModal from '@/modules/articles-module/components/DeleteArticleModal';
+import { IArticle } from '@/types';
 
 const { Option } = Select;
-const { confirm } = Modal;
+
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 function breadcrumbs(name: string) {
@@ -75,8 +74,8 @@ export const ArticleEdit: FC = () => {
   const { article, isLoading } = useArticle(id);
   const { mutate, isUpdating } = useUpdateArticle(id);
   const { updateStatusArticle, isStatusUpdating } = useUpdateArticleStatus();
-  const { deleteArticleMutationAsync } = useDeleteArticle();
 
+  const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList, 'article');
 
@@ -124,6 +123,7 @@ export const ArticleEdit: FC = () => {
           response: { ...f },
         })),
       });
+      setSelectedArticle(article);
       setContentText(article.content || '');
       setStatus(article.status);
     }
@@ -154,25 +154,6 @@ export const ArticleEdit: FC = () => {
     });
   };
 
-  const onDelete = () => {
-    confirm({
-      title: 'Do you want to delete these article?',
-      okType: 'danger',
-      onOk() {
-        return deleteArticleMutationAsync(+id, {
-          onSuccess: () => {
-            notification.success({
-              message: 'Article was deleted successfully',
-              placement: 'bottomLeft',
-            });
-
-            router.push(routes.dashboard.articles.index);
-          },
-        });
-      },
-    });
-  };
-
   return (
     <Flex gap="large" vertical>
       <div>
@@ -198,7 +179,6 @@ export const ArticleEdit: FC = () => {
                   }
                 >
                   <Input.TextArea
-                    autoSize
                     placeholder="Title"
                     count={{
                       show: true,
@@ -221,7 +201,6 @@ export const ArticleEdit: FC = () => {
                   }
                 >
                   <Input.TextArea
-                    autoSize
                     placeholder="Short Description"
                     count={{
                       show: true,
@@ -289,11 +268,17 @@ export const ArticleEdit: FC = () => {
                   <Form.Item
                     label="Slug"
                     name="slug"
-                    rules={[{ required: true }]}
+                    rules={ArticleFormRules.slug}
                     hasFeedback
                     tooltip="This is a field for SEO and should be unique and contain only latin characters for each article"
                   >
-                    <Input.TextArea placeholder="Slug" autoSize />
+                    <Input.TextArea
+                      placeholder="Slug"
+                      count={{
+                        show: true,
+                        max: ArticleFormRules.slug[1].max,
+                      }}
+                    />
                   </Form.Item>
 
                   <Form.Item>
@@ -316,16 +301,7 @@ export const ArticleEdit: FC = () => {
                       Save
                     </Button>
 
-                    <Button
-                      type="primary"
-                      title="Delete"
-                      danger
-                      ghost
-                      icon={<DeleteOutlined />}
-                      onClick={onDelete}
-                    >
-                      Delete
-                    </Button>
+                    <DeleteArticleModal article={selectedArticle} showButton />
                   </Space>
                 </Card>
 

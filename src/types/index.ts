@@ -14,6 +14,7 @@ export * from './common/summary-status-group.type';
 export * from './common/versions.type';
 export * from './contacts/contacts.type';
 export * from './dropdown-menu/dropdown.type';
+export * from './form/field-data.type';
 export * from './images/avatar-versions.type';
 export * from './images/base-image.type';
 export * from './images/file-versions.type';
