@@ -19,7 +19,7 @@ import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
 import { FileStatuses, Role } from '@/types';
 import { useMeQuery } from '@/services';
-import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
+import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 const { confirm } = Modal;

@@ -22,6 +22,6 @@ export const ArticleFormRules = {
   ],
   photo: {
     rules: [{ required: true }],
-    maxFileSize: 1,
+    maxCount: 1,
   },
 };

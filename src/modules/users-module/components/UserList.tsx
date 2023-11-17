@@ -30,8 +30,7 @@ import { Articles } from '@/modules/articles-module';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { columnsTablePlaces } from '@/modules/places-module';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { CustomSelectInput } from '@/components';
+import { CreateBreadcrumb, CustomSelectInput } from '@/components';
 
 interface DescriptionItemProps {
   title: string;

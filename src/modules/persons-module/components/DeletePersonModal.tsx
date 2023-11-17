@@ -1,10 +1,12 @@
 import { FC, useState } from 'react';
 import { Button, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IPerson, Role } from '@/types';
 import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
 import { useMeQuery } from '@/services';
-import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
+import { GetDisabledStatus } from '@/common-dashboard';
+import { routes } from '@/common/routing/routes';
 
 interface DeletePersonModalProps {
   person: IPerson | null;
@@ -15,6 +17,8 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
   person,
   showButton,
 }) => {
+  const router = useRouter();
+
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
 
@@ -36,6 +40,7 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
           message: `Person: ${selectedPerson?.firstName} deleted successfully`,
           placement: 'bottomLeft',
         });
+        router.push(routes.dashboard.persons.index);
       },
     });
     setDeleteModalVisible(false);
@@ -89,23 +94,6 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
   return (
     <>
       {showButtonDelete(showButton)}
-      <Modal
-        title="Confirm deletion"
-        open={isDeleteModalVisible}
-        onOk={deletePerson}
-        onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
-      >
-        <Space>
-          <div className="site-description-item-profile-wrapper">
-            <span className="text-neutral-400">
-              Are you sure you want to delete the person: &nbsp;
-            </span>
-            {selectedPerson?.firstName}
-          </div>
-        </Space>
-      </Modal>
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}

@@ -4,8 +4,8 @@ import { EditOutlined } from '@ant-design/icons';
 import { IPerson, Role } from '@/types';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import { useMeQuery } from '@/services';
-import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
-import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
+import { GetDisabledStatus } from '@/common-dashboard';
+import { GetUpdateOptions } from '@/components';
 
 interface UpdatePersonStatusComponentProps {
   person: IPerson | null;

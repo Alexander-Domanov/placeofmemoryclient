@@ -10,11 +10,9 @@ import {
   Flex,
   Form,
   Input,
-  List,
   notification,
   Row,
   Space,
-  Typography,
   Upload,
 } from 'antd';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
@@ -22,13 +20,24 @@ import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePerson, IGalleryFile, ILocation } from '@/types';
+import { ICreatePerson, IFieldData, IGalleryFile, ILocation } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
+import {
+  CreateBreadcrumb,
+  GetCharacterCount,
+  MetaInfoLocationForm,
+  MetaInfoSelectedPlaceForm,
+  QuillCharacterCount,
+  SupportedImageFormatsTooltip,
+} from '@/components';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -53,14 +62,6 @@ interface IPersonForm {
   photo: UploadFile<IGalleryFile>[];
 }
 
-interface FieldData {
-  name: string | number | (string | number)[];
-  value?: any;
-  touched?: boolean;
-  validating?: boolean;
-  errors?: string[];
-}
-
 export const CreatePerson: FC = () => {
   const router = useRouter();
 
@@ -70,7 +71,7 @@ export const CreatePerson: FC = () => {
   );
 
   const [form] = Form.useForm();
-  const [fields, setFields] = useState<FieldData[]>([]);
+  const [fields, setFields] = useState<IFieldData[]>([]);
 
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
@@ -83,7 +84,8 @@ export const CreatePerson: FC = () => {
     formattedAddress: string;
   } | null>(null);
   const [biographyText, setBiographyText] = useState('');
-  const [biographyCount, setBiographyCount] = useState(0);
+
+  const biographyCount = GetCharacterCount(biographyText);
 
   const { createPerson, isCreating } = useCreatePerson();
 
@@ -142,6 +144,25 @@ export const CreatePerson: FC = () => {
     });
   };
 
+  const exceeded = isCharacterCountExceeded(
+    biographyCount,
+    PersonFormRules.biography.maxCharacters
+  );
+  const quillStyle = getQuillStyle(exceeded);
+
+  const validateDescription = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: PersonFormRules.biography.maxCharacters,
+      message: PersonFormRules.biography.message,
+      value,
+      callback,
+    });
+  };
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -159,32 +180,53 @@ export const CreatePerson: FC = () => {
       >
         <Row gutter={[16, 16]}>
           <Col span={24} lg={16}>
-            <Card bodyStyle={{ marginBottom: -30 }}>
+            <Card>
               <Form.Item
                 name="firstName"
                 label="First Name"
-                rules={[{ required: true, whitespace: true }]}
+                rules={PersonFormRules.firstName}
                 hasFeedback
               >
-                <Input placeholder="Input First Name" allowClear />
+                <Input
+                  placeholder="Input First Name"
+                  allowClear
+                  count={{
+                    show: true,
+                    max: PersonFormRules.firstName[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 name="lastName"
                 label="Last Name"
-                rules={[{ required: true, whitespace: true }]}
+                rules={PersonFormRules.lastName}
                 hasFeedback
               >
-                <Input placeholder="Input Last Name" allowClear />
+                <Input
+                  placeholder="Input Last Name"
+                  allowClear
+                  count={{
+                    show: true,
+                    max: PersonFormRules.lastName[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 name="patronymic"
                 label="Patronymic"
-                rules={[{ whitespace: true }]}
+                rules={PersonFormRules.patronymic}
                 hasFeedback
               >
-                <Input placeholder="Input Patronymic" allowClear />
+                <Input
+                  placeholder="Input Patronymic"
+                  allowClear
+                  count={{
+                    show: true,
+                    max: PersonFormRules.patronymic[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Flex gap="large">
@@ -200,35 +242,67 @@ export const CreatePerson: FC = () => {
               <Form.Item
                 name="country"
                 label="Country"
-                rules={[{ whitespace: true }]}
+                rules={PersonFormRules.country}
                 hasFeedback
+                tooltip="This field is filled in automatically when you select a location on the map."
               >
-                <Input placeholder="n/a" disabled />
+                <Input
+                  placeholder="n/a"
+                  disabled
+                  count={{
+                    show: true,
+                    max: PersonFormRules.country[1].max,
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 name="city"
                 label="City"
-                rules={[{ whitespace: true }]}
+                rules={PersonFormRules.city}
                 hasFeedback
+                tooltip="This field is filled in automatically when you select a location on the map."
               >
-                <Input placeholder="n/a" disabled />
+                <Input
+                  placeholder="n/a"
+                  disabled
+                  count={{
+                    show: true,
+                    max: PersonFormRules.city[1].max,
+                  }}
+                />
               </Form.Item>
 
-              <Form.Item name="biography" label="Biography">
+              <Form.Item
+                name="biography"
+                label="Biography"
+                rules={[
+                  { validator: validateDescription },
+                  ...PersonFormRules.biography.rules,
+                ]}
+                tooltip={
+                  <span>
+                    You can use the rich text editor to format the text. The
+                    maximum number of characters is{' '}
+                    {PersonFormRules.biography.maxCharacters}.{' '}
+                  </span>
+                }
+              >
                 <ReactQuill
                   theme="snow"
                   value={biographyText}
                   onChange={(value) => {
                     setBiographyText(value);
-                    setBiographyCount(value.length);
                     form.setFieldValue('biography', value);
                   }}
+                  style={quillStyle}
                 />
-                <span className="font-normal text-neutral-400">
-                  Characters: {biographyCount}
-                </span>
               </Form.Item>
+
+              <QuillCharacterCount
+                characterCount={biographyCount}
+                maxCount={PersonFormRules.biography.maxCharacters}
+              />
             </Card>
           </Col>
 
@@ -247,79 +321,32 @@ export const CreatePerson: FC = () => {
                 </Space>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Place"
                   tooltip="Select a location from the list to link it to a specific location on the map."
                 >
                   <TitlePlaces onFinishValue={setSelectedPlace} />
 
-                  <Form.Item style={{ marginBottom: 0 }}>
-                    <List split={false}>
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Selected place: &nbsp;
-                          </span>
-                          {selectedPlace?.value}
-                        </Typography.Text>
-                      </List.Item>
+                  <MetaInfoSelectedPlaceForm place={selectedPlace} />
 
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Formatted address: &nbsp;
-                          </span>
-                          {selectedPlace?.formattedAddress}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <Row justify="end">
-                        <Button type="dashed" onClick={clearSelectedPlace}>
-                          Clear
-                        </Button>
-                      </Row>
-                    </List>
-                  </Form.Item>
+                  <Row justify="end" style={{ marginBottom: -20 }}>
+                    <Button type="dashed" onClick={clearSelectedPlace}>
+                      Clear
+                    </Button>
+                  </Row>
                 </Form.Item>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Location"
                   name="location"
-                  rules={[{ required: true }]}
+                  rules={PersonFormRules.location}
                   hasFeedback
                   tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
-                  <List split={false}>
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Formatted Address: &nbsp;
-                        </span>
-                        {selectedLocation?.place}
-                      </Typography.Text>
-                    </List.Item>
-
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Longitude: &nbsp;
-                        </span>
-                        {selectedLocation?.lng}
-                      </Typography.Text>
-                    </List.Item>
-
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Latitude: &nbsp;
-                        </span>
-                        {selectedLocation?.lat}
-                      </Typography.Text>
-                    </List.Item>
-                  </List>
+                  <MetaInfoLocationForm location={selectedLocation} />
 
                   <Space size={16}>
                     <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
@@ -327,29 +354,34 @@ export const CreatePerson: FC = () => {
                 </Form.Item>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Photos"
                   name="photo"
                   hasFeedback
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={[{ required: true }]}
+                  rules={PersonFormRules.photo.rules}
                   shouldUpdate
                   tooltip={
                     <span>
-                      You can upload up to 3 photos, the first photo will be the
-                      main one. After uploading, you should save the person.{' '}
+                      You can upload up to {PersonFormRules.photo.maxCount}{' '}
+                      photos, the first photo will be the main one. After
+                      uploading, you should save the person.{' '}
                       <SupportedImageFormatsTooltip />
                     </span>
                   }
                 >
-                  <Upload {...uploadProps} maxCount={3} multiple>
+                  <Upload
+                    {...uploadProps}
+                    maxCount={PersonFormRules.photo.maxCount}
+                    multiple
+                  >
                     <Button
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 2}
                     >
-                      + Upload (Max: 3)
+                      + Upload (Max: {PersonFormRules.photo.maxCount})
                     </Button>
                   </Upload>
                 </Form.Item>

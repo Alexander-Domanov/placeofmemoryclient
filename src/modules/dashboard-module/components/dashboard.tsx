@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Breadcrumb, Flex, Spin } from 'antd';
 import { usePersonsForMap } from '@/modules/dashboard-module/hooks/usePersonsForMap';
 import MapWithClusterMarkers from '@/modules/maps/components/MapWithClusterMarkers';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components';
 import { routes } from '@/common/routing/routes';
 
 const breadcrumbs = [

@@ -23,15 +23,15 @@ import { ICreatePlace, IFieldData, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
-import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
-import { ValidationOfRedactorValue } from '@/common-dashboard';
 import {
+  CreateBreadcrumb,
   GetCharacterCount,
   MetaInfoLocationForm,
   QuillCharacterCount,
+  SupportedImageFormatsTooltip,
 } from '@/components';
+import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
@@ -123,7 +123,7 @@ export const CreatePlace: FC = () => {
   };
 
   const exceededDescription = isCharacterCountExceeded(
-    GetCharacterCount(descriptionText),
+    descriptionCount,
     PlaceFormRules.description.maxCharacters
   );
   const quillStyle = getQuillStyle(exceededDescription);
@@ -284,7 +284,7 @@ export const CreatePlace: FC = () => {
                 <Form.Item
                   label="Location"
                   name="location"
-                  rules={[{ required: true }]}
+                  rules={PlaceFormRules.location}
                   hasFeedback
                   tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
@@ -307,8 +307,9 @@ export const CreatePlace: FC = () => {
                   shouldUpdate
                   tooltip={
                     <span>
-                      You can upload up to one photo. After uploading, you
-                      should save the place. <SupportedImageFormatsTooltip />
+                      You can upload up to {PlaceFormRules.photo.maxCount}{' '}
+                      photo. After uploading, you should save the place.{' '}
+                      <SupportedImageFormatsTooltip />
                     </span>
                   }
                 >
@@ -317,7 +318,7 @@ export const CreatePlace: FC = () => {
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      + Upload (Max: {PlaceFormRules.photo.maxFileSize})
+                      + Upload (Max: {PlaceFormRules.photo.maxCount})
                     </Button>
                   </Upload>
                 </Form.Item>

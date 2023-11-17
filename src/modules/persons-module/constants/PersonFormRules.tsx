@@ -1,4 +1,23 @@
-export const PlaceFormRules = {
+export const PersonFormRules = {
+  firstName: [
+    { required: true },
+    { max: 120, message: `First name limit is 120 characters` },
+    { whitespace: true },
+  ],
+  lastName: [
+    { required: true },
+    { max: 120, message: `Last name limit is 120 characters` },
+    { whitespace: true },
+  ],
+  patronymic: [
+    { whitespace: true },
+    { max: 120, message: `Patronymic limit is 120 characters` },
+  ],
+  biography: {
+    rules: [{ required: true }],
+    maxCharacters: 500,
+    message: `Biography limit is 500 characters`,
+  },
   country: [
     { required: true },
     { max: 120, message: `Country limit is 120 characters` },
@@ -9,20 +28,6 @@ export const PlaceFormRules = {
     { max: 120, message: `City limit is 120 characters` },
     { whitespace: true },
   ],
-  nameCemetery: [
-    { required: true },
-    { max: 120, message: `Name Cemetery limit is 120 characters` },
-  ],
-  shortDescription: {
-    rules: [{ required: true }],
-    maxCharacters: 300,
-    message: `Short Description limit is 300 characters`,
-  },
-  description: {
-    rules: [{ required: true }],
-    maxCharacters: 5000,
-    message: `Description limit is 5000 characters`,
-  },
   location: [{ required: true }],
   slug: [
     { required: true },
@@ -34,6 +39,6 @@ export const PlaceFormRules = {
   ],
   photo: {
     rules: [{ required: true }],
-    maxCount: 1,
+    maxCount: 3,
   },
 };

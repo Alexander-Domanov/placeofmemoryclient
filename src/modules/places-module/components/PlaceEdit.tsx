@@ -29,14 +29,14 @@ import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModa
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
-import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
 import {
+  CreateBreadcrumb,
   GetCharacterCount,
+  GetUpdateOptions,
   MetaInfoForm,
   MetaInfoLocationForm,
   QuillCharacterCount,
+  SupportedImageFormatsTooltip,
 } from '@/components';
 import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
@@ -380,7 +380,7 @@ export const PlaceEdit: FC = () => {
                   <Form.Item
                     label="Location"
                     name="location"
-                    rules={[{ required: true }]}
+                    rules={PlaceFormRules.location}
                     hasFeedback
                     tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
@@ -399,8 +399,9 @@ export const PlaceEdit: FC = () => {
                     rules={PlaceFormRules.photo.rules}
                     tooltip={
                       <span>
-                        You can upload up to one photo. After uploading, you
-                        should save the place. <SupportedImageFormatsTooltip />
+                        You can upload up to {PlaceFormRules.photo.maxCount}{' '}
+                        photo. After uploading, you should save the place.{' '}
+                        <SupportedImageFormatsTooltip />
                       </span>
                     }
                   >
@@ -409,7 +410,7 @@ export const PlaceEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: {PlaceFormRules.photo.maxFileSize})
+                        + Upload (Max: {PlaceFormRules.photo.maxCount})
                       </Button>
                     </Upload>
                   </Form.Item>

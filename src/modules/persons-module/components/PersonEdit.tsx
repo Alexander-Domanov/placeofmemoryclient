@@ -9,13 +9,11 @@ import {
   Flex,
   Form,
   Input,
-  List,
   notification,
   Row,
   Select,
   Space,
   Spin,
-  Typography,
   Upload,
 } from 'antd';
 import { useRouter } from 'next/router';
@@ -23,7 +21,6 @@ import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
-import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePerson, IGalleryFile, ILocation, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
@@ -34,12 +31,25 @@ import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
-import { GetDisabledStatus } from '@/common-dashboard/GetDisabledStatus.helper';
-import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
+import {
+  CreateBreadcrumb,
+  GetCharacterCount,
+  GetUpdateOptions,
+  MetaInfoForm,
+  MetaInfoLocationForm,
+  MetaInfoSelectedPlaceForm,
+  QuillCharacterCount,
+  SupportedImageFormatsTooltip,
+} from '@/components';
+import {
+  GetDisabledStatus,
+  ValidationOfRedactorValue,
+} from '@/common-dashboard';
+import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 function breadcrumbs(name: string) {
   return [
@@ -96,7 +106,8 @@ export const PersonEdit: FC = () => {
     formattedAddress: string;
   } | null>(null);
   const [biographyText, setBiographyText] = useState('');
-  const [biographyCount, setBiographyCount] = useState(0);
+
+  const biographyCount = GetCharacterCount(biographyText);
 
   const [status, setStatus] = useState('DRAFT');
 
@@ -134,7 +145,6 @@ export const PersonEdit: FC = () => {
         location: person.location.place,
       });
       setBiographyText(person.biography || '');
-      setBiographyCount(person.biography?.length || 0);
       setSelectedLocation(person.location);
       setSelectedPlace({
         value: person.place.name,
@@ -154,13 +164,6 @@ export const PersonEdit: FC = () => {
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
-
-  const ellipsisSlug = useMemo(() => {
-    if (person?.slug && person?.slug.length > 30) {
-      return `${person?.slug.slice(0, 30)}...`;
-    }
-    return person?.slug;
-  }, [person?.slug]);
 
   const handleStatusChange = (selectedStatus: string) => {
     setStatus(selectedStatus);
@@ -218,6 +221,25 @@ export const PersonEdit: FC = () => {
 
   const isDisabled = GetDisabledStatus(status, me?.role as Role);
 
+  const exceeded = isCharacterCountExceeded(
+    biographyCount,
+    PersonFormRules.biography.maxCharacters
+  );
+  const quillStyle = getQuillStyle(exceeded);
+
+  const validateDescription = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: PersonFormRules.biography.maxCharacters,
+      message: PersonFormRules.biography.message,
+      value,
+      callback,
+    });
+  };
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -230,16 +252,20 @@ export const PersonEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
             <Col span={24} lg={14} md={12}>
-              <Card bodyStyle={{ marginBottom: -30 }}>
+              <Card>
                 <Form.Item
                   name="firstName"
                   label="First Name"
-                  rules={[{ required: true, whitespace: true }]}
+                  rules={PersonFormRules.firstName}
                   hasFeedback
                 >
                   <Input
                     placeholder="Input First Name"
                     allowClear
+                    count={{
+                      show: true,
+                      max: PersonFormRules.firstName[1].max,
+                    }}
                     disabled={isDisabled}
                   />
                 </Form.Item>
@@ -247,12 +273,16 @@ export const PersonEdit: FC = () => {
                 <Form.Item
                   name="lastName"
                   label="Last Name"
-                  rules={[{ required: true, whitespace: true }]}
+                  rules={PersonFormRules.lastName}
                   hasFeedback
                 >
                   <Input
                     placeholder="Input Last Name"
                     allowClear
+                    count={{
+                      show: true,
+                      max: PersonFormRules.lastName[1].max,
+                    }}
                     disabled={isDisabled}
                   />
                 </Form.Item>
@@ -260,12 +290,16 @@ export const PersonEdit: FC = () => {
                 <Form.Item
                   name="patronymic"
                   label="Patronymic"
-                  rules={[{ whitespace: true }]}
+                  rules={PersonFormRules.patronymic}
                   hasFeedback
                 >
                   <Input
                     placeholder="Input Patronymic"
                     allowClear
+                    count={{
+                      show: true,
+                      max: PersonFormRules.patronymic[1].max,
+                    }}
                     disabled={isDisabled}
                   />
                 </Form.Item>
@@ -291,35 +325,67 @@ export const PersonEdit: FC = () => {
                 <Form.Item
                   name="country"
                   label="Country"
-                  rules={[{ whitespace: true }]}
+                  rules={PersonFormRules.country}
                   hasFeedback
+                  tooltip="This field is filled in automatically when you select a location on the map."
                 >
-                  <Input placeholder="n/a" disabled />
+                  <Input
+                    placeholder="n/a"
+                    disabled
+                    count={{
+                      show: true,
+                      max: PersonFormRules.country[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name="city"
                   label="City"
-                  rules={[{ whitespace: true }]}
+                  rules={PersonFormRules.city}
                   hasFeedback
+                  tooltip="This field is filled in automatically when you select a location on the map."
                 >
-                  <Input placeholder="n/a" disabled />
+                  <Input
+                    placeholder="n/a"
+                    disabled
+                    count={{
+                      show: true,
+                      max: PersonFormRules.city[1].max,
+                    }}
+                  />
                 </Form.Item>
 
-                <Form.Item name="biography" label="Biography">
+                <Form.Item
+                  name="biography"
+                  label="Biography"
+                  rules={[
+                    { validator: validateDescription },
+                    ...PersonFormRules.biography.rules,
+                  ]}
+                  tooltip={
+                    <span>
+                      You can use the rich text editor to format the text. The
+                      maximum number of characters is{' '}
+                      {PersonFormRules.biography.maxCharacters}.{' '}
+                    </span>
+                  }
+                >
                   <ReactQuill
                     theme="snow"
                     value={biographyText}
                     onChange={(value) => {
                       setBiographyText(value);
-                      setBiographyCount(value.length);
                       form.setFieldValue('biography', value);
                     }}
+                    style={quillStyle}
                   />
-                  <span className="text-neutral-400">
-                    Characters: {biographyCount}
-                  </span>
                 </Form.Item>
+
+                <QuillCharacterCount
+                  characterCount={biographyCount}
+                  maxCount={PersonFormRules.biography.maxCharacters}
+                />
               </Card>
             </Col>
 
@@ -340,69 +406,28 @@ export const PersonEdit: FC = () => {
                   <Form.Item
                     name="slug"
                     label="Slug"
-                    rules={[{ required: true, whitespace: true }]}
+                    rules={PersonFormRules.slug}
                     hasFeedback
                     tooltip="This is a field for SEO and should be unique and contain only latin characters for each person"
                   >
-                    <Input
+                    <Input.TextArea
                       placeholder="This field is auto generated"
-                      allowClear
+                      count={{
+                        show: true,
+                        max: PersonFormRules.slug[1].max,
+                      }}
                       disabled={isDisabled}
                     />
                   </Form.Item>
 
                   <Form.Item>
-                    <List split={false}>
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Public link: &nbsp;
-                          </span>
-                          <Link
-                            href={{
-                              pathname: routes.people.person(
-                                selectedPerson?.slug || ''
-                              ),
-                            }}
-                          >
-                            <Typography.Text
-                              ellipsis
-                              style={{ cursor: 'pointer', color: '#1087f6' }}
-                              title={selectedPerson?.slug}
-                            >
-                              {ellipsisSlug}
-                            </Typography.Text>
-                          </Link>
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Owner: &nbsp;
-                          </span>
-                          {selectedPerson?.owner?.userName}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Created At: &nbsp;
-                          </span>
-                          {convertDateToFormat(person?.createdAt)}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Updated At: &nbsp;
-                          </span>
-                          {convertDateToFormat(person?.updatedAt)}
-                        </Typography.Text>
-                      </List.Item>
-                    </List>
+                    <MetaInfoForm
+                      slug={person?.slug}
+                      path={routes.people.person(person?.slug || '')}
+                      owner={person?.owner}
+                      createdAt={person?.createdAt}
+                      updatedAt={person?.updatedAt}
+                    />
                   </Form.Item>
 
                   <Space size={16}>
@@ -420,7 +445,7 @@ export const PersonEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card bodyStyle={{ marginBottom: -20 }}>
+                <Card>
                   <Form.Item
                     label="Place"
                     tooltip="Select a location from the list to link it to a specific location on the map."
@@ -430,74 +455,25 @@ export const PersonEdit: FC = () => {
                       disabled={isDisabled}
                     />
 
-                    <Form.Item style={{ marginBottom: 0 }}>
-                      <List split={false}>
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Selected place: &nbsp;
-                            </span>
-                            {selectedPlace?.value}
-                          </Typography.Text>
-                        </List.Item>
+                    <MetaInfoSelectedPlaceForm place={selectedPlace} />
 
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Formatted address: &nbsp;
-                            </span>
-                            {selectedPlace?.formattedAddress}
-                          </Typography.Text>
-                        </List.Item>
-
-                        <Row justify="end">
-                          <Button type="dashed" onClick={clearSelectedPlace}>
-                            Clear
-                          </Button>
-                        </Row>
-                      </List>
-                    </Form.Item>
+                    <Row justify="end" style={{ marginBottom: -20 }}>
+                      <Button type="dashed" onClick={clearSelectedPlace}>
+                        Clear
+                      </Button>
+                    </Row>
                   </Form.Item>
                 </Card>
 
-                <Card bodyStyle={{ marginBottom: -20 }}>
+                <Card>
                   <Form.Item
                     label="Location"
                     name="location"
-                    rules={[{ required: true }]}
+                    rules={PersonFormRules.location}
                     hasFeedback
                     tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
-                    <Form.Item>
-                      <List split={false}>
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Formatted Address: &nbsp;
-                            </span>
-                            {selectedLocation?.place}
-                          </Typography.Text>
-                        </List.Item>
-
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Longitude: &nbsp;
-                            </span>
-                            {selectedLocation?.lng}
-                          </Typography.Text>
-                        </List.Item>
-
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Latitude: &nbsp;
-                            </span>
-                            {selectedLocation?.lat}
-                          </Typography.Text>
-                        </List.Item>
-                      </List>
-                    </Form.Item>
+                    <MetaInfoLocationForm location={selectedLocation} />
 
                     <MapDrawer
                       onPlaceSelected={setSelectedPlaceFromMap}
@@ -507,25 +483,26 @@ export const PersonEdit: FC = () => {
                 </Card>
 
                 <Flex vertical gap="middle">
-                  <Card bodyStyle={{ marginBottom: -20 }}>
+                  <Card>
                     <Form.Item
                       label="Photos"
                       name="photo"
                       hasFeedback
                       valuePropName="fileList"
                       getValueFromEvent={normFile}
-                      rules={[{ required: true }]}
+                      rules={PersonFormRules.photo.rules}
                       tooltip={
                         <span>
-                          You can upload up to 3 photos, the first photo will be
-                          the main one. After uploading, you should save the
-                          person. <SupportedImageFormatsTooltip />
+                          You can upload up to {PersonFormRules.photo.maxCount}{' '}
+                          photos, the first photo will be the main one. After
+                          uploading, you should save the person.{' '}
+                          <SupportedImageFormatsTooltip />
                         </span>
                       }
                     >
                       <Upload
                         {...uploadProps}
-                        maxCount={3}
+                        maxCount={PersonFormRules.photo.maxCount}
                         multiple
                         disabled={isDisabled}
                       >
@@ -533,7 +510,7 @@ export const PersonEdit: FC = () => {
                           icon={<UploadOutlined />}
                           disabled={fileList.length > 2 || isDisabled}
                         >
-                          + Upload (Max: 3)
+                          + Upload (Max: {PersonFormRules.photo.maxCount})
                         </Button>
                       </Upload>
                     </Form.Item>

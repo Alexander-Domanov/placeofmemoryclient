@@ -17,9 +17,8 @@ import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { fileStatusOptions } from '@/common-dashboard/options-file-statuses-select-input';
-import { CustomSelectInput } from '@/components';
+import { CreateBreadcrumb, CustomSelectInput } from '@/components';
+import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

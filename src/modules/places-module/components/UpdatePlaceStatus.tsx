@@ -4,7 +4,7 @@ import { EditOutlined } from '@ant-design/icons';
 import { IPlace } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { useMeQuery } from '@/services';
-import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
+import { GetUpdateOptions } from '@/components';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;

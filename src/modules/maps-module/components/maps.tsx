@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Flex, Spin } from 'antd';
 import { usePersonsForMap } from '@/modules/dashboard-module/hooks/usePersonsForMap';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb } from '@/components';
 import { routes } from '@/common/routing/routes';
 import MapMainWithClusterMarkers from '@/modules/maps-module/components/MapMainWithClusterMarkers';
 

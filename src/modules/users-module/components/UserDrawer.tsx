@@ -11,7 +11,7 @@ import {
   Typography,
 } from 'antd';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderImage } from '@/components/dashboard/helpers/RenderImage';
+import { RenderImage } from '@/components';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';

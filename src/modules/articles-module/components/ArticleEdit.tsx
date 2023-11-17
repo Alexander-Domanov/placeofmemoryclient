@@ -333,8 +333,8 @@ export const ArticleEdit: FC = () => {
                     rules={ArticleFormRules.photo.rules}
                     tooltip={
                       <span>
-                        You can upload up to one photo. After uploading, you
-                        should save the article.{' '}
+                        You can upload up to {ArticleFormRules.photo.maxCount}{' '}
+                        photo. After uploading, you should save the article.{' '}
                         <SupportedImageFormatsTooltip />
                       </span>
                     }
@@ -344,7 +344,7 @@ export const ArticleEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: {ArticleFormRules.photo.maxFileSize})
+                        + Upload (Max: {ArticleFormRules.photo.maxCount})
                       </Button>
                     </Upload>
                   </Form.Item>

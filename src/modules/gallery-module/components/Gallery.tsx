@@ -13,14 +13,13 @@ import {
 import { useGallery } from '../hooks/useGallery';
 import { UploadGalleryModal } from './UploadGalleryModal';
 import { GalleryItem } from './GalleryItem';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { CreateBreadcrumb, CustomSelectInput } from '@/components';
 import { routes } from '@/common/routing/routes';
 import { FileStatuses, ImageResourceType, Role } from '@/types';
 import {
   fileStatusOptions,
   typeFileOptions,
-} from '@/common-dashboard/options-file-statuses-select-input';
-import { CustomSelectInput } from '@/components';
+} from '@/common-dashboard/helpers/options-file-statuses-select-input';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

@@ -24,3 +24,5 @@ export * from './dashboard/helpers/CustomSelectInput';
 export * from './dashboard/helpers/SupportedImageFormatsTooltip';
 export * from './dashboard/helpers/MetaInfoForm';
 export * from './dashboard/helpers/MetaInfoLocationForm';
+export * from './dashboard/helpers/MetaInfoSelectedPlaceForm';
+export * from './dashboard/helpers/GetUpdateOptions';

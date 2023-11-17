@@ -3,7 +3,7 @@ import { Row, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IUserWithShortExtensions } from '@/types';
-import { RenderImage } from '@/components/dashboard/helpers/RenderImage';
+import { RenderImage } from '@/components';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
