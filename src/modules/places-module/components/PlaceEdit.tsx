@@ -139,13 +139,6 @@ export const PlaceEdit: FC = () => {
     }
   }, [selectedPlaceFromMap]);
 
-  const ellipsisSlug = useMemo(() => {
-    if (place?.slug && place?.slug.length > 30) {
-      return `${place?.slug.slice(0, 30)}...`;
-    }
-    return place?.slug;
-  }, [place?.slug]);
-
   const handleStatusChange = (selectedStatus: string) => {
     setStatus(selectedStatus);
 
@@ -163,7 +156,6 @@ export const PlaceEdit: FC = () => {
   };
 
   const onFinish = (values: IPlaceEditForm) => {
-    console.log('Success:', values);
     const newPlace: ICreatePlace = {
       country: values.country,
       city: values.city,
