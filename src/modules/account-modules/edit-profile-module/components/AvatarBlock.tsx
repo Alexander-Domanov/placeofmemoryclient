@@ -5,7 +5,6 @@ import {
   useUploadAvatar,
 } from '@/modules/account-modules/edit-profile-module';
 import { useUserStore } from '@/store/userStore';
-import { AvatarComponent } from '@/ui';
 import { Spinner } from '@/ui/spinner/Spinner';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { ImageComponent } from '@/ui/image/ImageComponent';

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { OAUTH_AUTHORIZATION } from '@/services';
