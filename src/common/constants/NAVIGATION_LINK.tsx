@@ -12,7 +12,7 @@ const NAVIGATION_LINK = (): INavigationLinks[] => {
   const { t } = useTranslation();
   return [
     { title: t.header.articles, link: routes.articles.index },
-    { title: t.header.places, link: routes.places.index },
+    { title: t.header.places, link: routes.places.page(String(1)) },
     { title: t.header.people, link: routes.people.index },
     { title: t.header.aboutProject, link: routes.aboutTheProject.index },
     { title: t.header.map, link: routes.map.index },
