@@ -31,7 +31,6 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   MetaInfoForm,
   QuillCharacterCount,
@@ -42,6 +41,7 @@ import { ArticleFormRules } from '@/modules/articles-module';
 import DeleteArticleModal from '@/modules/articles-module/components/DeleteArticleModal';
 import { IArticle, Statuses } from '@/types';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { Option } = Select;
 

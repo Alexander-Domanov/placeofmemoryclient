@@ -33,7 +33,6 @@ import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdateP
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   GetUpdateOptions,
   MetaInfoForm,
@@ -48,6 +47,7 @@ import {
 } from '@/common-dashboard';
 import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 

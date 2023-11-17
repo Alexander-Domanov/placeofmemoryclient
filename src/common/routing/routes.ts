@@ -41,7 +41,9 @@ export const routes = {
   },
   dashboard: {
     index: '/dashboard',
-    gallery: '/dashboard/gallery',
+    gallery: {
+      index: '/dashboard/gallery',
+    },
     users: {
       index: '/dashboard/users',
       user: (id: string | number) => `/dashboard/users/${id}`,

@@ -9,7 +9,8 @@ import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { routes } from '@/common/routing/routes';
 import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
-import { CreateBreadcrumb, CustomSelectInput } from '@/components';
+import { CustomSelectInput } from '@/components';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

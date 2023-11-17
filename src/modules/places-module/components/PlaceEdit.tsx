@@ -30,7 +30,6 @@ import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   GetUpdateOptions,
   MetaInfoForm,
@@ -41,6 +40,7 @@ import {
 import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 

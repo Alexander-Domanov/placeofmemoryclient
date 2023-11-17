@@ -8,8 +8,9 @@ import { FileStatuses, IPlace, Role } from '@/types';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
-import { CreateBreadcrumb, CustomSelectInput } from '@/components';
+import { CustomSelectInput } from '@/components';
 import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

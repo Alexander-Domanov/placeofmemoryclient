@@ -14,12 +14,12 @@ import {
   Typography,
 } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
-import { CreateBreadcrumb } from '@/components';
 import { routes } from '@/common/routing/routes';
 import { useContacts } from '@/modules/contacts-module/hooks/useContacts';
 import { useUpdateContacts } from '@/modules/contacts-module/hooks/useUpdateContacts';
 import { IContacts, IContactsForm } from '@/types';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),

@@ -26,7 +26,6 @@ import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson'
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   MetaInfoLocationForm,
   MetaInfoSelectedPlaceForm,
@@ -36,6 +35,7 @@ import {
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 

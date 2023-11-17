@@ -24,7 +24,6 @@ import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   MetaInfoLocationForm,
   QuillCharacterCount,
@@ -33,6 +32,7 @@ import {
 import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 

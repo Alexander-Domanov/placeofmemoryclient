@@ -21,7 +21,6 @@ import { IFieldData, IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import {
-  CreateBreadcrumb,
   GetCharacterCount,
   QuillCharacterCount,
   SupportedImageFormatsTooltip,
@@ -29,6 +28,7 @@ import {
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 

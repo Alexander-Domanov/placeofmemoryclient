@@ -48,8 +48,8 @@ const menuItems = {
       <GrMapLocation />
     ),
     getItem(
-      <Link href={routes.dashboard.gallery}>Gallery</Link>,
-      routes.dashboard.gallery,
+      <Link href={routes.dashboard.gallery.index}>Gallery</Link>,
+      routes.dashboard.gallery.index,
       <IoImagesOutline />
     ),
   ],

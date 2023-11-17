@@ -15,7 +15,7 @@ export { DashboardSelectLanguage } from './dashboard/dashboard-select-language/D
 
 // dashboard helpers
 export * from './dashboard/helpers/ColorStatusTag';
-export * from './dashboard/helpers/CreateBreadcrumb';
+// export * from './dashboard/helpers/CreateBreadcrumb';
 export * from './dashboard/helpers/GetCharacterCount.helper';
 export * from './dashboard/helpers/GetEllipsisSlug.helper';
 export * from './dashboard/helpers/QuillCharacterCount';

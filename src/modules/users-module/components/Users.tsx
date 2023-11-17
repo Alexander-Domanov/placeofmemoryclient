@@ -10,10 +10,11 @@ import {
   UserStatusesForSelect,
 } from '@/types';
 import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
-import { CreateBreadcrumb, CustomSelectInput } from '@/components';
+import { CustomSelectInput } from '@/components';
 import { routes } from '@/common/routing/routes';
 import { userStatusOptions } from '@/modules/users-module/components/helpers/options-user-statuses-select-input';
 import { userRolesOptions } from '@/modules/users-module/components/helpers/options-user-roles-select-input';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
