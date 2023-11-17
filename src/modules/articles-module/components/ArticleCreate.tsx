@@ -135,7 +135,6 @@ export const ArticleCreate: FC = () => {
                 }
               >
                 <Input.TextArea
-                  autoSize
                   placeholder="Title"
                   count={{
                     show: true,
@@ -158,7 +157,6 @@ export const ArticleCreate: FC = () => {
                 }
               >
                 <Input.TextArea
-                  autoSize
                   placeholder="Short Description"
                   count={{
                     show: true,
