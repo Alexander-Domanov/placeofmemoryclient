@@ -6,14 +6,14 @@ import { IOwnerInfo } from '@/types';
 import { GetEllipsisSlug } from '@/components';
 import { routes } from '@/common/routing/routes';
 
-interface ArticleInfoFormProps {
+interface IInfoFormProps {
   slug: string | undefined;
   owner: IOwnerInfo | undefined;
   createdAt: string | undefined;
   updatedAt: string | undefined;
 }
 
-export const MetaInfoForm: FC<ArticleInfoFormProps> = ({
+export const MetaInfoForm: FC<IInfoFormProps> = ({
   slug,
   owner,
   createdAt,

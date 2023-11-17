@@ -9,11 +9,9 @@ import {
   Flex,
   Form,
   Input,
-  List,
   notification,
   Row,
   Space,
-  Typography,
   Upload,
 } from 'antd';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
@@ -21,12 +19,22 @@ import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
-import { ICreatePlace, IGalleryFile, ILocation } from '@/types';
+import { ICreatePlace, IFieldData, IGalleryFile, ILocation } from '@/types';
 import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
+import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
+import {
+  GetCharacterCount,
+  MetaInfoLocationForm,
+  QuillCharacterCount,
+} from '@/components';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -48,14 +56,6 @@ interface IPlaceForm {
   photo: UploadFile<IGalleryFile>[];
 }
 
-interface FieldData {
-  name: string | number | (string | number)[];
-  value?: any;
-  touched?: boolean;
-  validating?: boolean;
-  errors?: string[];
-}
-
 export const CreatePlace: FC = () => {
   const router = useRouter();
 
@@ -64,17 +64,16 @@ export const CreatePlace: FC = () => {
     []
   );
   const [form] = Form.useForm();
-  const [fields, setFields] = useState<FieldData[]>([]);
+  const [fields, setFields] = useState<IFieldData[]>([]);
 
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
-  const [shortDescriptionText, setShortDescriptionText] = useState('');
-  const [descriptionText, setDescriptionText] = useState('');
-  const [shortDescriptionCount, setShortDescriptionCount] = useState(0);
-  const [descriptionCount, setDescriptionCount] = useState(0);
+  const [descriptionText, setDescriptionText] = useState<string>('');
+
+  const descriptionCount = GetCharacterCount(descriptionText);
 
   const { createPlaceMutate, isCreating } = useCreatePlace();
 
@@ -123,6 +122,25 @@ export const CreatePlace: FC = () => {
     });
   };
 
+  const exceededDescription = isCharacterCountExceeded(
+    GetCharacterCount(descriptionText),
+    PlaceFormRules.description.maxCharacters
+  );
+  const quillStyle = getQuillStyle(exceededDescription);
+
+  const validateDescription = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: PlaceFormRules.description.maxCharacters,
+      message: PlaceFormRules.description.message,
+      value,
+      callback,
+    });
+  };
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -140,68 +158,112 @@ export const CreatePlace: FC = () => {
       >
         <Row gutter={[16, 16]}>
           <Col span={24} lg={16}>
-            <Card bodyStyle={{ marginBottom: -30 }}>
+            <Card>
               <Form.Item
                 name="country"
                 label="Country"
-                rules={[{ required: true, whitespace: true }]}
+                rules={PlaceFormRules.country}
                 hasFeedback
               >
-                <Input placeholder="Input Country" allowClear />
+                <Input.TextArea
+                  placeholder="Input Country"
+                  count={{
+                    show: true,
+                    max: PlaceFormRules.country[1].max,
+                  }}
+                />
               </Form.Item>
+
               <Form.Item
                 name="city"
                 label="City"
-                rules={[{ required: true, whitespace: true }]}
+                rules={PlaceFormRules.city}
                 hasFeedback
               >
-                <Input placeholder="Input City" allowClear />
+                <Input.TextArea
+                  placeholder="Input City"
+                  count={{
+                    show: true,
+                    max: PlaceFormRules.city[1].max,
+                  }}
+                />
               </Form.Item>
+
               <Form.Item
                 name="nameCemetery"
                 label="Name Cemetery"
-                validateDebounce={500}
-                rules={[{ required: true, min: 2, max: 100 }]}
+                rules={PlaceFormRules.nameCemetery}
                 hasFeedback
+                tooltip={
+                  <span>
+                    You can write up to {PlaceFormRules.nameCemetery[1].max}{' '}
+                    characters. The name of the cemetery should be unique. After
+                    writing, you can save the place.
+                  </span>
+                }
               >
-                <Input placeholder="Input Name Cemetery" allowClear />
+                <Input.TextArea
+                  placeholder="Input Name Cemetery"
+                  count={{
+                    show: true,
+                    max: PlaceFormRules.nameCemetery[1].max,
+                  }}
+                />
               </Form.Item>
+
               <Form.Item
                 name="shortDescription"
                 label="Short Description"
-                rules={[{ required: true }]}
+                rules={PlaceFormRules.shortDescription.rules}
+                hasFeedback
+                tooltip={
+                  <span>
+                    You can write up to{' '}
+                    {PlaceFormRules.shortDescription.maxCharacters} characters.
+                    This description will be displayed on the main page as a
+                    preview of the place.
+                  </span>
+                }
               >
-                <ReactQuill
-                  theme="snow"
-                  value={shortDescriptionText}
-                  onChange={(value) => {
-                    setShortDescriptionText(value);
-                    setShortDescriptionCount(value.length);
-                    form.setFieldValue('shortDescription', value);
+                <Input.TextArea
+                  placeholder="Short Description"
+                  count={{
+                    show: true,
+                    max: PlaceFormRules.shortDescription.maxCharacters,
                   }}
                 />
-                <span className="text-neutral-400">
-                  Characters: {shortDescriptionCount}
-                </span>
               </Form.Item>
+
               <Form.Item
                 name="description"
                 label="Description"
-                rules={[{ required: true }]}
+                rules={[
+                  { validator: validateDescription },
+                  ...PlaceFormRules.description.rules,
+                ]}
+                tooltip={
+                  <span>
+                    You can write up to{' '}
+                    {PlaceFormRules.description.maxCharacters} characters. This
+                    description will be displayed on the place page.
+                  </span>
+                }
               >
                 <ReactQuill
                   theme="snow"
                   value={descriptionText}
                   onChange={(value) => {
                     setDescriptionText(value);
-                    setDescriptionCount(value.length);
                     form.setFieldValue('description', value);
                   }}
+                  style={quillStyle}
                 />
-                <span className="text-neutral-400">
-                  Characters: {descriptionCount}
-                </span>
               </Form.Item>
+
+              <QuillCharacterCount
+                characterCount={descriptionCount}
+                maxCount={PlaceFormRules.description.maxCharacters}
+              />
             </Card>
           </Col>
 
@@ -218,7 +280,7 @@ export const CreatePlace: FC = () => {
                 </Button>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Location"
                   name="location"
@@ -226,34 +288,7 @@ export const CreatePlace: FC = () => {
                   hasFeedback
                   tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
-                  <List split={false}>
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Formatted Address: &nbsp;
-                        </span>
-                        {selectedLocation?.place}
-                      </Typography.Text>
-                    </List.Item>
-
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Longitude: &nbsp;
-                        </span>
-                        {selectedLocation?.lng}
-                      </Typography.Text>
-                    </List.Item>
-
-                    <List.Item>
-                      <Typography.Text>
-                        <span className="text-neutral-400">
-                          Latitude: &nbsp;
-                        </span>
-                        {selectedLocation?.lat}
-                      </Typography.Text>
-                    </List.Item>
-                  </List>
+                  <MetaInfoLocationForm location={selectedLocation} />
 
                   <Space size={16}>
                     <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
@@ -261,14 +296,14 @@ export const CreatePlace: FC = () => {
                 </Form.Item>
               </Card>
 
-              <Card bodyStyle={{ marginBottom: -20 }}>
+              <Card>
                 <Form.Item
                   label="Photo"
                   name="photo"
                   hasFeedback
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={[{ required: true }]}
+                  rules={PlaceFormRules.photo.rules}
                   shouldUpdate
                   tooltip={
                     <span>
@@ -282,7 +317,7 @@ export const CreatePlace: FC = () => {
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      + Upload (Max: 1)
+                      + Upload (Max: {PlaceFormRules.photo.maxFileSize})
                     </Button>
                   </Upload>
                 </Form.Item>
