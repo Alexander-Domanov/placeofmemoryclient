@@ -93,6 +93,7 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
           Open Map
         </Button>
       </Space>
+
       <Drawer
         placement="right"
         width={520}
@@ -113,7 +114,9 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
         }
       >
         <MapWithAutoComplete onDefineLocation={handleExecuteGeoCoder} />
+
         <Divider orientation="left">Define Location</Divider>
+
         <LocationForm form={form} onFinish={onFinish} />
       </Drawer>
     </>

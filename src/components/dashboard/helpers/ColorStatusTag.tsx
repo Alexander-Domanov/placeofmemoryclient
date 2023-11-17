@@ -6,24 +6,25 @@ import {
   InboxOutlined,
   MinusCircleOutlined,
 } from '@ant-design/icons';
+import { Statuses } from '@/types';
 
 export const getColorStatus = (status: string | null) => {
   let color = 'default-color';
   let text = 'Unknown Status';
   let icon = <MinusCircleOutlined />;
-  if (status === 'DRAFT') {
+  if (status === Statuses.DRAFT) {
     color = 'red';
     text = 'Draft';
     icon = <EyeInvisibleOutlined />;
-  } else if (status === 'PENDING_REVIEW') {
+  } else if (status === Statuses.PENDING_REVIEW) {
     color = 'geekblue';
     text = 'Sent for review';
     icon = <ClockCircleOutlined />;
-  } else if (status === 'PUBLISHED') {
+  } else if (status === Statuses.PUBLISHED) {
     color = 'green';
     text = 'Published';
     icon = <EyeOutlined />;
-  } else if (status === 'ARCHIVED') {
+  } else if (status === Statuses.ARCHIVED) {
     color = 'lightgrey';
     text = 'Archived';
     icon = <InboxOutlined />;

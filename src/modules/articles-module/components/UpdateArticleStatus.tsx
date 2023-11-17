@@ -7,7 +7,7 @@ import {
   EyeOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
-import { IArticle } from '@/types';
+import { IArticle, Statuses } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 
 const { Option } = Select;
@@ -67,16 +67,16 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
       >
         <Form.Item label="Current Status">
           <Select value={newStatus} onChange={handleMenuStatusClick}>
-            <Option value="DRAFT">
+            <Option value={Statuses.DRAFT}>
               <EyeInvisibleOutlined /> Draft
             </Option>
-            <Option value="PENDING_REVIEW">
+            <Option value={Statuses.PENDING_REVIEW}>
               <ClockCircleOutlined /> Send for review
             </Option>
-            <Option value="PUBLISHED">
+            <Option value={Statuses.PUBLISHED}>
               <EyeOutlined /> Publish
             </Option>
-            <Option value="ARCHIVED">
+            <Option value={Statuses.ARCHIVED}>
               <InboxOutlined /> Archive
             </Option>
           </Select>

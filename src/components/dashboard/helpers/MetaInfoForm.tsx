@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { IOwnerInfo } from '@/types';
 import { GetEllipsisSlug } from '@/components';
-import { routes } from '@/common/routing/routes';
 
 interface IInfoFormProps {
   slug: string | undefined;
+  path: string | undefined;
   owner: IOwnerInfo | undefined;
   createdAt: string | undefined;
   updatedAt: string | undefined;
@@ -15,25 +15,22 @@ interface IInfoFormProps {
 
 export const MetaInfoForm: FC<IInfoFormProps> = ({
   slug,
+  path,
   owner,
   createdAt,
   updatedAt,
 }) => (
   <List split={false}>
-    <List.Item draggable>
+    <List.Item>
       <Typography.Text>
         <span className="text-neutral-400">Public link: &nbsp;</span>
-        <Link
-          href={{
-            pathname: routes.articles.getArticle(slug || ''),
-          }}
-        >
+        <Link href={{ pathname: path }}>
           <GetEllipsisSlug slug={slug} />
         </Link>
       </Typography.Text>
     </List.Item>
 
-    <List.Item draggable>
+    <List.Item>
       <Typography.Text>
         <span className="text-neutral-400">Owner: &nbsp;</span>
         {owner?.userName}

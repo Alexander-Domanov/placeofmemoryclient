@@ -9,19 +9,16 @@ import {
   Flex,
   Form,
   Input,
-  List,
   notification,
   Row,
   Select,
   Space,
   Spin,
-  Typography,
   Upload,
 } from 'antd';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
-import Link from 'next/link';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
@@ -31,11 +28,21 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
-import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { GetUpdateOptions } from '@/common-dashboard/GetUpdateOptions';
 import { SupportedImageFormatsTooltip } from '@/components/dashboard/helpers/SupportedImageFormatsTooltip';
+import {
+  GetCharacterCount,
+  MetaInfoForm,
+  MetaInfoLocationForm,
+  QuillCharacterCount,
+} from '@/components';
+import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 interface IPlaceEditForm {
   country: string;
@@ -65,13 +72,6 @@ export const PlaceEdit: FC = () => {
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
   );
-  // const MapWithNoSSR = dynamic(
-  //   () => import('@/modules/leaflet-maps-module/components/LeafletMap'),
-  //   {
-  //     ssr: false,
-  //     // loading: () => <div>loading...</div>,
-  //   }
-  // );
   const router = useRouter();
   const { placeId } = router.query as { placeId: string };
 
@@ -90,10 +90,9 @@ export const PlaceEdit: FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
-  const [shortDescriptionText, setShortDescriptionText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
-  const [shortDescriptionCount, setShortDescriptionCount] = useState(0);
-  const [descriptionCount, setDescriptionCount] = useState(0);
+  const descriptionCount = GetCharacterCount(descriptionText);
+
   const [status, setStatus] = useState('DRAFT');
 
   const normFile = (e: any) => {
@@ -122,10 +121,7 @@ export const PlaceEdit: FC = () => {
         slug: place.slug,
         location: place.location.place,
       });
-      setShortDescriptionText(place.shortDescription || '');
-      setShortDescriptionCount(place.shortDescription?.length || 0);
       setDescriptionText(place.description || '');
-      setDescriptionCount(place.description?.length || 0);
       setSelectedLocation(place.location);
       setStatus(place.status);
     }
@@ -167,6 +163,7 @@ export const PlaceEdit: FC = () => {
   };
 
   const onFinish = (values: IPlaceEditForm) => {
+    console.log('Success:', values);
     const newPlace: ICreatePlace = {
       country: values.country,
       city: values.city,
@@ -194,6 +191,25 @@ export const PlaceEdit: FC = () => {
 
   const updateOptions = GetUpdateOptions(me);
 
+  const exceededDescription = isCharacterCountExceeded(
+    GetCharacterCount(descriptionText),
+    PlaceFormRules.description.maxCharacters
+  );
+  const quillStyle = getQuillStyle(exceededDescription);
+
+  const validateDescription = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: PlaceFormRules.description.maxCharacters,
+      message: PlaceFormRules.description.message,
+      value,
+      callback,
+    });
+  };
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -204,72 +220,112 @@ export const PlaceEdit: FC = () => {
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>
             <Col span={24} lg={14} md={12}>
-              <Card bodyStyle={{ marginBottom: -30 }}>
+              <Card>
                 <Form.Item
                   name="country"
                   label="Country"
-                  rules={[{ required: true, whitespace: true }]}
+                  rules={PlaceFormRules.country}
                   hasFeedback
                 >
-                  <Input placeholder="Input Country" allowClear />
+                  <Input
+                    placeholder="Input Country"
+                    count={{
+                      show: true,
+                      max: PlaceFormRules.country[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name="city"
                   label="City"
-                  rules={[{ required: true, whitespace: true }]}
+                  rules={PlaceFormRules.city}
                   hasFeedback
                 >
-                  <Input placeholder="Input City" allowClear />
+                  <Input
+                    placeholder="Input City"
+                    count={{
+                      show: true,
+                      max: PlaceFormRules.city[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name="nameCemetery"
                   label="Name Cemetery"
-                  validateDebounce={500}
-                  rules={[{ required: true, min: 2, max: 200 }]}
+                  rules={PlaceFormRules.nameCemetery}
                   hasFeedback
+                  tooltip={
+                    <span>
+                      You can write up to {PlaceFormRules.nameCemetery[1].max}{' '}
+                      characters. The name of the cemetery should be unique.
+                      After writing, you can save the place.
+                    </span>
+                  }
                 >
-                  <Input placeholder="Input Name Cemetery" allowClear />
+                  <Input
+                    placeholder="Input Name Cemetery"
+                    count={{
+                      show: true,
+                      max: PlaceFormRules.nameCemetery[1].max,
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name="shortDescription"
                   label="Short Description"
-                  rules={[{ required: true }]}
+                  rules={PlaceFormRules.shortDescription.rules}
+                  hasFeedback
+                  tooltip={
+                    <span>
+                      You can write up to{' '}
+                      {PlaceFormRules.shortDescription.maxCharacters}{' '}
+                      characters. This description will be displayed on the main
+                      page as a preview of the place.
+                    </span>
+                  }
                 >
-                  <ReactQuill
-                    theme="snow"
-                    value={shortDescriptionText}
-                    onChange={(value) => {
-                      setShortDescriptionText(value);
-                      setShortDescriptionCount(value.length);
-                      form.setFieldValue('shortDescription', value);
+                  <Input.TextArea
+                    placeholder="Short Description"
+                    count={{
+                      show: true,
+                      max: PlaceFormRules.shortDescription.maxCharacters,
                     }}
                   />
-                  <span className="text-neutral-400">
-                    Characters: {shortDescriptionCount}
-                  </span>
                 </Form.Item>
 
                 <Form.Item
                   name="description"
                   label="Description"
-                  rules={[{ required: true }]}
+                  rules={[
+                    { validator: validateDescription },
+                    ...PlaceFormRules.description.rules,
+                  ]}
+                  tooltip={
+                    <span>
+                      You can write up to{' '}
+                      {PlaceFormRules.description.maxCharacters} characters.
+                      This description will be displayed on the place page.
+                    </span>
+                  }
                 >
                   <ReactQuill
                     theme="snow"
                     value={descriptionText}
                     onChange={(value) => {
                       setDescriptionText(value);
-                      setDescriptionCount(value.length);
                       form.setFieldValue('description', value);
                     }}
+                    style={quillStyle}
                   />
-                  <span className="text-neutral-400">
-                    Characters: {descriptionCount}
-                  </span>
                 </Form.Item>
+
+                <QuillCharacterCount
+                  characterCount={descriptionCount}
+                  maxCount={PlaceFormRules.description.maxCharacters}
+                />
               </Card>
             </Col>
 
@@ -290,68 +346,27 @@ export const PlaceEdit: FC = () => {
                   <Form.Item
                     name="slug"
                     label="Slug"
-                    rules={[{ required: true, whitespace: true }]}
+                    rules={PlaceFormRules.slug}
                     tooltip="This is a field for SEO and should be unique and contain only latin characters for each place."
                     hasFeedback
                   >
-                    <Input
+                    <Input.TextArea
                       placeholder="This field is auto generated"
-                      allowClear
+                      count={{
+                        show: true,
+                        max: PlaceFormRules.slug[1].max,
+                      }}
                     />
                   </Form.Item>
 
                   <Form.Item>
-                    <List split={false}>
-                      <List.Item draggable>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Public link: &nbsp;
-                          </span>
-                          <Link
-                            href={{
-                              pathname: routes.places.place(
-                                selectedPlace?.slug || ''
-                              ),
-                            }}
-                          >
-                            <Typography.Text
-                              ellipsis
-                              style={{ cursor: 'pointer', color: '#1087f6' }}
-                              title={selectedPlace?.slug}
-                            >
-                              {ellipsisSlug}
-                            </Typography.Text>
-                          </Link>
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item draggable>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Owner: &nbsp;
-                          </span>
-                          {selectedPlace?.owner?.userName}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Created At: &nbsp;
-                          </span>
-                          {convertDateToFormat(place?.createdAt)}
-                        </Typography.Text>
-                      </List.Item>
-
-                      <List.Item>
-                        <Typography.Text>
-                          <span className="text-neutral-400">
-                            Updated At: &nbsp;
-                          </span>
-                          {convertDateToFormat(place?.updatedAt)}
-                        </Typography.Text>
-                      </List.Item>
-                    </List>
+                    <MetaInfoForm
+                      slug={place?.slug}
+                      path={routes.places.place(place?.slug || '')}
+                      owner={place?.owner}
+                      createdAt={place?.createdAt}
+                      updatedAt={place?.updatedAt}
+                    />
                   </Form.Item>
 
                   <Space size={16}>
@@ -369,7 +384,7 @@ export const PlaceEdit: FC = () => {
                   </Space>
                 </Card>
 
-                <Card bodyStyle={{ marginBottom: -20 }}>
+                <Card>
                   <Form.Item
                     label="Location"
                     name="location"
@@ -377,48 +392,19 @@ export const PlaceEdit: FC = () => {
                     hasFeedback
                     tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
-                    <Form.Item>
-                      <List split={false}>
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Formatted Address: &nbsp;
-                            </span>
-                            {selectedLocation?.place}
-                          </Typography.Text>
-                        </List.Item>
-
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Longitude: &nbsp;
-                            </span>
-                            {selectedLocation?.lng}
-                          </Typography.Text>
-                        </List.Item>
-
-                        <List.Item>
-                          <Typography.Text>
-                            <span className="text-neutral-400">
-                              Latitude: &nbsp;
-                            </span>
-                            {selectedLocation?.lat}
-                          </Typography.Text>
-                        </List.Item>
-                      </List>
-                    </Form.Item>
+                    <MetaInfoLocationForm location={selectedLocation} />
 
                     <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
                   </Form.Item>
                 </Card>
 
-                <Card bodyStyle={{ marginBottom: -20 }}>
+                <Card>
                   <Form.Item
                     label="Photo"
                     name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[{ required: true }]}
+                    rules={PlaceFormRules.photo.rules}
                     tooltip={
                       <span>
                         You can upload up to one photo. After uploading, you
@@ -431,7 +417,7 @@ export const PlaceEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: 1)
+                        + Upload (Max: {PlaceFormRules.photo.maxFileSize})
                       </Button>
                     </Upload>
                   </Form.Item>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
 import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
+import { routes } from '@/common/routing/routes';
 
 interface DeletePlaceModalProps {
   place: IPlace | null;
@@ -13,6 +15,8 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
   place,
   showButton,
 }) => {
+  const router = useRouter();
+
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
 
@@ -33,6 +37,7 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
           message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
           placement: 'bottomLeft',
         });
+        router.push(routes.dashboard.places.index);
       },
     });
     setDeleteModalVisible(false);

@@ -6,7 +6,7 @@ import {
   InboxOutlined,
 } from '@ant-design/icons';
 import { Select } from 'antd';
-import { Role } from '@/types';
+import { Role, Statuses } from '@/types';
 
 const { Option } = Select;
 
@@ -14,29 +14,26 @@ export const GetUpdateOptions = (me?: { role: Role }) => {
   const isAdminOrEditor = me?.role === Role.USER || me?.role === Role.AUTHOR;
   if (isAdminOrEditor) {
     return [
-      <Option key="DRAFT" value="DRAFT">
+      <Option key={Statuses.DRAFT} value={Statuses.DRAFT}>
         <EyeInvisibleOutlined /> Draft
       </Option>,
-      <Option key="PENDING_REVIEW" value="PENDING_REVIEW">
+      <Option key={Statuses.PENDING_REVIEW} value={Statuses.PENDING_REVIEW}>
         <ClockCircleOutlined /> Send for review
       </Option>,
-      // <Option key="PUBLISHED" value="PUBLISHED">
-      //   <EyeOutlined /> Publish
-      // </Option>,
     ];
   }
 
   return [
-    <Option key="DRAFT" value="DRAFT">
+    <Option key={Statuses.DRAFT} value={Statuses.DRAFT}>
       <EyeInvisibleOutlined /> Draft
     </Option>,
-    <Option key="PENDING_REVIEW" value="PENDING_REVIEW">
+    <Option key={Statuses.PENDING_REVIEW} value={Statuses.PENDING_REVIEW}>
       <ClockCircleOutlined /> Send for review
     </Option>,
-    <Option key="PUBLISHED" value="PUBLISHED">
+    <Option key={Statuses.PUBLISHED} value={Statuses.PUBLISHED}>
       <EyeOutlined /> Publish
     </Option>,
-    <Option key="ARCHIVED" value="ARCHIVED">
+    <Option key={Statuses.ARCHIVED} value={Statuses.ARCHIVED}>
       <InboxOutlined /> Archive
     </Option>,
   ];

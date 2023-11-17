@@ -40,7 +40,7 @@ import {
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
 import DeleteArticleModal from '@/modules/articles-module/components/DeleteArticleModal';
-import { IArticle } from '@/types';
+import { IArticle, Statuses } from '@/types';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 
 const { Option } = Select;
@@ -268,16 +268,16 @@ export const ArticleEdit: FC = () => {
                       loading={isStatusUpdating}
                       disabled={isStatusUpdating}
                     >
-                      <Option value="DRAFT">
+                      <Option value={Statuses.DRAFT}>
                         <EyeInvisibleOutlined /> Draft
                       </Option>
-                      <Option value="PENDING_REVIEW">
+                      <Option value={Statuses.PENDING_REVIEW}>
                         <ClockCircleOutlined /> Send for review
                       </Option>
-                      <Option value="PUBLISHED">
+                      <Option value={Statuses.PUBLISHED}>
                         <EyeOutlined /> Publish
                       </Option>
-                      <Option value="ARCHIVED">
+                      <Option value={Statuses.ARCHIVED}>
                         <InboxOutlined /> Archive
                       </Option>
                     </Select>
@@ -302,6 +302,7 @@ export const ArticleEdit: FC = () => {
                   <Form.Item>
                     <MetaInfoForm
                       slug={article?.slug}
+                      path={routes.articles.getArticle(article?.slug || '')}
                       owner={article?.owner}
                       createdAt={article?.createdAt}
                       updatedAt={article?.updatedAt}

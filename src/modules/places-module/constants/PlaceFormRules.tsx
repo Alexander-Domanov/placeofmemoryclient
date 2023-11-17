@@ -15,7 +15,7 @@ export const PlaceFormRules = {
   ],
   shortDescription: {
     rules: [{ required: true }],
-    maxCharacters: 3,
+    maxCharacters: 300,
     message: `Short Description limit is 300 characters`,
   },
   description: {
