@@ -41,6 +41,7 @@ import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtil
 import { ArticleFormRules } from '@/modules/articles-module';
 import DeleteArticleModal from '@/modules/articles-module/components/DeleteArticleModal';
 import { IArticle } from '@/types';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
 
 const { Option } = Select;
 
@@ -131,7 +132,7 @@ export const ArticleEdit: FC = () => {
 
   const exceeded = isCharacterCountExceeded(
     characterCount,
-    ArticleFormRules.content[1].max as number
+    ArticleFormRules.content.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
 
@@ -151,6 +152,19 @@ export const ArticleEdit: FC = () => {
           placement: 'bottomLeft',
         });
       },
+    });
+  };
+
+  const validateContent = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: ArticleFormRules.content.maxCharacters,
+      message: ArticleFormRules.content.message,
+      value,
+      callback,
     });
   };
 
@@ -213,12 +227,16 @@ export const ArticleEdit: FC = () => {
                   label="Content"
                   name="content"
                   validateFirst
-                  rules={ArticleFormRules.content}
+                  rules={[
+                    { validator: validateContent },
+                    ...ArticleFormRules.content.rules,
+                  ]}
                   hasFeedback
                   tooltip={
                     <span>
-                      You can write up to {ArticleFormRules.content[1].max}{' '}
-                      characters. After writing, you should save the article.
+                      You can write up to{' '}
+                      {ArticleFormRules.content.maxCharacters} characters. After
+                      writing, you should save the article.
                     </span>
                   }
                 >
@@ -235,7 +253,7 @@ export const ArticleEdit: FC = () => {
 
                 <QuillCharacterCount
                   characterCount={characterCount}
-                  maxCount={ArticleFormRules.content[1].max as number}
+                  maxCount={ArticleFormRules.content.maxCharacters}
                 />
               </Card>
             </Col>

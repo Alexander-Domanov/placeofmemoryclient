@@ -1,7 +1,7 @@
 export const ArticleFormRules = {
   title: [
     { required: true },
-    { max: 3, message: `Title limit is 155 characters` },
+    { max: 10, message: `Title limit is 155 characters` },
   ],
   description: [
     { required: true },
@@ -9,7 +9,7 @@ export const ArticleFormRules = {
   ],
   content: {
     rules: [{ required: true }],
-    maxCharacters: 4,
+    maxCharacters: 10,
     message: `Content limit is 10000 characters`,
   },
   slug: [

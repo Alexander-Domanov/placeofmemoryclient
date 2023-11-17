@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { validateMessages } from '@/common-dashboard/validations/ValidateMessages';
+import { validateMessages } from '@/common-dashboard';
 
 const layout = {
   labelCol: { span: 6 },

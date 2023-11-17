@@ -28,6 +28,7 @@ import {
 } from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -99,9 +100,22 @@ export const ArticleCreate: FC = () => {
 
   const exceeded = isCharacterCountExceeded(
     characterCount,
-    ArticleFormRules.content[1].max as number
+    ArticleFormRules.content.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
+
+  const validateContent = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: ArticleFormRules.content.maxCharacters,
+      message: ArticleFormRules.content.message,
+      value,
+      callback,
+    });
+  };
 
   return (
     <Flex gap="large" vertical>
@@ -169,11 +183,14 @@ export const ArticleCreate: FC = () => {
                 label="Content"
                 name="content"
                 validateFirst
-                rules={ArticleFormRules.content}
+                rules={[
+                  { validator: validateContent },
+                  ...ArticleFormRules.content.rules,
+                ]}
                 hasFeedback
                 tooltip={
                   <span>
-                    You can write up to {ArticleFormRules.content[1].max}{' '}
+                    You can write up to {ArticleFormRules.content.maxCharacters}{' '}
                     characters. After writing, you should save the article.
                   </span>
                 }
@@ -191,7 +208,7 @@ export const ArticleCreate: FC = () => {
 
               <QuillCharacterCount
                 characterCount={characterCount}
-                maxCount={ArticleFormRules.content[1].max as number}
+                maxCount={ArticleFormRules.content.maxCharacters}
               />
             </Card>
           </Col>
