@@ -10,7 +10,7 @@ interface QuillCharacterCountProps {
 export const QuillCharacterCount: React.FC<QuillCharacterCountProps> = ({
   characterCount,
   maxCount,
-  exceededColor = 'red',
+  exceededColor = '#ff4d4f',
 }) => {
   const isCharacterCountExceeded = characterCount > maxCount;
 
@@ -20,7 +20,7 @@ export const QuillCharacterCount: React.FC<QuillCharacterCountProps> = ({
         position: 'absolute',
         bottom: 28,
         right: 26,
-        color: isCharacterCountExceeded ? exceededColor : 'rgba(0, 0, 0, 0.45)',
+        color: isCharacterCountExceeded ? exceededColor : 'rgba(0, 0, 0, 0.40)',
       }}
     >
       {characterCount} / {maxCount}
