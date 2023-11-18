@@ -111,10 +111,30 @@ module.exports = {
       boxShadow: {
         button: '0px 15px 30px 0px rgba(0, 0, 0, 0.12)',
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-headings': theme.colors.white,
+            '--tw-prose-code': theme.colors.white,
+            maxWidth: '100%',
+            color: theme.colors.white,
+            strong: {
+              color: theme.colors.white,
+              fontWeight: 700,
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [
     require('tailwindcss-animate'),
     require('tailwindcss-debug-screens'),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@tailwindcss/typography')({
+      className: 'wysiwyg',
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 };
