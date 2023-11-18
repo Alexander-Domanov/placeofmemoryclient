@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -17,7 +17,7 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { FileStatuses, Role } from '@/types';
+import { FileStatuses, IExtendGalleryFile, Role } from '@/types';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
@@ -41,6 +41,10 @@ export const GalleryFileInfoModal: FC = () => {
     useUpdateGalleryFile(uploadId);
   const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
 
+  const [selectedFile, setSelectedFile] = useState<IExtendGalleryFile | null>(
+    null
+  );
+
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -48,6 +52,7 @@ export const GalleryFileInfoModal: FC = () => {
       form.setFieldValue('alt', file?.alt);
       form.setFieldValue('status', file?.status.toLowerCase());
     }
+    setSelectedFile(file as IExtendGalleryFile);
   }, [file]);
 
   const onCancel = () => {
@@ -183,6 +188,35 @@ export const GalleryFileInfoModal: FC = () => {
                           Created At: &nbsp;
                         </span>
                         {file?.createdAt}
+                      </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          {selectedFile?.usageInfo?.article?.id && (
+                            <>
+                              ArticleID: {selectedFile?.usageInfo?.article?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.article?.title}
+                              &nbsp;
+                            </>
+                          )}
+                          {selectedFile?.usageInfo?.place?.id && (
+                            <>
+                              PlaceID: {selectedFile?.usageInfo?.place?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.place?.title}
+                              &nbsp;
+                            </>
+                          )}
+                          {selectedFile?.usageInfo?.person?.id && (
+                            <>
+                              PersonID: {selectedFile?.usageInfo?.person?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.person?.title}
+                              &nbsp;
+                            </>
+                          )}
+                        </span>
                       </List.Item>
                     </List>
 
