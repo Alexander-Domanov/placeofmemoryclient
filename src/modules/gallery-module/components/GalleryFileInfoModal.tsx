@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -13,16 +13,16 @@ import {
   Space,
   Spin,
 } from 'antd';
+import { SaveOutlined } from '@ant-design/icons';
 import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { FileStatuses, Role } from '@/types';
+import { FileStatuses, IExtendGalleryFile, Role } from '@/types';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
-
-const { confirm } = Modal;
+import { DeleteConfirmationModal } from '@/components';
 
 type FormValues = {
   alt: string;
@@ -41,6 +41,10 @@ export const GalleryFileInfoModal: FC = () => {
     useUpdateGalleryFile(uploadId);
   const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
 
+  const [selectedFile, setSelectedFile] = useState<IExtendGalleryFile | null>(
+    null
+  );
+
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -48,6 +52,7 @@ export const GalleryFileInfoModal: FC = () => {
       form.setFieldValue('alt', file?.alt);
       form.setFieldValue('status', file?.status.toLowerCase());
     }
+    setSelectedFile(file as IExtendGalleryFile);
   }, [file]);
 
   const onCancel = () => {
@@ -55,23 +60,16 @@ export const GalleryFileInfoModal: FC = () => {
     setUploadId(null);
   };
 
-  const onDelete = () => {
-    confirm({
-      title: 'Do you want to delete these image?',
-      onOk() {
-        return deleteGalleryFileMutateAsync(file?.uploadId, {
-          onSuccess() {
-            notification.success({
-              message: 'File was deleted successfully',
-              placement: 'topRight',
-            });
-
-            setIsOpen(false);
-            setUploadId(null);
-          },
+  const onDeleteFile = () => {
+    deleteGalleryFileMutateAsync(file?.uploadId, {
+      onSuccess() {
+        notification.success({
+          message: 'File was deleted successfully',
+          placement: 'bottomLeft',
         });
+        setIsOpen(false);
+        setUploadId(null);
       },
-      onCancel() {},
     });
   };
 
@@ -82,7 +80,7 @@ export const GalleryFileInfoModal: FC = () => {
     }).then(() => {
       notification.success({
         message: 'File was updated successfully',
-        placement: 'topRight',
+        placement: 'bottomLeft',
       });
     });
   };
@@ -184,6 +182,35 @@ export const GalleryFileInfoModal: FC = () => {
                         </span>
                         {file?.createdAt}
                       </List.Item>
+
+                      <List.Item draggable>
+                        <span className="text-neutral-400">
+                          {selectedFile?.usageInfo?.article?.id && (
+                            <>
+                              ArticleID: {selectedFile?.usageInfo?.article?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.article?.title}
+                              &nbsp;
+                            </>
+                          )}
+                          {selectedFile?.usageInfo?.place?.id && (
+                            <>
+                              PlaceID: {selectedFile?.usageInfo?.place?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.place?.title}
+                              &nbsp;
+                            </>
+                          )}
+                          {selectedFile?.usageInfo?.person?.id && (
+                            <>
+                              PersonID: {selectedFile?.usageInfo?.person?.id}
+                              <br />
+                              Title: {selectedFile?.usageInfo?.person?.title}
+                              &nbsp;
+                            </>
+                          )}
+                        </span>
+                      </List.Item>
                     </List>
 
                     <Space wrap>
@@ -191,19 +218,16 @@ export const GalleryFileInfoModal: FC = () => {
                         type="primary"
                         htmlType="submit"
                         loading={isUpdating}
+                        icon={<SaveOutlined />}
                         disabled={isDisabled}
                       >
                         Save
                       </Button>
 
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={onDelete}
-                        disabled={isDisabled}
-                      >
-                        Delete
-                      </Button>
+                      <DeleteConfirmationModal<IExtendGalleryFile>
+                        item={selectedFile}
+                        onDelete={onDeleteFile}
+                      />
                     </Space>
                   </Space>
                 </Form>

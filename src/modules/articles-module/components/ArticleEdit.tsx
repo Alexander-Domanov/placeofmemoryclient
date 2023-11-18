@@ -31,6 +31,7 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import {
+  DeleteConfirmationModal,
   GetCharacterCount,
   MetaInfoForm,
   QuillCharacterCount,
@@ -38,10 +39,10 @@ import {
 } from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
-import DeleteArticleModal from '@/modules/articles-module/components/DeleteArticleModal';
 import { IArticle, Statuses } from '@/types';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 
 const { Option } = Select;
 
@@ -86,6 +87,8 @@ export const ArticleEdit: FC = () => {
   const [contentText, setContentText] = useState<string>('');
   const characterCount = GetCharacterCount(contentText);
 
+  const { deleteArticleMutationAsync } = useDeleteArticle();
+
   const onStatusChange = (status: string) => {
     setStatus(status);
 
@@ -100,6 +103,18 @@ export const ArticleEdit: FC = () => {
         },
       }
     );
+  };
+
+  const onDeleteArticle = () => {
+    deleteArticleMutationAsync(selectedArticle?.id || null, {
+      onSuccess() {
+        notification.success({
+          message: 'Article was deleted successfully',
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.articles.index);
+      },
+    });
   };
 
   const normFile = (e: any) => {
@@ -320,7 +335,10 @@ export const ArticleEdit: FC = () => {
                       Save
                     </Button>
 
-                    <DeleteArticleModal article={selectedArticle} showButton />
+                    <DeleteConfirmationModal<IArticle>
+                      item={selectedArticle}
+                      onDelete={onDeleteArticle}
+                    />
                   </Space>
                 </Card>
 

@@ -67,7 +67,7 @@ export const DashboardHeader: FC = () => {
 
   return (
     <>
-      <Header className={styles.header}>
+      <Header className={styles.header} style={{ background: 'rgb(44 44 44)' }}>
         <Flex align="center" justify="space-between" gap="middle">
           <div>
             <Link href={routes.main} className={styles.logo}>

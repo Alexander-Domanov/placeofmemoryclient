@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Button, Modal, notification, Space } from 'antd';
+import React, { FC, useState } from 'react';
+import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { IPerson, Role } from '@/types';
@@ -10,19 +10,16 @@ import { routes } from '@/common/routing/routes';
 
 interface DeletePersonModalProps {
   person: IPerson | null;
-  showButton: boolean;
 }
 
-const DeletePersonModal: FC<DeletePersonModalProps> = ({
-  person,
-  showButton,
-}) => {
+const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
   const router = useRouter();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const { deletePersonMutation } = useDeletePerson();
+  const { deletePersonMutationAsync } = useDeletePerson();
   const { data: me } = useMeQuery();
 
   const showDeleteModal = () => {
@@ -34,7 +31,7 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
   };
 
   const deletePerson = () => {
-    deletePersonMutation(selectedPerson?.id || null, {
+    deletePersonMutationAsync(selectedPerson?.id || null, {
       onSuccess: () => {
         notification.success({
           message: `Person: ${selectedPerson?.firstName} deleted successfully`,
@@ -51,49 +48,33 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
     me?.role as Role
   );
 
-  const showButtonDelete = (showButton: boolean) => {
-    const handleClick = () => {
-      setSelectedPerson(person);
-      showDeleteModal();
-    };
+  const handleClick = () => {
+    setSelectedPerson(person);
+    showDeleteModal();
+  };
 
-    const buttonStyle = {
-      cursor: 'pointer',
-      color: '#ef2020',
-      ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
-    };
-
-    if (showButton) {
-      return (
-        <Button
-          danger
-          type="primary"
-          title="Delete"
-          icon={<DeleteOutlined />}
-          style={buttonStyle}
-          onClick={handleClick}
-          ghost
-          disabled={isDisabled}
-        >
-          Delete
-        </Button>
-      );
-    }
-    return (
-      <Button
-        title="Delete"
-        icon={<DeleteOutlined />}
-        style={buttonStyle}
-        onClick={handleClick}
-        ghost
-        disabled={isDisabled}
-      />
-    );
+  const buttonStyle = {
+    cursor: 'pointer',
+    color: '#ef2020',
+    ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
   };
 
   return (
     <>
-      {showButtonDelete(showButton)}
+      <List.Item
+        key={person?.id}
+        actions={[
+          <Button
+            key="delete"
+            title="Delete"
+            icon={<DeleteOutlined />}
+            style={buttonStyle}
+            onClick={handleClick}
+            ghost
+          />,
+        ]}
+      />
+
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
@@ -101,6 +82,17 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
+        okButtonProps={{
+          icon: <DeleteOutlined />,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+          style: {
+            cursor: 'pointer',
+            color: isHovered ? '#fff' : '#ef2020',
+            backgroundColor: isHovered ? '#ef2020' : 'transparent',
+            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
+          },
+        }}
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
@@ -115,4 +107,4 @@ const DeletePersonModal: FC<DeletePersonModalProps> = ({
   );
 };
 
-export default DeletePersonModal;
+export default DeletePersonComponent;
