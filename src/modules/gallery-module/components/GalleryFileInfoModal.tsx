@@ -33,16 +33,18 @@ type FormValues = {
 
 const GalleryImage: FC<{ url: string }> = ({ url }) => {
   return (
-    <Image
-      src={url}
-      preview={false}
-      style={{
-        display: 'block',
-        objectFit: 'cover',
-        borderRadius: '0.5vw',
-      }}
-      fallback={pictureBackup}
-    />
+    <Spin spinning={!url}>
+      <Image
+        src={url}
+        preview={false}
+        style={{
+          display: 'block',
+          objectFit: 'cover',
+          borderRadius: '1vw',
+        }}
+        fallback={pictureBackup}
+      />
+    </Spin>
   );
 };
 
@@ -262,6 +264,7 @@ export const GalleryFileInfoModal: FC = () => {
           title="File Info"
           destroyOnClose
           width={1000}
+          // className="smooth-transition"
         >
           {isLoading && (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
