@@ -2,14 +2,27 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import Image from 'next/image';
+import { Pagination } from 'antd';
+import { useRouter } from 'next/router';
 import { routes } from '@/common/routing/routes';
 import { IGetArticlesResponse } from '@/types';
+import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
 
 interface Props {
   posts: IGetArticlesResponse;
 }
 
 export const ArticlesMain: FC<Props> = ({ posts }) => {
+  const router = useRouter();
+
+  const onPageChange = (page: number) => {
+    if (page === 1) {
+      router.push(routes.articles.index);
+    } else {
+      router.push(`${routes.articles.index}/page/${page}`);
+    }
+  };
+
   return (
     <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
       <div className="container">
@@ -30,36 +43,50 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          {posts?.items.map((post) => (
-            <div
-              key={post.id}
-              className="grid grid-cols-2 gap-8 mb-5 last:mb-0 lg:gap-5 lg:grid-cols-[4fr_6fr] sm:grid-cols-1 sm:gap-10"
-            >
-              <div>
-                <Link
-                  href={routes.articles.getArticle(post.slug)}
-                  className="relative aspect-[532/244] block"
-                >
-                  <Image
-                    src={post.photos[0]?.versions.huge.url}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                </Link>
-              </div>
-
-              <div>
-                <h2 className="text-4xl lg:text-3xl">
-                  <Link href={routes.articles.getArticle(post.slug)}>
-                    {post.title}
+          <div>
+            {posts?.items.map((post) => (
+              <div
+                key={post.id}
+                className="grid grid-cols-2 gap-8 mb-10 last:mb-0 lg:gap-5 lg:grid-cols-[4fr_6fr] sm:grid-cols-1 sm:gap-10"
+              >
+                <div>
+                  <Link
+                    href={routes.articles.getArticle(post.slug)}
+                    className="relative aspect-[532/244] block"
+                  >
+                    <Image
+                      src={post.photos[0]?.versions.huge.url}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                    />
                   </Link>
-                </h2>
+                </div>
 
-                <div className="mt-8 text-base lg:mt-4">{post.description}</div>
+                <div>
+                  <h2 className="text-4xl lg:text-3xl">
+                    <Link href={routes.articles.getArticle(post.slug)}>
+                      {post.title}
+                    </Link>
+                  </h2>
+
+                  <div className="mt-8 text-base lg:mt-4">
+                    {post.description}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="mt-6">
+            <Pagination
+              pageSize={SITE_ARTICLES_PER_PAGE}
+              current={Number(router.query.page) || 1}
+              total={posts.totalCount}
+              showSizeChanger={false}
+              onChange={onPageChange}
+            />
+          </div>
         </div>
       </div>
     </div>

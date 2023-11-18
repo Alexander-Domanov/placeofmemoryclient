@@ -113,7 +113,7 @@ module.exports = {
         icon: `0 2px 6px rgba(0, 0, 0, 0.3)`,
         iconHover: 'brightness(90%)',
       },
-      typography: (theme) => ({
+      typography: (theme: any) => ({
         DEFAULT: {
           css: {
             '--tw-prose-headings': theme.colors.white,
