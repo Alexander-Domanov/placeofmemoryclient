@@ -26,13 +26,13 @@ import { ICreatePerson, IGalleryFile, ILocation, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
 import { useUpdatePerson } from '@/modules/persons-module/hooks/useUpdatePerson';
-import DeletePersonModal from '@/modules/persons-module/components/DeletePersonModal';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
+  DeleteConfirmationModal,
   GetCharacterCount,
   GetUpdateOptions,
   MetaInfoForm,
@@ -48,6 +48,7 @@ import {
 import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -88,6 +89,7 @@ export const PersonEdit: FC = () => {
   const { person, isLoading, me } = usePerson(personId);
   const { updatePersonMutation, isUpdating } = useUpdatePerson();
   const { updateStatusPerson, isStatusUpdating } = useUpdatePersonStatus();
+  const { deletePersonMutationAsync } = useDeletePerson();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList, 'person');
@@ -183,6 +185,18 @@ export const PersonEdit: FC = () => {
 
   const clearSelectedPlace = () => {
     setSelectedPlace(null);
+  };
+
+  const onDeletePerson = () => {
+    deletePersonMutationAsync(selectedPerson?.id || null, {
+      onSuccess: () => {
+        notification.success({
+          message: `Person deleted successfully`,
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.persons.index);
+      },
+    });
   };
 
   const onFinish = (values: IPersonEditForm) => {
@@ -441,7 +455,11 @@ export const PersonEdit: FC = () => {
                     >
                       Save
                     </Button>
-                    <DeletePersonModal person={selectedPerson} showButton />
+
+                    <DeleteConfirmationModal<IPerson>
+                      item={selectedPerson}
+                      onDelete={onDeletePerson}
+                    />
                   </Space>
                 </Card>
 

@@ -25,11 +25,11 @@ import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
-import DeletePlaceModal from '@/modules/places-module/components/DeletePlaceModal';
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
+  DeleteConfirmationModal,
   GetCharacterCount,
   GetUpdateOptions,
   MetaInfoForm,
@@ -41,6 +41,7 @@ import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -81,6 +82,8 @@ export const PlaceEdit: FC = () => {
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { uploadProps } = useUpload(setFileList, 'place');
+
+  const { deletePlaceMutationAsync } = useDeletePlace();
 
   const [form] = Form.useForm();
 
@@ -153,6 +156,18 @@ export const PlaceEdit: FC = () => {
         },
       }
     );
+  };
+
+  const onDeletePlace = () => {
+    deletePlaceMutationAsync(selectedPlace?.id || null, {
+      onSuccess() {
+        notification.success({
+          message: 'Place deleted successfully',
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.places.index);
+      },
+    });
   };
 
   const onFinish = (values: IPlaceEditForm) => {
@@ -372,7 +387,10 @@ export const PlaceEdit: FC = () => {
                       Save
                     </Button>
 
-                    <DeletePlaceModal place={selectedPlace} showButton />
+                    <DeleteConfirmationModal<IPlace>
+                      item={selectedPlace}
+                      onDelete={onDeletePlace}
+                    />
                   </Space>
                 </Card>
 

@@ -6,8 +6,8 @@ import { IPerson } from '@/types';
 import { ColorStatusTag, RenderImage } from '@/components';
 import { routes } from '@/common/routing/routes';
 import UpdatePersonStatusComponent from '@/modules/persons-module/components/UpdatePersonStatus';
-import DeletePersonComponent from '@/modules/persons-module/components/DeletePerson';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import DeletePersonComponent from '@/modules/persons-module/components/DeletePersonModal';
 
 export const columnsTablePersons: ColumnsType<IPerson> = [
   {

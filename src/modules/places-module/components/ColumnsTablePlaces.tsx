@@ -4,10 +4,10 @@ import Link from 'next/link';
 import React from 'react';
 import { IPlace } from '@/types';
 import { ColorStatusTag, RenderImage } from '@/components';
-import DeletePlaceComponent from '@/modules/places-module/components/DeletePlace';
 import UpdatePlaceStatus from '@/modules/places-module/components/UpdatePlaceStatus';
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import DeletePlaceComponent from '@/modules/places-module/components/DeletePlaceModal';
 
 export const columnsTablePlaces: ColumnsType<IPlace> = [
   {
@@ -166,6 +166,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePlaceStatus place={record} />
+
         <DeletePlaceComponent place={record} />
       </Row>
     ),

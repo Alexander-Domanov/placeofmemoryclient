@@ -4,10 +4,10 @@ import Link from 'next/link';
 import React from 'react';
 import { ColorStatusTag, RenderImage } from '@/components';
 import { IArticle } from '@/types';
-import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticle';
 import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticleModal';
 
 export const columnsTableArticles: ColumnsType<IArticle> = [
   {
