@@ -110,6 +110,7 @@ module.exports = {
       },
       boxShadow: {
         button: '0px 15px 30px 0px rgba(0, 0, 0, 0.12)',
+        icon: `0 2px 6px rgba(0, 0, 0, 0.3)`,
       },
     },
   },
