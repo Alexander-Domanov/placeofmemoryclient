@@ -64,7 +64,7 @@ export const AvatarBlock = () => {
           height={width && width > 639 ? 100 : 60}
           alt="user-avatar"
         />
-        {isHovered && urlAvatar && (
+        {isHovered && (
           <div
             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
             style={{ borderRadius: '50%' }}
@@ -80,6 +80,7 @@ export const AvatarBlock = () => {
                   />
                 )}
               </div>
+
               <div className="cursor-pointer" onClick={() => deleteAvatar()}>
                 {isLoadingDeleteAvatar ? (
                   <Spinner />

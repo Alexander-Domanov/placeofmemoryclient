@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { useDebounce } from 'usehooks-ts';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
@@ -23,22 +23,18 @@ export const PlacesMain = () => {
   const vCity = useDebounce(city, 1000);
   const pageParams = query.page as string;
   const { width } = useWindowSize();
-  const { dataPlaces, isLoading } = useGetPlacesMain({
+  const { dataPlaces, isLoading, isFetchingPlaces } = useGetPlacesMain({
     name: vName,
     city: vCity,
     country: vCountry,
     pageNumber: Number(page),
   });
   const onPageChange = (newPage: number) => {
-    setPage(newPage);
-    push(`/places?page=${newPage}`, undefined, { shallow: true });
-  };
-  useEffect(() => {
-    if (pageParams === undefined) {
-      setPage(1);
-      push(`/places?page=${1}`, undefined, { shallow: true });
+    if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
+      setPage(newPage);
+      push(routes.places.page(String(newPage)), undefined, { shallow: true });
     }
-  }, []);
+  };
 
   return (
     <div className="flex flex-col">
@@ -142,8 +138,8 @@ export const PlacesMain = () => {
       {dataPlaces && dataPlaces.items.length > 0 && (
         <PaginationCustom
           onPageChange={onPageChange}
-          page={Number(page)}
-          pageCount={dataPlaces.pagesCount}
+          page={Number(pageParams) || 1}
+          pageCount={dataPlaces ? dataPlaces.pagesCount : 1}
         />
       )}
     </div>

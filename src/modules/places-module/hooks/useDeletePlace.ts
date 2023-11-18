@@ -6,7 +6,11 @@ import { ErrorNotification } from '@/common-dashboard/errorNotification';
 
 export const useDeletePlace = () => {
   const client = useQueryClient();
-  const { mutate: deletePlaceMutation, isLoading: isDeleting } = useMutation({
+  const {
+    mutate: deletePlaceMutation,
+    mutateAsync: deletePlaceMutationAsync,
+    isLoading: isDeleting,
+  } = useMutation({
     mutationKey: ['delete-place'],
     mutationFn: (id: number | null) => deletePlace(id),
     onSuccess: () => {
@@ -19,5 +23,5 @@ export const useDeletePlace = () => {
     },
   });
 
-  return { deletePlaceMutation, isDeleting };
+  return { deletePlaceMutation, deletePlaceMutationAsync, isDeleting };
 };

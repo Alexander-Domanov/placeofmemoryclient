@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Modal, notification, Space } from 'antd';
+import React, { FC, useState } from 'react';
+import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
@@ -8,19 +8,16 @@ import { routes } from '@/common/routing/routes';
 
 interface DeletePlaceModalProps {
   place: IPlace | null;
-  showButton: boolean;
 }
 
-const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
-  place,
-  showButton,
-}) => {
+const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
   const router = useRouter();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const { deletePlaceMutation } = useDeletePlace();
+  const { deletePlaceMutationAsync } = useDeletePlace();
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -31,7 +28,7 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
   };
 
   const deletePlace = () => {
-    deletePlaceMutation(selectedPlace?.id || null, {
+    deletePlaceMutationAsync(selectedPlace?.id || null, {
       onSuccess: () => {
         notification.success({
           message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
@@ -43,41 +40,32 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
     setDeleteModalVisible(false);
   };
 
-  const showButtonDelete = (showButton: boolean) => {
-    const handleClick = () => {
-      setSelectedPlace(place);
-      showDeleteModal();
-    };
+  const buttonStyle = {
+    cursor: 'pointer',
+    color: '#ef2020',
+  };
 
-    if (showButton) {
-      return (
-        <Button
-          danger
-          type="primary"
-          title="Delete"
-          icon={<DeleteOutlined />}
-          style={{ cursor: 'pointer', color: '#ef2020' }}
-          onClick={handleClick}
-          ghost
-        >
-          Delete
-        </Button>
-      );
-    }
-    return (
-      <Button
-        title="Delete"
-        icon={<DeleteOutlined />}
-        style={{ cursor: 'pointer', color: '#ef2020' }}
-        onClick={handleClick}
-        ghost
-      />
-    );
+  const handleClick = () => {
+    setSelectedPlace(place);
+    showDeleteModal();
   };
 
   return (
     <>
-      {showButtonDelete(showButton)}
+      <List.Item
+        key={place?.id}
+        actions={[
+          <Button
+            key="delete"
+            title="Delete"
+            icon={<DeleteOutlined />}
+            style={buttonStyle}
+            onClick={handleClick}
+            ghost
+          />,
+        ]}
+      />
+
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
@@ -85,6 +73,17 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
+        okButtonProps={{
+          icon: <DeleteOutlined />,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+          style: {
+            cursor: 'pointer',
+            color: isHovered ? '#fff' : '#ef2020',
+            backgroundColor: isHovered ? '#ef2020' : 'transparent',
+            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
+          },
+        }}
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
@@ -102,6 +101,17 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
+        okButtonProps={{
+          icon: <DeleteOutlined />,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+          style: {
+            cursor: 'pointer',
+            color: isHovered ? '#fff' : '#ef2020',
+            backgroundColor: isHovered ? '#ef2020' : 'transparent',
+            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
+          },
+        }}
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
@@ -116,4 +126,4 @@ const DeletePlaceModal: React.FC<DeletePlaceModalProps> = ({
   );
 };
 
-export default DeletePlaceModal;
+export default DeletePlaceComponent;

@@ -12,3 +12,18 @@ export interface IGalleryFile
   createdAt: string;
   updatedAt: string;
 }
+
+interface IShortInfoPhotoUsage {
+  id: number;
+  title: string;
+}
+
+interface IPhotoUsageInfo {
+  article: IShortInfoPhotoUsage;
+  place: IShortInfoPhotoUsage;
+  person: IShortInfoPhotoUsage;
+}
+
+export interface IExtendGalleryFile extends IGalleryFile {
+  usageInfo: IPhotoUsageInfo;
+}

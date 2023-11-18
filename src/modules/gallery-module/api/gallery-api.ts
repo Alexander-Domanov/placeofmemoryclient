@@ -1,5 +1,5 @@
 import { authInstance } from '@/services';
-import { IGalleryFile, IGetGalleryResponse } from '@/types';
+import { IExtendGalleryFile, IGetGalleryResponse } from '@/types';
 
 export const getGallery = (
   page: number,
@@ -18,7 +18,7 @@ export const getGallery = (
 };
 
 export const getGalleryFile = (id: string | null) => {
-  return authInstance.get<IGalleryFile>(`gallery/${id}`);
+  return authInstance.get<IExtendGalleryFile>(`gallery/${id}`);
 };
 
 export const updateGalleryFile = (id: string | null, form: any) => {

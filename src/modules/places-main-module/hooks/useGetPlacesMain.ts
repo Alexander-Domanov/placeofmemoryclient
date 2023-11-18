@@ -18,7 +18,7 @@ export const useGetPlacesMain = ({
     isFetching: isFetchingPlaces,
     isLoading,
   } = useQuery(
-    ['places-main', name, country, city, pageNumber],
+    ['places-main', pageNumber],
     () =>
       getPlacesMainForSSR({ name, country, city, lang: locale, pageNumber }),
     {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Modal, notification, Space } from 'antd';
+import { FC, useState } from 'react';
+import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { IArticle } from '@/types';
@@ -8,16 +8,13 @@ import { routes } from '@/common/routing/routes';
 
 interface DeleteArticleModalProps {
   article: IArticle | null;
-  showButton: boolean;
 }
-const DeleteArticleModal: React.FC<DeleteArticleModalProps> = ({
-  article,
-  showButton,
-}) => {
+const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
   const router = useRouter();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const { deleteArticleMutation } = useDeleteArticle();
 
@@ -41,46 +38,32 @@ const DeleteArticleModal: React.FC<DeleteArticleModalProps> = ({
     setDeleteModalVisible(false);
   };
 
-  const showButtonDelete = (showButton: boolean) => {
-    const handleClick = () => {
-      setSelectedArticle(article);
-      showDeleteModal();
-    };
+  const handleClick = () => {
+    setSelectedArticle(article);
+    showDeleteModal();
+  };
 
-    const buttonStyle = {
-      cursor: 'pointer',
-      color: '#ef2020',
-    };
-
-    if (showButton) {
-      return (
-        <Button
-          danger
-          type="primary"
-          title="Delete"
-          icon={<DeleteOutlined />}
-          style={buttonStyle}
-          onClick={handleClick}
-          ghost
-        >
-          Delete
-        </Button>
-      );
-    }
-    return (
-      <Button
-        title="Delete"
-        icon={<DeleteOutlined />}
-        style={buttonStyle}
-        onClick={handleClick}
-        ghost
-      />
-    );
+  const buttonStyle = {
+    cursor: 'pointer',
+    color: '#ef2020',
   };
 
   return (
     <>
-      {showButtonDelete(showButton)}
+      <List.Item
+        key={article?.id}
+        actions={[
+          <Button
+            key="delete"
+            title="Delete"
+            icon={<DeleteOutlined />}
+            style={buttonStyle}
+            onClick={handleClick}
+            ghost
+          />,
+        ]}
+      />
+
       <Modal
         title="Confirm deletion"
         open={isDeleteModalVisible}
@@ -88,6 +71,17 @@ const DeleteArticleModal: React.FC<DeleteArticleModalProps> = ({
         onCancel={handleDeleteCancel}
         okText="Delete"
         cancelText="Cancel"
+        okButtonProps={{
+          icon: <DeleteOutlined />,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+          style: {
+            cursor: 'pointer',
+            color: isHovered ? '#fff' : '#ef2020',
+            backgroundColor: isHovered ? '#ef2020' : 'transparent',
+            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
+          },
+        }}
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
@@ -102,4 +96,4 @@ const DeleteArticleModal: React.FC<DeleteArticleModalProps> = ({
   );
 };
 
-export default DeleteArticleModal;
+export default DeleteArticleComponent;

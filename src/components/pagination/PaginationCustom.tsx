@@ -37,33 +37,39 @@ export const PaginationCustom: FC<IPaginationProps> = ({
   };
 
   return (
-    <div className="flex items-center gap-3 justify-center text-2xl text-center sm:text-sm mt-3">
+    <div className="flex items-center gap-3 justify-center text-lg text-center sm:text-sm mt-24">
       <button
-        className={`mr-32 sm:mr-16 text-5xl sm:text-2xl ${
-          page <= 1 ? 'text-dark-700 cursor-not-allowed' : 'text-dark-500'
+        className={`mr-56 md:mr-32 sm:mr-16 text-5xl sm:text-3xl ${
+          page <= 1
+            ? 'text-dark-700 cursor-not-allowed'
+            : 'text-dark-500 rounded-full shadow-icon hover:bg-dark-100'
         }`}
         onClick={() => onPageChange(page - 1)}
       >
         <BsArrowLeftCircleFill />
       </button>
+
       <span className="flex items-center">
         <Input
           type="text"
           value={page.toString()}
           min="1"
-          className="w-[50px] h-[36px] ms:w-[30px] ms:h-[24px] text-center text-2xl sm:text-sm"
+          className="w-[50px] h-[36px] ms:w-[30px] ms:h-[24px] text-center text-lg sm:text-sm"
           max={pageCount}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
       </span>
+
       <div>/</div>
+
       <span>{pageCount}</span>
+
       <button
-        className={`ml-32 sm:ml-16 text-5xl sm:text-2xl ${
+        className={`ml-56 md:ml-32 sm:ml-16 text-5xl sm:text-3xl ${
           page >= pageCount
             ? 'text-dark-700 cursor-not-allowed'
-            : 'text-dark-500'
+            : 'text-dark-500 rounded-full shadow-icon hover:bg-dark-100'
         }`}
         onClick={() => onPageChange(page + 1)}
       >
