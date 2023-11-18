@@ -13,6 +13,7 @@ import {
   Space,
   Spin,
 } from 'antd';
+import { SaveOutlined } from '@ant-design/icons';
 import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
@@ -21,8 +22,7 @@ import { FileStatuses, IExtendGalleryFile, Role } from '@/types';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
-
-const { confirm } = Modal;
+import { DeleteConfirmationModal } from '@/components';
 
 type FormValues = {
   alt: string;
@@ -60,23 +60,16 @@ export const GalleryFileInfoModal: FC = () => {
     setUploadId(null);
   };
 
-  const onDelete = () => {
-    confirm({
-      title: 'Do you want to delete these image?',
-      onOk() {
-        return deleteGalleryFileMutateAsync(file?.uploadId, {
-          onSuccess() {
-            notification.success({
-              message: 'File was deleted successfully',
-              placement: 'topRight',
-            });
-
-            setIsOpen(false);
-            setUploadId(null);
-          },
+  const onDeleteFile = () => {
+    deleteGalleryFileMutateAsync(file?.uploadId, {
+      onSuccess() {
+        notification.success({
+          message: 'File was deleted successfully',
+          placement: 'bottomLeft',
         });
+        setIsOpen(false);
+        setUploadId(null);
       },
-      onCancel() {},
     });
   };
 
@@ -87,7 +80,7 @@ export const GalleryFileInfoModal: FC = () => {
     }).then(() => {
       notification.success({
         message: 'File was updated successfully',
-        placement: 'topRight',
+        placement: 'bottomLeft',
       });
     });
   };
@@ -225,19 +218,16 @@ export const GalleryFileInfoModal: FC = () => {
                         type="primary"
                         htmlType="submit"
                         loading={isUpdating}
+                        icon={<SaveOutlined />}
                         disabled={isDisabled}
                       >
                         Save
                       </Button>
 
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={onDelete}
-                        disabled={isDisabled}
-                      >
-                        Delete
-                      </Button>
+                      <DeleteConfirmationModal<IExtendGalleryFile>
+                        item={selectedFile}
+                        onDelete={onDeleteFile}
+                      />
                     </Space>
                   </Space>
                 </Form>
