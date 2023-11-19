@@ -1,15 +1,9 @@
 import Head from 'next/head';
-import { FC } from 'react';
 import { SignUp } from '@/modules/auth-modules/sign-up-module';
 import { useTranslation } from '@/components/internationalization';
-import { IContacts } from '@/types';
 import { Header } from '@/components';
 
-interface Props {
-  contacts: IContacts;
-}
-
-const SignUpPage: FC<Props> = ({ contacts }) => {
+const SignUpPage = () => {
   const { t } = useTranslation();
   return (
     <>

@@ -26,7 +26,7 @@ const Map: FC<Props> = ({ contacts }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data: contacts } = await getContacts();
 
   return {
