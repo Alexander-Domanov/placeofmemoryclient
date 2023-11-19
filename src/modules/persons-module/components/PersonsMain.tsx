@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
-import { Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { routes } from '@/common/routing/routes';
 import { IGetPersonsResponse } from '@/types';
-import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
+import AntPagination from '@/components/pagination/AntPagination';
+import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -67,15 +67,12 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
             ))}
           </div>
 
-          <div className="mt-6">
-            <Pagination
-              pageSize={SITE_ARTICLES_PER_PAGE}
-              current={Number(router.query.page) || 1}
-              total={persons.totalCount}
-              showSizeChanger={false}
-              onChange={onPageChange}
-            />
-          </div>
+          <AntPagination
+            page={Number(router.query.page) || 1}
+            pageSize={SITE_PERSONS_PER_PAGE}
+            total={persons.totalCount}
+            onPageChange={onPageChange}
+          />
         </div>
       </div>
     </div>

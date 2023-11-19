@@ -1,6 +1,5 @@
-import { FC } from 'react';
 import Head from 'next/head';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { ArticleMain } from '@/modules/articles-module/components/ArticleMain';
 import {
@@ -15,7 +14,7 @@ interface Props {
   contacts: IContacts;
 }
 
-const Article: FC<Props> = ({ contacts, post }) => {
+const ArticlePage: NextPage<Props> = ({ contacts, post }) => {
   return (
     <>
       <Head>
@@ -46,7 +45,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsBy } = await getArticlesPublic(20);
+  const { data: postsBy } = await getArticlesPublic(20, 1, 'by');
   const { data: postsRu } = await getArticlesPublic(20, 1, 'ru');
 
   const pathsBy = postsBy.items.map((post) => ({
@@ -65,4 +64,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default Article;
+export default ArticlePage;

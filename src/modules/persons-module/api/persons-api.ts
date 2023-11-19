@@ -53,3 +53,14 @@ export const getPersonsPublic = (
     }
   );
 };
+
+export const getPersonPublic = (slug: string, lang = 'by') => {
+  return axios.get<IPerson>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/persons/${slug}/public`,
+    {
+      params: {
+        lang,
+      },
+    }
+  );
+};

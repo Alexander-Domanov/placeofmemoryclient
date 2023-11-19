@@ -16,7 +16,7 @@ export function Header() {
     ? NAVIGATION_LINK()
     : [...NAVIGATION_LINK(), ...AUTH_LINK()];
   return (
-    <header className="h-[65px] bg-dark-900  flex items-center border-b border-dark-900 ">
+    <header className="h-[65px] bg-dark-900  flex items-center border-b border-dark-900 sticky top-0 z-50">
       <Container className="bg-dark-900 w-full container">
         <section className="flex justify-between items-center font-normal leading-3 text-sm text-light-300">
           <div className="flex items-center font-kelsi text-xl">
