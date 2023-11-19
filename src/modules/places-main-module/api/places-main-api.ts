@@ -32,7 +32,7 @@ export const getPlacesMainForSSR = async ({
   lang,
   name,
   pageNumber,
-  pageSize = 1,
+  pageSize = 5,
 }: IPlacesProps | any) => {
   const res = await axios.get<IPlacesMainResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/places/public/all`,

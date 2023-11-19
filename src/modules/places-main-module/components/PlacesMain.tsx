@@ -5,14 +5,20 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
-import { useGetPlacesMain } from '@/modules/places-main-module';
+import {
+  IPlacesMainResponse,
+  useGetPlacesMain,
+} from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 import { Input } from '@/ui';
 import PaginationCustom from '@/components/pagination/PaginationCustom';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 
-export const PlacesMain = () => {
+interface IProps {
+  places: IPlacesMainResponse;
+}
+export const PlacesMain = ({ places }: IProps) => {
   const { push, query } = useRouter();
   const [page, setPage] = useState<number>();
   const [name, setName] = useState<string>('');
@@ -27,12 +33,12 @@ export const PlacesMain = () => {
     name: vName,
     city: vCity,
     country: vCountry,
-    pageNumber: Number(page),
+    places,
   });
   const onPageChange = (newPage: number) => {
     if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
       setPage(newPage);
-      push(routes.places.page(String(newPage)), undefined, { shallow: true });
+      push(`${routes.places.index}/${newPage}`);
     }
   };
 
@@ -109,9 +115,7 @@ export const PlacesMain = () => {
                         {place.nameCemetery}
                       </h3>
                       <section className="text-base text-light-300 break-words font-light">
-                        <MarkupRenderer
-                          markup={`${place.description.substring(0, 140)}...`}
-                        />
+                        {place.shortDescription}
                       </section>
                     </div>
                   )}
@@ -124,9 +128,7 @@ export const PlacesMain = () => {
                   {place.nameCemetery}
                 </h3>
                 <section className="text-xl text-light-300 break-words font-light">
-                  <MarkupRenderer
-                    markup={`${place.description.substring(0, 140)}...`}
-                  />
+                  {place.shortDescription}
                 </section>
               </div>
             )}

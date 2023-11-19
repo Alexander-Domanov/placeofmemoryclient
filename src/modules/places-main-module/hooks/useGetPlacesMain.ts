@@ -2,14 +2,20 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPlacesMainForSSR } from '@/modules/places-main-module/api/places-main-api';
-import { IPlacesProps } from '@/modules/places-main-module';
+import {
+  IPlacesMainResponse,
+  IPlacesProps,
+} from '@/modules/places-main-module';
 
+interface IProps {
+  places: IPlacesMainResponse;
+}
 export const useGetPlacesMain = ({
   name,
   country,
   city,
-  pageNumber,
-}: IPlacesProps) => {
+  places,
+}: IPlacesProps & IProps) => {
   const { locale } = useRouter();
   const {
     data: dataPlaces,
@@ -18,11 +24,12 @@ export const useGetPlacesMain = ({
     isFetching: isFetchingPlaces,
     isLoading,
   } = useQuery(
-    ['places-main', pageNumber],
-    () =>
-      getPlacesMainForSSR({ name, country, city, lang: locale, pageNumber }),
+    ['places-main'],
+    () => getPlacesMainForSSR({ name, country, city, lang: locale }),
     {
       ...noRefetch,
+      initialData: places,
+      refetchInterval: 60 * 1000,
     }
   );
 
