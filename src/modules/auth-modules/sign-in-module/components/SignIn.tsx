@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { FaGoogle } from 'react-icons/fa6';
 import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
@@ -9,6 +10,7 @@ import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
 import { Spinner } from '@/ui/spinner/Spinner';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 export const SignIn = () => {
   const { errors, register, reset, handleSubmit, setCustomError } =
@@ -52,20 +54,38 @@ export const SignIn = () => {
     }
   }, [queryStatus]);
 
+  const { width } = useWindowSize();
+  const isMobile = width && width < 640;
+
   return (
     <AuthLayout>
       {viewQueryStatus && <span>{viewQueryStatus}</span>}
+
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
         Рэдактаваць акаўнт
       </h1>
-      <hr className="w-full mt-8 mb-8 transform bg-light-900" />
-      <Button onClick={OAUTH_AUTHORIZATION.registrationGoogle}>
-        Увайдзіце праз Google
+
+      <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
+
+      <Button
+        onClick={OAUTH_AUTHORIZATION.registrationGoogle}
+        className="gap-1 hover:shadow-icon"
+      >
+        Увайдзіце праз &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
+        oogle
       </Button>
+
       <div>
-        <div className="flex justify-center align-middle text-center text-sm mb-7 mt-7">
-          <span>або ўвайдзіце з дапамогай электроннай пошты</span>
+        <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
+          <div className="flex-grow  h-[1px] bg-dark-300" />
+
+          <span className="mx-4">
+            або ўвайдзіце з дапамогай электроннай пошты
+          </span>
+
+          <div className="flex-grow h-[1px] bg-dark-300" />
         </div>
+
         <form
           className="flex flex-col gap-3"
           onSubmit={handleSubmit(handleFormSubmit)}
@@ -77,6 +97,7 @@ export const SignIn = () => {
             error={errors?.email?.message}
             {...register('email')}
           />
+
           <Input
             type="password"
             id="password"
@@ -84,6 +105,7 @@ export const SignIn = () => {
             label="Пароль"
             {...register('password')}
           />
+
           <div className="flex text-sm justify-end">
             <Link
               className="text-xs underline"
@@ -92,13 +114,20 @@ export const SignIn = () => {
               Забыўся?
             </Link>
           </div>
-          <Button disabled={isLoading} className="mt-1" type="submit">
+
+          <Button
+            disabled={isLoading}
+            className="mt-1  hover:shadow-icon"
+            type="submit"
+          >
             {isLoading ? <Spinner /> : 'Увайсці'}
           </Button>
         </form>
       </div>
-      <div className="flex gap-1 text-sm justify-center">
+
+      <div className="flex gap-1 text-sm justify-center ">
         <span> У вас няма акаўнта?</span>
+
         <Link className="underline" href={routes.auth.signUp}>
           Зарэгістравацца
         </Link>

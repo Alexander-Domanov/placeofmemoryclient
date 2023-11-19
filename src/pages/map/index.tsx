@@ -3,16 +3,15 @@ import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import { MapsMain } from '@/modules/maps-module/components/maps';
 import { useTranslation } from '@/components/internationalization';
-import { IContacts, IGetArticlesResponse } from '@/types';
+import { IContacts } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 
 interface Props {
   contacts: IContacts;
-  posts: IGetArticlesResponse;
 }
 
-const Map: FC<Props> = ({ contacts, posts }) => {
+const Map: FC<Props> = ({ contacts }) => {
   const { t } = useTranslation();
   return (
     <>

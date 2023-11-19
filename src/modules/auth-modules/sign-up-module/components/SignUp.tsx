@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { FaGoogle } from 'react-icons/fa6';
 import { AuthLayout } from '@/components';
 import { Button, Input } from '@/ui';
 import { OAUTH_AUTHORIZATION } from '@/services';
@@ -10,6 +11,7 @@ import {
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { routes } from '@/common/routing/routes';
 import { Spinner } from '@/ui/spinner/Spinner';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 const videoForLayout =
   'https://media.istockphoto.com/id/670852240/video/nature-photographer.mp4?s=mp4-640x640-is&k=20&c=MWW5_lvT4duO8Ztd45Q1Xy6dmDrBaQ0mWGHVITArPJo=';
@@ -27,32 +29,44 @@ export const SignUp = () => {
     sendRegisteredData(data);
   };
 
+  const { width } = useWindowSize();
+  const isMobile = width && width < 640;
+
   return (
     <AuthLayout videoSrc={videoForLayout}>
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
         Рэгістрацыя акаўнта
       </h1>
-      <hr className="w-full mt-8 mb-8 transform bg-light-900" />
+
+      <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
+
       {!showOrHiddenForm && (
         <>
           <Button
-            className="font-fontHeader"
             onClick={OAUTH_AUTHORIZATION.registrationGoogle}
+            className="gap-1 hover:shadow-icon"
           >
-            Зарэгістравацца праз Google
+            Увайдзіце праз &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
+            oogle
           </Button>
 
-          <div className="flex justify-center text-sm mb-7 mt-7">
-            <span>або</span>
+          <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
+            <div className="flex-grow  h-[1px] bg-dark-300" />
+
+            <span className="mx-4">або</span>
+
+            <div className="flex-grow h-[1px] bg-dark-300" />
           </div>
         </>
       )}
+
       <Button onClick={() => setShowOrHiddenForm(!showOrHiddenForm)}>
         {!showOrHiddenForm ? `Працягнуць з электроннай поштай` : 'Вяртацца'}
       </Button>
+
       {showOrHiddenForm && (
         <form
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-3 mt-8"
           onSubmit={handleSubmit(registeredDataSubmit)}
         >
           <Input
@@ -62,6 +76,7 @@ export const SignUp = () => {
             error={errors?.userName?.message}
             {...register('userName')}
           />
+
           <Input
             type="email"
             id="email"
@@ -69,6 +84,7 @@ export const SignUp = () => {
             error={errors?.email?.message}
             {...register('email')}
           />
+
           <Input
             placeholder="6+ персанажаў"
             type="password"
@@ -77,18 +93,22 @@ export const SignUp = () => {
             label="Пароль"
             {...register('password')}
           />
-          <div className="text-sm flex justify-center">
+
+          <div className="text-sm flex justify-center text-dark-150">
             <span>
               Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы{' '}
             </span>
           </div>
-          <Button disabled={isLoading} className="mt-1" type="submit">
+
+          <Button disabled={isLoading} className="mt-8" type="submit">
             {isLoading ? <Spinner /> : 'Зарэгістравацца'}
           </Button>
         </form>
       )}
+
       <div className="flex gap-1 text-sm justify-center">
         <span> У вас ужо ёсць уліковы запіс?</span>
+
         <Link className="underline" href={routes.auth.signIn}>
           Увайсці
         </Link>
