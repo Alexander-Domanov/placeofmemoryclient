@@ -30,8 +30,10 @@ export const PlacesMain = () => {
     pageNumber: Number(page),
   });
   const onPageChange = (newPage: number) => {
-    setPage(newPage);
-    push(routes.places.page(String(newPage)), undefined, { shallow: true });
+    if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
+      setPage(newPage);
+      push(routes.places.page(String(newPage)), undefined, { shallow: true });
+    }
   };
 
   return (
@@ -136,8 +138,8 @@ export const PlacesMain = () => {
       {dataPlaces && dataPlaces.items.length > 0 && (
         <PaginationCustom
           onPageChange={onPageChange}
-          page={Number(pageParams)}
-          pageCount={dataPlaces.pagesCount}
+          page={Number(pageParams) || 1}
+          pageCount={dataPlaces ? dataPlaces.pagesCount : 1}
         />
       )}
     </div>

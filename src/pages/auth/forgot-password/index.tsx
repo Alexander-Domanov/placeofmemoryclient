@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { PasswordResets } from '@/modules/auth-modules/forgot-password-module';
-import { getLayoutWithHeader } from '@/components';
+import { Header } from '@/components';
 import { useTranslation } from '@/components/internationalization';
 
 const PasswordResetsPage = () => {
@@ -10,9 +10,12 @@ const PasswordResetsPage = () => {
       <Head>
         <title>{t.auth.forgotPassword.indexTitle}| Mogilki</title>
       </Head>
+
+      <Header />
+
       <PasswordResets />
     </>
   );
 };
-PasswordResetsPage.getLayout = getLayoutWithHeader;
+// PasswordResetsPage.getLayout = getLayoutWithHeader;
 export default PasswordResetsPage;

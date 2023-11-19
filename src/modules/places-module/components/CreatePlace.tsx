@@ -289,11 +289,11 @@ export const CreatePlace: FC = () => {
                   tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
                   <MetaInfoLocationForm location={selectedLocation} />
-
-                  <Space size={16}>
-                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-                  </Space>
                 </Form.Item>
+
+                <Space size={16}>
+                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                </Space>
               </Card>
 
               <Card>

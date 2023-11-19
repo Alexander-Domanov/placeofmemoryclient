@@ -403,9 +403,9 @@ export const PlaceEdit: FC = () => {
                     tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <MetaInfoLocationForm location={selectedLocation} />
-
-                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
                   </Form.Item>
+
+                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
                 </Card>
 
                 <Card>

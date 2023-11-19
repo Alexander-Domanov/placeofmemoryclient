@@ -32,16 +32,26 @@ export const EditProfile = () => {
   };
 
   return (
-    <section className="flex flex-col gap-4 items-center">
-      <span className="text-3xl font-semibold sm:text-xl">
-        Рэдактаваць акаўнт
-      </span>
-      <AvatarBlock />
-      <AccountSettingForm
-        isEditProfileLoading={isEditProfileLoading}
-        profileData={profileData}
-        settingFormSubmit={settingFormSubmit}
-      />
-    </section>
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+      <div className="container">
+        <div className="flex items-center justify-center mt-10">
+          <span className="text-3xl font-semibold sm:text-xl">
+            Рэдактаваць акаўнт
+          </span>
+        </div>
+
+        <div className="items-center justify-center mt-10 flex flex-col">
+          <AvatarBlock />
+        </div>
+
+        <div className="flex items-center justify-center mt-10">
+          <AccountSettingForm
+            isEditProfileLoading={isEditProfileLoading}
+            profileData={profileData}
+            settingFormSubmit={settingFormSubmit}
+          />
+        </div>
+      </div>
+    </div>
   );
 };

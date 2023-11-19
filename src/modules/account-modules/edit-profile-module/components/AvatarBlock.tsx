@@ -95,7 +95,8 @@ export const AvatarBlock = () => {
           </div>
         )}
       </div>
-      <div className="flex gap-3 flex-col align-middle items-center text-sm pt-3">
+
+      <div className="align-middle items-center text-dark-150 text-xs pt-3 text-center">
         <span>JPG, GIF або PNG. Максімальны памер 2 Мб</span>
         {showErrorSizeImage && (
           <span className="text-red-500">
@@ -103,6 +104,7 @@ export const AvatarBlock = () => {
           </span>
         )}
       </div>
+
       <input
         type="file"
         accept="image/jpeg,image/png, image/jpeg, image/tif"

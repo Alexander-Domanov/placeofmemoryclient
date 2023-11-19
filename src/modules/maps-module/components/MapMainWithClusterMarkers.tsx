@@ -13,7 +13,7 @@ import { useWindowSize } from '@/common/hooks/useWindowResize';
 const containerStyle = {
   height: '60vh',
   width: '100%',
-  borderRadius: '20px',
+  borderRadius: '10px',
 };
 
 const defaultMapOptions = {
@@ -146,66 +146,69 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   const { width } = useWindowSize();
 
   return isLoaded ? (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-3 text-xl leading-[64px] font-light sm:text-sm sm:mb-4 text-dark-100">
-        <Link href={routes.main} className="cursor-pointer">
-          <AiOutlineHome
-            className="text-dark-100"
-            size={width && width > 639 ? 22 : 16}
-          />
-        </Link>
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+      <div className="container">
+        <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
+          <Link href={routes.main} className="cursor-pointer">
+            <AiOutlineHome
+              className="text-dark-100"
+              size={width && width > 639 ? 22 : 16}
+            />
+          </Link>
 
-        <div>/</div>
+          <div>/</div>
 
-        <span className="text-accent-100">Інтэрактыўная_Мапа</span>
-      </div>
-
-      <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
-        <h2 className="text-light-300 text-5xl sm:text-3xl">
-          Інтэрактыўная Мапа
-        </h2>
-
-        <div className="flex items-center">
-          <Autocomplete
-            onPlaceChanged={onPlaceChanged}
-            onLoad={onLoadAutoComplete}
-          >
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <BsSearch />
-              </span>
-
-              <input
-                placeholder="ЗНАЙСЦІ"
-                type="text"
-                title={inputValue}
-                className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md px-12 sm:w-60 sm:h-8 sm:px-10"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            </div>
-          </Autocomplete>
+          <span className="text-accent-100">Інтэрактыўная_Мапа</span>
         </div>
-      </div>
 
-      <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" />
+        <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
+          <h2 className="text-light-300 text-5xl sm:text-3xl">
+            Інтэрактыўная Мапа
+          </h2>
 
-      <div className="flex items-center justify-center">
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={selectedCenter}
-          zoom={6}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{
-            ...mapOptions,
-            ...defaultMapOptions,
-            ...{
-              // disableDefaultUI: true,
-              clickableIcons: true,
-            },
-          }}
-        />
+          <div className="flex items-center">
+            <Autocomplete
+              onPlaceChanged={onPlaceChanged}
+              onLoad={onLoadAutoComplete}
+            >
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <BsSearch />
+                </span>
+
+                <input
+                  placeholder="ЗНАЙСЦІ"
+                  type="text"
+                  title={inputValue}
+                  className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md px-12 sm:w-60 sm:h-8 sm:px-10"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
+              </div>
+            </Autocomplete>
+          </div>
+        </div>
+
+        <div className="mt-6 h-[1px] bg-dark-300" />
+        {/* <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" /> */}
+
+        <div className="flex items-center justify-center mt-10">
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={selectedCenter}
+            zoom={6}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{
+              ...mapOptions,
+              ...defaultMapOptions,
+              ...{
+                // disableDefaultUI: true,
+                clickableIcons: true,
+              },
+            }}
+          />
+        </div>
       </div>
     </div>
   ) : (

@@ -45,6 +45,7 @@ module.exports = {
         },
         dark: {
           100: '#bdbdbd',
+          150: '#a4a2a2',
           200: '#333333',
           300: '#565656',
           400: '#4E4E4E',
@@ -110,11 +111,33 @@ module.exports = {
       },
       boxShadow: {
         button: '0px 15px 30px 0px rgba(0, 0, 0, 0.12)',
+        icon: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+        iconHover: 'brightness(90%)',
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-headings': theme.colors.white,
+            '--tw-prose-code': theme.colors.white,
+            maxWidth: '100%',
+            color: theme.colors.white,
+            strong: {
+              color: theme.colors.white,
+              fontWeight: 700,
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [
     require('tailwindcss-animate'),
     require('tailwindcss-debug-screens'),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@tailwindcss/typography')({
+      className: 'wysiwyg',
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 };

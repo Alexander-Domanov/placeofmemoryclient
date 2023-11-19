@@ -37,13 +37,30 @@ export const deleteArticle = (id: number | null) => {
   return authInstance.delete(`articles/${id}`);
 };
 
-export const getArticlesPublic = () => {
+export const getArticlesPublic = (
+  pageSize = 4,
+  pageNumber = 1,
+  lang = 'by'
+) => {
   return axios.get<IGetArticlesResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/articles/public/all`,
     {
       params: {
-        pageSize: 4,
+        pageSize,
+        pageNumber,
+        lang,
         status: 'published',
+      },
+    }
+  );
+};
+
+export const getArticlePublic = (slug: string, lang = 'by') => {
+  return axios.get<IArticle>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/articles/${slug}/public`,
+    {
+      params: {
+        lang,
       },
     }
   );
