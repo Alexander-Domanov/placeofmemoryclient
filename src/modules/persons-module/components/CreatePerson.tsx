@@ -327,15 +327,15 @@ export const CreatePerson: FC = () => {
                   tooltip="Select a location from the list to link it to a specific location on the map."
                 >
                   <TitlePlaces onFinishValue={setSelectedPlace} />
-
-                  <MetaInfoSelectedPlaceForm place={selectedPlace} />
-
-                  <Row justify="end" style={{ marginBottom: -20 }}>
-                    <Button type="dashed" onClick={clearSelectedPlace}>
-                      Clear
-                    </Button>
-                  </Row>
                 </Form.Item>
+
+                <MetaInfoSelectedPlaceForm place={selectedPlace} />
+
+                <Row justify="end">
+                  <Button type="dashed" onClick={clearSelectedPlace}>
+                    Clear
+                  </Button>
+                </Row>
               </Card>
 
               <Card>
@@ -347,11 +347,11 @@ export const CreatePerson: FC = () => {
                   tooltip="You need to select a location on the map to determine the coordinates of the place."
                 >
                   <MetaInfoLocationForm location={selectedLocation} />
-
-                  <Space size={16}>
-                    <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
-                  </Space>
                 </Form.Item>
+
+                <Space size={16}>
+                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                </Space>
               </Card>
 
               <Card>

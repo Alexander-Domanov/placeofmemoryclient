@@ -472,15 +472,15 @@ export const PersonEdit: FC = () => {
                       onFinishValue={setSelectedPlace}
                       disabled={isDisabled}
                     />
-
-                    <MetaInfoSelectedPlaceForm place={selectedPlace} />
-
-                    <Row justify="end" style={{ marginBottom: -20 }}>
-                      <Button type="dashed" onClick={clearSelectedPlace}>
-                        Clear
-                      </Button>
-                    </Row>
                   </Form.Item>
+
+                  <MetaInfoSelectedPlaceForm place={selectedPlace} />
+
+                  <Row justify="end">
+                    <Button type="dashed" onClick={clearSelectedPlace}>
+                      Clear
+                    </Button>
+                  </Row>
                 </Card>
 
                 <Card>
@@ -492,12 +492,12 @@ export const PersonEdit: FC = () => {
                     tooltip="You need to select a location on the map to determine the coordinates of the place."
                   >
                     <MetaInfoLocationForm location={selectedLocation} />
-
-                    <MapDrawer
-                      onPlaceSelected={setSelectedPlaceFromMap}
-                      disabled={isDisabled}
-                    />
                   </Form.Item>
+
+                  <MapDrawer
+                    onPlaceSelected={setSelectedPlaceFromMap}
+                    disabled={isDisabled}
+                  />
                 </Card>
 
                 <Flex vertical gap="middle">

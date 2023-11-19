@@ -44,6 +44,7 @@ export const PasswordResets = () => {
             ўліковага запісу, інструкцыі па для скіду пароля будзе адпраўлена
             вам. Праверце сваю электронную пошту.{' '}
           </p>
+
           <Link
             className="underline text-sm font-bold"
             href={routes.auth.signIn}
@@ -54,20 +55,24 @@ export const PasswordResets = () => {
       ) : (
         <>
           <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-            Забыліся на пароль
+            Забыліся пароль?
           </h1>
-          <hr className="w-full mt-8 mb-8 transform bg-light-900" />
-          <div className="break-normal mb-3 sm:text-xs text-justify sm:w-[320px] text-sm w-[416px]">
+
+          <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
+
+          <div className="break-normal mb-3 text-xs sm:text-xs text-justify text-dark-150 sm:w-[320px] text-sm w-[416px]">
             <p>
               Увядзіце адрас электроннай пошты, які вы выкарыстоўвалі, калі
-              далучыліся, і мы вышлем інструкцыі па скідзе пароля.
+              далучыліся, і мы вышлем інструкцыі па скідцы пароля.
             </p>
+
             <p className="mt-3">
               У мэтах бяспекі мы НЕ захоўваем ваш пароль. Так што адпачывайце
               запэўніў, што мы ніколі не адправім ваш пароль па электроннай
               пошце.
             </p>
           </div>
+
           <form
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(onSubmit)}
@@ -80,8 +85,9 @@ export const PasswordResets = () => {
               {...register('email')}
             />
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
+
             <Button disabled={isLoading} className="mt-1">
-              {isLoading ? <Spinner /> : 'Адправіць інструкцыі па скіду'}
+              {isLoading ? <Spinner /> : 'Адправіць інструкцыі'}
             </Button>
           </form>
           <div />

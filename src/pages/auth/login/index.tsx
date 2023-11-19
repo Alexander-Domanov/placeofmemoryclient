@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { SignIn } from '@/modules/auth-modules/sign-in-module';
-import { getLayoutWithHeader } from '@/components';
 import { useTranslation } from '@/components/internationalization';
+import { Header } from '@/components';
 
 const SignInPage = () => {
   const { t } = useTranslation();
@@ -10,9 +10,12 @@ const SignInPage = () => {
       <Head>
         <title>{t.auth.signIn.indexTitle} | Mogilki</title>
       </Head>
+
+      <Header />
+
       <SignIn />
     </>
   );
 };
-SignInPage.getLayout = getLayoutWithHeader;
+// SignInPage.getLayout = getLayoutWithHeader;
 export default SignInPage;

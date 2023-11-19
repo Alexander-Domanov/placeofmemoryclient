@@ -1,19 +1,41 @@
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
+import { FC } from 'react';
 import { EditProfile } from '@/modules/account-modules/edit-profile-module';
-import { getGlobalLayout } from '@/components';
 import { useTranslation } from '@/components/internationalization';
+import { getContacts } from '@/modules/contacts-module/api/contacts-api';
+import { SiteLayout } from '@/components/layouts/SiteLayout';
+import { IContacts } from '@/types';
 
-const Settings = () => {
+interface Props {
+  contacts: IContacts;
+}
+
+const Settings: FC<Props> = ({ contacts }) => {
   const { t } = useTranslation();
   return (
     <>
       <Head>
         <title>{t.account.indexTitle}| Mogilki</title>
       </Head>
-      <EditProfile />
+
+      <SiteLayout contacts={contacts}>
+        <EditProfile />
+      </SiteLayout>
     </>
   );
 };
-Settings.getLayout = getGlobalLayout;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: contacts } = await getContacts();
+
+  return {
+    props: {
+      contacts,
+    },
+    revalidate: 30,
+  };
+};
+// Settings.getLayout = getGlobalLayout;
 
 export default Settings;
