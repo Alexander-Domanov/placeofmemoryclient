@@ -30,7 +30,7 @@ export const LanguageSwitcher: FC = () => {
       <DropdownMenuTrigger className="bg-transparent px-3 text-sm outline-none focus:border-0">
         {currentLanguage!.title}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-dark-500 border-0 z-10 px-3 text-sm text-white select-none min-w-[4rem]">
+      <DropdownMenuContent className="bg-dark-500 border-0 z-50 px-3 text-sm text-white select-none min-w-[3rem]">
         {languages.map((item, index) => (
           <DropdownMenuItem
             className="my-3 cursor-pointer transition-colors"

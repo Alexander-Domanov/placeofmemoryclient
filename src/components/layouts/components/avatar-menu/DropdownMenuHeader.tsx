@@ -19,14 +19,12 @@ export const DropdownMenuHeader = () => {
 
   return (
     <DropdownMenuComponent
-      menuLabel={userName ? <AvatarMenuHeader /> : null}
+      menuLabel={
+        userName && width && width <= 1023 ? <AvatarMenuHeader /> : null
+      }
       items={NAVIGATION_USER_NAME}
     >
-      {width && width < 1023 ? (
-        <PiListBold size={24} />
-      ) : (
-        <RiLogoutBoxRLine size={24} />
-      )}
+      {width && width <= 1023 ? <PiListBold size={24} /> : <AvatarMenuHeader />}
     </DropdownMenuComponent>
   );
 };

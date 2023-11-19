@@ -22,42 +22,26 @@ export function Header() {
           <div className="flex items-center font-kelsi text-xl">
             <Link href={routes.main}>MOGILKI</Link>
           </div>
-          <nav>
-            <ul className="flex gap-10 sm:gap-6 uppercase items-center">
-              {width && width > 1023 ? (
-                <>
-                  {NAVIGATION_USER_NAME.map(
-                    (navigationLink: INavigationLinks, index) => (
-                      <li key={index}>
-                        <Link key={index} href={navigationLink.link}>
-                          {navigationLink.title}
-                        </Link>
-                      </li>
-                    )
-                  )}
-                  <li>
-                    <LanguageSwitcher />
-                  </li>
-                  {userName && (
-                    <li>
-                      <DropdownMenuHeader />
+          {width && width > 1023 && (
+            <nav className="flex justify-center align-middle items-center">
+              <ul className="flex w-full gap-10 sm:gap-6 justify-center uppercase items-center">
+                {NAVIGATION_USER_NAME.map(
+                  (navigationLink: INavigationLinks, index) => (
+                    <li key={index}>
+                      <Link key={index} href={navigationLink.link}>
+                        {navigationLink.title}
+                      </Link>
                     </li>
-                  )}
-                </>
-              ) : (
-                <>
-                  <ul className="flex gap-10 sm:gap-6 uppercase justify-center">
-                    <li>
-                      <LanguageSwitcher />
-                    </li>
-                    <li>
-                      <DropdownMenuHeader />
-                    </li>
-                  </ul>
-                </>
-              )}
-            </ul>
-          </nav>
+                  )
+                )}
+              </ul>
+            </nav>
+          )}
+          <div className="flex gap-3 justify-between">
+            {width && width <= 1023 && !userName && <DropdownMenuHeader />}
+            {userName && <DropdownMenuHeader />}
+            <LanguageSwitcher />
+          </div>
         </section>
       </Container>
     </header>

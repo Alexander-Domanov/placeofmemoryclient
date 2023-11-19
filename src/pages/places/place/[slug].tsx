@@ -31,8 +31,8 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 export const getStaticPaths = async () => {
-  const resBy = await getPlacesMainForSSR({});
-  const resRu = await getPlacesMainForSSR({ lange: 'ru' });
+  const resBy = await getPlacesMainForSSR({ lang: 'by' });
+  const resRu = await getPlacesMainForSSR({ lang: 'ru' });
   const pathsBy = resBy.items.map((place) => ({
     params: { slug: place.slug },
     locale: 'by',
