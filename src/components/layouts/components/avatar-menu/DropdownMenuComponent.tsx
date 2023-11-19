@@ -16,7 +16,7 @@ export const DropdownMenuComponent = ({
 }: IDropdownMenuComponentProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="bg-transparent px-3 text-sm outline-none focus:border-0">
+      <DropdownMenuTrigger className="bg-transparent text-sm outline-none focus:border-0">
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-dark-500 border-0 z-50 px-3 text-sm text-white select-none min-w-[4rem]">
