@@ -1,26 +1,30 @@
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getGlobalLayout } from '@/components';
 import { PlacesMain } from '@/modules/places-main-module/components/PlacesMain';
 import { getPlacesMainForSSR } from '@/modules/places-main-module/api/places-main-api';
 import { useTranslation } from '@/components/internationalization';
 import { generateArray } from '@/common/helpers/generateArray';
 import { IPlacesMainResponse } from '@/modules/places-main-module';
 import { IContacts } from '@/types';
+import { SiteLayout } from '@/components/layouts/SiteLayout';
+import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 
 interface IProps {
   places: IPlacesMainResponse;
   contacts: IContacts;
 }
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (
+  context
+): Promise<{ props: IProps; revalidate: number }> => {
   const page = context.params?.page as string;
 
   const places = await getPlacesMainForSSR({
     lang: context.locale,
     pageNumber: page,
   });
+  const { data: contacts } = await getContacts();
   return {
-    props: { places },
+    props: { places, contacts },
     revalidate: 30,
   };
 };
@@ -42,20 +46,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Places = ({ places }: IProps) => {
+const Places = ({ places, contacts }: IProps) => {
   const { t } = useTranslation();
   return (
     <>
       <Head>
         <title>{t.places.indexTitle} | MOGILKI</title>
       </Head>
-      <div className="container">
+      <SiteLayout contacts={contacts}>
         <PlacesMain places={places} />
-      </div>
+      </SiteLayout>
     </>
   );
 };
-
-Places.getLayout = getGlobalLayout;
 
 export default Places;

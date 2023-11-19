@@ -43,107 +43,116 @@ export const PlacesMain = ({ places }: IProps) => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
-        <Link href={routes.main} className="cursor-pointer">
-          <AiOutlineHome size={22} />
-        </Link>
+    <div className="bg-dark-700 pt-[120px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+      <div className="container">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
+            <Link href={routes.main} className="cursor-pointer">
+              <AiOutlineHome size={22} />
+            </Link>
 
-        <div>/</div>
+            <div>/</div>
 
-        <span className="text-accent-100">Архіў_Месцаў</span>
-      </div>
+            <span className="text-accent-100">Архіў_Месцаў</span>
+          </div>
 
-      <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
-        <h2 className="text-light-300 text-5xl sm:text-3xl">
-          Архіў
-          <span className="text-dark-100 font-light ">_Месцаў</span>
-        </h2>
-      </div>
+          <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
+            <h2 className="text-light-300 text-5xl sm:text-3xl">
+              Архіў
+              <span className="text-dark-100 font-light ">_Месцаў</span>
+            </h2>
+          </div>
 
-      <hr className="w-full mt-[28px] mb-8 transform bg-light-900" />
-
-      <div className="flex md:justify-center flex-wrap gap-4">
-        <div>
-          <Input
-            label="Назва"
-            className="w-[166px] h-[36px]"
-            onChange={(e) => setName(e.currentTarget.value)}
-          />
-        </div>
-        <div>
-          <Input
-            label="Краіна"
-            className="w-[166px] h-[36px]"
-            onChange={(e) => setCountry(e.currentTarget.value)}
-          />
-        </div>
-        <div>
-          <Input
-            label="Горад"
-            className="w-[166px] h-[36px]"
-            onChange={(e) => setCity(e.currentTarget.value)}
-          />
-        </div>
-      </div>
-      {dataPlaces && dataPlaces.items.length > 0 ? (
-        dataPlaces.items.map((place) => (
-          <div
-            className="flex w-full md:justify-center items-center gap-16"
-            key={place.id}
-          >
-            {place.photos.map((photo) => (
+          <div className="mt-6 h-[1px] bg-dark-300" />
+          <div className="flex mt-10 md:justify-center flex-wrap gap-4">
+            <div>
+              <Input
+                label="Назва"
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setName(e.currentTarget.value)}
+              />
+            </div>
+            <div>
+              <Input
+                label="Краіна"
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setCountry(e.currentTarget.value)}
+              />
+            </div>
+            <div>
+              <Input
+                label="Горад"
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setCity(e.currentTarget.value)}
+              />
+            </div>
+          </div>
+          {dataPlaces && dataPlaces.items.length > 0 ? (
+            dataPlaces.items.map((place) => (
               <div
-                className="flex md:relative mt-12  bg-dark-900 justify-center  w-[540px] h-[240px]"
+                className="flex w-full align-middle lg:flex-col md:justify-center items-center lg:gap-8 gap-16"
                 key={place.id}
               >
-                <Link
-                  href={{
-                    pathname: routes.places.place(place.slug),
-                  }}
-                >
-                  <ImageComponent
-                    className="md:absolute md:left-0 object-cover"
-                    alt={photo.alt}
-                    width={width && width <= 767 ? 300 : 540}
-                    height={width && width <= 767 ? 100 : 240}
-                    src={photo.versions.huge.url}
-                  />
-                  {width && width <= 767 && (
-                    <div className="absolute px-3 py-3 bg-opacity-70 bg-[#292929] h-full tran left-0 flex justify-center align-middle gap-2 flex-col break-words">
-                      <h3 className="text-sm font-medium text-dark-100">
+                {place.photos.map((photo) => (
+                  <div
+                    className="flex md:relative mt-12  bg-dark-900 justify-center  w-[540px] h-[240px]"
+                    key={place.id}
+                  >
+                    <Link
+                      href={{
+                        pathname: routes.places.place(place.slug),
+                      }}
+                    >
+                      <ImageComponent
+                        className="md:absolute md:left-0 object-cover"
+                        alt={photo.alt}
+                        width={width && width <= 767 ? 300 : 540}
+                        height={width && width <= 767 ? 100 : 240}
+                        src={photo.versions.huge.url}
+                      />
+                      {width && width <= 767 && (
+                        <div className="absolute px-3 py-3 bg-opacity-70 bg-[#292929] h-full tran left-0 flex justify-center align-middle gap-2 flex-col break-words">
+                          <h2 className="text-4xl lg:text-3xl">
+                            <Link href={routes.articles.getArticle(place.slug)}>
+                              {place.nameCemetery}
+                            </Link>
+                          </h2>
+
+                          <div className="mt-8 text-base lg:mt-4">
+                            {place.shortDescription}
+                          </div>
+                        </div>
+                      )}
+                    </Link>
+                  </div>
+                ))}
+                {width && width > 767 && (
+                  <div className="flex gap-10 flex-col break-words">
+                    <h2 className="text-4xl lg:text-3xl">
+                      <Link href={routes.articles.getArticle(place.slug)}>
                         {place.nameCemetery}
-                      </h3>
-                      <section className="text-base text-light-300 break-words font-light">
-                        {place.shortDescription}
-                      </section>
+                      </Link>
+                    </h2>
+
+                    <div className="mt-8 text-base lg:mt-4">
+                      {place.shortDescription}
                     </div>
-                  )}
-                </Link>
+                  </div>
+                )}
               </div>
-            ))}
-            {width && width > 767 && (
-              <div className="flex gap-10 flex-col break-words">
-                <h3 className="text-4xl font-light text-dark-100">
-                  {place.nameCemetery}
-                </h3>
-                <section className="text-xl text-light-300 break-words font-light">
-                  {place.shortDescription}
-                </section>
-              </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <div>No Places</div>
-      )}
-      {dataPlaces && dataPlaces.items.length > 0 && (
-        <PaginationCustom
-          onPageChange={onPageChange}
-          page={Number(pageParams) || 1}
-          pageCount={dataPlaces ? dataPlaces.pagesCount : 1}
-        />
-      )}
+            ))
+          ) : (
+            <div>No Places</div>
+          )}
+          {dataPlaces && dataPlaces.items.length > 0 && (
+            <PaginationCustom
+              onPageChange={onPageChange}
+              page={Number(pageParams) || 1}
+              pageCount={dataPlaces ? dataPlaces.pagesCount : 1}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
