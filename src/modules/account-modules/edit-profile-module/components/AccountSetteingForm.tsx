@@ -40,7 +40,7 @@ export const AccountSettingForm = ({
   }, [profileData]);
   return (
     <form
-      className="flex flex-col align-middle sm:w-[330px] w-[420px] pt-3 gap-6"
+      className=" align-middle sm:w-[330px] w-[420px] gap-3 flex flex-col"
       onSubmit={handleSubmit(settingFormSubmit)}
     >
       <Input
@@ -49,12 +49,14 @@ export const AccountSettingForm = ({
         {...register('userName')}
         error={errors?.userName?.message}
       />
+
       <Input
         type="text"
         label="Горад"
         {...register('city')}
         error={errors?.city?.message}
       />
+
       <Button
         type="submit"
         variant="default"
