@@ -180,7 +180,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
                   placeholder="ЗНАЙСЦІ"
                   type="text"
                   title={inputValue}
-                  className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md px-12 sm:w-60 sm:h-8 sm:px-10"
+                  className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md hover:shadow-icon px-12 sm:w-60 sm:h-8 sm:px-10 outline-none"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                 />
