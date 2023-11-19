@@ -25,8 +25,9 @@ export const Captcha = ({ onRecaptchaChangeHandler }: PropsType) => {
         <Link href="https://policies.google.com/privacy" className="underline">
           Палітыка прыватнасці
         </Link>
+        <span> і </span>
         <Link href="https://policies.google.com/terms" className="underline">
-          Ўмовы абслугоўвання
+          Умовы выкарыстання
         </Link>
       </div>
     </div>

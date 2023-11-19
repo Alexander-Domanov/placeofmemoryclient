@@ -35,7 +35,7 @@ export const SignUp = () => {
   return (
     <AuthLayout videoSrc={videoForLayout}>
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-        Рэгістрацыя акаўнта
+        Рэгістрацыя
       </h1>
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
@@ -44,7 +44,7 @@ export const SignUp = () => {
         <>
           <Button
             onClick={OAUTH_AUTHORIZATION.registrationGoogle}
-            className="gap-1 hover:shadow-icon"
+            className="gap-1"
           >
             Увайдзіце праз &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
             oogle
@@ -61,7 +61,8 @@ export const SignUp = () => {
       )}
 
       <Button onClick={() => setShowOrHiddenForm(!showOrHiddenForm)}>
-        {!showOrHiddenForm ? `Працягнуць з электроннай поштай` : 'Вяртацца'}
+        {/* {!showOrHiddenForm ? `Працягнуць з электроннай поштай` : 'Вяртацца'} */}
+        {!showOrHiddenForm ? `Рэгістрацыя` : `Схаваць форму`}
       </Button>
 
       {showOrHiddenForm && (
@@ -80,7 +81,7 @@ export const SignUp = () => {
           <Input
             type="email"
             id="email"
-            label="Электронная пошта"
+            label="Адрас электроннай пошты"
             error={errors?.email?.message}
             {...register('email')}
           />
@@ -94,9 +95,11 @@ export const SignUp = () => {
             {...register('password')}
           />
 
-          <div className="text-sm flex justify-center text-dark-150">
+          <div className="text-xs flex justify-center text-dark-150">
             <span>
-              Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы{' '}
+              {/* Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы{' '} */}
+              Пароль павінен быць не менш за 6 знакаў, уключаць вялікія і
+              маленькія лацінскія літары, а таксама цыфры.
             </span>
           </div>
 
@@ -107,7 +110,7 @@ export const SignUp = () => {
       )}
 
       <div className="flex gap-1 text-sm justify-center">
-        <span> У вас ужо ёсць уліковы запіс?</span>
+        <span> У вас ўжо ёсць акаўнт?</span>
 
         <Link className="underline" href={routes.auth.signIn}>
           Увайсці
