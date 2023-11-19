@@ -19,7 +19,7 @@ export const DropdownMenuComponent = ({
       <DropdownMenuTrigger className="bg-transparent px-3 text-sm outline-none focus:border-0">
         {children}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-dark-500 border-0 z-10 px-3 text-sm text-white select-none min-w-[4rem]">
+      <DropdownMenuContent className="bg-dark-500 border-0 z-50 px-3 text-sm text-white select-none min-w-[4rem]">
         {menuLabel && (
           <>
             <DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>

@@ -24,14 +24,13 @@ const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   );
 
   useEffect(() => {
-    if (isSuccess && routes.unProtectedPaths.includes(pathname)) {
-      replace(routes.main, undefined, { shallow: true });
-    }
+    // if (isSuccess && routes.unProtectedPaths.includes(pathname)) {
+    //   replace(routes.main, undefined, { shallow: true });
+    // }
     if (isError && !routes.unProtectedPaths.includes(pathname)) {
       replace(routes.auth.signIn, undefined, { shallow: true });
     }
   }, [isSuccess, isError]);
-
   return (
     <>
       {/* {fetchStatus === 'fetching' && <div>Loading...</div>} */}

@@ -16,15 +16,15 @@ export function Header() {
     ? NAVIGATION_LINK()
     : [...NAVIGATION_LINK(), ...AUTH_LINK()];
   return (
-    <header className="h-[65px] bg-dark-900  flex items-center border-b border-dark-900 ">
-      <Container className="bg-dark-900 w-full container">
+    <header className="h-[65px] w-full fixed z-30 bg-dark-900  flex items-center border-b border-dark-900 ">
+      <Container className="bg-dark-900  w-full container">
         <section className="flex justify-between items-center font-normal leading-3 text-sm text-light-300">
           <div className="flex items-center font-kelsi text-xl">
             <Link href={routes.main}>MOGILKI</Link>
           </div>
-          <nav>
-            <ul className="flex gap-10 sm:gap-6 uppercase items-center">
-              {width && width > 1023 ? (
+          {width && width > 1023 && (
+            <nav>
+              <ul className="flex gap-10 sm:gap-6 uppercase items-center">
                 <>
                   {NAVIGATION_USER_NAME.map(
                     (navigationLink: INavigationLinks, index) => (
@@ -35,29 +35,15 @@ export function Header() {
                       </li>
                     )
                   )}
-                  <li>
-                    <LanguageSwitcher />
-                  </li>
-                  {userName && (
-                    <li>
-                      <DropdownMenuHeader />
-                    </li>
-                  )}
                 </>
-              ) : (
-                <>
-                  <ul className="flex gap-10 sm:gap-6 uppercase justify-center">
-                    <li>
-                      <LanguageSwitcher />
-                    </li>
-                    <li>
-                      <DropdownMenuHeader />
-                    </li>
-                  </ul>
-                </>
-              )}
-            </ul>
-          </nav>
+              </ul>
+            </nav>
+          )}
+          <div className="flex gap-3 items-center">
+            {width && width <= 1023 && !userName && <DropdownMenuHeader />}
+            {userName && <DropdownMenuHeader />}
+            <LanguageSwitcher />
+          </div>
         </section>
       </Container>
     </header>

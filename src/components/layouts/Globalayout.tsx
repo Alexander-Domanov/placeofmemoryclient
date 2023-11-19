@@ -6,13 +6,13 @@ export const GlobalLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <LayoutWithHeader>
       <Container>
-        <div className="min-h-[calc(100vh-65px)] pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
-          <div className=" container">{children}</div>
+        <div className="pt-[120px] md:pt-[58px] md:pb-[48px] pb-[120px]">
+          <div className="container">{children}</div>
         </div>
       </Container>
     </LayoutWithHeader>
   );
 };
-export const getGlobalLayout = (page: ReactElement) => {
+export const getGlobalLayout = (page: ReactElement, contacts: string) => {
   return <GlobalLayout>{page}</GlobalLayout>;
 };
