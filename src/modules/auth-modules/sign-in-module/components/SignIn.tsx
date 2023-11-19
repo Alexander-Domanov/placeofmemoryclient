@@ -62,14 +62,14 @@ export const SignIn = () => {
       {viewQueryStatus && <span>{viewQueryStatus}</span>}
 
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-        Рэдактаваць акаўнт
+        Увайдзіце ў свой акаўнт
       </h1>
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
       <Button
         onClick={OAUTH_AUTHORIZATION.registrationGoogle}
-        className="gap-1 hover:shadow-icon"
+        className="gap-1"
       >
         Увайдзіце праз &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
         oogle
@@ -93,7 +93,8 @@ export const SignIn = () => {
           <Input
             type="email"
             id="email"
-            label="Электронная пошта"
+            // label="Электронная пошта"
+            label="Адрас электроннай пошты"
             error={errors?.email?.message}
             {...register('email')}
           />
@@ -115,11 +116,7 @@ export const SignIn = () => {
             </Link>
           </div>
 
-          <Button
-            disabled={isLoading}
-            className="mt-1  hover:shadow-icon"
-            type="submit"
-          >
+          <Button disabled={isLoading} className="mt-1 " type="submit">
             {isLoading ? <Spinner /> : 'Увайсці'}
           </Button>
         </form>

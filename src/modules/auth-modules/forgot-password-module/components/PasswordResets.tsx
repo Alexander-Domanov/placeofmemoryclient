@@ -55,7 +55,7 @@ export const PasswordResets = () => {
       ) : (
         <>
           <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-            Забыліся на пароль
+            Забыліся пароль?
           </h1>
 
           <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
@@ -63,7 +63,7 @@ export const PasswordResets = () => {
           <div className="break-normal mb-3 text-xs sm:text-xs text-justify text-dark-150 sm:w-[320px] text-sm w-[416px]">
             <p>
               Увядзіце адрас электроннай пошты, які вы выкарыстоўвалі, калі
-              далучыліся, і мы вышлем інструкцыі па скідзе пароля.
+              далучыліся, і мы вышлем інструкцыі па скідцы пароля.
             </p>
 
             <p className="mt-3">
@@ -87,7 +87,7 @@ export const PasswordResets = () => {
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
 
             <Button disabled={isLoading} className="mt-1">
-              {isLoading ? <Spinner /> : 'Адправіць інструкцыі па скіду'}
+              {isLoading ? <Spinner /> : 'Адправіць інструкцыі'}
             </Button>
           </form>
           <div />

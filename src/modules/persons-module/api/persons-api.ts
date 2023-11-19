@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { authInstance } from '@/services';
 import {
   ICreatePerson,
@@ -34,4 +35,32 @@ export const updatePerson = (id: string, data: ICreatePerson) => {
 
 export const getPerson = (id: string | undefined | string[]) => {
   return authInstance.get<IPerson>(`persons/${id}`);
+};
+
+export const getPersonsPublic = (
+  pageSize = 10,
+  pageNumber = 1,
+  lang = 'by'
+) => {
+  return axios.get<IGetPersonsResponse>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/persons/public/all`,
+    {
+      params: {
+        pageSize,
+        pageNumber,
+        lang,
+      },
+    }
+  );
+};
+
+export const getPersonPublic = (slug: string, lang = 'by') => {
+  return axios.get<IPerson>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/persons/${slug}/public`,
+    {
+      params: {
+        lang,
+      },
+    }
+  );
 };
