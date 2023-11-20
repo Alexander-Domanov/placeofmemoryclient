@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import { FC } from 'react';
 import { GetStaticProps } from 'next';
-import { MapsMain } from '@/modules/maps-module/components/maps';
 import { useTranslation } from '@/components/internationalization';
 import { IContacts } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
+import { MapMain } from '@/modules/maps';
 
 interface Props {
   contacts: IContacts;
@@ -20,7 +20,7 @@ const Map: FC<Props> = ({ contacts }) => {
       </Head>
 
       <SiteLayout contacts={contacts}>
-        <MapsMain />
+        <MapMain />
       </SiteLayout>
     </>
   );

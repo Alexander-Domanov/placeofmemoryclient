@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { Flex, Spin } from 'antd';
 import { usePersonsForMap } from '@/modules/dashboard-module/hooks/usePersonsForMap';
 import { routes } from '@/common/routing/routes';
-import MapMainWithClusterMarkers from '@/modules/maps-module/components/MapMainWithClusterMarkers';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import MapMainWithClusterMarkers from '@/modules/maps/components/MapMainWithClusterMarkers';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -14,7 +14,7 @@ const breadcrumbs = [
   }),
 ];
 
-export const MapsMain: FC = () => {
+export const MapMain: FC = () => {
   const { persons, isFetching } = usePersonsForMap();
 
   return (
