@@ -146,7 +146,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   const { width } = useWindowSize();
 
   return isLoaded ? (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
           <Link href={routes.main} className="cursor-pointer">
