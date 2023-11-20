@@ -8,13 +8,14 @@ import { useUserStore } from '@/store/userStore';
 import { Spinner } from '@/ui/spinner/Spinner';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { ImageComponent } from '@/ui/image/ImageComponent';
+import { useTranslation } from '@/components/internationalization';
 
 export const AvatarBlock = () => {
   const { urlAvatar, setUrlAvatar } = useUserStore();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showErrorSizeImage, setShowErrorSizeImage] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const { isLoading: isLoadingUploadAvatar, mutate: uploadAvatar } =
     useUploadAvatar();
   const { isLoading: isLoadingDeleteAvatar, mutate: deleteAvatar } =
@@ -81,27 +82,27 @@ export const AvatarBlock = () => {
                 )}
               </div>
 
-              <div className="cursor-pointer" onClick={() => deleteAvatar()}>
-                {isLoadingDeleteAvatar ? (
-                  <Spinner />
-                ) : (
-                  <FaTrash
-                    className="hover:fill-accent-100"
-                    size={width && width > 639 ? 22 : 16}
-                  />
-                )}
-              </div>
+              {urlAvatar && (
+                <div className="cursor-pointer" onClick={() => deleteAvatar()}>
+                  {isLoadingDeleteAvatar ? (
+                    <Spinner />
+                  ) : (
+                    <FaTrash
+                      className="hover:fill-accent-100"
+                      size={width && width > 639 ? 22 : 16}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
 
-      <div className="align-middle items-center text-dark-150 text-xs pt-3 text-center">
-        <span>JPG, GIF або PNG. Максімальны памер 2 Мб</span>
+      <div className="align-middle flex flex-col items-center text-dark-150 text-xs pt-3 text-center">
+        <span>{t.account.page.descriptionImage}</span>
         {showErrorSizeImage && (
-          <span className="text-red-500">
-            Памер файла перавышае 2 мегабайты
-          </span>
+          <span className="text-red-500">{t.account.page.errorMessage}</span>
         )}
       </div>
 

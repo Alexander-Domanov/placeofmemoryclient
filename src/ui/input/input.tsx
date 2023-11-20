@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import { FieldValues } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
+import { clsx } from 'clsx';
 import { cn } from '@/common/utils/cn';
 
 export type InputProps = {
@@ -30,7 +32,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {error && <span className="text-red-500">{error}</span>}
+        <span
+          className={twMerge(
+            'text-xs text-red-500',
+            clsx(
+              error
+                ? 'opacity-1'
+                : 'opacity-0 transition-opacity duration-900 ease-linear'
+            )
+          )}
+        >
+          {error || ''}
+        </span>
       </>
     );
   }

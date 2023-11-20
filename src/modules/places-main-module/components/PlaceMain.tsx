@@ -6,8 +6,10 @@ import { ImageComponent } from '@/ui/image/ImageComponent';
 import { routes } from '@/common/routing/routes';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
+import { useTranslation } from '@/components/internationalization';
 
 export const PlaceMain = () => {
+  const { t } = useTranslation();
   const { query } = useRouter();
   const slug = query.slug as string;
   const { dataPlace, isLoading } = useGetPlaceMain({ slug });
@@ -15,7 +17,7 @@ export const PlaceMain = () => {
 
   const prevPageLabel = (
     <div className="flex mt-[50px]">
-      <Link href={routes.places.index}>
+      <Link href={routes.places.page(String(1))}>
         <AiOutlineLeftCircle
           className="cursor-pointer"
           size={56}
@@ -25,6 +27,9 @@ export const PlaceMain = () => {
       </Link>
     </div>
   );
+
+  const { map, notData, description, archive, grave, titleLink, location } =
+    t.places.place.page;
   return (
     <div className="flex flex-col">
       {dataPlace && (
@@ -37,8 +42,11 @@ export const PlaceMain = () => {
 
               <div>/</div>
 
-              <Link href={routes.places.index} className="cursor-pointer">
-                Архіў_Месцаў
+              <Link
+                href={routes.places.page(String(1))}
+                className="cursor-pointer"
+              >
+                {titleLink}
               </Link>
 
               <div>/</div>
@@ -48,8 +56,8 @@ export const PlaceMain = () => {
 
             <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
               <h2 className="text-light-300 text-5xl sm:text-3xl">
-                Архіў
-                <span className="text-dark-100 font-light ">_Могілка</span>
+                {archive}
+                <span className="text-dark-100 font-light ">{grave}</span>
               </h2>
             </div>
           </div>
@@ -82,19 +90,21 @@ export const PlaceMain = () => {
             <div className="flex flex-col gap-[70px]">
               <div className="flex flex-col gap-7 md:gap-3 sm:gap-3">
                 <h2 className="text-5xl text-dark-100 font-light">
-                  Месца знаходжання
+                  {location}
                 </h2>
                 <span className="text-xl font-light">
                   {dataPlace.city}, {dataPlace.country}
                 </span>
               </div>
               <div className="flex flex-col gap-7 md:gap-3 sm:gap-3">
-                <h3 className="text-5xl font-light text-dark-100">Апісанне</h3>
+                <h3 className="text-5xl font-light text-dark-100">
+                  {description}
+                </h3>
                 <section className="text-xl text-light-300 break-words font-light">
                   <MarkupRenderer markup={dataPlace.description} />
                 </section>
                 <div className="flex gap-7 md:gap-3 sm:gap-3 flex-col mt-[70px]">
-                  <h3 className="text-5xl font-light text-dark-100">На мапе</h3>
+                  <h3 className="text-5xl font-light text-dark-100">{map}</h3>
                   <section className="">Карта</section>
                 </div>
               </div>

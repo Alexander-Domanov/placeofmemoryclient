@@ -8,11 +8,12 @@ import {
 } from '@/modules/account-modules/edit-profile-module';
 
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
+import { useTranslation } from '@/components/internationalization';
 
 export const EditProfile = () => {
   const { profileData } = useGetProfile();
   const client = useQueryClient();
-
+  const { t } = useTranslation();
   const { mutate: editeProfile, isLoading: isEditProfileLoading } = useMutation(
     {
       mutationFn: editAccountData,
@@ -36,7 +37,7 @@ export const EditProfile = () => {
       <div className="container">
         <div className="flex items-center justify-center mt-10">
           <span className="text-3xl font-semibold sm:text-xl">
-            Рэдактаваць акаўнт
+            {t.account.page.title}
           </span>
         </div>
 

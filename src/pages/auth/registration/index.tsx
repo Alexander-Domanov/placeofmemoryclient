@@ -13,23 +13,9 @@ const SignUpPage = () => {
 
       <Header />
 
-      {/* <SiteLayout contacts={contacts}> */}
       <SignUp />
-      {/* </SiteLayout> */}
     </>
   );
 };
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { data: contacts } = await getContacts();
-//
-//   return {
-//     props: {
-//       contacts,
-//     },
-//     revalidate: 30,
-//   };
-// };
-
-// SignUpPage.getLayout = getLayoutWithHeader;
 export default SignUpPage;
