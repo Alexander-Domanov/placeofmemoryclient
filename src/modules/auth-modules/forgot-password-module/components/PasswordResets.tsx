@@ -69,7 +69,7 @@ export const PasswordResets = () => {
 
           <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
-          <div className="break-normal mb-3 text-xs sm:text-xs text-justify text-dark-150 sm:w-[320px] text-sm w-[416px]">
+          <div className="break-normal mb-3 sm:text-xs text-justify text-dark-150 sm:w-[320px] text-sm w-[416px]">
             <p>{descriptionFirstT} </p>
 
             <p className="mt-3">{descriptionSecondT}</p>
