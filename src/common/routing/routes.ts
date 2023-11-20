@@ -21,6 +21,7 @@ export const routes = {
     '/places/[page]',
     '/places/place/[slug]',
     '/_error',
+    '/404',
   ],
   dropdownMenuHeader: {
     settings: '/account',

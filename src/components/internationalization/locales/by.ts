@@ -1,4 +1,7 @@
 export const by = {
+  404: {
+    description: 'Гэтую старонку не ўдалося знайсці',
+  },
   header: {
     articles: 'Артыкулы',
     places: 'Месца',
