@@ -1,12 +1,14 @@
-import { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import Image from 'next/image';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import { routes } from '@/common/routing/routes';
 import { IPerson } from '@/types';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
 
 interface Props {
   person: IPerson;
@@ -15,6 +17,12 @@ interface Props {
 export const PersonMain: FC<Props> = ({ person }) => {
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
+
+  const [mapVisible, setMapVisible] = useState(true);
+
+  const toggleMapVisibility = () => {
+    setMapVisible(!mapVisible);
+  };
 
   return (
     <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
@@ -91,7 +99,33 @@ export const PersonMain: FC<Props> = ({ person }) => {
                 dangerouslySetInnerHTML={{ __html: person.biography }}
               />
 
-              <div className="mt-8 text-3xl text-dark-100">На мапе</div>
+              <div className="mt-8 text-3xl text-dark-100">
+                <button
+                  onClick={toggleMapVisibility}
+                  className="flex items-center hover:underline focus:outline-none"
+                >
+                  {mapVisible ? 'Схаваць мапу' : 'Паказаць мапу'}
+                  <span className="ml-2">
+                    {mapVisible ? (
+                      <FaChevronUp size={isMobile ? 20 : 24} />
+                    ) : (
+                      <FaChevronDown size={isMobile ? 20 : 24} />
+                    )}
+                  </span>
+                </button>
+              </div>
+
+              {mapVisible && (
+                <div className="mt-8 max-w-[400px] max-h-[400px] md:max-w-full md:max-h-full">
+                  <MapMainWithMarkersComponent
+                    center={{
+                      lat: person?.location.lat || 0,
+                      lng: person?.location?.lng || 0,
+                    }}
+                    locations={[]}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

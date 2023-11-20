@@ -1,14 +1,23 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
-import { Button, Flex } from 'antd';
+import { Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
+import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
   height: '50vh',
   width: '100%',
-  borderRadius: '10px',
+  borderRadius: '8px',
+};
+
+const defaultMapOptions = {
+  terrain: 'road',
+  disableDefaultUI: true,
+  fullscreenControl: true,
+  streetViewControl: false,
+  backgroundColor: 'rgb(250, 250, 250)',
 };
 
 interface MapMainWithMarkersProps {
@@ -109,14 +118,18 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
 
   return isLoaded ? (
     <Flex gap="large" vertical>
-      <Button onClick={() => panTo(center)}>Pan to Current Location</Button>
-
+      {/* <Button onClick={() => panTo(center)}>Pan to Current Location</Button> */}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={selectedCenter}
-        zoom={10}
+        zoom={15}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        options={{
+          ...mapOptions,
+          ...defaultMapOptions,
+          ...{ clickableIcons: true },
+        }}
       >
         <MarkerF
           key="center"
