@@ -1,17 +1,22 @@
 import * as yup from 'yup';
+import { useTranslation } from '@/components/internationalization';
 
-export const createNewPasswordSchema = yup.object({
-  password: yup
-    .string()
-    .trim()
-    .required()
-    .min(6)
-    .max(20)
-    .matches(/[a-z]/, 'Password must contain a lowercase letter')
-    .matches(/[A-Z]/, 'Password must contain an uppercase letter')
-    .matches(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      'Password must contain a special character'
-    )
-    .matches(/[0-9]/, 'Password must contain a digit'),
-});
+export const createNewPasswordSchema = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = useTranslation();
+  return yup.object({
+    password: yup
+      .string()
+      .required(t.auth.signUp.page.schema.password.required)
+      .min(6, t.auth.signUp.page.schema.password.min)
+      .max(20, t.auth.signUp.page.schema.password.max)
+      .matches(/[a-z]/, t.auth.signUp.page.schema.password.matches)
+      .matches(/[A-Z]/, t.auth.signUp.page.schema.password.matches)
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        t.auth.signUp.page.schema.password.matches
+      )
+      .matches(/[0-9]/, t.auth.signUp.page.schema.password.matches)
+      .trim(),
+  });
+};

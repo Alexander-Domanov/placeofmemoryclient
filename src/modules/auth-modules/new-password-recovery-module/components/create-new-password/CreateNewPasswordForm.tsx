@@ -4,6 +4,8 @@ import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { Button, Input } from '@/ui';
 import { createNewPasswordSchema } from '@/modules/auth-modules/new-password-recovery-module';
 import { Spinner } from '@/ui/spinner/Spinner';
+import { useTranslation } from '@/components/internationalization';
+import { useChangingLanguageError } from '@/common/hooks/useChangingLanguageError';
 
 interface ICreateNewPasswordFormProps {
   onSubmitHandler: (password: string) => void;
@@ -14,16 +16,18 @@ export const CreateNewPasswordForm = ({
   onSubmitHandler,
   isLoading,
 }: ICreateNewPasswordFormProps) => {
-  const { errors, register, reset, handleSubmit } = useGlobalForm(
-    createNewPasswordSchema
+  const { errors, trigger, register, reset, handleSubmit } = useGlobalForm(
+    createNewPasswordSchema()
   );
-
+  useChangingLanguageError({ errors, trigger });
+  const { t } = useTranslation();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const { password } = data;
     onSubmitHandler(password);
     reset();
   };
-
+  const { placeholderT, descriptionT, labelT, buttonT } =
+    t.auth.recovery.recoveryPage;
   return (
     <>
       <form
@@ -31,19 +35,17 @@ export const CreateNewPasswordForm = ({
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
-          label="Новы пароль"
+          label={labelT}
           id="password"
-          placeholder="6+ персанажаў"
+          placeholder={placeholderT}
           error={errors?.password?.message}
           {...register('password')}
         />
         <div className="flex justify-center text-sm">
-          <span>
-            Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы{' '}
-          </span>
+          <span>{descriptionT}</span>
         </div>
         <Button disabled={isLoading} className="mt-1" type="submit">
-          {isLoading ? <Spinner /> : 'Стварыце новы пароль'}
+          {isLoading ? <Spinner /> : buttonT}
         </Button>
       </form>
     </>

@@ -99,6 +99,17 @@ export const ru: LocaleType = {
     },
     recovery: {
       indexTile: 'Восстановление',
+      resendPage: {
+        firstDescription: `Срок действия ссылки для проверки электронной почты истек`,
+        secondDescription: `Видимо, срок действия ссылки для проверки истек. Не беспокойтесь, мы можем отправить ссылку еще раз`,
+        forgotPasswordLink: `Повторно отправить ссылку для проверки`,
+      },
+      recoveryPage: {
+        labelT: 'НОВЫЙ ПАРОЛЬ',
+        placeholderT: '6+ символов',
+        descriptionT: `Пароль должен содержать 1-9, a-z, A-Z и определенные символы`,
+        buttonT: 'Создать новый пароль',
+      },
     },
   },
   home: {
