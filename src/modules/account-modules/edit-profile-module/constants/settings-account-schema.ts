@@ -1,29 +1,27 @@
 import * as yup from 'yup';
+import { useTranslation } from '@/components/internationalization';
 
 const usernameRegex = /^[0-9A-Za-z_-]+$/;
 
 export const settingsSchema = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = useTranslation();
+  const { min, matches, max, required } = t.account.page.schema.userName;
   return yup.object({
     userName: yup.lazy((value) =>
       !value
         ? yup
             .string()
-            .matches(
-              usernameRegex,
-              'Only allowed characters are 0-9, A-Z, a-z, _, -'
-            )
-            .required('Username is required')
-            .min(6, 'Minimum number of characters 6')
-            .max(30, 'Maximum number of characters 30')
+            .matches(usernameRegex, matches)
+            .required(required)
+            .min(6, min)
+            .max(30, max)
             .trim()
         : yup
             .string()
-            .min(6, 'Minimum number of characters 6')
-            .max(30, 'Maximum number of characters 30')
-            .matches(
-              usernameRegex,
-              'Only allowed characters are 0-9, A-Z, a-z, _, -'
-            )
+            .min(6, min)
+            .max(30, max)
+            .matches(usernameRegex, matches)
             .trim()
     ),
     city: yup.string().trim(),
