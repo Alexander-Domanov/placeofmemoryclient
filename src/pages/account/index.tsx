@@ -5,13 +5,9 @@ import { EditProfile } from '@/modules/account-modules/edit-profile-module';
 import { useTranslation } from '@/components/internationalization';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
-import { IContacts } from '@/types';
+import { IPageContacts } from '@/types';
 
-interface Props {
-  contacts: IContacts;
-}
-
-const Settings: FC<Props> = ({ contacts }) => {
+const Settings: FC<IPageContacts> = ({ contacts }) => {
   const { t } = useTranslation();
   return (
     <>
@@ -36,6 +32,5 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 30,
   };
 };
-// Settings.getLayout = getGlobalLayout;
 
 export default Settings;

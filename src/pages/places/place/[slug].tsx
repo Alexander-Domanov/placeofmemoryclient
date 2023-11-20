@@ -1,38 +1,37 @@
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
-import { dehydrate, DehydratedState } from '@tanstack/query-core';
-import { QueryClient } from '@tanstack/react-query';
 import { PlaceMain } from '@/modules/places-main-module/components/PlaceMain';
 import {
-  getPlaceMainForSSR,
-  getPlacesMainForSSR,
-} from '@/modules/places-main-module/api/places-main-api';
-import { IPlacesMain } from '@/modules/places-main-module';
-import { getGlobalLayout } from '@/components';
+  getPlaceMain,
+  getPlacesMain,
+} from '@/services/api/places-api/places-main-api';
 import { useTranslation } from '@/components/internationalization';
+import { SiteLayout } from '@/components/layouts/SiteLayout';
+import { IPageContacts, IPlacesMain } from '@/types';
+import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 
+interface IPageProps extends IPageContacts {
+  place: IPlacesMain;
+}
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<{
-  props: { dehydratedState: DehydratedState };
+  props: IPageProps;
 }> => {
   const slug = context.params?.slug as string;
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(
-    ['place-main', slug],
-    async (): Promise<IPlacesMain> =>
-      await getPlaceMainForSSR({ slug, lang: context.locale })
-  );
 
+  const place = await getPlaceMain({ slug, lang: context.locale });
+  const { data: contacts } = await getContacts();
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      place,
+      contacts,
     },
   };
 };
 export const getStaticPaths = async () => {
-  const resBy = await getPlacesMainForSSR({ lang: 'by' });
-  const resRu = await getPlacesMainForSSR({ lang: 'ru' });
+  const resBy = await getPlacesMain({ lang: 'by' });
+  const resRu = await getPlacesMain({ lang: 'ru' });
   const pathsBy = resBy.items.map((place) => ({
     params: { slug: place.slug },
     locale: 'by',
@@ -47,18 +46,18 @@ export const getStaticPaths = async () => {
   };
 };
 
-const Place = () => {
+const Place = ({ place, contacts }: IPageProps) => {
   const { t } = useTranslation();
   return (
     <div>
       <Head>
         <title>{t.places.place.indexTitle} | MOGILKI</title>
       </Head>
-      <PlaceMain />
+      <SiteLayout contacts={contacts}>
+        <PlaceMain place={place} />
+      </SiteLayout>
     </div>
   );
 };
-
-Place.getLayout = getGlobalLayout;
 
 export default Place;

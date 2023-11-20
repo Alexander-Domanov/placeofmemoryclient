@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import { getGlobalLayout } from '@/components';
+import { GetStaticProps } from 'next';
 import { useTranslation } from '@/components/internationalization';
+import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 
 const AboutTheProject = () => {
   const { t } = useTranslation();
@@ -13,7 +14,15 @@ const AboutTheProject = () => {
     </>
   );
 };
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: contacts } = await getContacts();
 
-AboutTheProject.getLayout = getGlobalLayout;
+  return {
+    props: {
+      contacts,
+    },
+    revalidate: 30,
+  };
+};
 
 export default AboutTheProject;
