@@ -369,6 +369,7 @@ export const PlaceEdit: FC = () => {
                   <Form.Item>
                     <MetaInfoForm
                       slug={place?.slug}
+                      status={place?.status}
                       path={routes.places.place(place?.slug || '')}
                       owner={place?.owner}
                       createdAt={place?.createdAt}

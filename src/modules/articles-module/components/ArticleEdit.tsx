@@ -317,6 +317,7 @@ export const ArticleEdit: FC = () => {
                   <Form.Item>
                     <MetaInfoForm
                       slug={article?.slug}
+                      status={article?.status}
                       path={routes.articles.getArticle(article?.slug || '')}
                       owner={article?.owner}
                       createdAt={article?.createdAt}

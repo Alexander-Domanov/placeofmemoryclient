@@ -437,6 +437,7 @@ export const PersonEdit: FC = () => {
                   <Form.Item>
                     <MetaInfoForm
                       slug={person?.slug}
+                      status={person?.status}
                       path={routes.persons.person(person?.slug || '')}
                       owner={person?.owner}
                       createdAt={person?.createdAt}

@@ -9,7 +9,7 @@ import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 const containerStyle = {
   height: '60vh',
   width: '100%',
-  borderRadius: '10px',
+  borderRadius: '6px',
 };
 
 const defaultMapOptions = {
