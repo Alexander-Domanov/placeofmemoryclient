@@ -4,12 +4,15 @@ import Image from 'next/image';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { routes } from '@/common/routing/routes';
 import { IGetArticlesResponse } from '@/types';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   posts: IGetArticlesResponse;
 }
 
 export const HomeArticles: FC<Props> = ({ posts }) => {
+  const { t } = useTranslation();
+  const { titleT, buttonT } = t.home.page.homeArticles;
   return (
     <>
       {posts.items.length && (
@@ -17,7 +20,7 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
           <div className="container">
             <div className="relative flex flex-col w-full">
               <div className="absolute top-0 left-0 pt-3 pr-20 pb-10 pl-9 text-[56px] leading-[64px] bg-dark-700 rounded-ee-[20px] lg:py-4 lg:px-6 lg:text-4xl sm:relative sm:p-0 z-10">
-                Артыкулы
+                {titleT}
               </div>
 
               <div className="grid grid-cols-[1fr_1fr] sm:grid-cols-1 sm:mt-4">
@@ -47,7 +50,7 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
                 lg:h-14 lg:px-8
                 sm:relative sm:right-0 sm:top-0 sm:translate-y-0 sm:h-11 sm:text-sm sm:px-6 sm:mt-6 sm:ml-auto"
               >
-                чытаць усе
+                {buttonT}
                 <FaArrowRightLong className="ml-4" size={24} />
               </a>
             </div>

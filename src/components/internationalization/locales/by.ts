@@ -123,6 +123,29 @@ export const by = {
   },
   home: {
     indexTitle: 'Хатняя старонка',
+    page: {
+      homeHero: {
+        graveTitle: 'МОГІЛКІ',
+        archiveTitle: 'Архіў',
+        description: `   Могілкі - гэта спецыяльны партал для людзей, якія цікавяцца
+              гісторыяй і архіўнымі дадзенымі. На сайце ёсць інтэрактыўная мапа,
+              дзе вы знойдзеце пахавання беларусаў на тэрыторыі Рэспублікі
+              Польшчы.`,
+        linkButton: 'падрабязней',
+      },
+      homeArticles: {
+        titleT: 'Артыкулы',
+        buttonT: 'чытаць усе',
+      },
+      homeMap: {
+        titleFirstT: 'Інтэрактыўная',
+        titleSecondT: 'Мапа',
+        descriptionFirstT: `Каардынаты могілак`,
+        descriptionSecondT: `Можна адзначыць могілку самастойна`,
+        linkT: 'чытаць усе',
+        descriptionEnd: 'працуе на ўсіх дэвайсах',
+      },
+    },
   },
   articles: {
     indexTitle: 'Артыкул',

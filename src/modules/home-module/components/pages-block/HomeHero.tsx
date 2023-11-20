@@ -4,8 +4,12 @@ import Link from 'next/link';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import homeHero from '@/assets/images/home-hero.jpg';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 export const HomeHero: FC = () => {
+  const { t } = useTranslation();
+  const { linkButton, description, graveTitle, archiveTitle } =
+    t.home.page.homeHero;
   return (
     <div className="bg-dark-900 h-[calc(100vh-65px)] min-h-[575px] relative">
       <Image
@@ -23,19 +27,16 @@ export const HomeHero: FC = () => {
             <div className="pt-[32px] pl-[40px] pb-[40px] bg-dark-900/80 rounded-[20px] lg:py-4 lg:px-6">
               <div>
                 <div className="uppercase text-[72px] font-light leading-none -tracking-[2px] lg:text-6xl sm:text-5xl">
-                  МОГІЛКІ
+                  {graveTitle}
                 </div>
                 <div className="mt-1 text-[60px] font-bold leading-none tracking-[2px] lg:text-5xl sm:text-4xl">
-                  Архіў
+                  {archiveTitle}
                 </div>
               </div>
             </div>
 
             <div className="mt-1 bg-dark-900/95 rounded-[20px] py-5 px-8 text-sm font-light lg:py-4 lg:px-6">
-              Могілкі - гэта спецыяльны партал для людзей, якія цікавяцца
-              гісторыяй і архіўнымі дадзенымі. На сайце ёсць інтэрактыўная мапа,
-              дзе вы знойдзеце пахавання беларусаў на тэрыторыі Рэспублікі
-              Польшчы.
+              {description}
             </div>
           </div>
 
@@ -48,7 +49,7 @@ export const HomeHero: FC = () => {
                 lg:before:w-[80px] before:bg-dark-900 lg:mt-[80px] lg:ml-[80px] lg:h-14 lg:px-8
                 sm:mt-16 sm:before:hidden sm:ml-0 sm:h-11 sm:px-6 sm:text-sm"
               >
-                падрабязней
+                {linkButton}
                 <FaArrowRightLong className="ml-4" size={20} />
               </Link>
             </div>
