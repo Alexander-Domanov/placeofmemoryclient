@@ -84,7 +84,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
             lng: p.location.lng,
           },
           map: mapRef.current,
-          icon: '/google/people35.png',
+          icon: '/leaflet/reshot-icon.svg',
           clickable: true,
           cursor: 'pointer',
           // animation: google.maps.Animation.DROP,
@@ -94,7 +94,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
 <div class="flex gap-2 flex-col">
   <img src="${p.url || pictureBackup}" alt="${p.firstName} ${
           p.lastName
-        }" class="max-w-60 max-h-full object-contain rounded-md">
+        }" class="max-w-60 max-h-full object-contain rounded-lg">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>

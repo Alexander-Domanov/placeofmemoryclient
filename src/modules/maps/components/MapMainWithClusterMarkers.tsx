@@ -2,16 +2,12 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { BsSearch } from 'react-icons/bs';
-import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
 import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
-import { routes } from '@/common/routing/routes';
-import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 const containerStyle = {
-  height: '60vh',
+  height: '70vh',
   width: '100%',
   borderRadius: '10px',
 };
@@ -82,7 +78,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
             lng: p.location.lng,
           },
           map: mapRef.current,
-          icon: '/google/people35.png',
+          icon: '/leaflet/reshot-icon.svg',
           clickable: true,
           cursor: 'pointer',
           // animation: google.maps.Animation.DROP,
@@ -92,7 +88,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
 <div class="flex gap-2 flex-col">
   <img src="${p.url}" alt="${p.firstName} ${
           p.lastName
-        }" class="max-w-60 max-h-full object-contain rounded-md">
+        }" class="max-w-60 max-h-full object-contain rounded-lg">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
@@ -131,8 +127,8 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     if (searchResult != null) {
       const place = searchResult.getPlace();
       const position = {
-        lat: place.geometry?.location?.lat() || 0,
-        lng: place.geometry?.location?.lng() || 0,
+        lat: place?.geometry?.location?.lat() || 0,
+        lng: place?.geometry?.location?.lng() || 0,
       };
       setSelectedCenter(position);
       setInputValue(place.formatted_address || '');
@@ -143,72 +139,46 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     }
   };
 
-  const { width } = useWindowSize();
-
   return isLoaded ? (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
-      <div className="container">
-        <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
-          <Link href={routes.main} className="cursor-pointer">
-            <AiOutlineHome
-              className="text-dark-100"
-              size={width && width > 639 ? 22 : 16}
+    <div className="container">
+      <div className="flex justify-end md:justify-center md:flex-wrap">
+        <Autocomplete
+          onPlaceChanged={onPlaceChanged}
+          onLoad={onLoadAutoComplete}
+        >
+          <div className="relative">
+            <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <BsSearch />
+            </span>
+
+            <input
+              placeholder="ЗНАЙСЦІ"
+              type="text"
+              title={inputValue}
+              className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md hover:shadow-icon px-12 sm:w-60 sm:h-8 sm:px-10 outline-none"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
-          </Link>
-
-          <div>/</div>
-
-          <span className="text-accent-100">Інтэрактыўная_Мапа</span>
-        </div>
-
-        <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
-          <h2 className="text-light-300 text-5xl sm:text-3xl">
-            Інтэрактыўная Мапа
-          </h2>
-
-          <div className="flex items-center">
-            <Autocomplete
-              onPlaceChanged={onPlaceChanged}
-              onLoad={onLoadAutoComplete}
-            >
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <BsSearch />
-                </span>
-
-                <input
-                  placeholder="ЗНАЙСЦІ"
-                  type="text"
-                  title={inputValue}
-                  className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md hover:shadow-icon px-12 sm:w-60 sm:h-8 sm:px-10 outline-none"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-              </div>
-            </Autocomplete>
           </div>
-        </div>
+        </Autocomplete>
+      </div>
 
-        <div className="mt-6 h-[1px] bg-dark-300" />
-        {/* <hr className="w-full mt-[28px] mb-8 transform bg-[#565656]" /> */}
-
-        <div className="flex items-center justify-center mt-10">
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={selectedCenter}
-            zoom={6}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-            options={{
-              ...mapOptions,
-              ...defaultMapOptions,
-              ...{
-                // disableDefaultUI: true,
-                clickableIcons: true,
-              },
-            }}
-          />
-        </div>
+      <div className="flex items-center justify-center mt-10">
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={selectedCenter}
+          zoom={6}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={{
+            ...mapOptions,
+            ...defaultMapOptions,
+            ...{
+              // disableDefaultUI: true,
+              clickableIcons: true,
+            },
+          }}
+        />
       </div>
     </div>
   ) : (

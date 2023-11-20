@@ -72,14 +72,14 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
             lng: p.location.lng,
           },
           map: mapRef.current,
-          icon: '/google/people35.png',
+          icon: '/leaflet/reshot-icon.svg',
         });
 
         const contentString = `
 <div class="flex gap-2 flex-col">
   <img src="${url}" alt="${p.firstName} ${
           p.lastName
-        }" class="max-w-60 max-h-full object-contain rounded-md">
+        }" class="max-w-60 max-h-full object-contain rounded-lg">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
@@ -121,7 +121,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         <MarkerF
           key="center"
           position={{ lat: center.lat, lng: center.lng }}
-          options={{ icon: '/leaflet/map-marker.svg', zIndex: 1000 }}
+          options={{ icon: '/leaflet/reshot-icon-place.svg', zIndex: 1000 }}
         />
       </GoogleMap>
     </Flex>
