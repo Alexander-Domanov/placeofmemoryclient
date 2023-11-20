@@ -8,7 +8,6 @@ import { IGetPersonsResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
-import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface Props {
   persons: IGetPersonsResponse;
