@@ -113,6 +113,29 @@ export const ru: LocaleType = {
     },
   },
   home: {
+    page: {
+      homeHero: {
+        graveTitle: 'МОГИЛКИ',
+        archiveTitle: 'АРХИВ',
+        description: `Могилки - это специальный портал для людей, которые интересуются 
+              историей и архивными данными. На сайте есть интерактивная карта, 
+              где вы найдете захоронения белорусов на территории Республики 
+              Польша.`,
+        linkButton: 'подробнее',
+      },
+      homeArticles: {
+        titleT: 'Статьи',
+        buttonT: 'читать все',
+      },
+      homeMap: {
+        titleFirstT: 'Интерактивная',
+        titleSecondT: 'Карта',
+        descriptionFirstT: `Координаты могилок`,
+        descriptionSecondT: `Можно отметить могилку самостоятельно`,
+        linkT: 'читать все',
+        descriptionEnd: 'работает на всех устройствах',
+      },
+    },
     indexTitle: 'Главная страница',
   },
   articles: {
