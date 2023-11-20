@@ -117,6 +117,11 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
     }
   }, [map, selectedLocations]);
 
+  const icon =
+    locations && locations.length > 0
+      ? '/leaflet/reshot-icon-place.svg'
+      : '/leaflet/reshot-icon.svg';
+
   return isLoaded ? (
     <Flex gap="large" vertical>
       {/* <Button onClick={() => panTo(center)}>Pan to Current Location</Button> */}
@@ -135,7 +140,7 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
         <MarkerF
           key="center"
           position={{ lat: center.lat, lng: center.lng }}
-          options={{ icon: '/leaflet/reshot-icon-place.svg', zIndex: 1000 }}
+          options={{ icon, zIndex: 1000 }}
         />
       </GoogleMap>
     </Flex>
