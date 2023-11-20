@@ -10,7 +10,6 @@ import {
   useGetPlacesMain,
 } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
-import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 import { Input } from '@/ui';
 import PaginationCustom from '@/components/pagination/PaginationCustom';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
