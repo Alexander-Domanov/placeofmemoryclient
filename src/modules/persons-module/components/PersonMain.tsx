@@ -6,6 +6,7 @@ import { BsArrowLeftCircleFill } from 'react-icons/bs';
 import { routes } from '@/common/routing/routes';
 import { IPerson } from '@/types';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 interface Props {
   person: IPerson;
@@ -37,7 +38,10 @@ export const PersonMain: FC<Props> = ({ person }) => {
         </div>
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
-          <h2 className="text-light-300 text-4xl sm:text-3xl">{`${person.firstName} ${person.lastName}`}</h2>
+          <h2 className="text-light-300 text-5xl sm:text-3xl">
+            Архіў
+            <span className="text-dark-100 font-light">_Асоба</span>
+          </h2>
         </div>
 
         <div className="mt-6 h-[1px] bg-dark-300" />
@@ -50,7 +54,13 @@ export const PersonMain: FC<Props> = ({ person }) => {
               </div>
 
               <div className="mt-2 text-dark-100 text-xl">
-                {person.birthDate} - {person.deathDate}
+                {person.birthDate
+                  ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
+                  : 'Няма дадзеных'}
+                &nbsp;-&nbsp;
+                {person.deathDate
+                  ? convertDateToFormat(person.deathDate, 'DD.MM.YYYY')
+                  : 'Няма дадзеных'}
               </div>
 
               <div className="mt-10">
@@ -60,6 +70,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
                   width={person.photos[0]?.versions.huge.width}
                   height={person.photos[0]?.versions.huge.height}
                   loading="eager"
+                  className="object-cover rounded-lg shadow-icon"
                 />
               </div>
 
