@@ -20,7 +20,7 @@ export const AntPagination: FC<IPaginationProps> = ({
   const isMobile = width && width < 640;
 
   return (
-    <div className="mt-12 flex justify-center items-center">
+    <div className="flex justify-center items-center">
       <ConfigProvider
         theme={{
           components: {
@@ -31,7 +31,7 @@ export const AntPagination: FC<IPaginationProps> = ({
               // colorPrimary: '#565656',
               // colorBorder: '#565656',
               colorPrimaryHover: '#fafafa',
-              fontSize: isMobile ? 14 : 22,
+              fontSize: isMobile ? 10 : 22,
               lineType: 'round',
             },
           },
@@ -45,7 +45,7 @@ export const AntPagination: FC<IPaginationProps> = ({
           onChange={onPageChange}
           simple
           prevIcon={
-            <button className="mr-56 md:mr-32 sm:mr-16 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200">
+            <button className="mr-48 md:mr-32 sm:mr-6 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200">
               <BsArrowLeftCircleFill className="text-dark-300" />
               <span className="sr-only">Previous</span>
             </button>
@@ -53,7 +53,7 @@ export const AntPagination: FC<IPaginationProps> = ({
           nextIcon={
             <button
               type="button"
-              className="ml-56 md:ml-32 sm:ml-16 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
+              className="ml-48 md:ml-32 sm:ml-6 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
             >
               <BsArrowRightCircleFill className="text-dark-300" />
               <span className="sr-only">Next</span>

@@ -7,6 +7,7 @@ import { routes } from '@/common/routing/routes';
 import { IGetPersonsResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -23,21 +24,27 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     }
   };
 
+  const { width } = useWindowSize();
+  const isMobile = width && width < 640;
+
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[28px] md:pr-[28px]">
       <div className="container">
         <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
           <Link href={routes.main} className="cursor-pointer">
-            <AiOutlineHome size={22} />
+            <AiOutlineHome size={isMobile ? 16 : 22} />
           </Link>
 
           <div>/</div>
 
-          <span className="text-accent-100">Артыкулы</span>
+          <span className="text-accent-100">Архіў_Людзі</span>
         </div>
 
-        <div className="flex justify-between md:justify-center md:flex-wrap gap-4">
-          <h2 className="text-light-300 text-5xl sm:text-3xl">Артыкулы</h2>
+        <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
+          <h2 className="text-light-300 text-5xl sm:text-3xl">
+            Архіў
+            <span className="text-dark-100 font-light ">_Людзі</span>
+          </h2>
         </div>
 
         <div className="mt-6 h-[1px] bg-dark-300" />
@@ -45,7 +52,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-10">
           <div className="grid grid-cols-5 gap-x-8 gap-y-6">
             {persons?.items.map((person) => (
-              <div key={person.id}>
+              <div key={person.id} className="hover:shadow-iconHover shadow-lg">
                 <Link
                   href={routes.persons.person(person.slug)}
                   className="flex flex-col h-full"
@@ -55,11 +62,11 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
                       src={person.photos[0]?.versions.huge.url}
                       fill
                       alt={`${person.firstName} ${person.lastName}`}
-                      className="object-cover"
+                      className="object-cover rounded-t-sm"
                     />
                   </div>
 
-                  <div className="bg-dark-300 flex-grow text-center text-sm font-bold p-2">
+                  <div className="bg-dark-300 flex-grow text-center text-sm font-bold p-2 rounded-b-sm">
                     {person.firstName} {person.lastName}
                   </div>
                 </Link>
@@ -67,12 +74,14 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
             ))}
           </div>
 
-          <AntPagination
-            page={Number(router.query.page) || 1}
-            pageSize={SITE_PERSONS_PER_PAGE}
-            total={persons.totalCount}
-            onPageChange={onPageChange}
-          />
+          <div className="mt-10 md:mt-8">
+            <AntPagination
+              page={Number(router.query.page) || 1}
+              pageSize={SITE_PERSONS_PER_PAGE}
+              total={persons.totalCount}
+              onPageChange={onPageChange}
+            />
+          </div>
         </div>
       </div>
     </div>

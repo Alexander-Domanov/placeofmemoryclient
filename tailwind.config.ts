@@ -112,7 +112,7 @@ module.exports = {
       boxShadow: {
         button: '0px 15px 30px 0px rgba(0, 0, 0, 0.12)',
         icon: `0 4px 8px rgba(0, 0, 0, 0.3)`,
-        iconHover: 'brightness(90%)',
+        iconHover: `0 4px 8px rgba(0, 0, 0, 0.8)`,
       },
       typography: (theme: any) => ({
         DEFAULT: {

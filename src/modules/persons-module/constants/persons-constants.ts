@@ -1,1 +1,1 @@
-export const SITE_PERSONS_PER_PAGE = 5;
+export const SITE_PERSONS_PER_PAGE = 15;
