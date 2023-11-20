@@ -74,14 +74,20 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
             ))}
           </div>
 
-          <div className="mt-10 md:mt-8">
-            <AntPagination
-              page={Number(router.query.page) || 1}
-              pageSize={SITE_PERSONS_PER_PAGE}
-              total={persons.totalCount}
-              onPageChange={onPageChange}
-            />
-          </div>
+          {persons?.items.length === 0 ? (
+            <div className="flex justify-center mt-10 text-2xl text-dark-100">
+              Нічога не знойдзена
+            </div>
+          ) : (
+            <div className="mt-10 md:mt-8">
+              <AntPagination
+                page={Number(router.query.page) || 1}
+                pageSize={SITE_PERSONS_PER_PAGE}
+                total={persons.totalCount}
+                onPageChange={onPageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

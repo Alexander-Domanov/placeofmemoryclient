@@ -82,14 +82,20 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
             ))}
           </div>
 
-          <div className="mt-10 md:mt-8">
-            <AntPagination
-              page={Number(router.query.page) || 1}
-              pageSize={SITE_ARTICLES_PER_PAGE}
-              total={posts.totalCount}
-              onPageChange={onPageChange}
-            />
-          </div>
+          {posts?.items.length === 0 ? (
+            <div className="flex justify-center mt-10 text-2xl text-dark-100">
+              Няма артыкулаў
+            </div>
+          ) : (
+            <div className="mt-10 md:mt-8">
+              <AntPagination
+                page={Number(router.query.page) || 1}
+                pageSize={SITE_ARTICLES_PER_PAGE}
+                total={posts.totalCount}
+                onPageChange={onPageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
