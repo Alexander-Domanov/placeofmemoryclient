@@ -43,3 +43,5 @@ export * from './users/user-update.type';
 export * from './users/pagination-users.type';
 export * from './users/pagination-user.type';
 export * from './language/language.type';
+export * from './common/pageProps.type';
+export * from './places/plage-main.type';
