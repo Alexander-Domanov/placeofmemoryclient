@@ -17,5 +17,5 @@ const PasswordResetsPage = () => {
     </>
   );
 };
-// PasswordResetsPage.getLayout = getLayoutWithHeader;
+
 export default PasswordResetsPage;

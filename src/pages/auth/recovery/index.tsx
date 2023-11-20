@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { NextPageWithLayout } from '@/pages/_app';
 import { Recovery } from '@/modules/auth-modules/new-password-recovery-module';
-import { getLayoutWithHeader } from '@/components';
 import { useTranslation } from '@/components/internationalization';
 
 const PageRecovery: NextPageWithLayout = () => {
@@ -15,5 +14,4 @@ const PageRecovery: NextPageWithLayout = () => {
     </div>
   );
 };
-PageRecovery.getLayout = getLayoutWithHeader;
 export default PageRecovery;
