@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { SignIn } from '@/modules/auth-modules/sign-in-module';
 import { useTranslation } from '@/components/internationalization';
-import { getLayoutWithHeader, Header } from '@/components';
+import { Header } from '@/components';
 
 const SignInPage = () => {
   const { t } = useTranslation();
@@ -17,5 +17,4 @@ const SignInPage = () => {
     </>
   );
 };
-// SignInPage.getLayout = getLayoutWithHeader;
 export default SignInPage;

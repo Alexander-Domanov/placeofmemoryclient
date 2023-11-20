@@ -1,5 +1,4 @@
 // layouts
-export * from './layouts/LayoutWithHeader';
 export { AuthLayout } from './layouts/AuthLayout';
 export { Header } from './layouts/components/Header';
 export { Container } from './layouts/components/Containter';
@@ -7,7 +6,6 @@ export { AvatarMenuHeader } from './layouts/components/avatar-menu/AvatarMenuHea
 export { DropdownMenuHeader } from './layouts/components/avatar-menu/DropdownMenuHeader';
 export * from './dashboard/dashboard-modals';
 export { Footer } from './layouts/components/Footer';
-export { getHomeLayout } from './layouts/HomeLayout';
 
 // dashboard
 export { DashboardSelectLanguage } from './dashboard/dashboard-select-language/DashboardSelectLanguage';

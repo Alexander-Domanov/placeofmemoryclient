@@ -15,6 +15,7 @@ const breadcrumbs = [
 ];
 
 export const Dashboard: FC = () => {
+  // @ts-ignore
   const { persons, isFetching } = usePersonsForMap();
 
   return (
