@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
+import { BsArrowLeftCircleFill } from 'react-icons/bs';
 import { IArticle } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
@@ -36,7 +37,7 @@ export const ArticleMain: FC<Props> = ({ post }) => {
         </div>
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
-          <h2 className="text-light-300 text-4xl sm:text-3xl">{post.title}</h2>
+          <h2 className="text-light-300 text-4xl sm:text-2xl">{post.title}</h2>
         </div>
 
         <div className="mt-6 h-[1px] bg-dark-300" />
@@ -54,9 +55,17 @@ export const ArticleMain: FC<Props> = ({ post }) => {
 
           <div
             dangerouslySetInnerHTML={{ __html: post.content }}
-            className="wysiwyg"
+            className="wysiwyg sm:text-sm"
           />
         </div>
+
+        <Link
+          href={routes.articles.index}
+          className="mt-16 inline-flex text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
+        >
+          <BsArrowLeftCircleFill className="text-dark-300" />
+          <span className="sr-only">Previous</span>
+        </Link>
       </div>
     </div>
   );

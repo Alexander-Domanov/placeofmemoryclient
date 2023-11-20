@@ -17,7 +17,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
   const isMobile = width && width < 640;
 
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
           <div className="whitespace-nowrap scrollbar scrollbar-none overflow-auto flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
@@ -47,40 +47,36 @@ export const PersonMain: FC<Props> = ({ person }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          <div className="grid grid-cols-[400px_1fr] gap-20">
+          <div className="grid grid-cols-[400px_1fr] gap-10 md:grid-cols-1 md:gap-3">
             <div>
-              <div className="text-4xl font-bold">
-                {person.firstName} {person.lastName}
-              </div>
+              <div className="md:text-center">
+                <div className="text-4xl font-bold md:text-3xl">
+                  {person.firstName} {person.lastName}
+                </div>
 
-              <div className="mt-2 text-dark-100 text-xl">
-                {person.birthDate
-                  ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
-                  : 'Няма дадзеных'}
-                &nbsp;-&nbsp;
-                {person.deathDate
-                  ? convertDateToFormat(person.deathDate, 'DD.MM.YYYY')
-                  : 'Няма дадзеных'}
-              </div>
+                <div className="mt-2 text-dark-100 text-xl md:text-sm">
+                  {person.birthDate
+                    ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
+                    : 'Няма дадзеных'}
+                  &nbsp;-&nbsp;
+                  {person.deathDate
+                    ? convertDateToFormat(person.deathDate, 'DD.MM.YYYY')
+                    : 'Няма дадзеных'}
+                </div>
 
-              <div className="mt-10">
-                <Image
-                  src={person.photos[0]?.versions.huge.url}
-                  alt={`${person.firstName} ${person.lastName}`}
-                  width={person.photos[0]?.versions.huge.width}
-                  height={person.photos[0]?.versions.huge.height}
-                  loading="eager"
-                  className="object-cover rounded-lg shadow-icon"
-                />
+                <div className="mt-10">
+                  <div className="flex justify-center mx-auto aspect-w-1 aspect-h-1 max-w-[400px] max-h-[400px]">
+                    <Image
+                      src={person.photos[0]?.versions.huge.url}
+                      alt={`${person.firstName} ${person.lastName}`}
+                      width={person.photos[0]?.versions.huge.width}
+                      height={person.photos[0]?.versions.huge.height}
+                      loading="eager"
+                      className="object-cover rounded-lg shadow-icon"
+                    />
+                  </div>
+                </div>
               </div>
-
-              <Link
-                href={routes.persons.index}
-                className="mt-16 inline-flex text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
-              >
-                <BsArrowLeftCircleFill className="text-dark-300" />
-                <span className="sr-only">Previous</span>
-              </Link>
             </div>
 
             <div>
@@ -99,6 +95,14 @@ export const PersonMain: FC<Props> = ({ person }) => {
             </div>
           </div>
         </div>
+
+        <Link
+          href={routes.persons.index}
+          className="mt-16 inline-flex text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
+        >
+          <BsArrowLeftCircleFill className="text-dark-300" />
+          <span className="sr-only">Previous</span>
+        </Link>
       </div>
     </div>
   );
