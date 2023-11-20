@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { routes } from '@/common/routing/routes';
 import { IGetPersonsResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
-import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -50,7 +50,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          <div className="grid grid-cols-5 gap-x-8 gap-y-6">
+          <div className="grid grid-cols-6 gap-4 lg:grid-cols-4  sm:grid-cols-2">
             {persons?.items.map((person) => (
               <div key={person.id} className="hover:shadow-iconHover shadow-lg">
                 <Link
@@ -66,7 +66,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
                     />
                   </div>
 
-                  <div className="bg-dark-300 flex-grow text-center text-sm font-bold p-2 rounded-b-sm">
+                  <div className="bg-dark-300 flex-grow text-center text-xs font-bold p-2 rounded-b-sm">
                     {person.firstName} {person.lastName}
                   </div>
                 </Link>
