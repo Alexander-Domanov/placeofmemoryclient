@@ -38,8 +38,26 @@ export const by = {
   },
   places: {
     indexTitle: 'Месца',
+    page: {
+      title: 'Архіў_Месцаў',
+      archive: 'Архіў',
+      place: '_Месцаў',
+      name: 'НАЗВА',
+      country: 'КРАІНА',
+      city: 'ГОРАД',
+      noData: 'няма старонак',
+    },
     place: {
       indexTitle: 'Месца',
+      page: {
+        titleLink: 'Архіў_Месцаў',
+        archive: 'Архіў',
+        grave: '_Могілка',
+        location: 'Месца знаходжання',
+        description: 'Апісанне',
+        map: 'На мапе',
+        notData: 'няма дадзеных',
+      },
     },
   },
   people: {

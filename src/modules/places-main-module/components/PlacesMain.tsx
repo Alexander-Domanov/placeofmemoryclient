@@ -14,13 +14,14 @@ import { MarkupRenderer } from '@/common/helpers/MarkupRenderer';
 import { Input } from '@/ui';
 import PaginationCustom from '@/components/pagination/PaginationCustom';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { useTranslation } from '@/components/internationalization';
 
 interface IProps {
   places: IPlacesMainResponse;
 }
 export const PlacesMain = ({ places }: IProps) => {
   const { push, query } = useRouter();
-  const [page, setPage] = useState<number>();
+  const { t } = useTranslation();
   const [name, setName] = useState<string>('');
   const [country, setCountry] = useState<string>('');
   const [city, setCity] = useState<string>('');
@@ -37,11 +38,18 @@ export const PlacesMain = ({ places }: IProps) => {
   });
   const onPageChange = (newPage: number) => {
     if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
-      setPage(newPage);
-      push(`${routes.places.index}/${newPage}`);
+      push(routes.places.page(String(newPage)));
     }
   };
-
+  const {
+    name: nameT,
+    place: placeT,
+    country: countryT,
+    archive: archiveT,
+    city: cityT,
+    title: titleT,
+    noData: noDataT,
+  } = t.places.page;
   return (
     <div className="bg-dark-700 pt-[120px] md:pt-[28px] md:pb-[48px] pb-[120px]">
       <div className="container">
@@ -53,13 +61,13 @@ export const PlacesMain = ({ places }: IProps) => {
 
             <div>/</div>
 
-            <span className="text-accent-100">Архіў_Месцаў</span>
+            <span className="text-accent-100">{titleT}</span>
           </div>
 
           <div className="flex pt-4 justify-between md:justify-center md:flex-wrap gap-4">
             <h2 className="text-light-300 text-5xl sm:text-3xl">
-              Архіў
-              <span className="text-dark-100 font-light ">_Месцаў</span>
+              {archiveT}
+              <span className="text-dark-100 font-light ">{placeT}</span>
             </h2>
           </div>
 
@@ -67,21 +75,21 @@ export const PlacesMain = ({ places }: IProps) => {
           <div className="flex mt-10 md:justify-center flex-wrap gap-4">
             <div>
               <Input
-                label="Назва"
+                label={nameT}
                 className="w-[166px] h-[36px]"
                 onChange={(e) => setName(e.currentTarget.value)}
               />
             </div>
             <div>
               <Input
-                label="Краіна"
+                label={countryT}
                 className="w-[166px] h-[36px]"
                 onChange={(e) => setCountry(e.currentTarget.value)}
               />
             </div>
             <div>
               <Input
-                label="Горад"
+                label={cityT}
                 className="w-[166px] h-[36px]"
                 onChange={(e) => setCity(e.currentTarget.value)}
               />
@@ -142,7 +150,7 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
             ))
           ) : (
-            <div>No Places</div>
+            <div>{noDataT}</div>
           )}
           {dataPlaces && dataPlaces.items.length > 0 && (
             <PaginationCustom

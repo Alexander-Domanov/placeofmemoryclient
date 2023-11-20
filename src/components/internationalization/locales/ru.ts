@@ -40,7 +40,25 @@ export const ru: LocaleType = {
   },
   places: {
     indexTitle: 'Места',
+    page: {
+      title: 'Архив_Мест',
+      archive: 'Архив',
+      place: '_Мест',
+      name: 'ИМЯ',
+      country: 'СТРАНА',
+      city: 'ГОРОД',
+      noData: 'нет страниц',
+    },
     place: {
+      page: {
+        titleLink: 'Архив_Мест',
+        archive: 'Архив',
+        grave: '_Могил',
+        location: 'Место нахождения',
+        description: 'Описание',
+        map: 'На карте',
+        notData: 'нет данных',
+      },
       indexTitle: 'Место',
     },
   },
