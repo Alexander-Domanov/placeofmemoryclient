@@ -38,9 +38,9 @@ export function Header() {
             </nav>
           )}
           <div className="flex gap-3 justify-between">
+            <LanguageSwitcher />
             {width && width <= 1023 && !userName && <DropdownMenuHeader />}
             {userName && <DropdownMenuHeader />}
-            <LanguageSwitcher />
           </div>
         </section>
       </Container>

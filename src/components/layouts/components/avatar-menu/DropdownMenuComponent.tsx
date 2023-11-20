@@ -22,7 +22,9 @@ export const DropdownMenuComponent = ({
       <DropdownMenuContent className="bg-dark-500 border-0 z-50 px-3 text-sm text-white select-none min-w-[4rem]">
         {menuLabel && (
           <>
-            <DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
+            <div className="flex justify-center">
+              <DropdownMenuLabel>{menuLabel}</DropdownMenuLabel>
+            </div>
             <DropdownMenuSeparator className="bg-light-300" />
           </>
         )}
