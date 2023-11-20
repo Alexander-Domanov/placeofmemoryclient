@@ -5,15 +5,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 
-import {
-  IPlacesMainResponse,
-  useGetPlacesMain,
-} from '@/modules/places-main-module';
+import { useGetPlacesMain } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { Input } from '@/ui';
 import PaginationCustom from '@/components/pagination/PaginationCustom';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { useTranslation } from '@/components/internationalization';
+import { IPlacesMainResponse } from '@/types';
 
 interface IProps {
   places: IPlacesMainResponse;
@@ -149,7 +147,9 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
             ))
           ) : (
-            <div>{noDataT}</div>
+            <div className="text-lg first-letter:uppercase mt-10 text-center">
+              {noDataT}
+            </div>
           )}
           {dataPlaces && dataPlaces.items.length > 0 && (
             <PaginationCustom

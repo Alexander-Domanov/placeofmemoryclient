@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { PlacesMain } from '@/modules/places-main-module/components/PlacesMain';
-import { getPlacesMainForSSR } from '@/modules/places-main-module/api/places-main-api';
 import { useTranslation } from '@/components/internationalization';
 import { generateArray } from '@/common/helpers/generateArray';
-import { IPlacesMainResponse } from '@/modules/places-main-module';
-import { IContacts } from '@/types';
+import { IContacts, IPlacesMainResponse } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
+import { getPlacesMain } from '@/services';
 
 interface IProps {
   places: IPlacesMainResponse;
@@ -18,7 +17,7 @@ export const getStaticProps: GetStaticProps = async (
 ): Promise<{ props: IProps; revalidate: number }> => {
   const page = context.params?.page as string;
 
-  const places = await getPlacesMainForSSR({
+  const places = await getPlacesMain({
     lang: context.locale,
     pageNumber: page,
   });
@@ -29,8 +28,8 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const by = await getPlacesMainForSSR({ lang: 'by' });
-  const ru = await getPlacesMainForSSR({ lang: 'ru' });
+  const by = await getPlacesMain({ lang: 'by' });
+  const ru = await getPlacesMain({ lang: 'ru' });
 
   const pathsBy = generateArray(2, by.pagesCount).map((page) => ({
     params: { page: `${page}` },
