@@ -15,6 +15,7 @@ const containerStyle = {
 const defaultMapOptions = {
   terrain: 'road',
   disableDefaultUI: true,
+  zoomControl: true,
   fullscreenControl: true,
   streetViewControl: false,
   backgroundColor: 'rgb(250, 250, 250)',

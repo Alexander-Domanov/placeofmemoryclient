@@ -16,11 +16,12 @@ export const mapOptions = {
     },
     {
       elementType: 'labels.icon',
-      stylers: [{ visibility: 'off' }],
+      stylers: [{ visibility: 'on' }],
     },
     {
       elementType: 'labels.text.fill',
-      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#666666' }],
     },
     {
       elementType: 'labels.text.stroke',
@@ -29,12 +30,14 @@ export const mapOptions = {
     {
       featureType: 'administrative',
       elementType: 'geometry.stroke',
-      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#999999' }],
     },
     {
       featureType: 'administrative.land_parcel',
       elementType: 'geometry.stroke',
-      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#999999' }],
     },
     {
       featureType: 'poi',
@@ -49,12 +52,14 @@ export const mapOptions = {
     {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
-      stylers: [{ color: '#cccccc' }],
+      // stylers: [{ color: '#cccccc' }],
+      stylers: [{ color: '#8fb68c' }],
     },
     {
       featureType: 'road',
       elementType: 'geometry',
-      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#444444' }],
     },
     {
       featureType: 'road.arterial',
@@ -74,7 +79,8 @@ export const mapOptions = {
     {
       featureType: 'water',
       elementType: 'geometry',
-      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#375a8c' }],
     },
     {
       featureType: 'water',
