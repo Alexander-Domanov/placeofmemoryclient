@@ -20,7 +20,7 @@ export const routes = {
     '/articles/[slug]',
     '/places/[page]',
     '/places/place/[slug]',
-    '/404',
+    '/_error',
   ],
   dropdownMenuHeader: {
     settings: '/account',
