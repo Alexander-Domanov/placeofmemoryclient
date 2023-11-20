@@ -20,8 +20,8 @@ export const mapOptions = {
     },
     {
       elementType: 'labels.text.fill',
-      // stylers: [{ color: '#000000' }],
-      stylers: [{ color: '#666666' }],
+      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#666666' }],
     },
     {
       elementType: 'labels.text.stroke',
@@ -30,14 +30,14 @@ export const mapOptions = {
     {
       featureType: 'administrative',
       elementType: 'geometry.stroke',
-      // stylers: [{ color: '#000000' }],
-      stylers: [{ color: '#999999' }],
+      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#999999' }],
     },
     {
       featureType: 'administrative.land_parcel',
       elementType: 'geometry.stroke',
-      // stylers: [{ color: '#000000' }],
-      stylers: [{ color: '#999999' }],
+      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#999999' }],
     },
     {
       featureType: 'poi',
@@ -52,14 +52,14 @@ export const mapOptions = {
     {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
-      // stylers: [{ color: '#cccccc' }],
-      stylers: [{ color: '#8fb68c' }],
+      stylers: [{ color: '#cccccc' }],
+      // stylers: [{ color: '#8fb68c' }],
     },
     {
       featureType: 'road',
       elementType: 'geometry',
-      // stylers: [{ color: '#000000' }],
-      stylers: [{ color: '#444444' }],
+      stylers: [{ color: '#000000' }],
+      // stylers: [{ color: '#444444' }],
     },
     {
       featureType: 'road.arterial',

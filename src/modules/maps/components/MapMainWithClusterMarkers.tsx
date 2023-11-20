@@ -97,7 +97,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
     <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
   </div>
-  <a href="/peoples/${
+  <a href="/persons/${
     p?.slug || ''
   }" class="cursor-pointer text-blue-500 text-center">
     <span class="hover:underline">${p?.slug || ''}</span>
