@@ -2,7 +2,6 @@ import React, { FC, ForwardedRef, forwardRef, useState } from 'react';
 
 import { FieldValues } from 'react-hook-form';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-import style from './Input-with-eye.module.scss';
 import { Input } from '@/ui';
 
 interface PropsType {
@@ -20,7 +19,7 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
     const [showPass, setShowPass] = useState(false);
 
     return (
-      <div className={style.container}>
+      <div className="relative w-full h-full">
         <Input
           type={showPass ? 'text' : 'password'}
           id={id || ''}
@@ -30,10 +29,9 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
           ref={ref}
           {...restProps}
         />
-
         <button
           type="button"
-          className={style.iconBtn}
+          className="cursor-pointer absolute right-4 top-8"
           onClick={() => setShowPass(!showPass)}
         >
           {showPass ? (
