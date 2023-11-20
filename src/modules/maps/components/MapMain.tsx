@@ -1,18 +1,7 @@
 import React, { FC } from 'react';
 import { Flex, Spin } from 'antd';
 import { usePersonsForMap } from '@/modules/dashboard-module/hooks/usePersonsForMap';
-import { routes } from '@/common/routing/routes';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import MapMainWithClusterMarkers from '@/modules/maps/components/MapMainWithClusterMarkers';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({
-    key: routes.dashboard.index,
-    text: 'Dashboard',
-    withLink: false,
-  }),
-];
 
 export const MapMain: FC = () => {
   const { persons, isFetching } = usePersonsForMap();
