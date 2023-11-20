@@ -4,29 +4,43 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa6';
 import { AuthLayout } from '@/components';
-import { Button, Input } from '@/ui';
+import { Button, Input, InputWithEye } from '@/ui';
 import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
 import { Spinner } from '@/ui/spinner/Spinner';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { useTranslation } from '@/components/internationalization';
+import { useChangingLanguageError } from '@/common/hooks/useChangingLanguageError';
 
 export const SignIn = () => {
-  const { errors, register, reset, handleSubmit, setCustomError } =
-    useGlobalForm(schemaLogin);
+  const { t } = useTranslation();
+  const {
+    emailT,
+    buttonSignInT,
+    signUpT,
+    buttonGT,
+    descriptionT,
+    passwordT,
+    titleT,
+    noAccT,
+    customErrors,
+    forgotT,
+    STATUS_ERROR_204_TR,
+    STATUS_ERROR_401_TR,
+  } = t.auth.signIn.page;
+  const { errors, trigger, register, reset, handleSubmit, setCustomError } =
+    useGlobalForm(schemaLogin());
   const { query, push } = useRouter();
   const { sendLoginData, isLoading } = useLogin(
     () => {
       push(routes.main);
     },
-    () =>
-      setCustomError(
-        'password',
-        'The password or the email or Username are incorrect. Try again, please'
-      ),
+    () => setCustomError('password', customErrors),
     () => reset()
   );
+  useChangingLanguageError({ trigger, errors });
 
   const handleFormSubmit = ({ email, password }: FieldValues) => {
     sendLoginData({
@@ -42,15 +56,11 @@ export const SignIn = () => {
     if (!queryStatus) return;
 
     if (queryStatus === AUTH2_STATUS['401']) {
-      setViewQueryStatus(
-        `This account is not in the system, if you want to register, go to the page "Sign Up" `
-      );
+      setViewQueryStatus(STATUS_ERROR_401_TR);
     }
 
     if (queryStatus === AUTH2_STATUS['204']) {
-      setViewQueryStatus(
-        'A user with this email already exists. Go to your email for further instructions'
-      );
+      setViewQueryStatus(STATUS_ERROR_204_TR);
     }
   }, [queryStatus]);
 
@@ -59,10 +69,14 @@ export const SignIn = () => {
 
   return (
     <AuthLayout>
-      {viewQueryStatus && <span>{viewQueryStatus}</span>}
+      {viewQueryStatus && (
+        <span className="text-center sm:mb-4 mb-8 text-xs">
+          {viewQueryStatus}
+        </span>
+      )}
 
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-        Увайдзіце ў свой акаўнт
+        {titleT}
       </h1>
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
@@ -71,7 +85,7 @@ export const SignIn = () => {
         onClick={OAUTH_AUTHORIZATION.registrationGoogle}
         className="gap-1"
       >
-        Увайдзіце праз &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
+        {buttonGT} &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
         oogle
       </Button>
 
@@ -79,9 +93,7 @@ export const SignIn = () => {
         <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
           <div className="flex-grow  h-[1px] bg-dark-300" />
 
-          <span className="mx-4">
-            або ўвайдзіце з дапамогай электроннай пошты
-          </span>
+          <span className="mx-4">{descriptionT} </span>
 
           <div className="flex-grow h-[1px] bg-dark-300" />
         </div>
@@ -93,17 +105,15 @@ export const SignIn = () => {
           <Input
             type="email"
             id="email"
-            // label="Электронная пошта"
-            label="Адрас электроннай пошты"
+            label={emailT}
             error={errors?.email?.message}
             {...register('email')}
           />
 
-          <Input
-            type="password"
+          <InputWithEye
             id="password"
             error={errors?.password?.message}
-            label="Пароль"
+            label={passwordT}
             {...register('password')}
           />
 
@@ -112,21 +122,21 @@ export const SignIn = () => {
               className="text-xs underline"
               href={routes.auth.forgotPassword}
             >
-              Забыўся?
+              {forgotT}
             </Link>
           </div>
 
           <Button disabled={isLoading} className="mt-1 " type="submit">
-            {isLoading ? <Spinner /> : 'Увайсці'}
+            {isLoading ? <Spinner /> : buttonSignInT}
           </Button>
         </form>
       </div>
 
       <div className="flex gap-1 text-sm justify-center ">
-        <span> У вас няма акаўнта?</span>
+        <span> {noAccT}</span>
 
         <Link className="underline" href={routes.auth.signUp}>
-          Зарэгістравацца
+          {signUpT}
         </Link>
       </div>
     </AuthLayout>

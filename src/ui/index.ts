@@ -5,3 +5,4 @@ export { AvatarComponent } from './avatar/AvatarComponent';
 export * from './dropdown-menu/dropdown-menu';
 export { DropdownMenuComponent } from '../components/layouts/components/avatar-menu/DropdownMenuComponent';
 export { LinkComponent } from './link/LinkComponent';
+export { InputWithEye } from './input/inputWithEye/InputWithEye';
