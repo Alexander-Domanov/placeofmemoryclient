@@ -22,7 +22,7 @@ export const SignUp = () => {
   const { t } = useTranslation();
   const [showOrHiddenForm, setShowOrHiddenForm] = useState<boolean>(false);
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
-    useGlobalForm(registrationSchema);
+    useGlobalForm(registrationSchema());
 
   const { sendRegisteredData, isLoading } = useRegister(
     () => reset(),
