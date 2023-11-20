@@ -41,6 +41,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-// Home.getLayout = getSiteLayout;
-
 export default Home;

@@ -1,4 +1,7 @@
 export const by = {
+  404: {
+    description: 'Гэтую старонку не ўдалося знайсці',
+  },
   header: {
     articles: 'Артыкулы',
     places: 'Месца',
@@ -51,7 +54,7 @@ export const by = {
         nameT: 'Імя карыстальніка',
         emailT: 'Адрас электроннай пошты',
         passwordT: 'Пароль',
-        passwordPlaceholderT: '6+ персанажаў',
+        passwordPlaceholderT: '6+ знакаў',
         descriptionFormT: ` Пароль павінен быць не менш за 6 знакаў, уключаць вялікія і
               маленькія лацінскія літары, а таксама цыфры.`,
         buttonSignUpT: 'Зарэгістравацца',
@@ -114,7 +117,7 @@ export const by = {
       },
       recoveryPage: {
         labelT: 'НОВЫ ПАРОЛЬ',
-        placeholderT: '6+ персанажаў"',
+        placeholderT: '6+ знакаў"',
         descriptionT: `  Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы
          `,
         buttonT: 'Стварыце новы пароль',
@@ -187,7 +190,7 @@ export const by = {
     indexTitle: 'Рэдагаваць профіль',
     page: {
       title: 'Рэдактаваць акаўнт',
-      name: 'НІКНЭЙМ',
+      name: 'Імя карыстальніка',
       descriptionImage: 'JPG, GIF або PNG. Максімальны памер 2 Мб',
       city: 'ГОРАД',
       buttonSave: 'Захаваць',
