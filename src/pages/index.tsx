@@ -28,7 +28,7 @@ const Home = ({ posts, time, contacts }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts } = await getArticlesPublic();
+  const { data: posts } = await getArticlesPublic({ title: '' });
   const { data: contacts } = await getContacts();
 
   return {

@@ -37,11 +37,13 @@ export const deleteArticle = (id: number | null) => {
   return authInstance.delete(`articles/${id}`);
 };
 
-export const getArticlesPublic = (
-  pageSize = 4,
-  pageNumber = 1,
-  lang = 'by'
-) => {
+export const getArticlesPublic = (data: {
+  title: string;
+  pageSize?: number;
+  pageNumber?: number;
+  lang?: string;
+}) => {
+  const { title, pageSize = 4, pageNumber = 1, lang = 'by' } = data;
   return axios.get<IGetArticlesResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/articles/public/all`,
     {
@@ -50,6 +52,7 @@ export const getArticlesPublic = (
         pageNumber,
         lang,
         status: 'published',
+        title,
       },
     }
   );

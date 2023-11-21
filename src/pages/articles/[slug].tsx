@@ -45,8 +45,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsBy } = await getArticlesPublic(20, 1, 'by');
-  const { data: postsRu } = await getArticlesPublic(20, 1, 'ru');
+  const { data: postsBy } = await getArticlesPublic({
+    title: '',
+    pageSize: 20,
+    pageNumber: 1,
+    lang: 'by',
+  });
+  const { data: postsRu } = await getArticlesPublic({
+    title: '',
+    pageSize: 20,
+    pageNumber: 1,
+    lang: 'ru',
+  });
 
   const pathsBy = postsBy.items.map((post) => ({
     params: { slug: post.slug },

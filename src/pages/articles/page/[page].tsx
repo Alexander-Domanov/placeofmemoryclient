@@ -45,11 +45,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const { data: posts } = await getArticlesPublic(
-    SITE_ARTICLES_PER_PAGE,
-    +page,
-    context.locale?.toLowerCase()
-  );
+  const { data: posts } = await getArticlesPublic({
+    title: '',
+    pageSize: SITE_ARTICLES_PER_PAGE,
+    pageNumber: +page,
+    lang: context.locale?.toLowerCase(),
+  });
 
   const { data: contacts } = await getContacts();
 
@@ -63,7 +64,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsBy } = await getArticlesPublic(SITE_ARTICLES_PER_PAGE);
+  const { data: postsBy } = await getArticlesPublic({
+    title: '',
+    pageSize: SITE_ARTICLES_PER_PAGE,
+  });
 
   const pathsBy = generateArray(2, postsBy.pagesCount).map((page) => ({
     params: { page: `${page}` },

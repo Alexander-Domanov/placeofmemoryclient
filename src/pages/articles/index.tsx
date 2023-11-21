@@ -30,11 +30,12 @@ const ArticlesPage: NextPage<Props> = ({ contacts, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: posts } = await getArticlesPublic(
-    SITE_ARTICLES_PER_PAGE,
-    1,
-    context.locale?.toLowerCase()
-  );
+  const { data: posts } = await getArticlesPublic({
+    title: '',
+    pageSize: SITE_ARTICLES_PER_PAGE,
+    pageNumber: 1,
+    lang: context.locale?.toLowerCase(),
+  });
 
   const { data: contacts } = await getContacts();
 
