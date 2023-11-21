@@ -64,7 +64,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="flex justify-end md:justify-center md:flex-wrap mt-10">
-          <div className="relative">
+          <div className="relative w-96 md:w-80 sm:w-full">
             <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <BsSearch />
             </span>
@@ -73,8 +73,10 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               placeholder="ЗНАЙСЦІ"
               type="text"
               title={inputValue}
-              className={`w-80 h-10 flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12 sm:w-60 sm:h-8 sm:px-10 outline-none ${
-                isDropdownOpen ? 'rounded-tl-lg rounded-tr-lg' : 'rounded-lg'
+              className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12  sm:px-10 outline-none ${
+                isDropdownOpen
+                  ? 'rounded-tl-2xl rounded-tr-2xl  bg-dark-400'
+                  : 'rounded-full'
               }`}
               value={inputValue}
               onChange={(e) => {
@@ -84,28 +86,23 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
             />
 
             {searchResults.length > 0 && (
-              <div className="absolute w-80 bg-dark-300 rounded-bl-lg rounded-br-lg shadow-md overflow-hidden z-20">
+              <div className="absolute bg-dark-300 rounded-bl-2xl rounded-br-2xl shadow-md overflow-hidden z-20">
                 {searchResults.map((result) => (
                   <div
                     key={result.id}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                    onClick={() => {
-                      console.log(result);
-                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-dark-150"
                   >
-                    <div className="flex items-center">
-                      <div className="mr-2">
-                        <Image
-                          src={result.photos[0]?.versions.medium.url}
-                          alt={result.title}
-                          width={20}
-                          height={20}
-                          className="rounded-full"
-                        />
-                      </div>
+                    <div className="grid grid-cols-[60px_1fr] items-center">
+                      <Image
+                        src={result.photos[0]?.versions.medium.url}
+                        alt={result.title}
+                        width={40}
+                        height={40}
+                        className="rounded-sm"
+                      />
 
                       <Link href={routes.articles.getArticle(result.slug)}>
-                        <span className="text-light-300">{result.title}</span>
+                        <span className="text-light-300 ">{result.title}</span>
                       </Link>
                     </div>
                   </div>
