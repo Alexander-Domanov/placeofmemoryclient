@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { BsSearch } from 'react-icons/bs';
-import { useDebounce } from 'usehooks-ts';
+import { useDebounce, useOnClickOutside } from 'usehooks-ts';
 import { routes } from '@/common/routing/routes';
 import { IArticle, IGetArticlesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
@@ -20,11 +20,17 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const [searchResults, setSearchResults] = useState<IArticle[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const title = useDebounce(inputValue, 500);
 
   const { articles } = useArticlesPublic({
     title,
+  });
+
+  const ref = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref, () => {
+    setIsSearchOpen(false);
   });
 
   useEffect(() => {
@@ -57,7 +63,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="flex justify-end md:justify-center md:flex-wrap mt-10">
-          <div className="relative w-96 md:w-80 sm:w-full">
+          <div className="relative w-96 md:w-80 sm:w-full" ref={ref}>
             <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <BsSearch />
             </span>
@@ -67,7 +73,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               type="text"
               title={inputValue}
               className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12  sm:px-10 outline-none ${
-                isDropdownOpen
+                isSearchOpen
                   ? 'rounded-tl-2xl rounded-tr-2xl  bg-dark-400'
                   : 'rounded-full'
               }`}
@@ -75,11 +81,12 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               onChange={(e) => {
                 setInputValue(e.target.value);
               }}
+              onFocus={() => setIsSearchOpen(true)}
               list="titles"
             />
 
-            {searchResults.length > 0 && (
-              <div className="absolute bg-dark-300 rounded-bl-2xl rounded-br-2xl shadow-md overflow-hidden z-20">
+            {searchResults.length > 0 && isSearchOpen && (
+              <div className="absolute bg-dark-300 rounded-bl-2xl rounded-br-2xl shadow-md overflow-hidden z-20 w-full">
                 {searchResults.map((result) => (
                   <div
                     key={result.id}
