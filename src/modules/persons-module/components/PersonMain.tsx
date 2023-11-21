@@ -18,7 +18,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
 
-  const [mapVisible, setMapVisible] = useState(true);
+  const [mapVisible, setMapVisible] = useState(false);
 
   const toggleMapVisibility = () => {
     setMapVisible(!mapVisible);
