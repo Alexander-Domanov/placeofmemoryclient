@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/router';
 import {
@@ -8,14 +8,20 @@ import {
   Col,
   DatePicker,
   Flex,
+  FloatButton,
   Form,
   Input,
   notification,
   Row,
   Space,
+  Tour,
   Upload,
 } from 'antd';
-import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  QuestionCircleOutlined,
+  SaveOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
@@ -36,6 +42,7 @@ import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtil
 import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { createPersonStepsTour } from '@/modules/persons-module/components/CreatePersonStepsTour';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -64,6 +71,9 @@ interface IPersonForm {
 
 export const CreatePerson: FC = () => {
   const router = useRouter();
+
+  const ref = useRef(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
@@ -357,7 +367,7 @@ export const CreatePerson: FC = () => {
                   <MetaInfoLocationForm location={selectedLocation} />
                 </Form.Item>
 
-                <Space size={16}>
+                <Space size={16} ref={ref}>
                   <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
                 </Space>
               </Card>
@@ -398,6 +408,19 @@ export const CreatePerson: FC = () => {
           </Col>
         </Row>
       </Form>
+
+      <FloatButton
+        icon={<QuestionCircleOutlined />}
+        type="primary"
+        style={{ right: 24 }}
+        onClick={() => setOpen(true)}
+      />
+
+      <Tour
+        open={open}
+        onClose={() => setOpen(false)}
+        steps={createPersonStepsTour(ref)}
+      />
     </Flex>
   );
 };

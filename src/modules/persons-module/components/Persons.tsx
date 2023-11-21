@@ -3,16 +3,22 @@ import {
   Breadcrumb,
   Button,
   Flex,
+  FloatButton,
   Input,
   InputNumber,
   Select,
   Table,
+  Tour,
 } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import {
+  CaretDownOutlined,
+  CaretUpOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
@@ -20,6 +26,7 @@ import { columnsTablePersons } from '@/modules/persons-module/components/Columns
 import { CustomSelectInput } from '@/components';
 import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { personsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -46,6 +53,8 @@ interface IPagination {
 
 export const Persons: FC = () => {
   const router = useRouter();
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const [pagination, setPagination] = useState<IPagination>({
     searchName: '',
@@ -328,6 +337,19 @@ export const Persons: FC = () => {
         }}
         scroll={setScrollForTable}
         onChange={handleTableChange}
+      />
+
+      <FloatButton
+        icon={<QuestionCircleOutlined />}
+        type="primary"
+        style={{ right: 24 }}
+        onClick={() => setOpen(true)}
+      />
+      <Tour
+        scrollIntoViewOptions={{ behavior: 'smooth' }}
+        open={open}
+        onClose={() => setOpen(false)}
+        steps={personsStepsTour}
       />
     </Flex>
   );

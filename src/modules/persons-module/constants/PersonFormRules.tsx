@@ -14,7 +14,7 @@ export const PersonFormRules = {
     { max: 120, message: `Patronymic limit is 120 characters` },
   ],
   biography: {
-    rules: [{ required: true }],
+    rules: [],
     maxCharacters: 500,
     message: `Biography limit is 500 characters`,
   },
