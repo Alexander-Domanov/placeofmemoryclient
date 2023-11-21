@@ -25,6 +25,8 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const { articles } = useArticlesPublic({
     title,
+    pageSize: 7,
+    lang: router.locale?.toLowerCase(),
   });
 
   useEffect(() => {

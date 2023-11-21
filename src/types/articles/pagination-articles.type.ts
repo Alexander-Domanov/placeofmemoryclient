@@ -6,4 +6,6 @@ export interface IPaginationArticles extends Omit<IPagination, 'name'> {
 
 export interface IPaginationPublicArticles {
   title: string;
+  pageSize: number;
+  lang?: string;
 }
