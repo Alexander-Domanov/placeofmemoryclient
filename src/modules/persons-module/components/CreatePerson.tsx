@@ -163,6 +163,8 @@ export const CreatePerson: FC = () => {
     });
   };
 
+  const dateFormatList = ['DD.MM.YYYY', 'YYYY', 'MM.YYYY'];
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -231,11 +233,17 @@ export const CreatePerson: FC = () => {
 
               <Flex gap="large">
                 <Form.Item name="birthDate" label="Birth Date">
-                  <DatePicker placeholder="Input Date" format="DD.MM.YYYY" />
+                  <DatePicker
+                    placeholder="Input Date"
+                    format={dateFormatList}
+                  />
                 </Form.Item>
 
                 <Form.Item name="deathDate" label="Death Date">
-                  <DatePicker placeholder="Input Date" format="DD.MM.YYYY" />
+                  <DatePicker
+                    placeholder="Input Date"
+                    format={dateFormatList}
+                  />
                 </Form.Item>
               </Flex>
 
