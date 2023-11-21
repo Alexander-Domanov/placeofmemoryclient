@@ -1,39 +1,26 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
 import { IArticle } from '@/types';
 import { routes } from '@/common/routing/routes';
-import { useWindowSize } from '@/common/hooks/useWindowResize';
+import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 
 interface Props {
   post: IArticle;
 }
 
 export const ArticleMain: FC<Props> = ({ post }) => {
-  const { width } = useWindowSize();
-  const isMobile = width && width < 640;
-
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[48px] pb-[120px]">
+    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
-          <div className="whitespace-nowrap scrollbar scrollbar-none overflow-auto flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
-            <Link href={routes.main} className="cursor-pointer">
-              <AiOutlineHome size={isMobile ? 16 : 22} />
-            </Link>
-
-            <div>/</div>
-
-            <Link href={routes.articles.index}>
-              <span>Артыкулы</span>
-            </Link>
-
-            <div>/</div>
-
-            <span className="text-accent-100">{post.title}</span>
-          </div>
+          <BreadcrumbMain
+            items={[
+              { text: 'Артыкулы', link: routes.articles.index },
+              { text: post.title },
+            ]}
+          />
         </div>
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">

@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
 import Image from 'next/image';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
@@ -9,6 +8,7 @@ import { IPerson } from '@/types';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
+import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 
 interface Props {
   person: IPerson;
@@ -28,21 +28,12 @@ export const PersonMain: FC<Props> = ({ person }) => {
     <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
-          <div className="whitespace-nowrap scrollbar scrollbar-none overflow-auto flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
-            <Link href={routes.main} className="cursor-pointer">
-              <AiOutlineHome size={isMobile ? 16 : 22} />
-            </Link>
-
-            <div>/</div>
-
-            <Link href={routes.persons.index}>
-              <span>Артыкулы</span>
-            </Link>
-
-            <div>/</div>
-
-            <span className="text-accent-100">{`${person.firstName} ${person.lastName}`}</span>
-          </div>
+          <BreadcrumbMain
+            items={[
+              { text: 'Артыкулы', link: routes.persons.index },
+              { text: `${person.firstName} ${person.lastName}` },
+            ]}
+          />
         </div>
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
