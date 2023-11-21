@@ -11,13 +11,6 @@ import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-const
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useArticlesPublic } from '@/modules/articles-module/hooks/useArticlesPublic';
 
-const titles = [
-  { title: 'Каталіцкія могілкі', id: 1, slug: 'catholic-cemeteries' },
-  { title: 'Працэстанцкія могілкі', id: 2, slug: 'protestant-cemeteries' },
-  { title: 'Савецкія могілкі', id: 3, slug: 'soviet-cemeteries' },
-  { title: 'Іншыя могілкі', id: 4, slug: 'other-cemeteries' },
-];
-
 interface Props {
   posts: IGetArticlesResponse;
 }
@@ -30,7 +23,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const title = useDebounce(inputValue, 500);
 
-  const { articles, isLoading } = useArticlesPublic({
+  const { articles } = useArticlesPublic({
     title,
   });
 
