@@ -30,7 +30,7 @@ export const ArticleMain: FC<Props> = ({ post }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          <div className="mb-8 flex justify-center mx-auto max-w-[600px] max-h-[450px]">
+          <div className="mb-8 flex justify-center mx-auto max-w-[600px] max-h-[600px]">
             <Image
               src={post.photos[0]?.versions.huge.url}
               alt={post.title}
