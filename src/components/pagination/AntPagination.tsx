@@ -25,7 +25,7 @@ export const AntPagination: FC<IPaginationProps> = ({
         theme={{
           components: {
             Pagination: {
-              itemSizeSM: isMobile ? 32 : 48,
+              itemSizeSM: isMobile ? 28 : 40,
               itemInputBg: '#565656',
               colorText: '#fafafa',
               // colorPrimary: '#565656',

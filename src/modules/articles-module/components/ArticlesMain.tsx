@@ -63,7 +63,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
             </span>
 
             <input
-              placeholder="ЗНАЙСЦІ"
+              placeholder="ЗНАЙСЦІ ПА ЗАГАЛОЎКУ"
               type="text"
               title={inputValue}
               className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12  sm:px-10 outline-none ${
