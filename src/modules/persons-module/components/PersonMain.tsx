@@ -1,8 +1,17 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaMagnifyingGlassPlus,
+} from 'react-icons/fa6';
+import LightGallery from 'lightgallery/react';
+import lgRotate from 'lightgallery/plugins/rotate';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
+import { InitDetail } from 'lightgallery/lg-events';
 import { routes } from '@/common/routing/routes';
 import { IPerson } from '@/types';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
@@ -22,6 +31,18 @@ export const PersonMain: FC<Props> = ({ person }) => {
 
   const toggleMapVisibility = () => {
     setMapVisible(!mapVisible);
+  };
+
+  const lightGalleryRef = useRef<any>(null);
+
+  const onLightGalleryInit = useCallback((detail: InitDetail) => {
+    if (detail) {
+      lightGalleryRef.current = detail.instance;
+    }
+  }, []);
+
+  const openLG = () => {
+    lightGalleryRef?.current?.openGallery?.(0);
   };
 
   return (
@@ -64,15 +85,34 @@ export const PersonMain: FC<Props> = ({ person }) => {
                 </div>
 
                 <div className="mt-10">
-                  <div className="flex justify-center mx-auto aspect-w-1 aspect-h-1 max-w-[400px] max-h-[400px]">
+                  <div className="flex justify-center mx-auto aspect-w-1 aspect-h-1 max-w-[400px] max-h-[400px] relative">
                     <Image
                       src={person.photos[0]?.versions.huge.url}
                       alt={`${person.firstName} ${person.lastName}`}
                       width={person.photos[0]?.versions.huge.width}
                       height={person.photos[0]?.versions.huge.height}
                       loading="eager"
-                      className="object-cover rounded-lg shadow-icon"
+                      className="object-cover rounded-lg shadow-icon cursor-pointer"
+                      onClick={openLG}
                     />
+
+                    <FaMagnifyingGlassPlus className="absolute top-4 right-4 text-white text-2xl pointer-events-none" />
+
+                    <LightGallery
+                      onInit={onLightGalleryInit}
+                      elementClassNames="hidden"
+                      plugins={[lgThumbnail, lgRotate, lgZoom]}
+                      download={false}
+                    >
+                      {person.photos.map((photo) => (
+                        <div
+                          data-src={photo.versions.huge.url}
+                          key={photo.versions.huge.url}
+                        >
+                          <img src={photo.versions.huge.url} alt="" />
+                        </div>
+                      ))}
+                    </LightGallery>
                   </div>
                 </div>
               </div>
