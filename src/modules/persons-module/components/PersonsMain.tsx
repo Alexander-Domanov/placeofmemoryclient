@@ -52,7 +52,10 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-10">
           <div className="grid grid-cols-6 gap-4 lg:grid-cols-4  sm:grid-cols-2">
             {persons?.items.map((person) => (
-              <div key={person.id} className="hover:shadow-iconHover shadow-lg">
+              <div
+                key={person.id}
+                className="hover:shadow-iconHover shadow-lg transition-all duration-300"
+              >
                 <Link
                   href={routes.persons.person(person.slug)}
                   className="flex flex-col h-full"

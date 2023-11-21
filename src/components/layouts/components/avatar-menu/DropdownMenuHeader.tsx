@@ -1,4 +1,3 @@
-import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { PiListBold } from 'react-icons/pi';
 import { AvatarMenuHeader } from '@/components';
 import { DropdownMenuComponent } from '@/ui';
@@ -20,7 +19,9 @@ export const DropdownMenuHeader = () => {
   return (
     <DropdownMenuComponent
       menuLabel={
-        userName && width && width <= 1023 ? <AvatarMenuHeader /> : null
+        userName && width && width <= 1023 ? (
+          <AvatarMenuHeader showName />
+        ) : null
       }
       items={NAVIGATION_USER_NAME}
     >

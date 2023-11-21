@@ -140,7 +140,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   };
 
   return isLoaded ? (
-    <div className="container">
+    <div className="w-full">
       <div className="flex justify-end md:justify-center md:flex-wrap">
         <Autocomplete
           onPlaceChanged={onPlaceChanged}
