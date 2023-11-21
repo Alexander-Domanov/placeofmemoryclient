@@ -136,6 +136,7 @@ export const PersonEdit: FC = () => {
         ...(person.deathDate && {
           deathDate: dayjs(person.deathDate),
         }),
+        biography: person.biography,
         photo: person.photos.map((f) => ({
           uid: f.uploadId,
           name: f.uploadId,
