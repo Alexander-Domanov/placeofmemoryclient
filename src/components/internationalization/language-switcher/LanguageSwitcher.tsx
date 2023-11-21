@@ -19,6 +19,23 @@ const languages: Language[] = [
   { slug: 'ru', title: 'Рус' },
 ];
 
+const ChevronDownIcon: FC = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    className="w-4 h-4 ml-1"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M19 9l-7 7-7-7"
+    />
+  </svg>
+);
+
 export const LanguageSwitcher: FC = () => {
   const { locale, push, pathname, query, asPath } = useRouter();
   const currentLanguage = languages.find((lang) => lang.slug === locale);
@@ -29,7 +46,9 @@ export const LanguageSwitcher: FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-transparent px-3 text-sm outline-none focus:border-0">
-        {currentLanguage!.title}
+        <div className="flex items-center gap-1">
+          {currentLanguage!.title} <ChevronDownIcon />
+        </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="bg-dark-500 border-0 z-50 px-3 text-sm text-white select-none min-w-[3rem]">
