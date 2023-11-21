@@ -50,7 +50,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
                 >
                   <div className="aspect-[170/210] relative flex-shrink-0">
                     <Image
-                      src={person.photos[0]?.versions.huge.url}
+                      src={person.photos[0]?.versions.medium.url}
                       fill
                       alt={`${person.firstName} ${person.lastName}`}
                       className="object-cover rounded-t-sm"
