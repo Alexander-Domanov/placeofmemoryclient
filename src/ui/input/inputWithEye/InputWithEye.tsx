@@ -35,9 +35,9 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
           onClick={() => setShowPass(!showPass)}
         >
           {showPass ? (
-            <IoMdEyeOff className="fill-dark-900" size={24} />
+            <IoMdEyeOff className="fill-dark-150" size={24} />
           ) : (
-            <IoMdEye className="fill-dark-900" size={24} />
+            <IoMdEye className="fill-dark-150" size={24} />
           )}
         </button>
       </div>
