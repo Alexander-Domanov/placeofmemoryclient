@@ -5,11 +5,13 @@ import { DeleteOutlined } from '@ant-design/icons';
 interface DeleteConfirmationModalProps<T> {
   item: T | null;
   onDelete: (item: T | null) => void;
+  disabled?: boolean;
 }
 
 export function DeleteConfirmationModal<T>({
   item,
   onDelete,
+  disabled,
 }: DeleteConfirmationModalProps<T>) {
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -34,7 +36,12 @@ export function DeleteConfirmationModal<T>({
         danger
         title="Delete"
         icon={<DeleteOutlined />}
-        style={{ cursor: 'pointer', color: '#ef2020' }}
+        style={{
+          cursor: 'pointer',
+          color: '#ef2020',
+          ...(disabled && { opacity: 0.5, cursor: 'not-allowed' }),
+        }}
+        disabled={disabled}
         onClick={showDeleteModal}
         ghost
       >

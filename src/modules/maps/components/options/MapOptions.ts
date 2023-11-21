@@ -52,8 +52,8 @@ export const mapOptions = {
     {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
-      stylers: [{ color: '#cccccc' }],
-      // stylers: [{ color: '#8fb68c' }],
+      // stylers: [{ color: '#cccccc' }],
+      stylers: [{ color: '#8fb68c' }],
     },
     {
       featureType: 'road',
@@ -79,8 +79,8 @@ export const mapOptions = {
     {
       featureType: 'water',
       elementType: 'geometry',
-      stylers: [{ color: '#000000' }],
-      // stylers: [{ color: '#375a8c' }],
+      // stylers: [{ color: '#000000' }],
+      stylers: [{ color: '#375a8c' }],
     },
     {
       featureType: 'water',

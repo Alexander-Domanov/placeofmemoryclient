@@ -71,6 +71,7 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
             style={buttonStyle}
             onClick={handleClick}
             ghost
+            disabled={isDisabled}
           />,
         ]}
       />

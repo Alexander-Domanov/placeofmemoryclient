@@ -163,6 +163,7 @@ const GalleryForm: FC<{
         <DeleteConfirmationModal<IExtendGalleryFile>
           item={selectedFile}
           onDelete={onDeleteFile}
+          disabled={isDisabled}
         />
       </Space>
     </Space>

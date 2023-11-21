@@ -460,6 +460,7 @@ export const PersonEdit: FC = () => {
                     <DeleteConfirmationModal<IPerson>
                       item={selectedPerson}
                       onDelete={onDeletePerson}
+                      disabled={isDisabled}
                     />
                   </Space>
                 </Card>
