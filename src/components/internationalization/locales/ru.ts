@@ -1,6 +1,9 @@
 import { LocaleType } from '@/components/internationalization';
 
 export const ru: LocaleType = {
+  404: {
+    description: 'Эту страницу не удалось найти',
+  },
   header: {
     articles: 'Артикулы',
     places: 'Места',
