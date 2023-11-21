@@ -1,13 +1,14 @@
 import { ColumnsType } from 'antd/es/table';
-import { Row, Tooltip, Typography } from 'antd';
+import { Badge, Image, Row, Space, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { IPerson } from '@/types';
-import { ColorStatusTag, RenderImage } from '@/components';
+import { ColorStatusTag } from '@/components';
 import { routes } from '@/common/routing/routes';
 import UpdatePersonStatusComponent from '@/modules/persons-module/components/UpdatePersonStatus';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import DeletePersonComponent from '@/modules/persons-module/components/DeletePersonModal';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 export const columnsTablePersons: ColumnsType<IPerson> = [
   {
@@ -175,20 +176,30 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     align: 'center',
     width: 80,
     render: (text, record: IPerson) => (
-      <Row justify="space-evenly">
-        {record.photos.map((photo, index) => (
-          <Tooltip
-            title={`ID: ${photo.uploadId}`}
-            placement="leftBottom"
-            color="#1087f6"
-            key={index}
-          >
-            <Typography.Text>
-              {RenderImage(photo.versions.huge.url, 30, true)}
-            </Typography.Text>
-          </Tooltip>
-        ))}
-      </Row>
+      <Image.PreviewGroup
+        preview
+        items={record.photos.map((photo) => ({
+          src: photo.versions.huge.url,
+        }))}
+      >
+        <Tooltip
+          title={`ID: ${record?.photos[0]?.uploadId}`}
+          placement="leftBottom"
+          color="#1087f6"
+          key={record?.photos[0]?.uploadId}
+        >
+          <Space size="middle">
+            <Badge size="small" count={record?.photos.length}>
+              <Image
+                src={record?.photos[0]?.versions.huge.url}
+                width={40}
+                style={{ borderRadius: 4 }}
+                fallback={pictureBackup}
+              />
+            </Badge>
+          </Space>
+        </Tooltip>
+      </Image.PreviewGroup>
     ),
   },
   {

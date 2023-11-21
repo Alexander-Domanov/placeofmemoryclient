@@ -117,7 +117,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
             key={index}
           >
             <Typography.Text key={index}>
-              {RenderImage(photo.versions.huge.url, 30, true)}
+              {RenderImage(photo.versions.huge.url, 40, true)}
             </Typography.Text>
           </Tooltip>
         ))}

@@ -140,7 +140,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
             key={index}
           >
             <Typography.Text>
-              {RenderImage(photo.versions.huge.url, 30, true)}
+              {RenderImage(photo.versions.huge.url, 40, true)}
             </Typography.Text>
           </Tooltip>
         ))}
