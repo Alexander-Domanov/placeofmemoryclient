@@ -75,7 +75,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               type="text"
               title={inputValue}
               className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12 sm:px-10 outline-none ${
-                isSearchOpen
+                isSearchOpen && isDropdownOpen
                   ? 'rounded-tl-2xl rounded-tr-2xl  bg-dark-400'
                   : 'rounded-full'
               }`}
