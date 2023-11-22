@@ -1,15 +1,12 @@
 import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
 import { useDebounce } from 'usehooks-ts';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { ImageComponent } from '@/ui/image/ImageComponent';
 
 import { useGetPlacesMain } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { Input } from '@/ui';
-import PaginationCustom from '@/components/pagination/PaginationCustom';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { useTranslation } from '@/components/internationalization';
 import { IPlacesMainResponse } from '@/types';
