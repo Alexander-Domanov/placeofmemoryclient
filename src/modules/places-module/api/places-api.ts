@@ -17,16 +17,16 @@ export const getPlaces = (data: IPaginationPlaces) => {
   });
 };
 
-export const getTitlePlaces = (
-  page: number,
-  pageSize: number,
-  name: string
-) => {
+export const getTitlePlaces = (data: {
+  pageNumber: number;
+  pageSize: number;
+  name?: string;
+  city?: string;
+  country?: string;
+}) => {
   return authInstance.get<IGetTitlePlacesResponse>('places/country/titles', {
     params: {
-      pageNumber: page,
-      pageSize,
-      name,
+      ...data,
     },
   });
 };

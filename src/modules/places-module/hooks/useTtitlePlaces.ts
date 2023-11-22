@@ -5,11 +5,13 @@ import { getTitlePlaces } from '@/modules/places-module/api/places-api';
 import { ErrorNotification } from '@/common-dashboard/errorNotification';
 import { useMeQuery } from '@/services';
 
-export const useTitlePlaces = (
-  page: number,
-  pageSize: number,
-  name: string
-) => {
+export const useTitlePlaces = (data: {
+  pageNumber: number;
+  pageSize: number;
+  name?: string;
+  city?: string;
+  country?: string;
+}) => {
   const { data: me } = useMeQuery();
   const {
     data: titlePlaces,
@@ -17,8 +19,8 @@ export const useTitlePlaces = (
     refetch,
     error,
   } = useQuery({
-    queryKey: ['title-places', { page, pageSize, name, lang: me?.lang }],
-    queryFn: () => getTitlePlaces(page, pageSize, name),
+    queryKey: ['title-places', { ...data, lang: me?.lang }],
+    queryFn: () => getTitlePlaces({ ...data }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
