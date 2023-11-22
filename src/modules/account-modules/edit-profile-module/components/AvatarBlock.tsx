@@ -60,9 +60,9 @@ export const AvatarBlock = () => {
       >
         <ImageComponent
           src={urlAvatar}
-          width={width && width > 639 ? 100 : 60}
+          width={width && width > 639 ? 100 : 120}
           className="rounded-full"
-          height={width && width > 639 ? 100 : 60}
+          height={width && width > 639 ? 100 : 120}
           alt="user-avatar"
         />
         {isHovered && (

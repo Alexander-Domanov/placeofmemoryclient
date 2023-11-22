@@ -21,7 +21,9 @@ export const DropdownMenuHeader = () => {
       menuLabel={
         userName && width && width <= 1023 ? (
           <AvatarMenuHeader showName />
-        ) : null
+        ) : (
+          userName
+        )
       }
       items={NAVIGATION_USER_NAME}
     >
