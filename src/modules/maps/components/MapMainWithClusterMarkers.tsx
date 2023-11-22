@@ -7,7 +7,8 @@ import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
-  height: '70vh',
+  // height: '70vh',
+  aspectRatio: '16/9',
   width: '100%',
   borderRadius: '10px',
 };
