@@ -173,7 +173,15 @@ export const CreatePerson: FC = () => {
     });
   };
 
-  const dateFormatList = ['DD.MM.YYYY', 'YYYY', 'MM.YYYY'];
+  const dateFormatList = [
+    'DD.MM.YYYY',
+    'YYYY',
+    'MM.YYYY',
+    'DD/MM/YYYY',
+    'YYYY/MM/DD',
+    'YYYY-MM-DD',
+    'DD-MM-YYYY',
+  ];
 
   return (
     <Flex gap="large" vertical>

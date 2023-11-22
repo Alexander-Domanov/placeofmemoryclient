@@ -133,7 +133,7 @@ export const ArticleCreate: FC = () => {
         onFinish={onSubmit}
       >
         <Row gutter={[16, 16]}>
-          <Col span={16}>
+          <Col span={24} lg={16}>
             <Card>
               <Form.Item
                 label="Title"
@@ -213,7 +213,7 @@ export const ArticleCreate: FC = () => {
             </Card>
           </Col>
 
-          <Col span={8}>
+          <Col span={24} lg={8}>
             <Flex vertical gap="middle">
               <Card>
                 <Button
