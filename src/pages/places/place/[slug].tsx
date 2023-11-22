@@ -9,26 +9,33 @@ import { useTranslation } from '@/components/internationalization';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { IPageContacts, IPlacesMain } from '@/types';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
+import Error from '@/pages/_error';
 
 interface IPageProps extends IPageContacts {
   place: IPlacesMain;
+  statusCode?: any;
 }
-export const getStaticProps: GetStaticProps = async (
-  context
-): Promise<{
-  props: IPageProps;
-}> => {
-  const slug = context.params?.slug as string;
+export const getStaticProps: GetStaticProps = async (context) => {
+  try {
+    const slug = context.params?.slug as string;
+    const place = await getPlaceMain({ slug, lang: context.locale });
+    const { data: contacts } = await getContacts();
 
-  const place = await getPlaceMain({ slug, lang: context.locale });
-  const { data: contacts } = await getContacts();
-  return {
-    props: {
-      place,
-      contacts,
-    },
-  };
+    return {
+      props: {
+        place,
+        contacts,
+      },
+    };
+  } catch (error: any) {
+    return {
+      props: {
+        statusCode: error.response?.status || 500,
+      },
+    };
+  }
 };
+
 export const getStaticPaths = async () => {
   const resBy = await getPlacesMain({ lang: 'by' });
   const resRu = await getPlacesMain({ lang: 'ru' });
@@ -46,8 +53,11 @@ export const getStaticPaths = async () => {
   };
 };
 
-const Place = ({ place, contacts }: IPageProps) => {
+const Place = ({ place, contacts, statusCode }: IPageProps) => {
   const { t } = useTranslation();
+  if (statusCode) {
+    return <Error statusCode={statusCode} />;
+  }
   return (
     <div>
       <Head>

@@ -14,9 +14,9 @@ const NotFound = ({ contacts }: IPageContacts) => {
         <title>404 | MOGIILKI</title>
       </Head>
       <SiteLayout contacts={contacts}>
-        <div className="bg-dark-700 h-[calc(100vh-65px)] min-h-[575px] relative">
+        <div className="bg-dark-700  h-screen relative">
           <div className="container">
-            <div className="flex justify-center items-center text-2xl lg:text-xl min-h-[575px]">
+            <div className="flex justify-center items-center text-base min-h-[575px]">
               404 | {t['404'].description}
             </div>
           </div>
