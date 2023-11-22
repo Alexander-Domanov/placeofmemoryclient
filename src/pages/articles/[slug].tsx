@@ -8,13 +8,18 @@ import {
 } from '@/modules/articles-module/api/articles-api';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IArticle, IContacts } from '@/types';
+import Error from '@/pages/_error';
 
 interface Props {
   post: IArticle;
   contacts: IContacts;
+  statusCode?: any;
 }
 
-const ArticlePage: NextPage<Props> = ({ contacts, post }) => {
+const ArticlePage: NextPage<Props> = ({ contacts, post, statusCode }) => {
+  if (statusCode) {
+    return <Error statusCode={statusCode} />;
+  }
   return (
     <>
       <Head>
@@ -29,19 +34,27 @@ const ArticlePage: NextPage<Props> = ({ contacts, post }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const slug = context.params?.slug as string;
+  try {
+    const slug = context.params?.slug as string;
 
-  const { data: post } = await getArticlePublic(slug, context.locale);
+    const { data: post } = await getArticlePublic(slug, context.locale);
 
-  const { data: contacts } = await getContacts();
+    const { data: contacts } = await getContacts();
 
-  return {
-    props: {
-      post,
-      contacts,
-    },
-    revalidate: 30,
-  };
+    return {
+      props: {
+        post,
+        contacts,
+      },
+      revalidate: 30,
+    };
+  } catch (error: any) {
+    return {
+      props: {
+        statusCode: error.response?.status || 500,
+      },
+    };
+  }
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

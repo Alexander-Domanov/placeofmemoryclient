@@ -3,11 +3,9 @@ import { useDebounce } from 'usehooks-ts';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-
 import { useGetPlacesMain } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { Input } from '@/ui';
-import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { useTranslation } from '@/components/internationalization';
 import { IPlacesMainResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
@@ -27,7 +25,6 @@ export const PlacesMain = ({ places }: IProps) => {
   const vCountry = useDebounce(country, 1000);
   const vCity = useDebounce(city, 1000);
   const pageParams = query.page as string;
-  const { width } = useWindowSize();
   const { dataPlaces, isLoading, isFetchingPlaces } = useGetPlacesMain({
     name: vName,
     city: vCity,
