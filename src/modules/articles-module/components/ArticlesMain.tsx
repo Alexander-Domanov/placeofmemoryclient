@@ -25,8 +25,8 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
   const title = useDebounce(inputValue, 500);
 
   const { articles } = useArticlesPublic({
-    title,
-    pageSize: 7,
+    title: title.toLowerCase(),
+    pageSize: 5,
     lang: router.locale?.toLowerCase(),
   });
 
@@ -54,7 +54,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
   const isDropdownOpen = searchResults.length > 0;
 
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
+    <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <BreadcrumbMain items={[{ text: 'Артыкулы' }]} />
 
@@ -74,7 +74,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               placeholder="ЗНАЙСЦІ ПА ЗАГАЛОЎКУ"
               type="text"
               title={inputValue}
-              className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12  sm:px-10 outline-none ${
+              className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12 sm:px-10 outline-none ${
                 isSearchOpen
                   ? 'rounded-tl-2xl rounded-tr-2xl  bg-dark-400'
                   : 'rounded-full'

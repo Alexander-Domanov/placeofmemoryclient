@@ -12,7 +12,7 @@ interface Props {
 
 export const ArticleMain: FC<Props> = ({ post }) => {
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
+    <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
           <BreadcrumbMain
@@ -48,7 +48,7 @@ export const ArticleMain: FC<Props> = ({ post }) => {
 
         <Link
           href={routes.articles.index}
-          className="mt-16 inline-flex text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
+          className="mt-16 inline-flex text-5xl sm:text-4xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
         >
           <BsArrowLeftCircleFill className="text-dark-300" />
           <span className="sr-only">Previous</span>

@@ -46,12 +46,12 @@ export const PersonMain: FC<Props> = ({ person }) => {
   };
 
   return (
-    <div className="bg-dark-700 pt-[60px] md:pt-[28px] md:pb-[28px] pb-[60px] pl-[60px] pr-[60px] md:pl-[4px] md:pr-[4px]">
+    <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
           <BreadcrumbMain
             items={[
-              { text: 'Артыкулы', link: routes.persons.index },
+              { text: 'Архіў_Людзі', link: routes.persons.index },
               { text: `${person.firstName} ${person.lastName}` },
             ]}
           />
@@ -67,14 +67,14 @@ export const PersonMain: FC<Props> = ({ person }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          <div className="grid grid-cols-[400px_1fr] gap-10 md:grid-cols-1 md:gap-3">
+          <div className="grid grid-cols-[350px_1fr] gap-10 md:grid-cols-1 md:gap-3">
             <div>
               <div className="md:text-center">
                 <div className="text-4xl font-bold md:text-3xl">
                   {person.firstName} {person.lastName}
                 </div>
 
-                <div className="mt-2 text-dark-100 text-xl md:text-sm">
+                <div className="mt-2 text-dark-100 text-xl md:text-lg">
                   {person.birthDate
                     ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
                     : 'Няма дадзеных'}
@@ -119,18 +119,22 @@ export const PersonMain: FC<Props> = ({ person }) => {
             </div>
 
             <div>
-              <div className="text-3xl text-dark-100">Месца нараджэння</div>
+              <div className="text-3xl sm:text-2xl text-dark-100">
+                Месца нараджэння
+              </div>
               <div className="mt-4">
                 {person.country}, {person.city}
               </div>
 
-              <div className="mt-8 text-3xl text-dark-100">Біяграфія</div>
+              <div className="mt-8 text-3xl sm:text-2xl text-dark-100">
+                Біяграфія
+              </div>
               <div
-                className="mt-4 wysiwyg"
+                className="mt-4 wysiwyg sm:text-xs"
                 dangerouslySetInnerHTML={{ __html: person.biography }}
               />
 
-              <div className="mt-8 text-3xl text-dark-100">
+              <div className="mt-8 text-3xl sm:text-2xl text-dark-100">
                 <button
                   onClick={toggleMapVisibility}
                   className="flex items-center hover:underline focus:outline-none"
@@ -147,7 +151,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
               </div>
 
               {mapVisible && (
-                <div className="mt-8 max-w-[400px] max-h-[400px] md:max-w-full md:max-h-full">
+                <div className="mt-8  md:max-w-full md:max-h-full">
                   <MapMainWithMarkersComponent
                     center={{
                       lat: person?.location.lat || 0,
@@ -163,7 +167,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
 
         <Link
           href={routes.persons.index}
-          className="mt-16 inline-flex text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
+          className="mt-16 inline-flex text-5xl sm:text-4xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
         >
           <BsArrowLeftCircleFill className="text-dark-300" />
           <span className="sr-only">Previous</span>

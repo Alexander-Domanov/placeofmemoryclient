@@ -7,7 +7,8 @@ import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
-  height: '50vh',
+  // height: '100%',
+  aspectRatio: '16/9',
   width: '100%',
   borderRadius: '8px',
 };
