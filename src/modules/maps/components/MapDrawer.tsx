@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Divider, Drawer, Form, Space } from 'antd';
+import { Button, Col, Divider, Drawer, Form, Space } from 'antd';
 import { FaLocationDot } from 'react-icons/fa6';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import MapWithAutoComplete from '@/modules/maps/components/MapWithAutoComplete';
@@ -8,7 +8,7 @@ import LocationForm from '@/modules/maps/components/LocationForm';
 
 const styleButton = {
   cursor: 'pointer',
-  color: '#1890ff',
+  // color: '#1890ff',
   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
 };
 
@@ -88,7 +88,6 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
           onClick={showDrawer}
           icon={<FaLocationDot />}
           disabled={disabled}
-          // style={{ cursor: 'pointer', color: '#74c782' }}
         >
           Open Map
         </Button>
@@ -107,17 +106,24 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
             >
               Clear Table
             </Button>
-            <Button onClick={onExecuteGeoCoder} style={styleButton}>
+
+            <Button
+              type="primary"
+              onClick={onExecuteGeoCoder}
+              style={styleButton}
+            >
               Fill Table
             </Button>
           </Space>
         }
       >
-        <MapWithAutoComplete onDefineLocation={handleExecuteGeoCoder} />
+        <Col span={24}>
+          <MapWithAutoComplete onDefineLocation={handleExecuteGeoCoder} />
 
-        <Divider orientation="left">Define Location</Divider>
+          <Divider orientation="left">Define Location</Divider>
 
-        <LocationForm form={form} onFinish={onFinish} />
+          <LocationForm form={form} onFinish={onFinish} />
+        </Col>
       </Drawer>
     </>
   );
