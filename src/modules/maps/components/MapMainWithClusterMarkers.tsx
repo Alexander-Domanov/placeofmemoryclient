@@ -86,20 +86,22 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
         });
 
         const contentString = `
-<div class="flex gap-2 flex-col">
-  <img src="${p.url}" alt="${p.firstName} ${
+         <div class="flex gap-2 flex-col">
+          <img src="${p.url}" alt="${p.firstName} ${
           p.lastName
         }" class="max-w-60 max-h-full object-contain rounded-lg">
-  <div class="text-black text-center">
-    <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-    <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
-  </div>
-  <a href="/persons/${
-    p?.slug || ''
-  }" class="cursor-pointer text-blue-500 text-center">
-    <span class="hover:underline">${p?.slug || ''}</span>
-  </a>
-</div>`;
+            <div class="text-black text-center">
+             <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
+             <p class="mb-1">${p.birthDate || 'n/a'} - ${
+          p.deathDate || 'n/a'
+        }</p>
+            </div>
+          <a href="/persons/${
+            p?.slug || ''
+          }" class="cursor-pointer text-blue-500 text-center">
+           <span class="hover:underline">${p?.slug || ''}</span>
+          </a>
+        </div>`;
 
         marker.addListener('click', () => {
           infoWindow.close();

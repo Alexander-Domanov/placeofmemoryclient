@@ -157,7 +157,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
                       lat: person?.location.lat || 0,
                       lng: person?.location?.lng || 0,
                     }}
-                    locations={[]}
+                    locations={[person]}
                   />
                 </div>
               )}

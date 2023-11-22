@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
@@ -87,20 +87,13 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
         });
 
         const contentString = `
-<div class="flex gap-2 flex-col">
-  <img src="${url}" alt="${p.firstName} ${
-          p.lastName
-        }" class="max-w-60 max-h-full object-contain rounded-lg">
-  <div class="text-black text-center">
-    <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-    <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
-  </div>
-  <a href="/dashboard/persons/${
-    p?.id || ''
-  }" class="cursor-pointer text-blue-500 text-center">
-    <span class="hover:underline">${p?.slug || ''}</span>
-  </a>
-</div>`;
+          <div class="flex gap-2 flex-col">
+            <div class="text-black text-center">
+              <p class="font-bold m-1">
+                ${p.location.lat}, ${p.location.lng}
+              </p>
+            </div>
+          </div>`;
 
         marker.addListener('click', () => {
           infoWindow.close();
@@ -138,11 +131,11 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
           ...{ clickableIcons: true },
         }}
       >
-        <MarkerF
-          key="center"
-          position={{ lat: center.lat, lng: center.lng }}
-          options={{ icon, zIndex: 1000 }}
-        />
+        {/* <MarkerF */}
+        {/*  key="center" */}
+        {/*  position={{ lat: center.lat, lng: center.lng }} */}
+        {/*  options={{ icon, zIndex: 1000 }} */}
+        {/* /> */}
       </GoogleMap>
     </Flex>
   ) : (
