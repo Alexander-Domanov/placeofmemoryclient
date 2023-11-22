@@ -60,9 +60,9 @@ export const AvatarBlock = () => {
       >
         <ImageComponent
           src={urlAvatar}
-          width={width && width > 639 ? 100 : 120}
+          width={width && width > 639 ? 130 : 120}
           className="rounded-full"
-          height={width && width > 639 ? 100 : 120}
+          height={width && width > 639 ? 130 : 120}
           alt="user-avatar"
         />
         {isHovered && (
@@ -70,14 +70,14 @@ export const AvatarBlock = () => {
             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
             style={{ borderRadius: '50%' }}
           >
-            <div className="flex gap-3">
+            <div className="flex gap-8">
               <div className="cursor-pointer" onClick={onSelectClick}>
                 {isLoadingUploadAvatar ? (
                   <Spinner />
                 ) : (
                   <FaUpload
                     className="hover:fill-accent-100"
-                    size={width && width > 639 ? 22 : 16}
+                    size={width && width > 639 ? 26 : 22}
                   />
                 )}
               </div>
@@ -89,7 +89,7 @@ export const AvatarBlock = () => {
                   ) : (
                     <FaTrash
                       className="hover:fill-accent-100"
-                      size={width && width > 639 ? 22 : 16}
+                      size={width && width > 639 ? 26 : 22}
                     />
                   )}
                 </div>
