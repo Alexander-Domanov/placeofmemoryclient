@@ -87,30 +87,28 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               list="titles"
             />
 
-            {searchResults.length > 0 && isSearchOpen && (
-              <div className="absolute bg-dark-300 rounded-bl-2xl rounded-br-2xl shadow-md overflow-hidden z-20 w-full">
-                {searchResults.map((result) => (
-                  <div
-                    key={result.id}
-                    className="px-4 py-2 cursor-pointer hover:bg-dark-150"
-                  >
-                    <div className="grid grid-cols-[60px_1fr] items-center">
-                      <Image
-                        src={result.photos[0]?.versions.medium.url}
-                        alt={result.title}
-                        width={40}
-                        height={40}
-                        className="rounded-sm"
-                      />
+            {searchResults.length > 0 &&
+              isSearchOpen &&
+              searchResults.map((result) => (
+                <div
+                  key={result.id}
+                  className="flex w-full align-middle lg:flex-col md:justify-center items-center lg:gap-8 gap-16"
+                >
+                  <div className="grid grid-cols-[60px_1fr] items-center">
+                    <Image
+                      src={result.photos[0]?.versions.medium.url}
+                      alt={result.title}
+                      width={40}
+                      height={40}
+                      className="rounded-sm"
+                    />
 
-                      <Link href={routes.articles.getArticle(result.slug)}>
-                        <span className="text-light-300 ">{result.title}</span>
-                      </Link>
-                    </div>
+                    <Link href={routes.articles.getArticle(result.slug)}>
+                      <span className="text-light-300 ">{result.title}</span>
+                    </Link>
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
           </div>
         </div>
 
