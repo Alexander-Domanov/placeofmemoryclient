@@ -5,8 +5,8 @@ import {
   Marker,
   useLoadScript,
 } from '@react-google-maps/api';
-import { Button, Input, message, Space } from 'antd';
-import { containerStyle } from '@/modules/maps/components/options/MapOptions';
+import { Button, Flex, Input, message } from 'antd';
+import { AimOutlined } from '@ant-design/icons';
 import { MapLocationProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
 
 const initialCenter = {
@@ -14,12 +14,6 @@ const initialCenter = {
   lng: 21.0122287,
 };
 const maxZoomLevel = 18;
-
-const styleButton = {
-  cursor: 'pointer',
-  color: '#1890ff',
-  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-};
 
 const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
   const { isLoaded } = useLoadScript({
@@ -115,27 +109,30 @@ const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
   };
 
   return isLoaded ? (
-    <Space direction="vertical" align="center">
+    <Flex vertical gap="middle">
       <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoadAutoComplete}>
-        <Input
-          placeholder="Search location…"
-          allowClear
-          title={inputValue}
-          style={{
-            width: 400,
-            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-            textOverflow: `ellipses`,
-            marginBottom: '16px',
-          }}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
+        <Flex gap="small">
+          <Button
+            type="default"
+            onClick={requestUserLocation}
+            style={{ cursor: 'pointer', color: '#000000', width: '60px' }}
+            icon={<AimOutlined style={{ fontSize: 22 }} />}
+          />
+
+          <Input
+            placeholder="Show your location or Search location"
+            allowClear
+            title={inputValue}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+        </Flex>
       </Autocomplete>
+
       <GoogleMap
         mapContainerStyle={{
-          ...containerStyle,
-          height: '400px',
-          width: '450px',
+          aspectRatio: '16/9',
+          borderRadius: '6px',
         }}
         center={center}
         onLoad={onLoad}
@@ -146,26 +143,25 @@ const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
           <Marker position={markerPosition} />
         )}
       </GoogleMap>
-      <Space direction="horizontal" style={{ marginBottom: '10px' }}>
-        <Button
-          onClick={handleSearchTypeChange}
-          style={{ ...styleButton, color: '#f66321' }}
-        >
-          Remove marker
-        </Button>
-        <Button
-          onClick={() => setAllowMapClick(!allowMapClick)}
-          style={styleButton}
-        >
-          {allowMapClick ? 'Disable Map Click' : 'Enable Map Click'}
-        </Button>
-        <Button onClick={requestUserLocation} style={styleButton}>
-          Request My Location
-        </Button>
-      </Space>
-    </Space>
+
+      <Button
+        onClick={handleSearchTypeChange}
+        style={{ cursor: 'pointer', color: '#f66321' }}
+      >
+        Remove marker
+      </Button>
+
+      <Button
+        onClick={() => setAllowMapClick(!allowMapClick)}
+        style={{ cursor: 'pointer' }}
+      >
+        {allowMapClick ? 'Disable Map Click' : 'Enable Map Click'}
+      </Button>
+    </Flex>
   ) : (
-    <></>
+    <Flex vertical>
+      <p>Loading...</p>
+    </Flex>
   );
 };
 
