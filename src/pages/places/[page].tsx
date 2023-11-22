@@ -3,13 +3,13 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { PlacesMain } from '@/modules/places-main-module/components/PlacesMain';
 import { useTranslation } from '@/components/internationalization';
 import { generateArray } from '@/common/helpers/generateArray';
-import { IContacts, IPlacesMainResponse } from '@/types';
+import { IContacts, IGetPlacesResponse } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { getPlacesMain } from '@/services';
 
 interface IProps {
-  places: IPlacesMainResponse;
+  places: IGetPlacesResponse;
   contacts: IContacts;
 }
 export const getStaticProps: GetStaticProps = async (

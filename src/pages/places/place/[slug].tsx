@@ -7,12 +7,12 @@ import {
 } from '@/services/api/places-api/places-main-api';
 import { useTranslation } from '@/components/internationalization';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
-import { IPageContacts, IPlacesMain } from '@/types';
+import { IPageContacts, IPlace } from '@/types';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import Error from '@/pages/_error';
 
 interface IPageProps extends IPageContacts {
-  place: IPlacesMain;
+  place: IPlace;
   statusCode?: any;
 }
 export const getStaticProps: GetStaticProps = async (context) => {

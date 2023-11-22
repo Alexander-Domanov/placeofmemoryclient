@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { noRefetch } from '@/common/helpers/noRefetch';
 import { getPlaceMain } from '@/services/api/places-api/places-main-api';
-import { IPlacesMain } from '@/types';
+import { IPlace } from '@/types';
 
 interface IUseGetPlaceMain {
   slug: string;
-  place: IPlacesMain;
+  place: IPlace;
 }
 export const useGetPlaceMain = ({ slug, place }: IUseGetPlaceMain) => {
   const {

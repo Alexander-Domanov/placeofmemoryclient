@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IPlacesMain, IPlacesMainResponse, IPlacesProps } from '@/types';
+import { IGetPlacesResponse, IPlace, IPlacesProps } from '@/types';
 
 export const getPlacesMain = async ({
   lang,
@@ -7,7 +7,7 @@ export const getPlacesMain = async ({
   pageNumber,
   pageSize = 5,
 }: IPlacesProps | any) => {
-  const res = await axios.get<IPlacesMainResponse>(
+  const res = await axios.get<IGetPlacesResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/places/public/all`,
     {
       params: {
@@ -26,7 +26,7 @@ export const getPlaceMain = async ({
   lang,
   slug,
 }: Pick<IPlacesProps, 'lang' | 'slug'> | any) => {
-  const res = await axios.get<IPlacesMain>(
+  const res = await axios.get<IPlace>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/places/${slug}/public`,
     {
       params: {

@@ -7,13 +7,13 @@ import { useGetPlacesMain } from '@/modules/places-main-module';
 import { routes } from '@/common/routing/routes';
 import { Input } from '@/ui';
 import { useTranslation } from '@/components/internationalization';
-import { IPlacesMainResponse } from '@/types';
+import { IGetPlacesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 
 interface IProps {
-  places: IPlacesMainResponse;
+  places: IGetPlacesResponse;
 }
 export const PlacesMain = ({ places }: IProps) => {
   const { push, query } = useRouter();
