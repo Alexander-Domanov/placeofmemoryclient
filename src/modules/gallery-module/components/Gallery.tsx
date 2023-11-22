@@ -115,19 +115,19 @@ export const Gallery: FC = () => {
           />
 
           {/* <Flex justify="end"> */}
-          <Pagination
-            size="small"
-            total={gallery?.totalCount || 1}
-            current={page}
-            onChange={onPageChange}
-            defaultCurrent={1}
-            defaultPageSize={18}
-            pageSizeOptions={[18, 24, 36, 48, 96]}
-            onShowSizeChange={onPageSizeChange}
-            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`}
-            simple
-            showSizeChanger
-          />
+          {/* <Pagination */}
+          {/*  size="small" */}
+          {/*  total={gallery?.totalCount || 1} */}
+          {/*  current={page} */}
+          {/*  onChange={onPageChange} */}
+          {/*  defaultCurrent={1} */}
+          {/*  defaultPageSize={18} */}
+          {/*  pageSizeOptions={[18, 24, 36, 48, 96]} */}
+          {/*  onShowSizeChange={onPageSizeChange} */}
+          {/*  showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`} */}
+          {/*  simple */}
+          {/*  showSizeChanger */}
+          {/* /> */}
           {/* </Flex> */}
           {/* </Flex> */}
         </Flex>
@@ -155,6 +155,22 @@ export const Gallery: FC = () => {
           </Card>
         </Spin>
       </Space>
+
+      <Flex justify="center" align="center" gap="middle" wrap="wrap">
+        <Pagination
+          size="small"
+          total={gallery?.totalCount || 1}
+          current={page}
+          onChange={onPageChange}
+          defaultCurrent={1}
+          defaultPageSize={18}
+          pageSizeOptions={[18, 24, 36, 48, 96]}
+          onShowSizeChange={onPageSizeChange}
+          showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`}
+          simple
+          showSizeChanger
+        />
+      </Flex>
 
       <UploadGalleryModal
         isOpen={isUploadGalleryOpen}
