@@ -103,7 +103,7 @@ export const PersonEdit: FC = () => {
     null
   );
   const [selectedPlace, setSelectedPlace] = useState<{
-    value: string;
+    namePlace: string;
     id: number;
     formattedAddress: string;
   } | null>(null);
@@ -150,7 +150,7 @@ export const PersonEdit: FC = () => {
       setBiographyText(person.biography || '');
       setSelectedLocation(person.location);
       setSelectedPlace({
-        value: person.place.name,
+        namePlace: person.place.name,
         id: person.place.id,
         formattedAddress: person.place.formattedAddress,
       });
@@ -213,7 +213,7 @@ export const PersonEdit: FC = () => {
       placeId: selectedPlace?.id as number,
       slug: values.slug,
       location: {
-        place: selectedPlace?.value as string,
+        place: selectedPlace?.namePlace as string,
         ...selectedLocation,
       } as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),

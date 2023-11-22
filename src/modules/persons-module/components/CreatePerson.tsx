@@ -89,7 +89,7 @@ export const CreatePerson: FC = () => {
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<{
-    value: string;
+    namePlace: string;
     id: number;
     formattedAddress: string;
   } | null>(null);
@@ -136,7 +136,7 @@ export const CreatePerson: FC = () => {
       city: values.city,
       placeId: selectedPlace?.id as number,
       location: {
-        place: selectedPlace?.value as string,
+        place: selectedPlace?.namePlace as string,
         ...selectedLocation,
       } as ILocation,
       ids: values.photo?.map((file) => file.response?.uploadId || ''),

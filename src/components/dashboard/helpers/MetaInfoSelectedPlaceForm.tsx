@@ -3,7 +3,7 @@ import { List, Typography } from 'antd';
 
 interface IInfoSelectedPlaceFormProps {
   place: {
-    value: string;
+    namePlace: string;
     id: number;
     formattedAddress: string;
   } | null;
@@ -16,7 +16,7 @@ export const MetaInfoSelectedPlaceForm: FC<IInfoSelectedPlaceFormProps> = ({
     <List.Item>
       <Typography.Text>
         <span className="text-neutral-400">Selected place: &nbsp;</span>
-        {selectedPlace?.value}
+        {selectedPlace?.namePlace}
       </Typography.Text>
     </List.Item>
 
