@@ -40,7 +40,9 @@ export const getPerson = (id: string | undefined | string[]) => {
 export const getPersonsPublic = (
   pageSize = 10,
   pageNumber = 1,
-  lang = 'by'
+  lang = 'by',
+  name = '',
+  lastName = ''
 ) => {
   return axios.get<IGetPersonsResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/persons/public/all`,
@@ -49,6 +51,8 @@ export const getPersonsPublic = (
         pageSize,
         pageNumber,
         lang,
+        name,
+        lastName,
       },
     }
   );

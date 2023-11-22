@@ -1,18 +1,18 @@
-import { FC, FormEvent, useRef, useState } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { routes } from '@/common/routing/routes';
-import { IGetPersonsResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
-import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
+import { IGetPersonsResponse } from '@/types';
 
 interface Props {
   persons: IGetPersonsResponse;
 }
 
-export const PersonsMain: FC<Props> = ({ persons }) => {
+export const PersonsSearchMain: FC<Props> = ({ persons }) => {
   const router = useRouter();
 
   const onPageChange = (page: number) => {
@@ -26,6 +26,16 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  useEffect(() => {
+    if (router.query.name) {
+      setName(router.query.name as string);
+    }
+
+    if (router.query.lastName) {
+      setLastName(router.query.lastName as string);
+    }
+  }, [router.query]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

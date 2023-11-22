@@ -41,6 +41,7 @@ export const routes = {
     index: '/persons',
     person: (slug: string) => `${routes.persons.index}/${slug}`,
     page: (page: number) => `${routes.persons.index}/page/${page}`,
+    search: () => `${routes.persons.index}/search`,
   },
   aboutTheProject: {
     index: '/about-the-project',
