@@ -25,7 +25,7 @@ export const PlacesMain = ({ places }: IProps) => {
   const vCountry = useDebounce(country, 1000);
   const vCity = useDebounce(city, 1000);
   const pageParams = query.page as string;
-  const { dataPlaces, isLoading, isFetchingPlaces } = useGetPlacesMain({
+  const { dataPlaces } = useGetPlacesMain({
     name: vName,
     city: vCity,
     country: vCountry,
