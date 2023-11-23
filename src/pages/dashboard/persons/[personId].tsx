@@ -6,7 +6,7 @@ const DashboardPersonList = () => {
   return (
     <>
       <Head>
-        <title>Person List</title>
+        <title>Edit person</title>
       </Head>
 
       <PersonEdit />

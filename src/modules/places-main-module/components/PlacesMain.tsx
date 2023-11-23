@@ -25,7 +25,7 @@ export const PlacesMain = ({ places }: IProps) => {
   const vCountry = useDebounce(country, 1000);
   const vCity = useDebounce(city, 1000);
   const pageParams = query.page as string;
-  const { dataPlaces, isLoading, isFetchingPlaces } = useGetPlacesMain({
+  const { dataPlaces } = useGetPlacesMain({
     name: vName,
     city: vCity,
     country: vCountry,
@@ -62,27 +62,27 @@ export const PlacesMain = ({ places }: IProps) => {
 
           <div className="flex flex-col mt-10 ">
             <div className="flex md:justify-center justify-end flex-wrap gap-4">
-              <div>
-                <Input
-                  label={nameT}
-                  className="w-[166px] h-[36px]"
-                  onChange={(e) => setName(e.currentTarget.value)}
-                />
-              </div>
-              <div>
-                <Input
-                  label={countryT}
-                  className="w-[166px] h-[36px]"
-                  onChange={(e) => setCountry(e.currentTarget.value)}
-                />
-              </div>
-              <div>
-                <Input
-                  label={cityT}
-                  className="w-[166px] h-[36px]"
-                  onChange={(e) => setCity(e.currentTarget.value)}
-                />
-              </div>
+              <Input
+                aria-label="пошук па назве"
+                value={name}
+                label={nameT}
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setName(e.currentTarget.value)}
+              />
+              <Input
+                value={country}
+                aria-label="пошук па краіне"
+                label={countryT}
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setCountry(e.currentTarget.value)}
+              />
+              <Input
+                value={city}
+                aria-label="пошук па горадзе"
+                label={cityT}
+                className="w-[166px] h-[36px]"
+                onChange={(e) => setCity(e.currentTarget.value)}
+              />
             </div>
             <div className="mt-10">
               <div>
