@@ -65,6 +65,7 @@ export const PlacesMain = ({ places }: IProps) => {
               <div>
                 <Input
                   aria-label="пошук па назве"
+                  value={name}
                   label={nameT}
                   className="w-[166px] h-[36px]"
                   onChange={(e) => setName(e.currentTarget.value)}
@@ -72,6 +73,7 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
               <div>
                 <Input
+                  value={country}
                   aria-label="пошук па краіне"
                   label={countryT}
                   className="w-[166px] h-[36px]"
@@ -80,6 +82,7 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
               <div>
                 <Input
+                  value={city}
                   aria-label="пошук па горадзе"
                   label={cityT}
                   className="w-[166px] h-[36px]"

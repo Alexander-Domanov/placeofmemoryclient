@@ -133,6 +133,7 @@ module.exports = {
   plugins: [
     require('tailwindcss-animate'),
     require('tailwindcss-debug-screens'),
+    require('autoprefixer'),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('@tailwindcss/typography')({
       className: 'wysiwyg',
