@@ -38,12 +38,10 @@ export function DeleteConfirmationModal<T>({
         icon={<DeleteOutlined />}
         style={{
           cursor: 'pointer',
-          color: '#ef2020',
           ...(disabled && { opacity: 0.5, cursor: 'not-allowed' }),
         }}
         disabled={disabled}
         onClick={showDeleteModal}
-        ghost
       >
         Delete
       </Button>
