@@ -1,6 +1,5 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { getArticlesPublic } from '@/modules/articles-module/api/articles-api';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IPageContacts } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
@@ -26,13 +25,10 @@ const NotFound = ({ contacts }: IPageContacts) => {
   );
 };
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts } = await getArticlesPublic({ title: '' });
   const { data: contacts } = await getContacts();
 
   return {
     props: {
-      posts,
-      time: Date.now(),
       contacts,
     },
     revalidate: 30,

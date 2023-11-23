@@ -30,11 +30,11 @@ const PersonsPage: NextPage<Props> = ({ contacts, persons }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: persons } = await getPersonsPublic(
-    SITE_PERSONS_PER_PAGE,
-    1,
-    context.locale
-  );
+  const { data: persons } = await getPersonsPublic({
+    pageSize: SITE_PERSONS_PER_PAGE,
+    pageNumber: 1,
+    lang: context.locale,
+  });
 
   const { data: contacts } = await getContacts();
 

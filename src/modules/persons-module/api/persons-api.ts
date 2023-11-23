@@ -37,13 +37,31 @@ export const getPerson = (id: string | undefined | string[]) => {
   return authInstance.get<IPerson>(`persons/${id}`);
 };
 
-export const getPersonsPublic = (
-  pageSize = 10,
-  pageNumber = 1,
-  lang = 'by',
-  name = '',
-  lastName = ''
-) => {
+interface GetPersonsPublicParams {
+  pageSize?: number;
+  pageNumber?: number;
+  lang?: string;
+  name?: string;
+  lastName?: string;
+  birthDate?: string;
+  country?: string;
+  city?: string;
+  deathDate?: string;
+}
+
+export const getPersonsPublic = (params: GetPersonsPublicParams) => {
+  const {
+    pageSize = 10,
+    pageNumber = 1,
+    lang = 'by',
+    name = '',
+    lastName = '',
+    birthDate = null,
+    country = '',
+    city = '',
+    deathDate = null,
+  } = params;
+
   return axios.get<IGetPersonsResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/persons/public/all`,
     {
@@ -53,6 +71,10 @@ export const getPersonsPublic = (
         lang,
         name,
         lastName,
+        birthDate,
+        country,
+        city,
+        deathDate,
       },
     }
   );

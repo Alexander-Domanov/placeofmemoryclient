@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect, useRef, useState } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import { routes } from '@/common/routing/routes';
 import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { IGetPersonsResponse } from '@/types';
+import { PersonsSearchForm } from '@/modules/persons-module/components/PersonsSearchForm';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -21,32 +22,6 @@ export const PersonsSearchMain: FC<Props> = ({ persons }) => {
     } else {
       router.push(`${routes.persons.page(page)}`);
     }
-  };
-
-  const formRef = useRef<HTMLFormElement>(null);
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-
-  useEffect(() => {
-    if (router.query.name) {
-      setName(router.query.name as string);
-    }
-
-    if (router.query.lastName) {
-      setLastName(router.query.lastName as string);
-    }
-  }, [router.query]);
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    router.push({
-      pathname: routes.persons.search(),
-      query: {
-        name,
-        lastName,
-      },
-    });
   };
 
   return (
@@ -64,74 +39,7 @@ export const PersonsSearchMain: FC<Props> = ({ persons }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          <form
-            className="max-w-2xl text-black"
-            ref={formRef}
-            onSubmit={onSubmit}
-            action={routes.persons.index}
-          >
-            <div className="grid grid-cols-[1fr_1fr_125px] gap-8">
-              <div>
-                <label>
-                  <div>Імя</div>
-
-                  <input
-                    type="text"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  <div>прозвішча</div>
-
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  <div>год нараджэння</div>
-
-                  <input type="text" name="birthDate" />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  <div>краіна</div>
-
-                  <input type="text" name="country" />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  <div>Горад</div>
-
-                  <input type="text" name="city" />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  <div>год смерці</div>
-
-                  <input type="text" name="deathDate" />
-                </label>
-              </div>
-            </div>
-
-            <button>search</button>
-          </form>
+          <PersonsSearchForm />
         </div>
 
         <div className="mt-10">

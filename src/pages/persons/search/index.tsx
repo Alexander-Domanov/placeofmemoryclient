@@ -27,13 +27,17 @@ const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data: persons } = await getPersonsPublic(
-    SITE_PERSONS_PER_PAGE,
-    1,
-    context.locale,
-    (context.query.name as string).toLowerCase(),
-    (context.query.lastName as string).toLowerCase()
-  );
+  const { data: persons } = await getPersonsPublic({
+    pageSize: SITE_PERSONS_PER_PAGE,
+    pageNumber: 1,
+    lang: context.locale,
+    name: context.query.name as string,
+    lastName: context.query.lastName as string,
+    birthDate: context.query.birthDate as string,
+    country: context.query.country as string,
+    city: context.query.city as string,
+    deathDate: context.query.deathDate as string,
+  });
 
   const { data: contacts } = await getContacts();
 
