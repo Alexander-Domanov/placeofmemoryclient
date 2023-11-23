@@ -64,6 +64,7 @@ export const PlacesMain = ({ places }: IProps) => {
             <div className="flex md:justify-center justify-end flex-wrap gap-4">
               <div>
                 <Input
+                  aria-label="пошук па назве"
                   label={nameT}
                   className="w-[166px] h-[36px]"
                   onChange={(e) => setName(e.currentTarget.value)}
@@ -71,6 +72,7 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
               <div>
                 <Input
+                  aria-label="пошук па краіне"
                   label={countryT}
                   className="w-[166px] h-[36px]"
                   onChange={(e) => setCountry(e.currentTarget.value)}
@@ -78,6 +80,7 @@ export const PlacesMain = ({ places }: IProps) => {
               </div>
               <div>
                 <Input
+                  aria-label="пошук па горадзе"
                   label={cityT}
                   className="w-[166px] h-[36px]"
                   onChange={(e) => setCity(e.currentTarget.value)}
