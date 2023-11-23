@@ -21,7 +21,7 @@ export const useGetPlacesMain = ({
     isFetching: isFetchingPlaces,
     isLoading,
   } = useQuery(
-    ['places-main'],
+    ['places-main', name, country, city],
     () => getPlacesMain({ name, country, city, lang: locale }),
     {
       ...noRefetch,
