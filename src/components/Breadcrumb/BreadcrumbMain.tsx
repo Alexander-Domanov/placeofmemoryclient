@@ -19,7 +19,11 @@ const BreadcrumbMain: FC<BreadcrumbProps> = ({ items }) => {
   const isMobile = width && width < 640;
   return (
     <div className="whitespace-nowrap scrollbar scrollbar-none overflow-auto flex items-center gap-3 sm:gap-2 text-base font-light sm:text-md sm:mb-4 text-dark-100">
-      <Link href={routes.main} className="cursor-pointer">
+      <Link
+        aria-label="хатняя старонка"
+        href={routes.main}
+        className="cursor-pointer"
+      >
         <AiOutlineHome size={isMobile ? 16 : 18} />
       </Link>
 
