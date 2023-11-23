@@ -1,6 +1,12 @@
 .container input:focus + label {
   @apply transform -translate-y-5 text-xs bg-dark-700;
 }
+.container input:hover + label {
+  @apply transform -translate-y-5 text-xs bg-dark-700;
+}
+.container label:hover {
+  @apply transform -translate-y-5 text-xs bg-dark-700;
+}
 
 .container input:not(:placeholder-shown) + label {
   @apply transform -translate-y-5 text-xs bg-dark-700;

@@ -81,5 +81,5 @@ select:-webkit-autofill:focus {
 
   transition: background-color 5000s ease-in-out 0s;
 
-  -webkit-text-fill-color: #bdc1c7;
+  -webkit-text-fill-color:  #a4a2a2;
 }
