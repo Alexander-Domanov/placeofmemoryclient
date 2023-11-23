@@ -303,7 +303,9 @@ export const ArticleEdit: FC = () => {
                     name="slug"
                     rules={ArticleFormRules.slug}
                     hasFeedback
-                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each article"
+                    tooltip="You can change the slug of the article.
+                    This field is for SEO, it must be unique and contain only letters, numbers and dashes.
+                    Can't start or end with a dash."
                   >
                     <Input.TextArea
                       placeholder="Slug"

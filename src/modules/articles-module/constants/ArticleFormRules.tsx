@@ -17,7 +17,7 @@ export const ArticleFormRules = {
     { max: 120, message: `Slug limit is 120 characters` },
     {
       pattern: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      message: `Lowercase letters and hyphens only.`,
+      message: `Lowercase letters, numbers and hyphens are allowed`,
     },
   ],
   photo: {

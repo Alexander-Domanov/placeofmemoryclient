@@ -101,7 +101,9 @@ export const en = {
         slug: {
           label: 'Slug',
           placeholder: 'Slug',
-          tooltip: `You can change the slug of the article. This field is for SEO, it must be unique and contain only lowercase letters and hyphens.`,
+          tooltip: `You can change the slug of the article.
+                    This field is for SEO, it must be unique and contain only letters, numbers and dashes.
+                    Can't start or end with a dash.`,
         },
         photo: {
           label: 'Photo',
