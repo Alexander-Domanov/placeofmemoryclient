@@ -18,6 +18,7 @@ export const DropdownMenuHeader = () => {
 
   return (
     <DropdownMenuComponent
+      ariaLabel="dropdown menu"
       menuLabel={
         userName && width && width <= 1023 ? (
           <AvatarMenuHeader showName />

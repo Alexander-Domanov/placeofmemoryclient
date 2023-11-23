@@ -31,7 +31,7 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
         />
         <button
           type="button"
-          className="cursor-pointer absolute right-4 top-8"
+          className="cursor-pointer absolute right-4 top-2"
           onClick={() => setShowPass(!showPass)}
         >
           {showPass ? (
