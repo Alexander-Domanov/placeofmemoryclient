@@ -47,7 +47,6 @@ export const SignUp = () => {
     buttonGoogleT,
     nameT,
     emailT,
-    passwordPlaceholderT,
     passwordT,
   } = t.auth.signUp.page;
   return (
@@ -104,7 +103,7 @@ export const SignUp = () => {
           />
 
           <Input
-            placeholder={passwordPlaceholderT}
+            // placeholder={passwordPlaceholderT}
             type="password"
             id="password"
             error={errors?.password?.message}
