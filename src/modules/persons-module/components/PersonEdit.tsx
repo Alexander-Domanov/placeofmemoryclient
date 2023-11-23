@@ -255,6 +255,8 @@ export const PersonEdit: FC = () => {
     });
   };
 
+  const isShowSlug = me?.role === Role.USER;
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -418,22 +420,24 @@ export const PersonEdit: FC = () => {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item
-                    name="slug"
-                    label="Slug"
-                    rules={PersonFormRules.slug}
-                    hasFeedback
-                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each person"
-                  >
-                    <Input.TextArea
-                      placeholder="This field is auto generated"
-                      count={{
-                        show: true,
-                        max: PersonFormRules.slug[1].max,
-                      }}
-                      disabled={isDisabled}
-                    />
-                  </Form.Item>
+                  {!isShowSlug && (
+                    <Form.Item
+                      name="slug"
+                      label="Slug"
+                      rules={PersonFormRules.slug}
+                      hasFeedback
+                      tooltip="This is a field for SEO and should be unique and contain only latin characters for each person"
+                    >
+                      <Input.TextArea
+                        placeholder="This field is auto generated"
+                        count={{
+                          show: true,
+                          max: PersonFormRules.slug[1].max,
+                        }}
+                        disabled={isDisabled}
+                      />
+                    </Form.Item>
+                  )}
 
                   <Form.Item>
                     <MetaInfoForm
@@ -480,7 +484,11 @@ export const PersonEdit: FC = () => {
                   <MetaInfoSelectedPlaceForm place={selectedPlace} />
 
                   <Row justify="end">
-                    <Button type="dashed" onClick={clearSelectedPlace}>
+                    <Button
+                      type="dashed"
+                      onClick={clearSelectedPlace}
+                      disabled={isDisabled}
+                    >
                       Clear
                     </Button>
                   </Row>

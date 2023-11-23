@@ -85,6 +85,7 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({
         style={{ width: 120 }}
         defaultValue="name"
         onChange={(value) => setSearchParam(value)}
+        disabled={disabled}
       >
         <Option key="name" value="name">
           Name

@@ -139,6 +139,15 @@ export const ArticleEdit: FC = () => {
           response: { ...f },
         })),
       });
+      setFileList(
+        article.photos.map((f) => ({
+          uid: f.uploadId,
+          name: f.uploadId,
+          status: 'done',
+          url: f.versions.medium.url,
+          response: { ...f },
+        }))
+      );
       setSelectedArticle(article);
       setContentText(article.content || '');
       setStatus(article.status);
