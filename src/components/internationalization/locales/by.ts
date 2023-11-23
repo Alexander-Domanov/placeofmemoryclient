@@ -48,7 +48,7 @@ export const by = {
       page: {
         titleT: 'Рэгістрацыя',
         buttonGoogleT: 'Увайдзіце праз',
-        descriptionT: 'abo',
+        descriptionT: 'або',
         buttonShowFormT: 'Рэгістрацыя',
         buttonHiddenFormT: 'Схаваць форму',
         nameT: 'ІМЯ КАРЫСТАЛЬНІКА',
