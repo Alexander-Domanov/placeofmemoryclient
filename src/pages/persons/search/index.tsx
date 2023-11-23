@@ -1,39 +1,42 @@
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { GetStaticProps, NextPage } from 'next';
-import { useTranslation } from '@/components/internationalization';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IContacts, IGetPersonsResponse } from '@/types';
-import { PersonsMain } from '@/modules/persons-module/components/PersonsMain';
 import { getPersonsPublic } from '@/modules/persons-module/api/persons-api';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
+import { PersonsSearchMain } from '@/modules/persons-module/components/PersonsSearchMain';
 
 interface Props {
   contacts: IContacts;
   persons: IGetPersonsResponse;
 }
 
-const PersonsPage: NextPage<Props> = ({ contacts, persons }) => {
-  const { t } = useTranslation();
-
+const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
   return (
     <>
       <Head>
-        <title>{`${t.people.indexTitle} | MOGILKI`}</title>
+        <title>Search</title>
       </Head>
 
       <SiteLayout contacts={contacts}>
-        <PersonsMain persons={persons} />
+        <PersonsSearchMain persons={persons} />
       </SiteLayout>
     </>
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data: persons } = await getPersonsPublic({
     pageSize: SITE_PERSONS_PER_PAGE,
     pageNumber: 1,
     lang: context.locale,
+    name: context.query.name as string,
+    lastName: context.query.lastName as string,
+    birthDate: context.query.birthDate as string,
+    country: context.query.country as string,
+    city: context.query.city as string,
+    deathDate: context.query.deathDate as string,
   });
 
   const { data: contacts } = await getContacts();
@@ -43,8 +46,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       persons,
       contacts,
     },
-    revalidate: 30,
   };
 };
 
-export default PersonsPage;
+export default PersonsSearchPage;

@@ -51,6 +51,7 @@ module.exports = {
     'react/jsx-no-comment-textnodes': 0,
     'react/no-unstable-nested-components': 0,
     '@typescript-eslint/return-await': 0,
+    'jsx-a11y/label-has-associated-control': 0,
     'prettier/prettier': [
       'error',
       {

@@ -1,19 +1,19 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { routes } from '@/common/routing/routes';
-import { IGetPersonsResponse } from '@/types';
-import AntPagination from '@/components/pagination/AntPagination';
-import { SITE_PERSONS_PER_PAGE } from '../constants/persons-constants';
+import { useRouter } from 'next/router';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
-import { PersonsSearchForm } from './PersonsSearchForm';
+import { routes } from '@/common/routing/routes';
+import AntPagination from '@/components/pagination/AntPagination';
+import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
+import { IGetPersonsResponse } from '@/types';
+import { PersonsSearchForm } from '@/modules/persons-module/components/PersonsSearchForm';
 
 interface Props {
   persons: IGetPersonsResponse;
 }
 
-export const PersonsMain: FC<Props> = ({ persons }) => {
+export const PersonsSearchMain: FC<Props> = ({ persons }) => {
   const router = useRouter();
 
   const onPageChange = (page: number) => {

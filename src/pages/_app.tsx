@@ -9,6 +9,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AuthProtection from '@/components/auth-protection/AuthProtection';
 import theme from '@/theme/themeConfig';
 import { useLoader } from '@/common/hooks/useLoader/useLoader';
@@ -52,7 +53,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         </AuthProtection>
       </Hydrate>
 
-      {/* <ReactQueryDevtools position="bottom-right" /> */}
+      <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
   );
 }
