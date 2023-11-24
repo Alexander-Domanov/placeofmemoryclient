@@ -27,6 +27,8 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
   useEffect(() => {
     if (status === Statuses.PUBLISHED) {
       setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
   }, [status]);
 

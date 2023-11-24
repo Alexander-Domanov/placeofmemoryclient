@@ -17,6 +17,7 @@ export const useUpdatePlaceStatus = () => {
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['places']);
+      client.invalidateQueries(['place']);
       client.invalidateQueries(['persons']);
       client.invalidateQueries(['user']);
     },
