@@ -37,6 +37,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     country: context.query.country as string,
     city: context.query.city as string,
     deathDate: context.query.deathDate as string,
+    filterConditionBirthDate: context.query.filterConditionBirthDate as string,
+    filterConditionDeathDate: context.query.filterConditionDeathDate as string,
   });
 
   const { data: contacts } = await getContacts();

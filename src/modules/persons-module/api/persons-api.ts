@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { authInstance } from '@/services';
 import {
+  FilterCondition,
   ICreatePerson,
   IGetPersonsResponse,
   IPaginationPersons,
@@ -47,6 +48,8 @@ interface GetPersonsPublicParams {
   country?: string;
   city?: string;
   deathDate?: string;
+  filterConditionBirthDate?: string;
+  filterConditionDeathDate?: string;
 }
 
 export const getPersonsPublic = (params: GetPersonsPublicParams) => {
@@ -60,6 +63,8 @@ export const getPersonsPublic = (params: GetPersonsPublicParams) => {
     country = '',
     city = '',
     deathDate = null,
+    filterConditionBirthDate = FilterCondition.gte,
+    filterConditionDeathDate = FilterCondition.lte,
   } = params;
 
   return axios.get<IGetPersonsResponse>(
@@ -75,6 +80,8 @@ export const getPersonsPublic = (params: GetPersonsPublicParams) => {
         country,
         city,
         deathDate,
+        filterConditionBirthDate,
+        filterConditionDeathDate,
       },
     }
   );
