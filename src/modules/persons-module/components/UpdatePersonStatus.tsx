@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IPerson, Role } from '@/types';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { GetUpdateOptions } from '@/components';
+import { routes } from '@/common/routing/routes';
 
 interface UpdatePersonStatusComponentProps {
   person: IPerson | null;
@@ -14,6 +16,7 @@ const UpdatePersonStatusComponent: React.FC<
   UpdatePersonStatusComponentProps
 > = ({ person }) => {
   const { data: me } = useMeQuery();
+  const router = useRouter();
 
   const { id, status } = person || { id: null, status: null };
   const stringId = id !== null ? id.toString() : null;
@@ -52,7 +55,7 @@ const UpdatePersonStatusComponent: React.FC<
   const buttonStyle = {
     cursor: 'pointer',
     color: '#2c332c',
-    ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
+    // ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
   };
 
   return (
@@ -65,28 +68,56 @@ const UpdatePersonStatusComponent: React.FC<
             style={buttonStyle}
             onClick={handleEditClick}
             ghost
-            disabled={isDisabled}
+            // disabled={isDisabled}
           />,
         ]}
       />
       <Modal
-        title="Set new status"
+        title="Change status of person or edit"
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
         {isDisabled ? (
-          <Form.Item label="Current status" style={{ marginBottom: 10 }}>
-            <Select value={newStatus} onChange={handleMenuStatusClick} disabled>
-              {updateOptions}
-            </Select>
-          </Form.Item>
+          <Form>
+            <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+              <Select
+                value={newStatus}
+                onChange={handleMenuStatusClick}
+                disabled
+              >
+                {updateOptions}
+              </Select>
+            </Form.Item>
+
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => {
+                router.push(routes.dashboard.persons.person(id || ''));
+              }}
+            >
+              Edit
+            </Button>
+          </Form>
         ) : (
-          <Form.Item label="Current status" style={{ marginBottom: 10 }}>
-            <Select value={newStatus} onChange={handleMenuStatusClick}>
-              {updateOptions}
-            </Select>
-          </Form.Item>
+          <Form>
+            <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+              <Select value={newStatus} onChange={handleMenuStatusClick}>
+                {updateOptions}
+              </Select>
+            </Form.Item>
+
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => {
+                router.push(routes.dashboard.persons.person(id || ''));
+              }}
+            >
+              Edit
+            </Button>
+          </Form>
         )}
       </Modal>
     </>

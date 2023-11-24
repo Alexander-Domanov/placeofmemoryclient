@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/components';
+import { routes } from '@/common/routing/routes';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
@@ -13,6 +15,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
   place,
 }) => {
   const { data: me } = useMeQuery();
+  const router = useRouter();
 
   const { id, status } = place || {
     id: null,
@@ -54,7 +57,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
       <List.Item
         actions={[
           <Button
-            title="Change status"
+            title="Change status of place or edit"
             key={0}
             icon={<EditOutlined />}
             style={{ cursor: 'pointer', color: '#2c332c' }}
@@ -74,6 +77,16 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
             {updateOptions}
           </Select>
         </Form.Item>
+
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={() => {
+            router.push(routes.dashboard.places.place(id || ''));
+          }}
+        >
+          Edit
+        </Button>
       </Modal>
     </>
   );

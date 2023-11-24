@@ -7,8 +7,10 @@ import {
   EyeOutlined,
   InboxOutlined,
 } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IArticle, Statuses } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
+import { routes } from '@/common/routing/routes';
 
 const { Option } = Select;
 
@@ -16,6 +18,8 @@ interface Props {
   article: IArticle | null;
 }
 const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
+  const router = useRouter();
+
   const { id, status } = article || { id: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
   const [newStatus, setNewStatus] = useState(status);
@@ -60,12 +64,12 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
       />
 
       <Modal
-        title="Change status"
+        title="Change status of article or edit"
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
-        <Form.Item label="Current Status">
+        <Form.Item label="Change status">
           <Select value={newStatus} onChange={handleMenuStatusClick}>
             <Option value={Statuses.DRAFT}>
               <EyeInvisibleOutlined /> Draft
@@ -81,6 +85,16 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
             </Option>
           </Select>
         </Form.Item>
+
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={() => {
+            router.push(routes.dashboard.articles.article(id || ''));
+          }}
+        >
+          Edit
+        </Button>
       </Modal>
     </>
   );
