@@ -17,9 +17,9 @@ export const AuthLayout = ({
   const { width } = useWindowSize();
   return (
     <Container types="auth">
-      <div className="grid grid-cols-2 lg:flex lg:justify-center min-h-[calc(100vh-65px)] lg:pt-[70px] lg:pr-0 pr-10">
+      <div className="grid grid-cols-2 lg:flex lg:justify-center min-h-[calc(100vh-65px)] lg:pr-0 pr-10">
         {width && width > 1023 && (
-          <section className="w-[450px] bg-accent-100 ">
+          <section className="w-[450px] bg-accent-100">
             <video
               playsInline
               className="auth-sidebar-video object-cover w-full h-full"

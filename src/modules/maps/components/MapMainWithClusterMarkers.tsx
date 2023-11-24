@@ -8,7 +8,7 @@ import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 
 const containerStyle = {
   // height: '70vh',
-  aspectRatio: '16/9',
+  aspectRatio: '21/9',
   width: '100%',
   borderRadius: '10px',
 };
