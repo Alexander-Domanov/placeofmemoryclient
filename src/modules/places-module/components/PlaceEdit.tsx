@@ -124,6 +124,15 @@ export const PlaceEdit: FC = () => {
         slug: place.slug,
         location: place.location.place,
       });
+      setFileList(
+        place.photos.map((f) => ({
+          uid: f.uploadId,
+          name: f.uploadId,
+          status: 'done',
+          url: f.versions.medium.url,
+          response: { ...f },
+        }))
+      );
       setDescriptionText(place.description || '');
       setSelectedLocation(place.location);
       setStatus(place.status);
@@ -354,7 +363,9 @@ export const PlaceEdit: FC = () => {
                     name="slug"
                     label="Slug"
                     rules={PlaceFormRules.slug}
-                    tooltip="This is a field for SEO and should be unique and contain only latin characters for each place."
+                    tooltip="You can change the slug of the place.
+                    This field is for SEO, it must be unique and contain only letters, numbers and dashes.
+                    Can't start or end with a dash."
                     hasFeedback
                   >
                     <Input.TextArea

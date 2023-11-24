@@ -89,6 +89,11 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
   }" class="cursor-pointer text-blue-500 text-center">
     <span class="hover:underline">${p?.slug || ''}</span>
   </a>
+  <div class="text-black text-center">
+              <p class="font-bold m-1">
+                ${p.location.lat}, ${p.location.lng}
+              </p>
+            </div>
 </div>`;
 
         marker.addListener('click', () => {
