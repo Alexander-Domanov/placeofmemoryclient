@@ -147,6 +147,15 @@ export const PersonEdit: FC = () => {
         slug: person.slug,
         location: person.location.place,
       });
+      setFileList(
+        person.photos.map((f) => ({
+          uid: f.uploadId,
+          name: f.uploadId,
+          status: 'done',
+          url: f.versions.medium.url,
+          response: { ...f },
+        }))
+      );
       setBiographyText(person.biography || '');
       setSelectedLocation(person.location);
       setSelectedPlace({
