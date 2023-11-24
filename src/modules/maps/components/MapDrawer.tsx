@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { Button, Col, Divider, Drawer, Form, Space } from 'antd';
 import { FaLocationDot } from 'react-icons/fa6';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
@@ -17,10 +17,8 @@ interface MapDrawerProps {
   disabled?: boolean;
 }
 
-const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
+const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
   const [open, setOpen] = useState(false);
-  const [selectedPlace, setSelectedPlace] =
-    useState<IPlaceResultAfterExtract | null>(null);
   const [markerPosition, setMarkerPosition] =
     useState<google.maps.LatLngLiteral | null>(null);
 
@@ -67,7 +65,6 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
   };
   const onClearForm = () => {
     form.resetFields();
-    setSelectedPlace(null);
   };
 
   const onClose = () => {
@@ -75,9 +72,15 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
   };
 
   const onFinish = (place: IPlaceResultAfterExtract) => {
-    setSelectedPlace(place);
     setOpen(false);
-    onPlaceSelected(place);
+    onPlaceSelected({
+      ...place,
+      location: {
+        place: place?.formattedAddress,
+        lat: place?.location?.lat,
+        lng: place?.location?.lng,
+      },
+    });
   };
 
   return (
@@ -96,6 +99,7 @@ const MapDrawer: React.FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
       <Drawer
         placement="right"
         width={520}
+        drawerStyle={{ backgroundColor: '#f0f2f5' }}
         onClose={onClose}
         open={open}
         extra={

@@ -34,6 +34,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     id: 'google-map-script',
     libraries: ['places'],
     version: 'weekly',
+    language: 'en',
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}` || '',
   });
 
