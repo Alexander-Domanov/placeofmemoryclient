@@ -25,7 +25,7 @@ import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/
 import DeleteUserModal from '@/modules/users-module/components/DeleteUserModal';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { Places } from '@/modules/places-module/components/Places';
-import { columnsTablePersons, Persons } from '@/modules/persons-module';
+import { columnsTablePersons } from '@/modules/persons-module';
 import { Articles } from '@/modules/articles-module';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { columnsTablePlaces } from '@/modules/places-module';
@@ -195,6 +195,7 @@ export const UserList: FC = () => {
                     <UpdateUserStatusAndRoleComponent
                       user={selectedUser}
                       showButton
+                      showEditButton={false}
                     />
                     <DeleteUserModal user={selectedUser} showButton />
                   </Space>

@@ -52,9 +52,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
           type="primary"
           title="Delete"
           icon={<DeleteOutlined />}
-          style={{ cursor: 'pointer', color: '#ef2020' }}
           onClick={handleClick}
-          ghost
         >
           Delete
         </Button>

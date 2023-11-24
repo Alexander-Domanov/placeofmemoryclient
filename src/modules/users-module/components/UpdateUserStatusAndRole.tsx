@@ -9,20 +9,26 @@ import {
   SolutionOutlined,
   UpOutlined,
 } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IUser, IUserWithShortExtensions } from '@/types';
 import { useUpdateUserRole } from '@/modules/users-module/hooks/useUpdateUserRole';
 import { useUpdateUserStatus } from '@/modules/users-module/hooks/useUpdateUserStatus';
+import { routes } from '@/common/routing/routes';
 
 const { Option } = Select;
 
 interface DeleteUserComponentProps {
   user: IUserWithShortExtensions | IUser | null;
   showButton: boolean;
+  showEditButton?: boolean;
 }
 const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   user,
   showButton,
+  showEditButton = true,
 }) => {
+  const router = useRouter();
+
   const { id, role, status } = user || { id: null, role: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
   const [newRole, setNewRole] = useState(role);
@@ -103,7 +109,7 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
     <>
       <List.Item actions={[showButtonDelete(showButton)]} />
       <Modal
-        title="Change user role or status:"
+        title="Change status, role or edit"
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
@@ -150,6 +156,18 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
             </Option>
           </Select>
         </Form.Item>
+
+        {showEditButton && (
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => {
+              router.push(routes.dashboard.users.user(id || ''));
+            }}
+          >
+            Edit
+          </Button>
+        )}
       </Modal>
     </>
   );
