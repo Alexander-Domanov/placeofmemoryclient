@@ -47,14 +47,28 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     align: 'center',
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
   {
     title: 'Updated At',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
     align: 'center',
-    render: (text: string) => convertDateToFormat(text),
+    render: (text: string) => (
+      <Typography.Text>
+        {convertDateToFormat(text, 'DD.MM.YYYY')} &nbsp;
+        <span className="text-neutral-400">
+          {convertDateToFormat(text, 'HH:mm')}
+        </span>
+      </Typography.Text>
+    ),
   },
 
   {

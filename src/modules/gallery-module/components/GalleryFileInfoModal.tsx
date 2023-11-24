@@ -25,6 +25,7 @@ import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { DeleteConfirmationModal } from '@/components';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 type FormValues = {
   alt: string;
@@ -78,7 +79,7 @@ const GalleryFileDetails: FC<{ file: IExtendGalleryFile }> = ({ file }) => {
 
       <List.Item draggable>
         <span className="text-neutral-400">Created At: &nbsp;</span>
-        {file?.createdAt}
+        {convertDateToFormat(file?.createdAt)}
       </List.Item>
 
       <List.Item draggable>
