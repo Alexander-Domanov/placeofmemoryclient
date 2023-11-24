@@ -31,6 +31,22 @@ export const PersonsSearchForm: FC = () => {
     if (router.query.lastName) {
       setLastName(router.query.lastName as string);
     }
+
+    if (router.query.birthDate) {
+      setBirthDate(router.query.birthDate as string);
+    }
+
+    if (router.query.country) {
+      setCountry(router.query.country as string);
+    }
+
+    if (router.query.city) {
+      setCity(router.query.city as string);
+    }
+
+    if (router.query.deathDate) {
+      setDeathDate(router.query.deathDate as string);
+    }
   }, [router.query]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -45,6 +61,7 @@ export const PersonsSearchForm: FC = () => {
       ...(deathDate && { deathDate }),
       ...(filterConditionBirthDate && { filterConditionBirthDate }),
       ...(filterConditionDeathDate && { filterConditionDeathDate }),
+      page: 1,
     };
 
     router.push({
@@ -53,14 +70,18 @@ export const PersonsSearchForm: FC = () => {
     });
   };
 
+  const onClear = () => {
+    router.push(routes.persons.index);
+  };
+
   return (
     <form
-      className="max-w-2xl md:max-w-full"
+      className="max-w-3xl md:max-w-full"
       ref={formRef}
       onSubmit={onSubmit}
       action={routes.persons.index}
     >
-      <div className="grid grid-cols-[1fr_1fr_2fr] gap-3 sm:grid-cols-2 sm:gap-3">
+      <div className="grid grid-cols-[1fr_1fr_1fr] gap-3 lg:grid-cols-[1fr_1fr_240px] sm:grid-cols-2 sm:gap-3">
         <div className="sm:order-1">
           <Input
             type="text"
@@ -83,7 +104,7 @@ export const PersonsSearchForm: FC = () => {
           />
         </div>
 
-        <div className="sm:order-5 flex space-x-1">
+        <div className="sm:order-5 grid grid-cols-[90px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
           <select
             id="filterConditionBirthDate"
             className="block focus:outline-none rounded-md bg-dark-700 text-dark-150 focus:outline-0 px-3 py-2 text-xs border-dark-300 border-[1px]"
@@ -101,6 +122,7 @@ export const PersonsSearchForm: FC = () => {
             id="birthDate"
             value={birthDate}
             maxLength={4}
+            className="flex-grow"
             error={
               yup.number().min(0).max(currentYear).isValidSync(+birthDate) &&
               (!birthDate || birthDate.length === 4)
@@ -135,7 +157,7 @@ export const PersonsSearchForm: FC = () => {
           />
         </div>
 
-        <div className="sm:order-6 flex space-x-1">
+        <div className="sm:order-6 grid grid-cols-[90px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
           <select
             id="filterConditionDeathDate"
             className="block focus:outline-none rounded-md bg-dark-700 text-dark-150 focus:outline-0 px-3 py-2 text-xs border-dark-300 border-[1px]"
@@ -164,13 +186,20 @@ export const PersonsSearchForm: FC = () => {
             onChange={(e) => setDeathDate(e.target.value)}
           />
         </div>
+      </div>
+
+      <div className="flex items-center gap-3 sm:gap-8 mt-4 flex-wrap">
+        <Button variant="default" size="sm" className="sm:w-full">
+          Пошук
+        </Button>
 
         <Button
           variant="default"
           size="sm"
-          className="sm:col-span-2 sm:order-9"
+          className="sm:w-full"
+          onClick={onClear}
         >
-          Пошук
+          Clear
         </Button>
       </div>
     </form>

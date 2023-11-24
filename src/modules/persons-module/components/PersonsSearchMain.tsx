@@ -1,6 +1,4 @@
 import { FC } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { routes } from '@/common/routing/routes';
@@ -8,6 +6,7 @@ import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { IGetPersonsResponse } from '@/types';
 import { PersonsSearchForm } from '@/modules/persons-module/components/PersonsSearchForm';
+import { PersonsItemMain } from '@/modules/persons-module/components/PersonsItemMain';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -17,11 +16,27 @@ export const PersonsSearchMain: FC<Props> = ({ persons }) => {
   const router = useRouter();
 
   const onPageChange = (page: number) => {
-    if (page === 1) {
-      router.push(routes.persons.index);
-    } else {
-      router.push(`${routes.persons.page(page)}`);
-    }
+    router.push({
+      pathname: routes.persons.search(),
+      query: {
+        ...router.query,
+        page,
+      },
+    });
+    // if (page === 1) {
+    //   router.push({
+    //     pathname: routes.persons.search(),
+    //     query: router.query,
+    //   });
+    // } else {
+    //   router.push({
+    //     pathname: routes.persons.search(),
+    //     query: {
+    //       ...router.query,
+    //       page,
+    //     },
+    //   });
+    // }
   };
 
   return (
@@ -45,28 +60,7 @@ export const PersonsSearchMain: FC<Props> = ({ persons }) => {
         <div className="mt-10">
           <div className="grid grid-cols-6 gap-4 lg:grid-cols-4  sm:grid-cols-2">
             {persons?.items.map((person) => (
-              <div
-                key={person.id}
-                className="hover:shadow-iconHover shadow-lg transition-all duration-300"
-              >
-                <Link
-                  href={routes.persons.person(person.slug)}
-                  className="flex flex-col h-full"
-                >
-                  <div className="aspect-[170/210] relative flex-shrink-0">
-                    <Image
-                      src={person.photos[0]?.versions.medium.url}
-                      fill
-                      alt={`${person.firstName} ${person.lastName}`}
-                      className="object-cover rounded-t-sm"
-                    />
-                  </div>
-
-                  <div className="bg-dark-300 flex-grow text-center text-xs font-bold p-2 rounded-b-sm">
-                    {person.firstName} {person.lastName}
-                  </div>
-                </Link>
-              </div>
+              <PersonsItemMain person={person} key={person.id} />
             ))}
           </div>
 
@@ -75,7 +69,7 @@ export const PersonsSearchMain: FC<Props> = ({ persons }) => {
               Нічога не знойдзена
             </div>
           ) : (
-            <div className="mt-10 md:mt-8">
+            <div className="mt-20 md:mt-10">
               <AntPagination
                 page={Number(router.query.page) || 1}
                 pageSize={SITE_PERSONS_PER_PAGE}

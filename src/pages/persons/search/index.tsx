@@ -29,7 +29,7 @@ const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data: persons } = await getPersonsPublic({
     pageSize: SITE_PERSONS_PER_PAGE,
-    pageNumber: 1,
+    pageNumber: context.query.page ? +context.query.page : 1,
     lang: context.locale,
     name: context.query.name as string,
     lastName: context.query.lastName as string,

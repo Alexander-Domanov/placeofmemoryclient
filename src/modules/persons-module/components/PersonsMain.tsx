@@ -1,13 +1,12 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { routes } from '@/common/routing/routes';
 import { IGetPersonsResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_PERSONS_PER_PAGE } from '../constants/persons-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { PersonsSearchForm } from './PersonsSearchForm';
+import { PersonsItemMain } from '@/modules/persons-module/components/PersonsItemMain';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -45,28 +44,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-10">
           <div className="grid grid-cols-6 gap-4 lg:grid-cols-4  sm:grid-cols-2">
             {persons?.items.map((person) => (
-              <div
-                key={person.id}
-                className="hover:shadow-iconHover shadow-lg transition-all duration-300"
-              >
-                <Link
-                  href={routes.persons.person(person.slug)}
-                  className="flex flex-col h-full"
-                >
-                  <div className="aspect-[170/210] relative flex-shrink-0">
-                    <Image
-                      src={person.photos[0]?.versions.medium.url}
-                      fill
-                      alt={`${person.firstName} ${person.lastName}`}
-                      className="object-cover rounded-t-sm"
-                    />
-                  </div>
-
-                  <div className="bg-dark-300 flex-grow text-center text-xs font-bold p-2 rounded-b-sm">
-                    {person.firstName} {person.lastName}
-                  </div>
-                </Link>
-              </div>
+              <PersonsItemMain person={person} key={person.id} />
             ))}
           </div>
 
