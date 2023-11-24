@@ -75,7 +75,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
               Нічога не знойдзена
             </div>
           ) : (
-            <div className="mt-10 md:mt-8">
+            <div className="mt-20 md:mt-10">
               <AntPagination
                 page={Number(router.query.page) || 1}
                 pageSize={SITE_PERSONS_PER_PAGE}

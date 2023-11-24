@@ -155,7 +155,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
               Няма артыкулаў
             </div>
           ) : (
-            <div className="mt-10 md:mt-8">
+            <div className="mt-20 md:mt-10">
               <AntPagination
                 page={Number(router.query.page) || 1}
                 pageSize={SITE_ARTICLES_PER_PAGE}

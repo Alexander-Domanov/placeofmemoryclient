@@ -172,6 +172,7 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
                           lng: place?.location?.lng || 0,
                         }}
                         locations={place.personsLocation}
+                        markerIcon
                       />
                     </div>
                   )}
