@@ -85,10 +85,13 @@ export const CreatePlace: FC = () => {
       form.setFieldsValue({
         country: selectedPlaceFromMap.country,
         city: selectedPlaceFromMap.city,
-        nameCemetery: selectedPlaceFromMap.formattedAddress,
         location: selectedPlaceFromMap.location.place,
       });
-      setSelectedLocation(selectedPlaceFromMap.location as ILocation);
+      setSelectedLocation({
+        place: selectedPlaceFromMap.formattedAddress,
+        lat: selectedPlaceFromMap.location.lat,
+        lng: selectedPlaceFromMap.location.lng,
+      } as ILocation);
     }
   }, [selectedPlaceFromMap]);
 

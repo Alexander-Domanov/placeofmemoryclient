@@ -104,12 +104,17 @@ export const CreatePerson: FC = () => {
 
   useEffect(() => {
     if (selectedPlaceFromMap) {
+      console.log(selectedPlaceFromMap, '------0');
       form.setFieldsValue({
-        location: selectedPlaceFromMap.location.place,
+        location: selectedPlaceFromMap.formattedAddress,
         country: selectedPlaceFromMap.country,
         city: selectedPlaceFromMap.city,
       });
-      setSelectedLocation(selectedPlaceFromMap.location as ILocation);
+      setSelectedLocation({
+        place: selectedPlaceFromMap.formattedAddress,
+        lat: selectedPlaceFromMap.location.lat,
+        lng: selectedPlaceFromMap.location.lng,
+      } as ILocation);
     }
   }, [selectedPlaceFromMap]);
 
@@ -141,6 +146,8 @@ export const CreatePerson: FC = () => {
       } as ILocation,
       ids: values.photo?.map((file) => file.response?.uploadId || ''),
     };
+
+    console.log(form, '------1');
 
     createPerson(form, {
       onSuccess: (data) => {

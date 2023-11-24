@@ -144,7 +144,6 @@ export const PlaceEdit: FC = () => {
       form.setFieldsValue({
         country: selectedPlaceFromMap.country,
         city: selectedPlaceFromMap.city,
-        nameCemetery: selectedPlaceFromMap.formattedAddress,
         location: selectedPlaceFromMap.location.place,
       });
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
