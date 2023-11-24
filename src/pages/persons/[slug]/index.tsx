@@ -44,8 +44,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: personsBy } = await getPersonsPublic(20, 1, 'by');
-  const { data: personsRu } = await getPersonsPublic(20, 1, 'ru');
+  const { data: personsBy } = await getPersonsPublic({});
+  const { data: personsRu } = await getPersonsPublic({});
 
   const pathsBy = personsBy.items.map((person) => ({
     params: { slug: person.slug },

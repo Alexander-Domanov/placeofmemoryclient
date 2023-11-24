@@ -44,11 +44,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const { data: persons } = await getPersonsPublic(
-    SITE_PERSONS_PER_PAGE,
-    +page,
-    context.locale
-  );
+  const { data: persons } = await getPersonsPublic({
+    pageSize: SITE_PERSONS_PER_PAGE,
+    pageNumber: +page,
+    lang: context.locale,
+  });
 
   const { data: contacts } = await getContacts();
 
@@ -62,7 +62,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: personsBy } = await getPersonsPublic(SITE_PERSONS_PER_PAGE);
+  const { data: personsBy } = await getPersonsPublic({
+    pageSize: SITE_PERSONS_PER_PAGE,
+  });
 
   const pathsBy = generateArray(2, personsBy.pagesCount).map((page) => ({
     params: { page: `${page}` },
