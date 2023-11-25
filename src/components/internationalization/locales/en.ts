@@ -1,4 +1,5 @@
 import { LocaleType } from '@/components/internationalization';
+import { MaxAllowedFileSize } from '@/common/constants';
 
 export const en: LocaleType = {
   404: {
@@ -276,5 +277,95 @@ export const en: LocaleType = {
       search: 'Search',
       button: 'Zoom to Poland',
     },
+    gallery: {
+      titleLink: 'Dashboard',
+      title: 'Gallery',
+      // button: 'Add Image',
+      // search: 'Search',
+      // noData: 'No data',
+      image: {
+        title: 'File Information',
+        alt: 'Alt',
+        status: 'Status',
+        type: 'Type',
+        mime: 'Mime',
+        fileSize: 'File Size',
+        demensions: 'Demensions',
+        owner: 'Owner',
+        createdAt: 'Created At',
+        relations: {
+          article: {
+            id: 'ArticleID',
+            title: 'Article',
+          },
+          place: {
+            id: 'PlaceID',
+            title: 'Place',
+          },
+          person: {
+            id: 'PersonID',
+            title: 'Person',
+          },
+        },
+        notifications: {
+          success: {
+            title: 'Image created successfully',
+            description: 'You will be redirected to the image page',
+          },
+          upload: {
+            success: {
+              title: 'File uploaded successfully',
+              description: 'All files uploaded successfully',
+            },
+            errorType: {
+              title: 'File upload error',
+              description: 'File type is not supported',
+            },
+            errorSize: {
+              title: 'File upload error',
+              description: `File is greater then ${MaxAllowedFileSize}MB`,
+            },
+            remove: {
+              title: 'File removed',
+              description: 'File removed successfully',
+            },
+            failed: {
+              title: 'File upload error',
+              description: 'File upload failed',
+            },
+          },
+          update: {
+            title: 'Image updated successfully',
+            description: 'You will be redirected to the image page',
+          },
+          delete: {
+            title: 'Image deleted successfully',
+            description: 'You will be redirected to the gallery page',
+          },
+          error: 'Error creating image',
+        },
+      },
+    },
+    selectStatus: {
+      all: 'All',
+      draft: 'Draft',
+      pending: 'Send for review',
+      published: 'Publish',
+      archived: 'Archive',
+    },
+    selectFileType: {
+      all: 'All',
+      articles: 'Articles',
+      places: 'Places',
+      people: 'People',
+    },
+    delete: {
+      title: 'Delete',
+      titleConfirm: 'Confirm deletion',
+      description: 'Are you sure you want to delete this item?',
+      cancel: 'Cancel',
+      delete: 'Delete',
+    },
+    save: 'Save',
   },
 };

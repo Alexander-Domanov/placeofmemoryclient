@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Modal, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useTranslation } from '@/components/internationalization';
 
 interface DeleteConfirmationModalProps<T> {
   item: T | null;
@@ -13,6 +14,7 @@ export function DeleteConfirmationModal<T>({
   onDelete,
   disabled,
 }: DeleteConfirmationModalProps<T>) {
+  const { t } = useTranslation();
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -34,7 +36,7 @@ export function DeleteConfirmationModal<T>({
       <Button
         type="primary"
         danger
-        title="Delete"
+        title={t.dashboard.delete.title}
         icon={<DeleteOutlined />}
         style={{
           cursor: 'pointer',
@@ -43,16 +45,16 @@ export function DeleteConfirmationModal<T>({
         disabled={disabled}
         onClick={showDeleteModal}
       >
-        Delete
+        {t.dashboard.delete.title}
       </Button>
 
       <Modal
-        title="Confirm deletion"
+        title={t.dashboard.delete.titleConfirm}
         open={isDeleteModalVisible}
         onOk={confirmDeletion}
         onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
+        okText={t.dashboard.delete.delete}
+        cancelText={t.dashboard.delete.cancel}
         okButtonProps={{
           icon: <DeleteOutlined />,
           onMouseEnter: () => setIsHovered(true),
@@ -68,7 +70,7 @@ export function DeleteConfirmationModal<T>({
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete this item?
+              {t.dashboard.delete.description}
             </span>
           </div>
         </Space>

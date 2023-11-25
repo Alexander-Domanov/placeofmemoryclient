@@ -2,11 +2,8 @@ import { notification, Upload, UploadProps } from 'antd';
 import { UploadFile } from 'antd/es/upload/interface';
 import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
 import { IGalleryFile } from '@/types';
-import {
-  IMAGE_FORMATS,
-  MAX_FILE_SIZE,
-  MaxAllowedFileSize,
-} from '@/common/constants';
+import { IMAGE_FORMATS, MAX_FILE_SIZE } from '@/common/constants';
+import { useTranslation } from '@/components/internationalization';
 
 export const useUpload = (
   setFileList: (fileList: UploadFile[]) => void,
@@ -15,6 +12,7 @@ export const useUpload = (
   maxCount = 1
 ) => {
   const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
+  const { t } = useTranslation();
 
   const onAllFilesUploaded = () => {
     notification.success({
@@ -37,16 +35,22 @@ export const useUpload = (
 
       if (!isImage) {
         notification.error({
-          message: 'File upload error',
-          description: `${file.name} is not an image`,
+          message:
+            t.dashboard.gallery.image.notifications.upload.errorType.title,
+          description:
+            t.dashboard.gallery.image.notifications.upload.errorType
+              .description,
           placement: 'bottomLeft',
         });
       }
 
       if (!isLT10MB) {
         notification.error({
-          message: 'File upload error',
-          description: `${file.name} is greater then ${MaxAllowedFileSize}MB`,
+          message:
+            t.dashboard.gallery.image.notifications.upload.errorSize.title,
+          description:
+            t.dashboard.gallery.image.notifications.upload.errorSize
+              .description,
           placement: 'bottomLeft',
         });
       }
@@ -66,16 +70,18 @@ export const useUpload = (
 
       if (status === 'removed') {
         notification.success({
-          message: 'File removed',
-          description: `${info.file.name} file removed successfully.`,
+          message: t.dashboard.gallery.image.notifications.upload.remove.title,
+          description:
+            t.dashboard.gallery.image.notifications.upload.remove.description,
           placement: 'bottomLeft',
         });
       }
 
       if (status === 'error') {
         notification.error({
-          message: 'File upload failed',
-          description: `${info.file.name} file upload failed.`,
+          message: t.dashboard.gallery.image.notifications.upload.failed.title,
+          description:
+            t.dashboard.gallery.image.notifications.upload.failed.description,
           placement: 'bottomLeft',
         });
       }

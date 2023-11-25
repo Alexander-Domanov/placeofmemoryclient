@@ -1,4 +1,5 @@
 import { LocaleType } from '@/components/internationalization';
+import { MaxAllowedFileSize } from '@/common/constants';
 
 export const ru: LocaleType = {
   404: {
@@ -283,5 +284,92 @@ export const ru: LocaleType = {
       search: 'Поиск',
       button: 'Приблизить к Польше',
     },
+    gallery: {
+      titleLink: 'Приборная панель',
+      title: 'Галерея',
+      image: {
+        title: 'Информация о файле',
+        alt: 'Альт',
+        status: 'Статус',
+        type: 'Тип',
+        mime: 'Mime',
+        fileSize: 'Размер файла',
+        demensions: 'Размеры',
+        owner: 'Владелец',
+        createdAt: 'Создано',
+        relations: {
+          article: {
+            id: 'ID статьи',
+            title: 'Статья',
+          },
+          place: {
+            id: 'ID места',
+            title: 'Место',
+          },
+          person: {
+            id: 'ID личности',
+            title: 'Личность',
+          },
+        },
+        notifications: {
+          success: {
+            title: 'Изображение успешно создано',
+            description: 'Вы будете перенаправлены на страницу галереи',
+          },
+          upload: {
+            success: {
+              title: 'Файл успешно загружен',
+              description: 'Все файлы успешно загружены',
+            },
+            errorType: {
+              title: 'Ошибка загрузки файла',
+              description: 'Тип файла не поддерживается',
+            },
+            errorSize: {
+              title: 'Ошибка загрузки файла',
+              description: `Размер файла больше, чем ${MaxAllowedFileSize}МБ`,
+            },
+            remove: {
+              title: 'Файл удален',
+              description: 'Файл успешно удален',
+            },
+            failed: {
+              title: 'Ошибка загрузки файла',
+              description: 'Файл не загружен',
+            },
+          },
+          update: {
+            title: 'Изображение успешно обновлено',
+            description: 'Вы будете перенаправлены на страницу галереи',
+          },
+          delete: {
+            title: 'Изображение успешно удалено',
+            description: 'Вы будете перенаправлены на страницу галереи',
+          },
+          error: 'Ошибка создания изображения',
+        },
+      },
+    },
+    selectStatus: {
+      all: 'Все',
+      draft: 'Черновики',
+      pending: 'Отправлено на рассмотрение',
+      published: 'Опубликовано',
+      archived: 'Архив',
+    },
+    selectFileType: {
+      all: 'Все',
+      articles: 'Статьи',
+      places: 'Места',
+      people: 'Люди',
+    },
+    delete: {
+      title: 'Удалить',
+      titleConfirm: 'Подтвердите удаление',
+      description: 'Вы уверены, что хотите удалить?',
+      cancel: 'Отмена',
+      delete: 'Удалить',
+    },
+    save: 'Сохранить',
   },
 };

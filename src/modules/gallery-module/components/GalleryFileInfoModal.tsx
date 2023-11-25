@@ -26,6 +26,7 @@ import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { DeleteConfirmationModal } from '@/components';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useTranslation } from '@/components/internationalization';
 
 type FormValues = {
   alt: string;
@@ -50,61 +51,80 @@ const GalleryImage: FC<{ url: string }> = ({ url }) => {
 };
 
 const GalleryFileDetails: FC<{ file: IExtendGalleryFile }> = ({ file }) => {
+  const { t } = useTranslation();
   return (
     <List>
-      <List.Item draggable>
-        <span className="text-neutral-400">Type: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.type}: &nbsp;
+        </span>
         {file?.typeFile}
       </List.Item>
 
-      <List.Item draggable>
-        <span className="text-neutral-400">Mime: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.mime}: &nbsp;
+        </span>
         {file?.mime}
       </List.Item>
 
-      <List.Item draggable>
-        <span className="text-neutral-400">File Size: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.fileSize}: &nbsp;
+        </span>
         {file?.versions?.huge?.fileSize}
       </List.Item>
 
-      <List.Item draggable>
-        <span className="text-neutral-400">Dimensions: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.demensions}: &nbsp;
+        </span>
         {file?.versions?.huge?.width} x {file?.versions?.huge?.height}
       </List.Item>
 
-      <List.Item draggable>
-        <span className="text-neutral-400">Owner: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.owner}: &nbsp;
+        </span>
         {file?.owner?.userName}
       </List.Item>
 
-      <List.Item draggable>
-        <span className="text-neutral-400">Created At: &nbsp;</span>
+      <List.Item>
+        <span className="text-neutral-400">
+          {t.dashboard.gallery.image.createdAt}: &nbsp;
+        </span>
         {convertDateToFormat(file?.createdAt)}
       </List.Item>
 
-      <List.Item draggable>
+      <List.Item>
         <span className="text-neutral-400">
           {file?.usageInfo?.article?.id && (
             <>
-              ArticleID: {file?.usageInfo?.article?.id}
+              {t.dashboard.gallery.image.relations.article.id}:{' '}
+              {file?.usageInfo?.article?.id}
               <br />
-              Title: {file?.usageInfo?.article?.title}
+              {t.dashboard.gallery.image.relations.article.title}:{' '}
+              {file?.usageInfo?.article?.title}
               &nbsp;
             </>
           )}
           {file?.usageInfo?.place?.id && (
             <>
-              PlaceID: {file?.usageInfo?.place?.id}
+              {t.dashboard.gallery.image.relations.place.id}:{' '}
+              {file?.usageInfo?.place?.id}
               <br />
-              Title: {file?.usageInfo?.place?.title}
+              {t.dashboard.gallery.image.relations.place.title}:{' '}
+              {file?.usageInfo?.place?.title}
               &nbsp;
             </>
           )}
           {file?.usageInfo?.person?.id && (
             <>
-              PersonID: {file?.usageInfo?.person?.id}
+              {t.dashboard.gallery.image.relations.person.id}:{' '}
+              {file?.usageInfo?.person?.id}
               <br />
-              Title: {file?.usageInfo?.person?.title}
+              {t.dashboard.gallery.image.relations.person.title}:{' '}
+              {file?.usageInfo?.person?.title}
               &nbsp;
             </>
           )}
@@ -129,14 +149,22 @@ const GalleryForm: FC<{
   onSubmit,
   onDeleteFile,
 }) => {
+  const { t } = useTranslation();
   return (
     <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-      <Form.Item label="Alt" name="alt">
-        <Input placeholder="Alt" disabled={isDisabled} />
+      <Form.Item label={t.dashboard.gallery.image.alt} name="alt">
+        <Input
+          placeholder={t.dashboard.gallery.image.alt}
+          disabled={isDisabled}
+        />
       </Form.Item>
 
-      <Form.Item label="Status" name="status" style={{ marginBottom: 0 }}>
-        <Input placeholder="Status" disabled />
+      <Form.Item
+        label={t.dashboard.gallery.image.status}
+        name="status"
+        style={{ marginBottom: 0 }}
+      >
+        <Input placeholder={t.dashboard.gallery.image.status} disabled />
         {/* <Select> */}
         {/*  <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
         {/*  <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
@@ -158,7 +186,7 @@ const GalleryForm: FC<{
           icon={<SaveOutlined />}
           disabled={isDisabled}
         >
-          Save
+          {t.dashboard.save}
         </Button>
 
         <DeleteConfirmationModal<IExtendGalleryFile>
@@ -172,6 +200,8 @@ const GalleryForm: FC<{
 };
 
 export const GalleryFileInfoModal: FC = () => {
+  const { t } = useTranslation();
+
   const { isOpen, uploadId, setIsOpen, setUploadId } = useDashboardModalsStore(
     (state) => state.fileInfoModal
   );
@@ -206,7 +236,9 @@ export const GalleryFileInfoModal: FC = () => {
     deleteGalleryFileMutateAsync(file?.uploadId, {
       onSuccess() {
         notification.success({
-          message: 'File was deleted successfully',
+          message: t.dashboard.gallery.image.notifications.success.title,
+          description:
+            t.dashboard.gallery.image.notifications.success.description,
           placement: 'bottomLeft',
         });
         setIsOpen(false);
@@ -221,7 +253,7 @@ export const GalleryFileInfoModal: FC = () => {
       status: values.status.toUpperCase(),
     }).then(() => {
       notification.success({
-        message: 'File was updated successfully',
+        message: t.dashboard.gallery.image.notifications.update.title,
         placement: 'bottomLeft',
       });
     });
@@ -263,7 +295,7 @@ export const GalleryFileInfoModal: FC = () => {
           open={isOpen}
           onCancel={onCancel}
           footer={null}
-          title="File Info"
+          title={t.dashboard.gallery.image.title}
           destroyOnClose
           width={1000}
           // className="smooth-transition"

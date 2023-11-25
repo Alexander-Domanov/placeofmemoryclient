@@ -17,22 +17,15 @@ import { CustomSelectInput } from '@/components';
 import { routes } from '@/common/routing/routes';
 import { FileStatuses, ImageResourceType, Role } from '@/types';
 import {
-  fileStatusOptions,
-  typeFileOptions,
+  FileStatusOptions,
+  TypeFileOptions,
 } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.gallery.index,
-    text: 'Gallery',
-    withLink: false,
-  }),
-];
+import { useTranslation } from '@/components/internationalization';
 
 export const Gallery: FC = () => {
+  const { t } = useTranslation();
+
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(18);
   const [status, setStatus] = useState<string>(FileStatuses.ALL.toLowerCase());
@@ -68,16 +61,32 @@ export const Gallery: FC = () => {
     setImageType(value.value);
   };
 
+  const fileStatuses = FileStatusOptions(t);
+
   const selectInputOptions =
     me?.role === Role.ADMIN
       ? [
-          ...fileStatusOptions,
+          ...fileStatuses,
           {
-            label: 'Archived',
+            label: t.dashboard.selectStatus.archived,
             value: FileStatuses.ARCHIVED,
           },
         ]
-      : fileStatusOptions;
+      : fileStatuses;
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.gallery.titleLink,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.gallery.index,
+      text: t.dashboard.gallery.title,
+      withLink: false,
+    }),
+  ];
+  const typeFileOptions = TypeFileOptions(t);
 
   return (
     <Flex gap="large" vertical>
@@ -102,14 +111,20 @@ export const Gallery: FC = () => {
             me?.role === Role.AUTHOR ||
             me?.role === Role.EDITOR) && (
             <CustomSelectInput
-              defaultValue={{ value: ImageResourceType.ALL, label: 'All' }}
+              defaultValue={{
+                value: ImageResourceType.ALL,
+                label: t.dashboard.selectFileType.all,
+              }}
               options={typeFileOptions}
               onChange={onTypeChange}
             />
           )}
 
           <CustomSelectInput
-            defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
+            defaultValue={{
+              value: FileStatuses.ALL,
+              label: t.dashboard.selectStatus.all,
+            }}
             options={selectInputOptions}
             onChange={onStatusChange}
           />

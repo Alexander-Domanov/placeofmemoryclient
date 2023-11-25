@@ -6,25 +6,24 @@ import { routes } from '@/common/routing/routes';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useTranslation } from '@/components/internationalization';
 
-const breadcrumbs = (t: any) => [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({
-    key: routes.dashboard.index,
-    text: t.dashboard.map.titleLink,
-    withLink: false,
-  }),
-];
-
 export const Dashboard: FC = () => {
-  // @ts-ignore
   const { persons, isFetching } = usePersonsForMap();
 
   const { t } = useTranslation();
 
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.map.titleLink,
+      withLink: false,
+    }),
+  ];
+
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(t)} />
+        <Breadcrumb items={breadcrumbs} />
       </div>
 
       <Flex gap="large" vertical>

@@ -4,6 +4,7 @@ import { InboxOutlined } from '@ant-design/icons';
 import { useDeleteGalleryFile } from '@/modules/gallery-module/hooks/useDeleteGalleryFile';
 import { IGalleryFile } from '@/types';
 import { IMAGE_FORMATS, MAX_FILE_SIZE } from '@/common/constants';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export const UploadGalleryModal: FC<Props> = ({
   setIsOpen,
   refetch,
 }) => {
+  const { t } = useTranslation();
   const { deleteGalleryFileMutateAsync } = useDeleteGalleryFile();
 
   const onAllFilesUploaded = () => {

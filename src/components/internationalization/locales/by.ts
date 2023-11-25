@@ -1,3 +1,5 @@
+import { MaxAllowedFileSize } from '@/common/constants';
+
 export const by = {
   404: {
     description: 'Гэтую старонку не ўдалося знайсці',
@@ -293,6 +295,93 @@ export const by = {
       search: 'Пошук',
       button: 'Прыблізіць да Польшчы',
     },
+    gallery: {
+      titleLink: 'Прыборная панэль',
+      title: 'Галерэя',
+      image: {
+        title: 'Інфармацыя пра файл',
+        alt: 'Альт',
+        status: 'Статус',
+        type: 'Тып',
+        mime: 'Mime',
+        fileSize: 'Памер файла',
+        demensions: 'Размеры',
+        owner: 'Уладальнік',
+        createdAt: 'Створана',
+        relations: {
+          article: {
+            id: 'ID артыкула',
+            title: 'Артыкул',
+          },
+          place: {
+            id: 'ID месца',
+            title: 'Месца',
+          },
+          person: {
+            id: 'ID асобы',
+            title: 'Асоба',
+          },
+        },
+        notifications: {
+          success: {
+            title: 'Файл створаны паспяхова',
+            description: 'Вы будзеце перанакіраваны на старонку галерэі',
+          },
+          upload: {
+            success: {
+              title: 'Файл паспяхова загружаны',
+              description: 'Усе файлы паспяхова загружаны',
+            },
+            errorType: {
+              title: 'Памылка загрузкі файла',
+              description: 'Тып файла не падтрымліваецца',
+            },
+            errorSize: {
+              title: 'Памылка загрузкі файла',
+              description: `Памер файла больш, чым ${MaxAllowedFileSize}МБ`,
+            },
+            remove: {
+              title: 'Файл выдалены',
+              description: 'Файл паспяхова выдалены',
+            },
+            failed: {
+              title: 'Памылка загрузкі файла',
+              description: 'Файл не загружаны',
+            },
+          },
+          update: {
+            title: 'Файл абноўлены паспяхова',
+            description: 'Вы будзеце перанакіраваны на старонку галерэі',
+          },
+          delete: {
+            title: 'Файл выдалены паспяхова',
+            description: 'Вы будзеце перанакіраваны на старонку галерэі',
+          },
+          error: 'Памылка стварэння файла',
+        },
+      },
+    },
+    selectStatus: {
+      all: 'Усе',
+      draft: 'Чарнавікі',
+      pending: 'Адпраўлены на праверку',
+      published: 'Апублікаваны',
+      archived: 'Архіў',
+    },
+    selectFileType: {
+      all: 'Усе',
+      articles: 'Артыкулы',
+      places: 'Месца',
+      people: 'Людзі',
+    },
+    delete: {
+      title: 'Выдаліць',
+      titleConfirm: 'Пацвердзіце выдаленьне',
+      description: 'Вы ўпэўненыя, што хочаце выдаліць?',
+      cancel: 'Адмена',
+      delete: 'Выдаліць',
+    },
+    save: 'Захаваць',
   },
 };
 
