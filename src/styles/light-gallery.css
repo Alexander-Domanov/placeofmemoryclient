@@ -2,3 +2,12 @@
 @import 'lightgallery/css/lg-thumbnail.css';
 @import 'lightgallery/css/lg-rotate.css';
 @import 'lightgallery/css/lg-zoom.css';
+
+.lg-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.lg-outer .lg-thumb-outer {
+    background-color: transparent;
+    opacity: 1;
+}
