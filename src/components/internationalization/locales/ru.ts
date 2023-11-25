@@ -263,4 +263,20 @@ export const ru: LocaleType = {
       },
     },
   },
+  dashboard: {
+    indexTitle: 'Приборная панель',
+    menu: {
+      dashboard: 'Приборная панель',
+      map: 'Карта',
+      gallery: 'Галерея',
+      content: 'Контент',
+      articles: 'Статьи',
+      places: 'Места',
+      people: 'Люди',
+      settings: 'Настройки',
+      users: 'Пользователи',
+      contacts: 'Контакты',
+      languages: 'Языки',
+    },
+  },
 };

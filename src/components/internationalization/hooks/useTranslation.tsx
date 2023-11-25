@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { LocaleType, by, ru } from '@/components/internationalization';
+import { by, en, LocaleType, ru } from '@/components/internationalization';
 
 export const useTranslation = () => {
   const { locale, defaultLocale } = useRouter();
@@ -7,6 +7,7 @@ export const useTranslation = () => {
   const translations: Record<string, LocaleType> = {
     by,
     ru,
+    en,
   };
 
   const t: LocaleType = locale !== undefined ? translations[locale] : by;

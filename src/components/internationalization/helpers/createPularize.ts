@@ -7,3 +7,4 @@ export const createPluralize = (locale: string) => {
 };
 export const pluralizeBy = createPluralize('by');
 export const pluralizeRy = createPluralize('ru');
+export const pluralizeEn = createPluralize('en');

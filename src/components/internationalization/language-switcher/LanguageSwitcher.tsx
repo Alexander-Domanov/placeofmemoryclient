@@ -17,6 +17,7 @@ interface Language {
 const languages: Language[] = [
   { slug: 'by', title: 'Бел' },
   { slug: 'ru', title: 'Рус' },
+  { slug: 'en', title: 'Eng' },
 ];
 
 const ChevronDownIcon: FC = () => (

@@ -273,6 +273,22 @@ export const by = {
       },
     },
   },
+  dashboard: {
+    indexTitle: 'Прыборная панэль',
+    menu: {
+      dashboard: 'Прыборная панэль',
+      map: 'Мапа',
+      gallery: 'Галерэя',
+      content: 'Кантэнт',
+      articles: 'Артыкулы',
+      places: 'Месца',
+      people: 'Людзі',
+      settings: 'Наладжваньне',
+      users: 'Карыстальнікі',
+      contacts: 'Кантакты',
+      languages: 'Мовы',
+    },
+  },
 };
 
 export type LocaleType = typeof by;
