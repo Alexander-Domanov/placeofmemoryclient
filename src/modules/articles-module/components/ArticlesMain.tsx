@@ -10,6 +10,7 @@ import AntPagination from '@/components/pagination/AntPagination';
 import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useArticlesPublic } from '@/modules/articles-module/hooks/useArticlesPublic';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   posts: IGetArticlesResponse;
@@ -17,6 +18,7 @@ interface Props {
 
 export const ArticlesMain: FC<Props> = ({ posts }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [searchResults, setSearchResults] = useState<IArticle[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -53,13 +55,20 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const isDropdownOpen = searchResults.length > 0;
 
+  const {
+    title: titleT,
+    article: articleT,
+    search: searchT,
+    noData: noDataT,
+  } = t.articles.page;
+
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
-        <BreadcrumbMain items={[{ text: 'Артыкулы' }]} />
+        <BreadcrumbMain items={[{ text: titleT }]} />
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
-          <h2 className="text-light-300 text-5xl sm:text-3xl">Артыкулы</h2>
+          <h2 className="text-light-300 text-5xl sm:text-3xl">{articleT}</h2>
         </div>
 
         <div className="mt-6 h-[1px] bg-dark-300" />
@@ -71,7 +80,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
             </span>
 
             <input
-              placeholder="ЗНАЙСЦІ ПА ЗАГАЛОЎКУ"
+              placeholder={searchT}
               type="text"
               title={inputValue}
               className={`h-10 sm:h-8 w-96 md:w-80 sm:w-full flex-shrink-0 bg-dark-300 shadow-md hover:shadow-icon px-12 sm:px-10 outline-none ${
@@ -152,7 +161,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
           {posts?.items.length === 0 ? (
             <div className="flex justify-center mt-10 text-2xl text-dark-100">
-              Няма артыкулаў
+              {noDataT}
             </div>
           ) : (
             <div className="mt-20 md:mt-10">

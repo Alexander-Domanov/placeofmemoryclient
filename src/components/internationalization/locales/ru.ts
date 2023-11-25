@@ -144,6 +144,15 @@ export const ru: LocaleType = {
   },
   articles: {
     indexTitle: 'Статьи',
+    page: {
+      title: 'Статьи',
+      article: 'Статьи',
+      noData: 'Нет данных',
+      search: 'НАЙТИ ПО ЗАГОЛОВКУ',
+    },
+    article: {
+      prev: 'Предыдущий',
+    },
   },
   places: {
     indexTitle: 'Места',

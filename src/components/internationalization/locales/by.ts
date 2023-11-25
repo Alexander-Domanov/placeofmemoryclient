@@ -152,7 +152,16 @@ export const by = {
     },
   },
   articles: {
-    indexTitle: 'Артыкул',
+    indexTitle: 'Артыкулы',
+    page: {
+      title: 'Артыкулы',
+      article: 'Артыкулы',
+      noData: 'Няма артыкулаў',
+      search: 'ЗНАЙСЦІ ПА ЗАГАЛОЎКУ',
+    },
+    article: {
+      prev: 'Папярэдні',
+    },
   },
   places: {
     indexTitle: 'Месца',
