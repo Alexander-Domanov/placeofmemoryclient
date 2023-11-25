@@ -104,7 +104,7 @@ export const PersonsSearchForm: FC = () => {
           />
         </div>
 
-        <div className="sm:order-5 grid grid-cols-[90px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
+        <div className="sm:order-5 grid grid-cols-[93px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
           <select
             id="filterConditionBirthDate"
             className="block focus:outline-none rounded-md bg-dark-700 text-dark-150 focus:outline-0 px-3 py-2 text-xs border-dark-300 border-[1px]"
@@ -113,8 +113,8 @@ export const PersonsSearchForm: FC = () => {
               setFilterConditionBirthDate(e.target.value as FilterCondition);
             }}
           >
-            <option value={FilterCondition.gte}>БОЛЬШ</option>
-            <option value={FilterCondition.lte}>МЕНЬШ</option>
+            <option value={FilterCondition.gte}>БОЛЬШ ЧЫМ</option>
+            <option value={FilterCondition.lte}>МЕНЬШ ЧЫМ</option>
           </select>
 
           <Input
@@ -157,7 +157,7 @@ export const PersonsSearchForm: FC = () => {
           />
         </div>
 
-        <div className="sm:order-6 grid grid-cols-[90px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
+        <div className="sm:order-6 grid grid-cols-[93px_1fr] gap-1 sm:grid-cols-[1fr_2fr] sm:col-span-2">
           <select
             id="filterConditionDeathDate"
             className="block focus:outline-none rounded-md bg-dark-700 text-dark-150 focus:outline-0 px-3 py-2 text-xs border-dark-300 border-[1px]"
@@ -166,8 +166,8 @@ export const PersonsSearchForm: FC = () => {
               setFilterConditionDeathDate(e.target.value as FilterCondition)
             }
           >
-            <option value={FilterCondition.gte}>БОЛЬШ</option>
-            <option value={FilterCondition.lte}>МЕНЬШ</option>
+            <option value={FilterCondition.gte}>БОЛЬШ ЧЫМ</option>
+            <option value={FilterCondition.lte}>МЕНЬШ ЧЫМ</option>
           </select>
 
           <Input
@@ -199,7 +199,7 @@ export const PersonsSearchForm: FC = () => {
           className="sm:w-full"
           onClick={onClear}
         >
-          Clear
+          Ачысціць
         </Button>
       </div>
     </form>

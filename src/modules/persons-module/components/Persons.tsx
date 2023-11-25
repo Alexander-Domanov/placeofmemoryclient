@@ -75,8 +75,8 @@ export const Persons: FC = () => {
   const [isShowMoreFilters, setIsShowMoreFilters] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
 
-  const name = useDebounce(pagination.searchName.toLowerCase(), 500);
-  const lastName = useDebounce(pagination.searchLastName.toLowerCase(), 500);
+  const name = useDebounce(pagination.searchName, 500);
+  const lastName = useDebounce(pagination.searchLastName, 500);
   const country = useDebounce(pagination.searchCountry, 500);
   const city = useDebounce(pagination.searchCity, 500);
 
