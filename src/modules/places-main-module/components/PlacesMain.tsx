@@ -9,7 +9,6 @@ import { Input } from '@/ui';
 import { useTranslation } from '@/components/internationalization';
 import { IGetPlacesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
-import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 
 interface IProps {
@@ -21,11 +20,12 @@ export const PlacesMain = ({ places }: IProps) => {
   const [name, setName] = useState<string>('');
   const [country, setCountry] = useState<string>('');
   const [city, setCity] = useState<string>('');
-  const vName = useDebounce(name, 1000);
-  const vCountry = useDebounce(country, 1000);
-  const vCity = useDebounce(city, 1000);
+  const vName = useDebounce(name, 500);
+  const vCountry = useDebounce(country, 500);
+  const vCity = useDebounce(city, 500);
   const pageParams = query.page as string;
   const { dataPlaces } = useGetPlacesMain({
+    pageNumber: Number(pageParams),
     name: vName,
     city: vCity,
     country: vCountry,
@@ -128,7 +128,7 @@ export const PlacesMain = ({ places }: IProps) => {
                 <div className="mt-20 md:mt-10">
                   <AntPagination
                     page={Number(pageParams) || 1}
-                    pageSize={SITE_ARTICLES_PER_PAGE}
+                    pageSize={dataPlaces.pageSize}
                     total={dataPlaces.totalCount}
                     onPageChange={onPageChange}
                   />

@@ -4,6 +4,8 @@ import { IGetPlacesResponse, IPlace, IPlacesProps } from '@/types';
 export const getPlacesMain = async ({
   lang,
   name,
+  country,
+  city,
   pageNumber,
   pageSize = 5,
 }: IPlacesProps | any) => {
@@ -13,6 +15,8 @@ export const getPlacesMain = async ({
       params: {
         lang,
         name,
+        country,
+        city,
         pageNumber,
         pageSize,
       },
