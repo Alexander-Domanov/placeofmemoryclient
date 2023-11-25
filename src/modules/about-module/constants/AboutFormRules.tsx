@@ -1,7 +1,14 @@
-export const AboutFormRules = {
+import { LocaleType } from '@/components/internationalization';
+
+export const AboutFormRules = (t: LocaleType) => ({
   about: {
-    rules: [{ required: true }],
+    rules: [
+      {
+        required: true,
+        message: t.dashboard.contacts.form.about.rules.required,
+      },
+    ],
     maxCharacters: 10000,
-    message: `Content limit is 10000 characters`,
+    message: t.dashboard.contacts.form.about.rules.max,
   },
-};
+});

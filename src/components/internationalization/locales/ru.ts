@@ -532,6 +532,69 @@ export const ru: LocaleType = {
         },
       },
     },
+    contacts: {
+      index: 'Контакты',
+      form: {
+        about: {
+          label: 'О нас',
+          placeholder: 'О нас',
+          tooltip:
+            'Вы можете написать до 10 000 символов. После написания вы должны сохранить контакты.',
+          rules: {
+            required: 'Поле "О нас" обязательно',
+            max: 'Максимальная длина: 10 000 символов',
+          },
+        },
+        socialNetworks: {
+          facebook: {
+            label: 'Facebook',
+            placeholder: 'Введите ссылку',
+            tooltip:
+              'Необходимо ввести ссылку на группу или страницу в формате "https://www.facebook.com/...".',
+          },
+          telegram: {
+            label: 'Telegram',
+            placeholder: 'Введите ссылку',
+            tooltip:
+              'Необходимо ввести ссылку на группу или канал в формате "https://t.me/...".',
+          },
+          instagram: {
+            label: 'Instagram',
+            placeholder: 'Введите ссылку',
+            tooltip:
+              'Необходимо ввести ссылку на группу или страницу в формате "https://www.instagram.com/...".',
+          },
+          partners: {
+            label: 'Партнеры',
+            placeholder: 'Введите ссылку',
+            tooltip: 'Необходимо ввести ссылку на группу или страницу.',
+          },
+        },
+        address: {
+          label: 'Адрес',
+          placeholder: 'Введите адрес',
+          rules: {
+            required: 'Поле "Адрес" обязательно',
+          },
+        },
+        email: {
+          label: 'Email',
+          placeholder: 'Введите email',
+          rules: {
+            required: 'Поле "Email" обязательно',
+            email: 'Email должен быть валидным',
+          },
+        },
+        updatedAt: 'Обновлено',
+        save: 'Сохранить',
+      },
+      notification: {
+        update: {
+          title: 'Контакты успешно обновлены',
+        },
+        error: 'Ошибка при обновлении контактов',
+      },
+    },
     rules: {
       required: 'Пожалуйста, введите',
     },

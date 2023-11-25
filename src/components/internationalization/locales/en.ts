@@ -528,6 +528,69 @@ export const en: LocaleType = {
         },
       },
     },
+    contacts: {
+      index: 'Contacts',
+      form: {
+        about: {
+          label: 'About',
+          placeholder: 'About',
+          tooltip:
+            'You can write up to 10 000 characters. After writing, you should save the contacts.',
+          rules: {
+            required: 'About field is required',
+            max: 'Maximum length: 10 000 characters',
+          },
+        },
+        socialNetworks: {
+          facebook: {
+            label: 'Facebook',
+            placeholder: 'Input link',
+            tooltip:
+              'You need to enter a link to the group or page in the format "https://www.facebook.com/...".',
+          },
+          telegram: {
+            label: 'Telegram',
+            placeholder: 'Input link',
+            tooltip:
+              'You need to enter a link to the group or channel in the format "https://t.me/...".',
+          },
+          instagram: {
+            label: 'Instagram',
+            placeholder: 'Input link',
+            tooltip:
+              'You need to enter a link to the group or page in the format "https://www.instagram.com/...".',
+          },
+          partners: {
+            label: 'Partners',
+            placeholder: 'Input link',
+            tooltip: 'You need to enter a link to the group or page.',
+          },
+        },
+        address: {
+          label: 'Address',
+          placeholder: 'Input address',
+          rules: {
+            required: 'Address field is required',
+          },
+        },
+        email: {
+          label: 'Email',
+          placeholder: 'Input email',
+          rules: {
+            required: 'Email field is required',
+            email: 'Email must be valid',
+          },
+        },
+        updatedAt: 'Updated At',
+        save: 'Save',
+      },
+      notification: {
+        update: {
+          title: 'Contacts updated successfully',
+        },
+        error: 'Error updating contacts',
+      },
+    },
     rules: {
       required: 'Please enter',
     },

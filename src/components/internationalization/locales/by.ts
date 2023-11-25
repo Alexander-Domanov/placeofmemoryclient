@@ -542,6 +542,69 @@ export const by = {
         },
       },
     },
+    contacts: {
+      index: 'Кантакты',
+      form: {
+        about: {
+          label: 'Аб нас',
+          placeholder: 'Аб',
+          tooltip:
+            'Вы можаце напісаць да 10 000 знакаў. Пасля напісання вы павінны захаваць кантакты.',
+          rules: {
+            required: 'Поле "Аб нас" абавязковае',
+            max: 'Максімальная даўжыня: 10 000 знакаў',
+          },
+        },
+        socialNetworks: {
+          facebook: {
+            label: 'Facebook',
+            placeholder: 'Увядзіце спасылку',
+            tooltip:
+              'Вы павінны ўвесці спасылку на групу або старонку ў фармаце "https://www.facebook.com/...".',
+          },
+          telegram: {
+            label: 'Telegram',
+            placeholder: 'Увядзіце спасылку',
+            tooltip:
+              'Вы павінны ўвесці спасылку на групу або канал у фармаце "https://t.me/...".',
+          },
+          instagram: {
+            label: 'Instagram',
+            placeholder: 'Увядзіце спасылку',
+            tooltip:
+              'Вы павінны ўвесці спасылку на групу або старонку ў фармаце "https://www.instagram.com/...".',
+          },
+          partners: {
+            label: 'Партнёры',
+            placeholder: 'Увядзіце спасылку',
+            tooltip: 'Вы павінны ўвесці спасылку на групу або старонку.',
+          },
+        },
+        address: {
+          label: 'Адрас',
+          placeholder: 'Увядзіце адрас',
+          rules: {
+            required: 'Поле "Адрас" абавязковае',
+          },
+        },
+        email: {
+          label: 'Email',
+          placeholder: 'Увядзіце email',
+          rules: {
+            required: 'Поле "Email" абавязковае',
+            email: 'Email павінен быць сапраўдным',
+          },
+        },
+        updatedAt: 'Абноўлена',
+        save: 'Захаваць',
+      },
+      notification: {
+        update: {
+          title: 'Кантакты паспяхова абноўлены',
+        },
+        error: 'Памылка пры абнаўленні кантактаў',
+      },
+    },
     rules: {
       required: 'Калі ласка, увядзіце',
     },

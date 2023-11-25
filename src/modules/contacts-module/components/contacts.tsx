@@ -30,16 +30,6 @@ import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.contacts.index,
-    text: 'Contacts',
-    withLink: false,
-  }),
-];
-
 interface FieldData {
   name: string | number | (string | number)[];
   value?: any;
@@ -102,7 +92,7 @@ export const Contacts: FC = () => {
       {
         onSuccess: () => {
           notification.success({
-            message: 'Contacts updated successfully',
+            message: t.dashboard.contacts.notification.update.title,
             placement: 'bottomLeft',
           });
         },
@@ -110,9 +100,11 @@ export const Contacts: FC = () => {
     );
   };
 
+  const aboutFormRules = AboutFormRules(t);
+
   const exceeded = isCharacterCountExceeded(
     characterCount,
-    AboutFormRules.about.maxCharacters
+    aboutFormRules.about.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
 
@@ -122,13 +114,26 @@ export const Contacts: FC = () => {
     callback: (message?: string) => void
   ) => {
     return ValidationOfRedactorValue({
-      maxCharacters: AboutFormRules.about.maxCharacters,
-      message: AboutFormRules.about.message,
+      maxCharacters: aboutFormRules.about.maxCharacters,
+      message: aboutFormRules.about.message,
       value,
       callback,
       t,
     });
   };
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.contacts.index,
+      text: t.dashboard.contacts.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -149,21 +154,15 @@ export const Contacts: FC = () => {
           <Col span={24} style={{ marginBottom: 16 }}>
             <Card>
               <Form.Item
-                label="About"
+                label={t.dashboard.contacts.form.about.label}
                 name="about"
                 validateFirst
                 rules={[
                   { validator: validateContent },
-                  ...AboutFormRules.about.rules,
+                  ...aboutFormRules.about.rules,
                 ]}
                 hasFeedback
-                tooltip={
-                  <span>
-                    This text will be displayed on the main page. You can write
-                    up to {AboutFormRules.about.maxCharacters} characters. After
-                    writing, you should save the article.
-                  </span>
-                }
+                tooltip={<span>{t.dashboard.contacts.form.about.tooltip}</span>}
               >
                 <ReactQuill
                   theme="snow"
@@ -178,7 +177,7 @@ export const Contacts: FC = () => {
 
               <QuillCharacterCount
                 characterCount={characterCount}
-                maxCount={AboutFormRules.about.maxCharacters}
+                maxCount={aboutFormRules.about.maxCharacters}
               />
             </Card>
           </Col>
@@ -188,42 +187,82 @@ export const Contacts: FC = () => {
               <Card>
                 <Form.Item
                   name={['socialNetworks', 'facebook']}
-                  label="Facebook"
+                  label={
+                    t.dashboard.contacts.form.socialNetworks.facebook.label
+                  }
                   rules={[{ whitespace: true }]}
                   hasFeedback
-                  tooltip='You need to enter a link to the group or page in the format "https://www.facebook.com/...".'
+                  tooltip={
+                    t.dashboard.contacts.form.socialNetworks.facebook.tooltip
+                  }
                 >
-                  <Input placeholder="Input link" allowClear />
+                  <Input
+                    placeholder={
+                      t.dashboard.contacts.form.socialNetworks.facebook
+                        .placeholder
+                    }
+                    allowClear
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name={['socialNetworks', 'telegram']}
-                  label="Telegram"
+                  label={
+                    t.dashboard.contacts.form.socialNetworks.telegram.label
+                  }
                   rules={[{ whitespace: true }]}
                   hasFeedback
-                  tooltip='You need to enter a link to the group or channel in the format "https://t.me/...".'
+                  tooltip={
+                    t.dashboard.contacts.form.socialNetworks.telegram.tooltip
+                  }
                 >
-                  <Input placeholder="Input link" allowClear />
+                  <Input
+                    placeholder={
+                      t.dashboard.contacts.form.socialNetworks.telegram
+                        .placeholder
+                    }
+                    allowClear
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name={['socialNetworks', 'instagram']}
-                  label="Instagram"
+                  label={
+                    t.dashboard.contacts.form.socialNetworks.instagram.label
+                  }
                   rules={[{ whitespace: true }]}
                   hasFeedback
-                  tooltip='You need to enter a link to the group or page in the format "https://www.instagram.com/...".'
+                  tooltip={
+                    t.dashboard.contacts.form.socialNetworks.instagram.tooltip
+                  }
                 >
-                  <Input placeholder="Input link" allowClear />
+                  <Input
+                    placeholder={
+                      t.dashboard.contacts.form.socialNetworks.instagram
+                        .placeholder
+                    }
+                    allowClear
+                  />
                 </Form.Item>
 
                 <Form.Item
                   name={['socialNetworks', 'partners']}
-                  label="Partners"
+                  label={
+                    t.dashboard.contacts.form.socialNetworks.partners.label
+                  }
                   rules={[{ whitespace: true }]}
                   hasFeedback
-                  tooltip="You need to enter a link to the group or page."
+                  tooltip={
+                    t.dashboard.contacts.form.socialNetworks.partners.tooltip
+                  }
                 >
-                  <Input placeholder="Input phone" allowClear />
+                  <Input
+                    placeholder={
+                      t.dashboard.contacts.form.socialNetworks.partners
+                        .placeholder
+                    }
+                    allowClear
+                  />
                 </Form.Item>
               </Card>
             </Col>
@@ -233,20 +272,28 @@ export const Contacts: FC = () => {
                 <Card>
                   <Form.Item
                     name="address"
-                    label="Address"
+                    label={t.dashboard.contacts.form.address.label}
                     rules={[{ whitespace: true, required: true }]}
                     hasFeedback
                   >
-                    <Input placeholder="Input address" allowClear />
+                    <Input
+                      placeholder={
+                        t.dashboard.contacts.form.address.placeholder
+                      }
+                      allowClear
+                    />
                   </Form.Item>
 
                   <Form.Item
                     name="email"
-                    label="Email"
+                    label={t.dashboard.contacts.form.email.label}
                     rules={[{ whitespace: true, required: true }]}
                     hasFeedback
                   >
-                    <Input placeholder="Input email" allowClear />
+                    <Input
+                      placeholder={t.dashboard.contacts.form.email.placeholder}
+                      allowClear
+                    />
                   </Form.Item>
 
                   {/* <Form.Item */}
@@ -266,7 +313,7 @@ export const Contacts: FC = () => {
                       <List.Item>
                         <Typography.Text>
                           <span className="text-neutral-400">
-                            Updated At: &nbsp;
+                            {t.dashboard.contacts.form.updatedAt}: &nbsp;
                           </span>
                           {convertDateToFormat(selectedContacts?.updatedAt)}
                         </Typography.Text>
@@ -280,7 +327,7 @@ export const Contacts: FC = () => {
                     loading={isUpdating}
                     icon={<SaveOutlined />}
                   >
-                    Save
+                    {t.dashboard.contacts.form.save}
                   </Button>
                 </Card>
               </Flex>
