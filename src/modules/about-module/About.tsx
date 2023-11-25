@@ -23,19 +23,22 @@ export const About: React.FC<Props> = ({ contacts }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="flex items-center justify-center mt-10">
-          {contacts?.about.length > 0 ? (
+          {contacts?.about.length < 0 ? (
             <div
               className="mt-4 wysiwyg sm:text-xs"
               dangerouslySetInnerHTML={{ __html: contacts.about }}
             />
           ) : (
-            <ImageComponent
-              alt="Candle picture"
-              width={730}
-              height={268}
-              className="rounded-lg"
-              src={candle}
-            />
+            <div className="text-light-300 text-2xl sm:text-sm">
+              <ImageComponent
+                alt="Candle picture"
+                width={730}
+                height={268}
+                className="rounded-lg shadow-lg mb-8"
+                src={candle}
+              />
+              {descriptionT}
+            </div>
           )}
         </div>
       </div>
