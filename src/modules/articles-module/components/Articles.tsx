@@ -8,9 +8,10 @@ import { FileStatuses, IPlace, Role } from '@/types';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { routes } from '@/common/routing/routes';
-import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
+import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CustomSelectInput } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useTranslation } from '@/components/internationalization';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -26,6 +27,7 @@ const defaultPageSize = 10;
 
 export const Articles: FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [pagination, setPagination] = useState({
     searchTerm: '',
@@ -78,16 +80,18 @@ export const Articles: FC = () => {
     }
   };
 
+  const fileStatuses = FileStatusOptions(t);
+
   const selectInputOptions =
     me?.role === Role.ADMIN
       ? [
-          ...fileStatusOptions,
+          ...fileStatuses,
           {
             label: 'Archived',
             value: FileStatuses.ARCHIVED,
           },
         ]
-      : fileStatusOptions;
+      : fileStatuses;
 
   const selectColumnsTablePlaces =
     me?.role === Role.AUTHOR

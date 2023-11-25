@@ -1,5 +1,3 @@
-import { MaxAllowedFileSize } from '@/common/constants';
-
 export const by = {
   404: {
     description: 'Гэтую старонку не ўдалося знайсці',
@@ -338,7 +336,7 @@ export const by = {
             },
             errorSize: {
               title: 'Памылка загрузкі файла',
-              description: `Памер файла больш, чым ${MaxAllowedFileSize}МБ`,
+              description: `Памер файла больш, чым 10МБ`,
             },
             remove: {
               title: 'Файл выдалены',

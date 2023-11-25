@@ -24,9 +24,10 @@ import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
 import { CustomSelectInput } from '@/components';
-import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
+import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { personsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
+import { useTranslation } from '@/components/internationalization';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -53,6 +54,7 @@ interface IPagination {
 
 export const Persons: FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -182,16 +184,18 @@ export const Persons: FC = () => {
     </Select>
   );
 
+  const fileStatuses = FileStatusOptions(t);
+
   const selectInputOptions =
     me?.role === Role.ADMIN
       ? [
-          ...fileStatusOptions,
+          ...fileStatuses,
           {
             label: 'Archived',
             value: FileStatuses.ARCHIVED,
           },
         ]
-      : fileStatusOptions;
+      : fileStatuses;
 
   const selectColumnsTablePlaces =
     me?.role === Role.USER || me?.role === Role.AUTHOR

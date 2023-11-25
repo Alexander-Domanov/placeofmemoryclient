@@ -1,5 +1,4 @@
 import { LocaleType } from '@/components/internationalization';
-import { MaxAllowedFileSize } from '@/common/constants';
 
 export const en: LocaleType = {
   404: {
@@ -323,7 +322,7 @@ export const en: LocaleType = {
             },
             errorSize: {
               title: 'File upload error',
-              description: `File is greater then ${MaxAllowedFileSize}MB`,
+              description: `File is greater then 10MB`,
             },
             remove: {
               title: 'File removed',

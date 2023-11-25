@@ -1,5 +1,4 @@
 import { LocaleType } from '@/components/internationalization';
-import { MaxAllowedFileSize } from '@/common/constants';
 
 export const ru: LocaleType = {
   404: {
@@ -327,7 +326,7 @@ export const ru: LocaleType = {
             },
             errorSize: {
               title: 'Ошибка загрузки файла',
-              description: `Размер файла больше, чем ${MaxAllowedFileSize}МБ`,
+              description: `Размер файла больше, чем 10МБ`,
             },
             remove: {
               title: 'Файл удален',

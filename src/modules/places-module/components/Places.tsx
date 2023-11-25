@@ -9,8 +9,9 @@ import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
 import { CustomSelectInput } from '@/components';
-import { fileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
+import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useTranslation } from '@/components/internationalization';
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -26,6 +27,7 @@ const defaultPageSize = 10;
 
 export const Places: FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [pagination, setPagination] = useState({
     searchTerm: '',
@@ -100,17 +102,17 @@ export const Places: FC = () => {
   // };
   //
   // const hasSelected = selectedRowKeys.length > 0;
-
+  const fileStatuses = FileStatusOptions(t);
   const selectInputOptions =
     me?.role === Role.ADMIN
       ? [
-          ...fileStatusOptions,
+          ...fileStatuses,
           {
             label: 'Archived',
             value: FileStatuses.ARCHIVED,
           },
         ]
-      : fileStatusOptions;
+      : fileStatuses;
 
   return (
     <Flex gap="large" vertical>
