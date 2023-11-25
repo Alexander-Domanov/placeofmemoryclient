@@ -172,7 +172,10 @@ export const ru: LocaleType = {
         grave: '_Могил',
         location: 'Место нахождения',
         description: 'Описание',
-        map: 'На карте',
+        map: {
+          show: 'Показать карту',
+          hide: 'Скрыть карту',
+        },
         notData: 'нет данных',
       },
       indexTitle: 'Место',
@@ -215,8 +218,8 @@ export const ru: LocaleType = {
         location: 'Место нахождения',
         biography: 'Биография',
         map: {
-          show: 'Показать на карте',
-          hide: 'Скрыть с карты',
+          show: 'Показать карту',
+          hide: 'Скрыть карту',
         },
         notData: 'нет данных',
         prev: 'Предыдущий',

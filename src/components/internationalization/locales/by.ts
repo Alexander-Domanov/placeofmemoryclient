@@ -182,7 +182,10 @@ export const by = {
         grave: '_Могілка',
         location: 'Месца знаходжання',
         description: 'Апісанне',
-        map: 'На мапе',
+        map: {
+          show: 'Паказаць мапу',
+          hide: 'Схаваць мапу',
+        },
         notData: 'няма дадзеных',
       },
     },
@@ -224,7 +227,7 @@ export const by = {
         location: 'Месца знаходжання',
         biography: 'Біяграфія',
         map: {
-          show: 'Паказаць на мапе',
+          show: 'Паказаць мапу',
           hide: 'Схаваць мапу',
         },
         notData: 'няма дадзеных',

@@ -153,7 +153,9 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
                       onClick={toggleMapVisibility}
                       className="flex items-center hover:underline focus:outline-none"
                     >
-                      {mapVisible ? 'Схаваць мапу' : 'Паказаць мапу'}
+                      {mapVisible
+                        ? t.places.place.page.map.hide
+                        : t.places.place.page.map.show}
                       <span className="ml-2">
                         {mapVisible ? (
                           <FaChevronUp size={isMobile ? 20 : 24} />
