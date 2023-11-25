@@ -4,6 +4,7 @@ import { Button, Flex } from 'antd';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 const containerStyle = {
   height: '50vh',
@@ -83,7 +84,10 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         }" class="max-w-60 max-h-full object-contain rounded-lg">
   <div class="text-black text-center">
     <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-    <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}</p>
+     <p class="mb-1">${
+       convertDateToFormat(p.birthDate, 'DD.MM.YYYY') || 'n/a'
+     } - ${convertDateToFormat(p.deathDate, 'DD.MM.YYYY') || 'n/a'}
+             </p>
   </div>
   <a href="/dashboard/persons/${
     p?.id || ''

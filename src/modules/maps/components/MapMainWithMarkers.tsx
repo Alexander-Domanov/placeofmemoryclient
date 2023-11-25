@@ -5,6 +5,7 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
+import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 
 const containerStyle = {
   // height: '100%',
@@ -107,15 +108,18 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
         }" class="max-w-60 max-h-full object-contain rounded-lg">
             <div class="text-black text-center">
              <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-             <p class="mb-1">${p.birthDate || 'n/a'} - ${
-          p.deathDate || 'n/a'
-        }</p>
+             <p class="mb-1">${
+               convertDateToFormat(p.birthDate, 'DD.MM.YYYY') || 'n/a'
+             } - ${convertDateToFormat(p.deathDate, 'DD.MM.YYYY') || 'n/a'}
+             </p>
             </div>
+            {markerIcon && (
           <a href="/persons/${
             p?.slug || ''
           }" class="cursor-pointer text-blue-500 text-center">
            <span class="hover:underline">${p?.slug || ''}</span>
           </a>
+        )}
           <div class="text-black text-center">
               <p class="font-bold m-1">
                 ${p.location.lat}, ${p.location.lng}
