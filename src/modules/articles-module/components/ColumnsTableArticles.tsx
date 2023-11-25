@@ -8,10 +8,11 @@ import UpdateArticleStatusComponent from '@/modules/articles-module/components/U
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticleModal';
+import { LocaleType } from '@/components/internationalization';
 
-export const columnsTableArticles: ColumnsType<IArticle> = [
+export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
   {
-    title: 'ID',
+    title: t.dashboard.articles.table.id,
     dataIndex: 'id',
     key: 'id',
     width: 50,
@@ -21,10 +22,10 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
-    title: 'Owner',
+    title: t.dashboard.articles.table.owner,
     dataIndex: 'owner',
     key: 'ownerId',
-    width: 60,
+    width: 80,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -39,11 +40,11 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Title',
+    title: t.dashboard.articles.table.title,
     dataIndex: 'title',
     key: 'title',
     ellipsis: true,
-    width: 300,
+    width: 280,
     render: (text, record) => (
       <Tooltip title={`${record.slug}`} placement="leftBottom" color="#1087f6">
         <Link href={`${routes.dashboard.articles.article(record.id)}`}>
@@ -58,10 +59,10 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Created At',
+    title: t.dashboard.articles.table.createdAt,
     dataIndex: 'createdAt',
     key: 'createdAt',
-    width: 90,
+    width: 80,
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
@@ -75,10 +76,10 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Updated At',
+    title: t.dashboard.articles.table.updatedAt,
     dataIndex: 'updatedAt',
     key: 'updatedAt',
-    width: 90,
+    width: 80,
     sorter: true,
     align: 'center',
     sortDirections: ['ascend', 'descend'],
@@ -92,7 +93,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Status',
+    title: t.dashboard.articles.table.status,
     dataIndex: 'status',
     key: 'status',
     width: 60,
@@ -102,10 +103,10 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     render: (text: string) => ColorStatusTag(text),
   },
   {
-    title: 'Photos',
+    title: t.dashboard.articles.table.photos,
     dataIndex: 'photos',
     key: 'photos',
-    width: 60,
+    width: 80,
     align: 'center',
     render: (text, record: IArticle) => (
       <Row justify="space-evenly">
@@ -125,7 +126,7 @@ export const columnsTableArticles: ColumnsType<IArticle> = [
     ),
   },
   {
-    title: 'Actions',
+    title: t.dashboard.articles.table.actions,
     dataIndex: 'actions',
     key: 'actions',
     width: 80,

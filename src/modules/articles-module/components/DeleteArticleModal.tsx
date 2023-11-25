@@ -5,12 +5,14 @@ import { useRouter } from 'next/router';
 import { IArticle } from '@/types';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 interface DeleteArticleModalProps {
   article: IArticle | null;
 }
 const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
@@ -25,11 +27,11 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
     setDeleteModalVisible(false);
   };
 
-  const deletePlace = () => {
+  const deleteArticle = () => {
     deleteArticleMutation(selectedArticle?.id || null, {
       onSuccess: () => {
         notification.success({
-          message: `Article: ${selectedArticle?.title} deleted successfully`,
+          message: t.dashboard.articles.notifications.delete.title,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.articles.index);
@@ -55,7 +57,7 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
         actions={[
           <Button
             key="delete"
-            title="Delete"
+            title={t.dashboard.articles.delete.title}
             icon={<DeleteOutlined />}
             style={buttonStyle}
             onClick={handleClick}
@@ -65,12 +67,12 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
       />
 
       <Modal
-        title="Confirm deletion"
+        title={t.dashboard.articles.delete.titleConfirm}
         open={isDeleteModalVisible}
-        onOk={deletePlace}
+        onOk={deleteArticle}
         onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
+        okText={t.dashboard.articles.delete.delete}
+        cancelText={t.dashboard.articles.delete.cancel}
         okButtonProps={{
           icon: <DeleteOutlined />,
           onMouseEnter: () => setIsHovered(true),
@@ -86,7 +88,7 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the article: &nbsp;
+              {t.dashboard.articles.delete.description}: &nbsp;
             </span>
             {selectedArticle?.title}
           </div>

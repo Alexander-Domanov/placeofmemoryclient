@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { IArticle, Statuses } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 const { Option } = Select;
 
@@ -19,6 +20,7 @@ interface Props {
 }
 const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { id, status } = article || { id: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
@@ -41,7 +43,7 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed status to: ${status} for article: ${article?.title}`,
+            message: t.dashboard.articles.updateModal.notification.success,
             placement: 'bottomLeft',
           });
         },
@@ -55,7 +57,7 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
         actions={[
           <Button
             key={0}
-            title="Change status of article"
+            title={t.dashboard.articles.updateModal.buttonTitle}
             icon={<EditOutlined />}
             onClick={handleEditClick}
             type="text"
@@ -64,24 +66,28 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
       />
 
       <Modal
-        title="Change status of article or edit"
+        title={t.dashboard.articles.updateModal.title}
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
-        <Form.Item label="Change status">
+        <Form.Item label={t.dashboard.articles.updateModal.form.label}>
           <Select value={newStatus} onChange={handleMenuStatusClick}>
             <Option value={Statuses.DRAFT}>
-              <EyeInvisibleOutlined /> Draft
+              <EyeInvisibleOutlined />{' '}
+              {t.dashboard.articles.updateModal.form.status.draft}
             </Option>
             <Option value={Statuses.PENDING_REVIEW}>
-              <ClockCircleOutlined /> Send for review
+              <ClockCircleOutlined />{' '}
+              {t.dashboard.articles.updateModal.form.status.pending}
             </Option>
             <Option value={Statuses.PUBLISHED}>
-              <EyeOutlined /> Publish
+              <EyeOutlined />{' '}
+              {t.dashboard.articles.updateModal.form.status.published}
             </Option>
             <Option value={Statuses.ARCHIVED}>
-              <InboxOutlined /> Archive
+              <InboxOutlined />{' '}
+              {t.dashboard.articles.updateModal.form.status.archived}
             </Option>
           </Select>
         </Form.Item>
@@ -93,7 +99,7 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
             router.push(routes.dashboard.articles.article(id || ''));
           }}
         >
-          Edit
+          {t.dashboard.articles.updateModal.edit}
         </Button>
       </Modal>
     </>

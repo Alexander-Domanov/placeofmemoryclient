@@ -43,18 +43,22 @@ import { IArticle, Statuses } from '@/types';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
+import { LocaleType, useTranslation } from '@/components/internationalization';
 
 const { Option } = Select;
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
-function breadcrumbs(name: string) {
+function breadcrumbs(name: string, t: LocaleType) {
   return [
     CreateBreadcrumb({ key: routes.main, icon: true }),
-    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
     CreateBreadcrumb({
       key: routes.dashboard.articles.index,
-      text: 'Articles',
+      text: t.dashboard.articles.index,
     }),
     CreateBreadcrumb({
       key: routes.dashboard.articles.breadcrumbs(name),
@@ -65,6 +69,8 @@ function breadcrumbs(name: string) {
 }
 
 export const ArticleEdit: FC = () => {
+  const { t } = useTranslation();
+
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
@@ -97,7 +103,7 @@ export const ArticleEdit: FC = () => {
       {
         onSuccess: () => {
           notification.success({
-            message: 'Status updated successfully',
+            message: t.dashboard.articles.edit.notification.update.title,
             placement: 'bottomLeft',
           });
         },
@@ -109,7 +115,7 @@ export const ArticleEdit: FC = () => {
     deleteArticleMutationAsync(selectedArticle?.id || null, {
       onSuccess() {
         notification.success({
-          message: 'Article was deleted successfully',
+          message: t.dashboard.articles.edit.notification.delete.title,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.articles.index);
@@ -154,9 +160,11 @@ export const ArticleEdit: FC = () => {
     }
   }, [article]);
 
+  const articleFormRules = ArticleFormRules(t);
+
   const exceeded = isCharacterCountExceeded(
     characterCount,
-    ArticleFormRules.content.maxCharacters
+    articleFormRules.content.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
 
@@ -172,7 +180,7 @@ export const ArticleEdit: FC = () => {
     mutate(data, {
       onSuccess: () => {
         notification.success({
-          message: 'Article updated successfully',
+          message: t.dashboard.articles.edit.notification.success.title,
           placement: 'bottomLeft',
         });
       },
@@ -185,17 +193,18 @@ export const ArticleEdit: FC = () => {
     callback: (message?: string) => void
   ) => {
     return ValidationOfRedactorValue({
-      maxCharacters: ArticleFormRules.content.maxCharacters,
-      message: ArticleFormRules.content.message,
+      maxCharacters: articleFormRules.content.maxCharacters,
+      message: articleFormRules.content.message,
       value,
       callback,
+      t,
     });
   };
 
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(article?.title || '')} />
+        <Breadcrumb items={breadcrumbs(article?.title || '', t)} />
       </div>
 
       <Spin spinning={isLoading}>
@@ -204,63 +213,61 @@ export const ArticleEdit: FC = () => {
             <Col span={24} md={12} lg={16}>
               <Card>
                 <Form.Item
-                  label="Title"
+                  label={t.dashboard.articles.edit.form.title.label}
                   name="title"
-                  rules={ArticleFormRules.title}
+                  rules={articleFormRules.title}
                   validateFirst
                   hasFeedback
                   tooltip={
-                    <span>
-                      You can write up to {ArticleFormRules.title[1].max}{' '}
-                      characters. After writing, you should save the article.
-                    </span>
+                    <span>{t.dashboard.articles.edit.form.title.tooltip} </span>
                   }
                 >
                   <Input.TextArea
-                    placeholder="Title"
+                    placeholder={
+                      t.dashboard.articles.edit.form.title.placeholder
+                    }
                     count={{
                       show: true,
-                      max: ArticleFormRules.title[1].max,
+                      max: articleFormRules.title[1].max,
                     }}
                   />
                 </Form.Item>
 
                 <Form.Item
-                  label="Short Description"
+                  label={t.dashboard.articles.edit.form.description.label}
                   name="description"
-                  rules={ArticleFormRules.description}
+                  rules={articleFormRules.description}
                   validateFirst
                   hasFeedback
                   tooltip={
                     <span>
-                      You can write up to {ArticleFormRules.description[1].max}{' '}
-                      characters. After writing, you should save the article.
+                      {t.dashboard.articles.edit.form.description.tooltip}
                     </span>
                   }
                 >
                   <Input.TextArea
-                    placeholder="Short Description"
+                    placeholder={
+                      t.dashboard.articles.edit.form.description.placeholder
+                    }
                     count={{
                       show: true,
-                      max: ArticleFormRules.description[1].max,
+                      max: articleFormRules.description[1].max,
                     }}
                   />
                 </Form.Item>
 
                 <Form.Item
-                  label="Content"
+                  label={t.dashboard.articles.edit.form.content.label}
                   name="content"
                   validateFirst
                   rules={[
                     { validator: validateContent },
-                    ...ArticleFormRules.content.rules,
+                    ...articleFormRules.content.rules,
                   ]}
                   hasFeedback
                   tooltip={
                     <span>
-                      You can write up to{' '}
-                      {ArticleFormRules.content.maxCharacters} characters. After
-                      writing, you should save the article.
+                      {t.dashboard.articles.edit.form.content.tooltip}
                     </span>
                   }
                 >
@@ -277,7 +284,7 @@ export const ArticleEdit: FC = () => {
 
                 <QuillCharacterCount
                   characterCount={characterCount}
-                  maxCount={ArticleFormRules.content.maxCharacters}
+                  maxCount={articleFormRules.content.maxCharacters}
                 />
               </Card>
             </Col>
@@ -285,7 +292,9 @@ export const ArticleEdit: FC = () => {
             <Col span={24} md={12} lg={8}>
               <Flex vertical gap={16}>
                 <Card>
-                  <Form.Item label="Status">
+                  <Form.Item
+                    label={t.dashboard.articles.edit.form.status.label}
+                  >
                     <Select
                       value={status}
                       onChange={onStatusChange}
@@ -293,34 +302,38 @@ export const ArticleEdit: FC = () => {
                       disabled={isStatusUpdating}
                     >
                       <Option value={Statuses.DRAFT}>
-                        <EyeInvisibleOutlined /> Draft
+                        <EyeInvisibleOutlined />{' '}
+                        {t.dashboard.articles.edit.form.status.draft}
                       </Option>
                       <Option value={Statuses.PENDING_REVIEW}>
-                        <ClockCircleOutlined /> Send for review
+                        <ClockCircleOutlined />{' '}
+                        {t.dashboard.articles.edit.form.status.pending}
                       </Option>
                       <Option value={Statuses.PUBLISHED}>
-                        <EyeOutlined /> Publish
+                        <EyeOutlined />{' '}
+                        {t.dashboard.articles.edit.form.status.published}
                       </Option>
                       <Option value={Statuses.ARCHIVED}>
-                        <InboxOutlined /> Archive
+                        <InboxOutlined />{' '}
+                        {t.dashboard.articles.edit.form.status.archived}
                       </Option>
                     </Select>
                   </Form.Item>
 
                   <Form.Item
-                    label="Slug"
+                    label={t.dashboard.articles.edit.form.slug.label}
                     name="slug"
-                    rules={ArticleFormRules.slug}
+                    rules={articleFormRules.slug}
                     hasFeedback
-                    tooltip="You can change the slug of the article.
-                    This field is for SEO, it must be unique and contain only letters, numbers and dashes.
-                    Can't start or end with a dash."
+                    tooltip={t.dashboard.articles.edit.form.slug.tooltip}
                   >
                     <Input.TextArea
-                      placeholder="Slug"
+                      placeholder={
+                        t.dashboard.articles.edit.form.slug.placeholder
+                      }
                       count={{
                         show: true,
-                        max: ArticleFormRules.slug[1].max,
+                        max: articleFormRules.slug[1].max,
                       }}
                     />
                   </Form.Item>
@@ -340,11 +353,11 @@ export const ArticleEdit: FC = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      title="Save"
+                      title={t.dashboard.articles.edit.button.save}
                       icon={<SaveOutlined />}
                       loading={isUpdating}
                     >
-                      Save
+                      {t.dashboard.articles.edit.button.save}
                     </Button>
 
                     <DeleteConfirmationModal<IArticle>
@@ -356,15 +369,14 @@ export const ArticleEdit: FC = () => {
 
                 <Card>
                   <Form.Item
-                    label="Photo"
+                    label={t.dashboard.articles.edit.form.photo.label}
                     name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={ArticleFormRules.photo.rules}
+                    rules={articleFormRules.photo.rules}
                     tooltip={
                       <span>
-                        You can upload up to {ArticleFormRules.photo.maxCount}{' '}
-                        photo. After uploading, you should save the article.{' '}
+                        {t.dashboard.articles.edit.form.photo.tooltip}{' '}
                         <SupportedImageFormatsTooltip />
                       </span>
                     }
@@ -374,7 +386,8 @@ export const ArticleEdit: FC = () => {
                         icon={<UploadOutlined />}
                         disabled={fileList.length > 0}
                       >
-                        + Upload (Max: {ArticleFormRules.photo.maxCount})
+                        {t.dashboard.articles.edit.button.photo} (Max:{' '}
+                        {articleFormRules.photo.maxCount})
                       </Button>
                     </Upload>
                   </Form.Item>

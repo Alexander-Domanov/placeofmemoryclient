@@ -27,11 +27,12 @@ import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { Places } from '@/modules/places-module/components/Places';
 import { columnsTablePersons } from '@/modules/persons-module';
 import { Articles } from '@/modules/articles-module';
-import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
+import { ColumnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { columnsTablePlaces } from '@/modules/places-module';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { CustomSelectInput } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useTranslation } from '@/components/internationalization';
 
 interface DescriptionItemProps {
   title: string;
@@ -66,6 +67,7 @@ function breadcrumbs(sectionName: string) {
 const defaultPageSize = 10;
 
 export const UserList: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { userId } = router.query as { userId: string };
 
@@ -141,6 +143,8 @@ export const UserList: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
+
+  const columnsTableArticles = ColumnsTableArticles(t);
 
   const items = [
     {

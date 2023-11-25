@@ -78,7 +78,7 @@ export const Gallery: FC = () => {
     CreateBreadcrumb({ key: routes.main, icon: true }),
     CreateBreadcrumb({
       key: routes.dashboard.index,
-      text: t.dashboard.gallery.titleLink,
+      text: t.dashboard.indexTitle,
     }),
     CreateBreadcrumb({
       key: routes.dashboard.gallery.index,

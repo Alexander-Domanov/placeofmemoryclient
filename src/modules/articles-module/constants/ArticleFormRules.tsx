@@ -1,16 +1,32 @@
-export const ArticleFormRules = {
+import { LocaleType } from '@/components/internationalization';
+
+export const ArticleFormRules = (t: LocaleType) => ({
   title: [
-    { required: true },
-    { max: 155, message: `Title limit is 155 characters` },
+    {
+      required: true,
+      message: t.dashboard.articles.create.form.title.rules.required,
+    },
+    { max: 155, message: t.dashboard.articles.create.form.title.rules.max },
   ],
   description: [
-    { required: true },
-    { max: 355, message: `Description limit is 355 characters` },
+    {
+      required: true,
+      message: t.dashboard.articles.create.form.description.rules.required,
+    },
+    {
+      max: 355,
+      message: t.dashboard.articles.create.form.description.rules.max,
+    },
   ],
   content: {
-    rules: [{ required: true }],
+    rules: [
+      {
+        required: true,
+        message: t.dashboard.articles.create.form.content.rules.required,
+      },
+    ],
     maxCharacters: 10000,
-    message: `Content limit is 10000 characters`,
+    message: t.dashboard.articles.create.form.content.rules.max,
   },
   slug: [
     { required: true },
@@ -21,7 +37,12 @@ export const ArticleFormRules = {
     },
   ],
   photo: {
-    rules: [{ required: true }],
+    rules: [
+      {
+        required: true,
+        message: t.dashboard.articles.create.form.photo.rules.required,
+      },
+    ],
     maxCount: 1,
   },
-};
+});

@@ -277,7 +277,6 @@ export const en: LocaleType = {
       button: 'Zoom to Poland',
     },
     gallery: {
-      titleLink: 'Dashboard',
       title: 'Gallery',
       // button: 'Add Image',
       // search: 'Search',
@@ -344,6 +343,202 @@ export const en: LocaleType = {
           error: 'Error creating image',
         },
       },
+    },
+    articles: {
+      index: 'Articles',
+      add: {
+        label: '+ Add',
+        title: 'Add article',
+      },
+      search: {
+        title: 'Search by title',
+        placeholder: 'Search by title',
+      },
+      table: {
+        id: 'ID',
+        owner: 'Owner',
+        title: 'Title',
+        createdAt: 'Created At',
+        updatedAt: 'Updated At',
+        status: 'Status',
+        photos: 'Photos',
+        actions: 'Actions',
+      },
+      notifications: {
+        success: {
+          title: 'Article created successfully',
+          description: 'You will be redirected to the article page',
+        },
+        delete: {
+          title: 'Article deleted successfully',
+          description: 'You will be redirected to the articles page',
+        },
+      },
+      delete: {
+        title: 'Delete',
+        titleConfirm: 'Confirm deletion',
+        description: 'Are you sure you want to delete the article?',
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+      updateModal: {
+        title: 'Change status of article or edit',
+        buttonTitle: 'Change status of article',
+        form: {
+          label: 'Current status',
+          status: {
+            draft: 'Draft',
+            pending: 'Send for review',
+            published: 'Publish',
+            archived: 'Archive',
+          },
+        },
+        edit: 'Edit',
+        notification: {
+          success: 'Status updated successfully',
+          error: 'Error updating status',
+        },
+      },
+      create: {
+        index: 'Create article',
+        notification: {
+          success: {
+            title: 'Article created successfully',
+            description: 'You will be redirected to the article page',
+          },
+          error: 'Error creating article',
+        },
+        form: {
+          title: {
+            label: 'Title',
+            placeholder: 'Title',
+            tooltip:
+              'You can write up to 155 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Title field is required',
+              max: 'Maximum length: 155 characters',
+            },
+          },
+          description: {
+            label: 'Short description',
+            placeholder: 'Short description',
+            tooltip:
+              'You can write up to 355 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Short description field is required',
+              max: 'Maximum length: 355 characters',
+            },
+          },
+          content: {
+            label: 'Content',
+            tooltip:
+              'You can write up to 10 000 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Content field is required',
+              max: 'Maximum length: 10 000 characters',
+            },
+          },
+          photo: {
+            label: 'Photo',
+            tooltip:
+              'You can upload up to 1 photo. After uploading, you should save the article.',
+            rules: {
+              required: 'Photo field is required',
+              max: 'Maximum length: 1 photo',
+            },
+          },
+        },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+      edit: {
+        index: 'Edit article',
+        notification: {
+          success: {
+            title: 'Article updated successfully',
+            description: 'You will be redirected to the article page',
+          },
+          update: {
+            title: 'Article updated successfully',
+          },
+          delete: {
+            title: 'Article deleted successfully',
+          },
+          error: 'Error updating article',
+        },
+        form: {
+          title: {
+            label: 'Title',
+            placeholder: 'Title',
+            tooltip:
+              'You can write up to 155 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Title field is required',
+              max: 'Maximum length: 155 characters',
+            },
+          },
+          description: {
+            label: 'Short description',
+            placeholder: 'Short description',
+            tooltip:
+              'You can write up to 355 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Short description field is required',
+              max: 'Maximum length: 355 characters',
+            },
+          },
+          content: {
+            label: 'Content',
+            tooltip:
+              'You can write up to 10 000 characters. After writing, you should save the article.',
+            rules: {
+              required: 'Content field is required',
+              max: 'Maximum length: 10 000 characters',
+            },
+          },
+          slug: {
+            label: 'Slug',
+            placeholder: 'Slug',
+            tooltip: `You can change the slug of the article.
+            This field is for SEO, it must be unique and contain only letters, numbers and dashes.
+            Can't start or end with a dash.`,
+          },
+          photo: {
+            label: 'Photo',
+            tooltip:
+              'You can upload up to 1 photo. After uploading, you should save the article.',
+            rules: {
+              required: 'Photo field is required',
+              max: 'Maximum length: 1 photo',
+            },
+          },
+          status: {
+            label: 'Status',
+            draft: 'Draft',
+            pending: 'Send for review',
+            published: 'Publish',
+            archived: 'Archive',
+          },
+        },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+    },
+    rules: {
+      required: 'Please enter',
+    },
+    metaInfo: {
+      publicLink: {
+        label: 'Public link',
+        no: 'Not published',
+      },
+      owner: 'Owner',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
     },
     selectStatus: {
       all: 'All',

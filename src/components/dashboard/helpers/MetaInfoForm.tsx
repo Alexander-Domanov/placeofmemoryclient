@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { IOwnerInfo, Statuses } from '@/types';
 import { GetEllipsisSlug } from '@/components';
+import { useTranslation } from '@/components/internationalization';
 
 interface IInfoFormProps {
   slug: string | undefined;
@@ -22,6 +23,7 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
   createdAt,
   updatedAt,
 }) => {
+  const { t } = useTranslation();
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
@@ -36,20 +38,24 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
     <List split={false}>
       <List.Item>
         <Typography.Text>
-          <span className="text-neutral-400">Public link: &nbsp;</span>
+          <span className="text-neutral-400">
+            {t.dashboard.metaInfo.publicLink.label}: &nbsp;
+          </span>
           {isDisabled ? (
             <Link href={{ pathname: path }}>
               <GetEllipsisSlug slug={slug} />
             </Link>
           ) : (
-            'Not published'
+            t.dashboard.metaInfo.publicLink.no
           )}
         </Typography.Text>
       </List.Item>
 
       <List.Item>
         <Typography.Text>
-          <span className="text-neutral-400">Owner: &nbsp;</span>
+          <span className="text-neutral-400">
+            {t.dashboard.metaInfo.owner}: &nbsp;
+          </span>
           {owner?.userName}
         </Typography.Text>
       </List.Item>
@@ -57,7 +63,7 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
       <List.Item>
         <Typography.Text>
           <span className="font-normal text-neutral-400">
-            Created At: &nbsp;
+            {t.dashboard.metaInfo.createdAt}: &nbsp;
           </span>
           {convertDateToFormat(createdAt)}
         </Typography.Text>
@@ -66,7 +72,7 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
       <List.Item>
         <Typography.Text>
           <span className="font-normal text-neutral-400">
-            Updated At: &nbsp;
+            {t.dashboard.metaInfo.updatedAt}: &nbsp;
           </span>
           {convertDateToFormat(updatedAt)}
         </Typography.Text>

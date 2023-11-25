@@ -6,22 +6,12 @@ import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { FileStatuses, IPlace, Role } from '@/types';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
-import { columnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { routes } from '@/common/routing/routes';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CustomSelectInput } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useTranslation } from '@/components/internationalization';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.articles.index,
-    text: 'Articles',
-    withLink: false,
-  }),
-];
+import { ColumnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 
 const defaultPageSize = 10;
 
@@ -87,11 +77,13 @@ export const Articles: FC = () => {
       ? [
           ...fileStatuses,
           {
-            label: 'Archived',
+            label: t.dashboard.selectStatus.archived,
             value: FileStatuses.ARCHIVED,
           },
         ]
       : fileStatuses;
+
+  const columnsTableArticles = ColumnsTableArticles(t);
 
   const selectColumnsTablePlaces =
     me?.role === Role.AUTHOR
@@ -99,6 +91,19 @@ export const Articles: FC = () => {
           (column) => column.key !== 'ownerId' && column.key !== 'id'
         )
       : columnsTableArticles;
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.articles.index,
+      text: t.dashboard.articles.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -110,17 +115,17 @@ export const Articles: FC = () => {
         <div>
           <Button
             type="primary"
-            title="Add new article"
+            title={t.dashboard.articles.add.title}
             onClick={() => router.push(routes.dashboard.articles.create)}
           >
-            + Add
+            {t.dashboard.articles.add.label}
           </Button>
         </div>
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by Title"
-            title="Search by title"
+            placeholder={t.dashboard.articles.search.placeholder}
+            title={t.dashboard.articles.search.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
@@ -131,7 +136,7 @@ export const Articles: FC = () => {
           <CustomSelectInput
             defaultValue={{
               value: FileStatuses.ALL,
-              label: 'All',
+              label: t.dashboard.selectStatus.all,
             }}
             options={selectInputOptions}
             onChange={onStatusChange}
