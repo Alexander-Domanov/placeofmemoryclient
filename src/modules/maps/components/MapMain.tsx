@@ -1,32 +1,16 @@
 import React, { FC } from 'react';
-import Link from 'next/link';
-import { AiOutlineHome } from 'react-icons/ai';
-import { routes } from '@/common/routing/routes';
 import { IGerPersonsForMapResponse } from '@/types';
-import { useWindowSize } from '@/common/hooks/useWindowResize';
 import MapMainWithClusterMarkers from '@/modules/maps/components/MapMainWithClusterMarkers';
+import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 
 interface Props {
   persons: IGerPersonsForMapResponse;
 }
 export const MapMain: FC<Props> = ({ persons }) => {
-  const { width } = useWindowSize();
-
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
-        <div className="flex items-center gap-3 text-xl font-light sm:text-sm sm:mb-4 text-dark-100">
-          <Link href={routes.main} className="cursor-pointer">
-            <AiOutlineHome
-              className="text-dark-100"
-              size={width && width > 639 ? 22 : 16}
-            />
-          </Link>
-
-          <div>/</div>
-
-          <span className="text-accent-100">Інтэрактыўная_Мапа</span>
-        </div>
+        <BreadcrumbMain items={[{ text: 'Інтэрактыўная_Мапа' }]} />
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
           <h2 className="text-light-300 text-5xl sm:text-3xl">
