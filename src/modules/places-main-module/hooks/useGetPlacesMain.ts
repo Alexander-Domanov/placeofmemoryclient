@@ -12,6 +12,7 @@ export const useGetPlacesMain = ({
   country,
   city,
   places,
+  pageNumber,
 }: IPlacesProps & IProps) => {
   const { locale } = useRouter();
   const {
@@ -21,15 +22,15 @@ export const useGetPlacesMain = ({
     isFetching: isFetchingPlaces,
     isLoading,
   } = useQuery(
-    ['places-main', name, country, city],
-    () => getPlacesMain({ name, country, city, lang: locale }),
+    ['places-main', pageNumber, name, country, city],
+    () => getPlacesMain({ name, country, city, lang: locale, pageNumber }),
     {
       ...noRefetch,
       initialData: places,
-      refetchInterval: 60 * 1000,
+      cacheTime: 0,
+      staleTime: 0,
     }
   );
-
   return {
     dataPlaces,
     isErrorPlaces,
