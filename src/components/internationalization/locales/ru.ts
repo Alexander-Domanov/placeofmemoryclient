@@ -278,5 +278,10 @@ export const ru: LocaleType = {
       contacts: 'Контакты',
       languages: 'Языки',
     },
+    map: {
+      titleLink: 'Приборная панель',
+      search: 'Поиск',
+      button: 'Приблизить к Польше',
+    },
   },
 };

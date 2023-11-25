@@ -271,5 +271,10 @@ export const en: LocaleType = {
       contacts: 'Contacts',
       languages: 'Languages',
     },
+    map: {
+      titleLink: 'Dashboard',
+      search: 'Search',
+      button: 'Zoom to Poland',
+    },
   },
 };

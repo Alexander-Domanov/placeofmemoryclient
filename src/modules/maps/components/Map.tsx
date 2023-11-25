@@ -20,6 +20,7 @@ const MapComponent: FC<AutoCompleteMapComponentProps> = ({
   const { isLoaded } = useLoadScript({
     libraries: ['places'],
     version: 'weekly',
+    language: 'en',
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}` || '',
   });
 

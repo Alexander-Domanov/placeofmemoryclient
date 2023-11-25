@@ -6,6 +6,7 @@ import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useTranslation } from '@/components/internationalization';
 
 const containerStyle = {
   height: '60vh',
@@ -29,6 +30,8 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
   center,
   locations,
 }) => {
+  const { t } = useTranslation();
+
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     libraries: ['places'],
@@ -155,7 +158,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
       <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button type="primary" onClick={() => panTo(center)}>
-            Pan to location Poland …
+            {t.dashboard.map.button}
           </Button>
         </div>
 
@@ -165,7 +168,7 @@ const MapWithClusterMarkers: FC<MapWithMarkersProps> = ({
             onLoad={onLoadAutoComplete}
           >
             <Input
-              placeholder="Go to ...   input location"
+              placeholder={t.dashboard.map.search}
               allowClear
               title={inputValue}
               style={{

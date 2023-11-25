@@ -288,6 +288,11 @@ export const by = {
       contacts: 'Кантакты',
       languages: 'Мовы',
     },
+    map: {
+      titleLink: 'Прыборная панэль',
+      search: 'Пошук',
+      button: 'Прыблізіць да Польшчы',
+    },
   },
 };
 
