@@ -9,7 +9,7 @@ const PageRecovery = () => {
   return (
     <div>
       <Head>
-        <title>{t.auth.recovery.indexTile} | Mogilki</title>
+        <title>{`${t.auth.recovery.indexTile} | MOGILKI`}</title>
       </Head>
 
       <Header />

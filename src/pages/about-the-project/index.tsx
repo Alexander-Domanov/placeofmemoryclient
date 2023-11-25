@@ -1,16 +1,26 @@
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { useTranslation } from '@/components/internationalization';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
+import { About } from '@/modules/about-module/About';
+import { SiteLayout } from '@/components/layouts/SiteLayout';
+import { IContacts } from '@/types';
 
-const AboutTheProject = () => {
+interface Props {
+  contacts: IContacts;
+}
+
+const AboutTheProject: NextPage<Props> = ({ contacts }) => {
   const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{t.aboutTheProject.indexTitle} | MOGILKI</title>
+        <title>{`${t.aboutTheProject.indexTitle} | MOGILKI`}</title>
       </Head>
-      <div className="flex justify-center items-center ">Пра праэкт</div>
+
+      <SiteLayout contacts={contacts}>
+        <About contacts={contacts} />
+      </SiteLayout>
     </>
   );
 };

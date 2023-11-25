@@ -8,7 +8,7 @@ const PasswordResetsPage = () => {
   return (
     <>
       <Head>
-        <title>{t.auth.forgotPassword.indexTitle}| Mogilki</title>
+        <title>{`${t.auth.forgotPassword.indexTitle} | MOGILKI`}</title>
       </Head>
 
       <Header />

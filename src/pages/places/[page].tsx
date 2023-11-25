@@ -50,8 +50,9 @@ const Places = ({ places, contacts }: IProps) => {
   return (
     <>
       <Head>
-        <title>{t.places.indexTitle} | MOGILKI</title>
+        <title>{`${t.places.indexTitle} | MOGILKI`}</title>
       </Head>
+
       <SiteLayout contacts={contacts}>
         <PlacesMain places={places} />
       </SiteLayout>

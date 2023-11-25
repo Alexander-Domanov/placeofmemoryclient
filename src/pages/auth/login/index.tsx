@@ -8,7 +8,7 @@ const SignInPage = () => {
   return (
     <>
       <Head>
-        <title>{t.auth.signIn.indexTitle} | Mogilki</title>
+        <title>{`${t.auth.signIn.indexTitle} | MOGILKI`}</title>
       </Head>
 
       <Header />

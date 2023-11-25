@@ -6,6 +6,7 @@ import { IContacts, IGetPersonsResponse } from '@/types';
 import { getPersonsPublic } from '@/modules/persons-module/api/persons-api';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { PersonsSearchMain } from '@/modules/persons-module/components/PersonsSearchMain';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   contacts: IContacts;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Head>
