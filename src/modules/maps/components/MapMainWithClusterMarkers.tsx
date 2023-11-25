@@ -6,6 +6,7 @@ import { ILocation } from '@/types';
 import { IPersonForMap } from '@/types/persons/person-for-map.type';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useTranslation } from '@/components/internationalization';
 
 const containerStyle = {
   height: '70vh',
@@ -31,6 +32,8 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   center,
   locations,
 }) => {
+  const { t } = useTranslation();
+
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     libraries: ['places'],
@@ -164,7 +167,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
             </span>
 
             <input
-              placeholder="ЗНАЙСЦІ"
+              placeholder={t.map.page.search}
               type="text"
               title={inputValue}
               className="w-80 h-10 flex-shrink-0 rounded-full bg-dark-300 shadow-md hover:shadow-icon px-12 sm:w-60 sm:h-8 sm:px-10 outline-none"
@@ -195,7 +198,7 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
     </div>
   ) : (
     <div className="flex justify-center mt-10 text-2xl text-dark-100">
-      Загрузка...
+      {t.map.page.loading}
     </div>
   );
 };

@@ -234,6 +234,12 @@ export const ru: LocaleType = {
   },
   map: {
     indexTitle: 'Карта',
+    page: {
+      title: 'Интерактивная_Карта',
+      header: 'Интерактивная Карта',
+      search: 'НАЙТИ',
+      loading: 'Загрузка',
+    },
   },
   account: {
     indexTitle: 'Редактировать профиль',

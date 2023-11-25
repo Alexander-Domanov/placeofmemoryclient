@@ -244,6 +244,12 @@ export const by = {
   },
   map: {
     indexTitle: 'Мапа',
+    page: {
+      title: 'Інтэрактыўная_Мапа',
+      header: 'Інтэрактыўная Мапа',
+      search: 'ЗНАЙСЦІ',
+      loading: 'Загрузка',
+    },
   },
   account: {
     indexTitle: 'Рэдагаваць профіль',
