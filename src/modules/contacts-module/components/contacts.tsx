@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import {
   Breadcrumb,
   Button,
@@ -14,12 +14,20 @@ import {
   Typography,
 } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
+import dynamic from 'next/dynamic';
 import { routes } from '@/common/routing/routes';
+import 'react-quill/dist/quill.snow.css';
 import { useContacts } from '@/modules/contacts-module/hooks/useContacts';
 import { useUpdateContacts } from '@/modules/contacts-module/hooks/useUpdateContacts';
 import { IContacts, IContactsForm } from '@/types';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { GetCharacterCount, QuillCharacterCount } from '@/components';
+import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
+import { AboutFormRules } from '@/modules/about-module/constants/AboutFormRules';
+import { ValidationOfRedactorValue } from '@/common-dashboard';
+
+const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
 const breadcrumbs = [
   CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -43,9 +51,17 @@ export const Contacts: FC = () => {
   const { contacts, isFetching } = useContacts();
   const { updateContactsMutate, isUpdating } = useUpdateContacts();
 
+  const ReactQuill = useMemo(
+    () => dynamic(() => import('react-quill'), { ssr: false }),
+    []
+  );
+
   const [form] = Form.useForm();
   const [fields, setFields] = useState<FieldData[]>([]);
   const [selectedContacts, setSelectedContacts] = useState<IContacts>();
+  const [aboutText, setAboutText] = useState<string>('');
+
+  const characterCount = GetCharacterCount(aboutText);
 
   useEffect(() => {
     if (contacts) {
@@ -59,6 +75,7 @@ export const Contacts: FC = () => {
           instagram: contacts.socialNetworks.instagram,
           partners: contacts.socialNetworks.partners,
         },
+        about: contacts.about,
       });
       setSelectedContacts(contacts);
     }
@@ -75,6 +92,7 @@ export const Contacts: FC = () => {
         instagram: values.socialNetworks.instagram,
         partners: values.socialNetworks.partners,
       },
+      about: values.about,
     };
 
     updateContactsMutate(
@@ -88,6 +106,25 @@ export const Contacts: FC = () => {
         },
       }
     );
+  };
+
+  const exceeded = isCharacterCountExceeded(
+    characterCount,
+    AboutFormRules.about.maxCharacters
+  );
+  const quillStyle = getQuillStyle(exceeded);
+
+  const validateContent = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
+    return ValidationOfRedactorValue({
+      maxCharacters: AboutFormRules.about.maxCharacters,
+      message: AboutFormRules.about.message,
+      value,
+      callback,
+    });
   };
 
   return (
@@ -106,6 +143,43 @@ export const Contacts: FC = () => {
           }}
           onFinish={onFinish}
         >
+          <Col span={24} style={{ marginBottom: 16 }}>
+            <Card>
+              <Form.Item
+                label="About"
+                name="about"
+                validateFirst
+                rules={[
+                  { validator: validateContent },
+                  ...AboutFormRules.about.rules,
+                ]}
+                hasFeedback
+                tooltip={
+                  <span>
+                    This text will be displayed on the main page. You can write
+                    up to {AboutFormRules.about.maxCharacters} characters. After
+                    writing, you should save the article.
+                  </span>
+                }
+              >
+                <ReactQuill
+                  theme="snow"
+                  value={aboutText}
+                  onChange={(value) => {
+                    setAboutText(value);
+                    form.setFieldValue('about', value);
+                  }}
+                  style={quillStyle}
+                />
+              </Form.Item>
+
+              <QuillCharacterCount
+                characterCount={characterCount}
+                maxCount={AboutFormRules.about.maxCharacters}
+              />
+            </Card>
+          </Col>
+
           <Row gutter={[16, 16]}>
             <Col span={24} lg={12}>
               <Card>

@@ -12,7 +12,7 @@ const Settings: FC<IPageContacts> = ({ contacts }) => {
   return (
     <>
       <Head>
-        <title>{t.account.indexTitle}| Mogilki</title>
+        <title>{`${t.account.indexTitle} | MOGILKI`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>
