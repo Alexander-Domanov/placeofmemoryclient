@@ -196,6 +196,7 @@ export const PersonsSearchForm: FC = () => {
         <Button
           variant="default"
           size="sm"
+          type="button"
           className="sm:w-full"
           onClick={onClear}
         >
