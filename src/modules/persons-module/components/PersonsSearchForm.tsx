@@ -87,7 +87,6 @@ export const PersonsSearchForm: FC = () => {
     gte: gteT,
     lte: lteT,
     clear: clearT,
-    noData: noDataT,
     error: errorT,
   } = t.people.search.page;
 
