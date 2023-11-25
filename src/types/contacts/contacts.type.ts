@@ -9,6 +9,7 @@ export interface IContacts extends IBaseLocation, IBaseDateType {
   phone: string;
   email: string;
   socialNetworks: IKeyValueStrings;
+  about: string;
 }
 
 interface ISocial {
@@ -23,4 +24,5 @@ export interface IContactsForm {
   phone: string;
   email: string;
   socialNetworks: ISocial;
+  about: string;
 }
