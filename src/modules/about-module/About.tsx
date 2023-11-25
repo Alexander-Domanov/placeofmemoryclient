@@ -23,7 +23,7 @@ export const About: React.FC<Props> = ({ contacts }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="flex items-center justify-center mt-10">
-          {contacts?.about.length < 0 ? (
+          {contacts.about ? (
             <div
               className="mt-4 wysiwyg sm:text-xs"
               dangerouslySetInnerHTML={{ __html: contacts.about }}
