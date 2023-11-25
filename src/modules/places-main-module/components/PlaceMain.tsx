@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { AiOutlineLeftCircle } from 'react-icons/ai';
 import React, { useCallback, useRef, useState } from 'react';
 import { BsArrowLeftCircleFill } from 'react-icons/bs';
 import Image from 'next/image';
@@ -36,18 +35,18 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
     setMapVisible(!mapVisible);
   };
 
-  const prevPageLabel = (
-    <div className="flex mt-[50px]">
-      <Link href={routes.places.page(String(1))}>
-        <AiOutlineLeftCircle
-          className="cursor-pointer"
-          size={56}
-          fill="#bdc1c7"
-          aria-label="prevPageLabel"
-        />
-      </Link>
-    </div>
-  );
+  // const prevPageLabel = (
+  //   <div className="flex mt-[50px]">
+  //     <Link href={routes.places.page(String(1))}>
+  //       <AiOutlineLeftCircle
+  //         className="cursor-pointer"
+  //         size={56}
+  //         fill="#bdc1c7"
+  //         aria-label="prevPageLabel"
+  //       />
+  //     </Link>
+  //   </div>
+  // );
 
   const { map, notData, description, archive, grave, titleLink, location } =
     t.places.place.page;
