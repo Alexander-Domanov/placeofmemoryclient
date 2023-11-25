@@ -216,6 +216,9 @@ export const ru: LocaleType = {
   },
   aboutTheProject: {
     indexTitle: 'О проекте',
+    page: {
+      title: 'О_проекте',
+    },
   },
   map: {
     indexTitle: 'Карта',

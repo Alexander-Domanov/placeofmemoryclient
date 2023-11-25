@@ -224,7 +224,10 @@ export const by = {
     },
   },
   aboutTheProject: {
-    indexTitle: 'Аб праекце',
+    indexTitle: 'Пра_праэкт',
+    page: {
+      title: 'Пра_праэкт',
+    },
   },
   map: {
     indexTitle: 'Мапа',
