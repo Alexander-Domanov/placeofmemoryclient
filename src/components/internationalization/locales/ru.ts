@@ -171,6 +171,48 @@ export const ru: LocaleType = {
   },
   people: {
     indexTitle: 'Люди',
+    search: {
+      indexTitle: 'Поиск',
+      page: {
+        title: 'Поиск',
+        placeholder: 'Поиск',
+        name: 'ИМЯ',
+        lastName: 'ФАМИЛИЯ',
+        // patronymic: 'ОТЧЕСТВО',
+        birthDate: 'ГОД РОЖДЕНИЯ',
+        error: 'Неправильный формат даты',
+        deathDate: 'ГОД СМЕРТИ',
+        country: 'СТРАНА',
+        city: 'ГОРОД',
+        gte: 'БОЛЬШЕ ЧЕМ',
+        lte: 'МЕНЬШЕ ЧЕМ',
+        search: 'ПОИСК',
+        clear: 'ОЧИСТИТЬ',
+        noData: 'НИЧЕГО НЕ НАЙДЕНО',
+      },
+    },
+    page: {
+      title: 'Архив_Людей',
+      archive: 'Архив',
+      people: '_Людей',
+      noData: 'НИЧЕГО НЕ НАЙДЕНО',
+    },
+    person: {
+      indexTitle: 'Человек',
+      page: {
+        titleLink: 'Архив_Людей',
+        archive: 'Архив',
+        grave: '_Личность',
+        location: 'Место нахождения',
+        biography: 'Биография',
+        map: {
+          show: 'Показать на карте',
+          hide: 'Скрыть с карты',
+        },
+        notData: 'нет данных',
+        prev: 'Предыдущий',
+      },
+    },
   },
   aboutTheProject: {
     indexTitle: 'О проекте',

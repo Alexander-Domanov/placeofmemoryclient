@@ -18,6 +18,7 @@ import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   person: IPerson;
@@ -26,6 +27,8 @@ interface Props {
 export const PersonMain: FC<Props> = ({ person }) => {
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
+
+  const { t } = useTranslation();
 
   const [mapVisible, setMapVisible] = useState(false);
 
@@ -45,13 +48,24 @@ export const PersonMain: FC<Props> = ({ person }) => {
     lightGalleryRef?.current?.openGallery?.(0);
   };
 
+  const {
+    titleLink: titleT,
+    archive: archiveT,
+    grave: graveT,
+    notData: noDataT,
+    location: locationT,
+    biography: biographyT,
+    map: mapT,
+    prev: prevT,
+  } = t.people.person.page;
+
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
         <div className="overflow-hidden">
           <BreadcrumbMain
             items={[
-              { text: 'Архіў_Людзі', link: routes.persons.index },
+              { text: titleT, link: routes.persons.index },
               { text: `${person.firstName} ${person.lastName}` },
             ]}
           />
@@ -59,8 +73,8 @@ export const PersonMain: FC<Props> = ({ person }) => {
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
           <h2 className="text-light-300 text-5xl sm:text-3xl">
-            Архіў
-            <span className="text-dark-100 font-light">_Асоба</span>
+            {archiveT}
+            <span className="text-dark-100 font-light">{graveT}</span>
           </h2>
         </div>
 
@@ -77,11 +91,11 @@ export const PersonMain: FC<Props> = ({ person }) => {
                 <div className="mt-2 text-dark-100 text-xl md:text-lg">
                   {person.birthDate
                     ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
-                    : 'Няма дадзеных'}
+                    : noDataT}
                   &nbsp;-&nbsp;
                   {person.deathDate
                     ? convertDateToFormat(person.deathDate, 'DD.MM.YYYY')
-                    : 'Няма дадзеных'}
+                    : noDataT}
                 </div>
 
                 <div className="mt-10">
@@ -120,14 +134,14 @@ export const PersonMain: FC<Props> = ({ person }) => {
 
             <div>
               <div className="text-3xl sm:text-2xl text-dark-100">
-                Месца нараджэння
+                {locationT}
               </div>
               <div className="mt-4">
                 {person.country}, {person.city}
               </div>
 
               <div className="mt-8 text-3xl sm:text-2xl text-dark-100">
-                Біяграфія
+                {biographyT}
               </div>
               <div
                 className="mt-4 wysiwyg sm:text-xs"
@@ -139,7 +153,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
                   onClick={toggleMapVisibility}
                   className="flex items-center hover:underline focus:outline-none"
                 >
-                  {mapVisible ? 'Схаваць мапу' : 'Паказаць мапу'}
+                  {mapVisible ? mapT.hide : mapT.show}
                   <span className="ml-2">
                     {mapVisible ? (
                       <FaChevronUp size={isMobile ? 20 : 24} />
@@ -170,7 +184,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
           className="mt-16 inline-flex text-5xl sm:text-4xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
         >
           <BsArrowLeftCircleFill className="text-dark-300" />
-          <span className="sr-only">Previous</span>
+          <span className="sr-only">{prevT}</span>
         </Link>
       </div>
     </div>

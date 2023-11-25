@@ -4,9 +4,11 @@ import * as yup from 'yup';
 import { routes } from '@/common/routing/routes';
 import { Button, Input } from '@/ui';
 import { FilterCondition } from '@/types';
+import { useTranslation } from '@/components/internationalization';
 
 export const PersonsSearchForm: FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -74,6 +76,21 @@ export const PersonsSearchForm: FC = () => {
     router.push(routes.persons.index);
   };
 
+  const {
+    name: nameT,
+    lastName: lastNameT,
+    country: countryT,
+    city: cityT,
+    birthDate: birthDateT,
+    deathDate: deathDateT,
+    search: searchT,
+    gte: gteT,
+    lte: lteT,
+    clear: clearT,
+    noData: noDataT,
+    error: errorT,
+  } = t.people.search.page;
+
   return (
     <form
       className="max-w-3xl md:max-w-full"
@@ -87,7 +104,7 @@ export const PersonsSearchForm: FC = () => {
             type="text"
             id="name"
             value={name}
-            label="ІМЯ"
+            label={nameT}
             showErrorMessage={false}
             onChange={(e) => setName(e.target.value)}
           />
@@ -98,7 +115,7 @@ export const PersonsSearchForm: FC = () => {
             type="text"
             id="lastName"
             value={lastName}
-            label="ПРОЗВІШЧА"
+            label={lastNameT}
             showErrorMessage={false}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -113,8 +130,8 @@ export const PersonsSearchForm: FC = () => {
               setFilterConditionBirthDate(e.target.value as FilterCondition);
             }}
           >
-            <option value={FilterCondition.gte}>БОЛЬШ ЧЫМ</option>
-            <option value={FilterCondition.lte}>МЕНЬШ ЧЫМ</option>
+            <option value={FilterCondition.gte}>{gteT}</option>
+            <option value={FilterCondition.lte}>{lteT}</option>
           </select>
 
           <Input
@@ -127,9 +144,9 @@ export const PersonsSearchForm: FC = () => {
               yup.number().min(0).max(currentYear).isValidSync(+birthDate) &&
               (!birthDate || birthDate.length === 4)
                 ? null
-                : 'Няправільны фармат'
+                : { errorT }
             }
-            label="ГОД НАРАДЖЭННЯ"
+            label={birthDateT}
             showErrorMessage={false}
             onChange={(e) => setBirthDate(e.target.value)}
           />
@@ -140,7 +157,7 @@ export const PersonsSearchForm: FC = () => {
             type="text"
             id="country"
             value={country}
-            label="КРАІНА"
+            label={countryT}
             showErrorMessage={false}
             onChange={(e) => setCountry(e.target.value)}
           />
@@ -151,7 +168,7 @@ export const PersonsSearchForm: FC = () => {
             type="text"
             id="city"
             value={city}
-            label="ГОРАД"
+            label={cityT}
             showErrorMessage={false}
             onChange={(e) => setCity(e.target.value)}
           />
@@ -166,8 +183,8 @@ export const PersonsSearchForm: FC = () => {
               setFilterConditionDeathDate(e.target.value as FilterCondition)
             }
           >
-            <option value={FilterCondition.gte}>БОЛЬШ ЧЫМ</option>
-            <option value={FilterCondition.lte}>МЕНЬШ ЧЫМ</option>
+            <option value={FilterCondition.gte}>{gteT}</option>
+            <option value={FilterCondition.lte}>{lteT}</option>
           </select>
 
           <Input
@@ -178,10 +195,10 @@ export const PersonsSearchForm: FC = () => {
               yup.number().min(0).max(currentYear).isValidSync(+deathDate) &&
               (!deathDate || deathDate.length === 4)
                 ? null
-                : 'Няправільны фармат'
+                : { errorT }
             }
             value={deathDate}
-            label="ГОД СМЕРЦІ"
+            label={deathDateT}
             showErrorMessage={false}
             onChange={(e) => setDeathDate(e.target.value)}
           />
@@ -190,7 +207,7 @@ export const PersonsSearchForm: FC = () => {
 
       <div className="flex items-center gap-3 sm:gap-8 mt-4 flex-wrap">
         <Button variant="default" size="sm" className="sm:w-full">
-          Пошук
+          {searchT}
         </Button>
 
         <Button
@@ -200,7 +217,7 @@ export const PersonsSearchForm: FC = () => {
           className="sm:w-full"
           onClick={onClear}
         >
-          Ачысціць
+          {clearT}
         </Button>
       </div>
     </form>

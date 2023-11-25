@@ -19,7 +19,7 @@ const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
   return (
     <>
       <Head>
-        <title>Search</title>
+        <title>{`${t.people.search.indexTitle} | MOGILKI`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

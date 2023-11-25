@@ -7,6 +7,7 @@ import { SITE_PERSONS_PER_PAGE } from '../constants/persons-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { PersonsSearchForm } from './PersonsSearchForm';
 import { PersonsItemMain } from '@/modules/persons-module/components/PersonsItemMain';
+import { useTranslation } from '@/components/internationalization';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -14,6 +15,7 @@ interface Props {
 
 export const PersonsMain: FC<Props> = ({ persons }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const onPageChange = (page: number) => {
     if (page === 1) {
@@ -22,16 +24,22 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
       router.push(`${routes.persons.page(page)}`);
     }
   };
+  const {
+    title: titleT,
+    archive: archiveT,
+    people: peopleT,
+    noData: noDataT,
+  } = t.people.page;
 
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px] lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
-        <BreadcrumbMain items={[{ text: 'Архіў_Людзі' }]} />
+        <BreadcrumbMain items={[{ text: titleT }]} />
 
         <div className="flex justify-between md:justify-center md:flex-wrap gap-4 mt-2">
           <h2 className="text-light-300 text-5xl sm:text-3xl">
-            Архіў
-            <span className="text-dark-100 font-light ">_Людзі</span>
+            {archiveT}
+            <span className="text-dark-100 font-light ">{peopleT}</span>
           </h2>
         </div>
 
@@ -50,7 +58,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
           {persons?.items.length === 0 ? (
             <div className="flex justify-center mt-10 text-2xl text-dark-100">
-              Нічога не знойдзена
+              {noDataT}
             </div>
           ) : (
             <div className="mt-20 md:mt-10">

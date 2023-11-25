@@ -180,6 +180,48 @@ export const by = {
   },
   people: {
     indexTitle: 'Людзі',
+    search: {
+      indexTitle: 'Пошук',
+      page: {
+        title: 'Пошук',
+        placeholder: 'Пошук',
+        name: 'ІMЯ',
+        lastName: 'ПРОЗВІШЧА',
+        // patronymic: 'ПО БАТЬКУ',
+        birthDate: 'ГОД НАРАДЖЭННЯ',
+        error: 'Няправільны формат даты',
+        deathDate: 'ГОД СМЕРЦІ',
+        country: 'КРАІНА',
+        city: 'ГОРАД',
+        gte: 'БОЛЬШ ЧЫМ',
+        lte: 'МЕНШ ЧЫМ',
+        search: 'ПОШУК',
+        clear: 'АЧЫСЦІЦЬ',
+        noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+      },
+    },
+    page: {
+      title: 'Архіў_Людзей',
+      archive: 'Архіў',
+      people: '_Людзей',
+      noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+    },
+    person: {
+      indexTitle: 'Чалавек',
+      page: {
+        titleLink: 'Архіў_Людзей',
+        archive: 'Архіў',
+        grave: '_Асоба',
+        location: 'Месца знаходжання',
+        biography: 'Біяграфія',
+        map: {
+          show: 'Паказаць на мапе',
+          hide: 'Схаваць мапу',
+        },
+        notData: 'няма дадзеных',
+        prev: 'Папярэдні',
+      },
+    },
   },
   aboutTheProject: {
     indexTitle: 'Аб праекце',
