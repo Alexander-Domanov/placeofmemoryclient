@@ -33,6 +33,7 @@ import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
+import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -58,6 +59,7 @@ interface IPlaceForm {
 
 export const CreatePlace: FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
@@ -141,6 +143,7 @@ export const CreatePlace: FC = () => {
       message: PlaceFormRules.description.message,
       value,
       callback,
+      t,
     });
   };
 

@@ -26,6 +26,7 @@ import { GetCharacterCount, QuillCharacterCount } from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { AboutFormRules } from '@/modules/about-module/constants/AboutFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
+import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -48,6 +49,7 @@ interface FieldData {
 }
 
 export const Contacts: FC = () => {
+  const { t } = useTranslation();
   const { contacts, isFetching } = useContacts();
   const { updateContactsMutate, isUpdating } = useUpdateContacts();
 
@@ -124,6 +126,7 @@ export const Contacts: FC = () => {
       message: AboutFormRules.about.message,
       value,
       callback,
+      t,
     });
   };
 

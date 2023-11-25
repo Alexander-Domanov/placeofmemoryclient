@@ -49,6 +49,7 @@ import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRu
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
+import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -84,6 +85,8 @@ export const PersonEdit: FC = () => {
     []
   );
   const router = useRouter();
+  const { t } = useTranslation();
+
   const { personId } = router.query as { personId: string };
 
   const { person, isLoading, me } = usePerson(personId);
@@ -261,6 +264,7 @@ export const PersonEdit: FC = () => {
       message: PersonFormRules.biography.message,
       value,
       callback,
+      t,
     });
   };
 

@@ -43,6 +43,7 @@ import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRu
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { createPersonStepsTour } from '@/modules/persons-module/components/CreatePersonStepsTour';
+import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -70,6 +71,7 @@ interface IPersonForm {
 }
 
 export const CreatePerson: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const ref = useRef(null);
@@ -174,6 +176,7 @@ export const CreatePerson: FC = () => {
       message: PersonFormRules.biography.message,
       value,
       callback,
+      t,
     });
   };
 

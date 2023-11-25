@@ -42,6 +42,7 @@ import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
+import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
@@ -69,6 +70,7 @@ function breadcrumbs(name: string) {
 }
 
 export const PlaceEdit: FC = () => {
+  const { t } = useTranslation();
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     []
@@ -222,6 +224,7 @@ export const PlaceEdit: FC = () => {
       message: PlaceFormRules.description.message,
       value,
       callback,
+      t,
     });
   };
 
