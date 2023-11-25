@@ -2,11 +2,12 @@ import { FC } from 'react';
 import Link from 'next/link';
 import {
   FaFacebookF,
-  FaLinkedin,
+  FaHandshake,
+  FaInstagram,
   FaLocationDot,
   FaRegEnvelope,
+  FaTelegram,
 } from 'react-icons/fa6';
-import { FaTwitter } from 'react-icons/fa';
 import { NAVIGATION_LINK } from '@/common/constants';
 import { routes } from '@/common/routing/routes';
 import { IContacts } from '@/types';
@@ -76,6 +77,24 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
                 </div>
               </div>
             </div>
+
+            <div className="text-base font-bold mt-8 sm:mt-6">
+              {t.footer.partners}
+            </div>
+
+            <div className="mt-6">
+              <div className="flex flex-col gap-6 sm:gap-3">
+                <div className="grid grid-cols-[20px_1fr] items-center gap-4 sm:grid-cols-[16px_1fr] sm:gap-3">
+                  <div className="flex justify-center">
+                    <FaHandshake className="text-base" />
+                  </div>
+
+                  <div className="text-sm font-light leading-6">
+                    {contacts.socialNetworks.partners}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="sm:order-1 sm:flex sm:items-center sm:gap-8 sm:col-span-2">
@@ -95,26 +114,26 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
                   </li>
                 )}
 
-                {contacts.socialNetworks.twitter && (
+                {contacts.socialNetworks.telegram && (
                   <li>
                     <a
-                      href="https://twitter.com/"
+                      href={contacts.socialNetworks.telegram}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FaTwitter size={20} />
+                      <FaTelegram size={20} />
                     </a>
                   </li>
                 )}
 
-                {contacts.socialNetworks.linkedin && (
+                {contacts.socialNetworks.instagram && (
                   <li>
                     <a
-                      href="https://linkedin.com/"
+                      href={contacts.socialNetworks.instagram}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FaLinkedin size={20} />
+                      <FaInstagram size={20} />
                     </a>
                   </li>
                 )}

@@ -19,6 +19,7 @@ export const ru: LocaleType = {
   footer: {
     pages: 'Страницы',
     contacts: 'Контакты',
+    partners: 'Партнеры',
     socialNetworks: 'Социальные сети',
   },
   auth: {

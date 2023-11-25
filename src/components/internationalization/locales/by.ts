@@ -17,6 +17,7 @@ export const by = {
   footer: {
     pages: 'Старонкі',
     contacts: 'Кантакты',
+    partners: 'Партнёры',
     socialNetworks: 'Сацыяльныя сеткі',
   },
   auth: {
