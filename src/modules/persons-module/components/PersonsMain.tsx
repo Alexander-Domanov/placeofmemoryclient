@@ -78,10 +78,10 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     city: cityT,
     birthDate: birthDateT,
     deathDate: deathDateT,
-    search: searchT,
+    // search: searchT,
     gte: gteT,
     lte: lteT,
-    clear: clearT,
+    // clear: clearT,
     error: errorT,
   } = t.people.search.page;
 
