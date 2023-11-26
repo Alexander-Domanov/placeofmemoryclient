@@ -191,7 +191,7 @@ export const en: LocaleType = {
         deathDate: 'DEATH YEAR',
         country: 'COUNTRY',
         city: 'CITY',
-        gte: 'GREATER THAN',
+        gte: 'MORE THAN',
         lte: 'LESS THAN',
         search: 'SEARCH',
         clear: 'CLEAR',
