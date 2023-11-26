@@ -5,6 +5,7 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useTranslation } from '@/components/internationalization';
 
 const containerStyle = {
   height: '50vh',
@@ -21,6 +22,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
   center,
   locations,
 }) => {
+  const { t } = useTranslation();
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     libraries: ['places'],
@@ -119,7 +121,9 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
 
   return isLoaded ? (
     <Flex gap="large" vertical>
-      <Button onClick={() => panTo(center)}>Pan to Current Location</Button>
+      <Button onClick={() => panTo(center)}>
+        {t.dashboard.locationInfo.buttons.panTo}
+      </Button>
 
       <GoogleMap
         mapContainerStyle={containerStyle}

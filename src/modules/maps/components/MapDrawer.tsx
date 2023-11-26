@@ -5,6 +5,7 @@ import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-
 import MapWithAutoComplete from '@/modules/maps/components/MapWithAutoComplete';
 import { extractPlaceData } from '@/modules/maps/components/helpers/placeUtils';
 import LocationForm from '@/modules/maps/components/LocationForm';
+import { useTranslation } from '@/components/internationalization';
 
 const styleButton = {
   cursor: 'pointer',
@@ -18,6 +19,7 @@ interface MapDrawerProps {
 }
 
 const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [markerPosition, setMarkerPosition] =
     useState<google.maps.LatLngLiteral | null>(null);
@@ -92,7 +94,7 @@ const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
           icon={<FaLocationDot />}
           disabled={disabled}
         >
-          Open Map
+          {t.dashboard.locationInfo.buttons.openMap}
         </Button>
       </Space>
 
@@ -108,7 +110,7 @@ const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
               onClick={onClearForm}
               style={{ cursor: 'pointer', color: '#f66321' }}
             >
-              Clear Table
+              {t.dashboard.locationInfo.buttons.clearTable}
             </Button>
 
             <Button
@@ -116,7 +118,7 @@ const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
               onClick={onExecuteGeoCoder}
               style={styleButton}
             >
-              Fill Table
+              {t.dashboard.locationInfo.buttons.fillTable}
             </Button>
           </Space>
         }
@@ -124,7 +126,10 @@ const MapDrawer: FC<MapDrawerProps> = ({ onPlaceSelected, disabled }) => {
         <Col span={24}>
           <MapWithAutoComplete onDefineLocation={handleExecuteGeoCoder} />
 
-          <Divider orientation="left">Define Location</Divider>
+          <Divider orientation="left">
+            {' '}
+            {t.dashboard.locationInfo.buttons.define}
+          </Divider>
 
           <LocationForm form={form} onFinish={onFinish} />
         </Col>

@@ -8,10 +8,11 @@ import UpdatePlaceStatus from '@/modules/places-module/components/UpdatePlaceSta
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import DeletePlaceComponent from '@/modules/places-module/components/DeletePlaceModal';
+import { LocaleType } from '@/components/internationalization';
 
-export const columnsTablePlaces: ColumnsType<IPlace> = [
+export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
   {
-    title: 'ID',
+    title: t.dashboard.places.table.id,
     dataIndex: 'id',
     key: 'id',
     width: 50,
@@ -21,11 +22,11 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
-    title: 'Owner',
+    title: t.dashboard.places.table.owner,
     dataIndex: 'owner',
     key: 'ownerId',
     align: 'center',
-    width: 60,
+    width: 80,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -40,7 +41,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
   },
 
   {
-    title: 'Name',
+    title: t.dashboard.places.table.name,
     dataIndex: 'nameCemetery',
     key: 'nameCemetery',
     ellipsis: true,
@@ -65,23 +66,23 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     ),
   },
   {
-    title: 'Country',
+    title: t.dashboard.places.table.country,
     dataIndex: 'country',
     key: 'country',
-    width: 110,
+    width: 90,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
   {
-    title: 'City',
+    title: t.dashboard.places.table.city,
     dataIndex: 'city',
     key: 'city',
-    width: 110,
+    width: 90,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
   {
-    title: 'Created At',
+    title: t.dashboard.places.table.createdAt,
     dataIndex: 'createdAt',
     key: 'createdAt',
     sorter: true,
@@ -98,7 +99,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     ),
   },
   {
-    title: 'Updated At',
+    title: t.dashboard.places.table.updatedAt,
     dataIndex: 'updatedAt',
     key: 'updatedAt',
     width: 90,
@@ -115,7 +116,7 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     ),
   },
   {
-    title: 'Status',
+    title: t.dashboard.places.table.status,
     dataIndex: 'status',
     key: 'status',
     align: 'center',
@@ -125,11 +126,11 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     render: (text: string) => ColorStatusTag(text),
   },
   {
-    title: 'Photo',
+    title: t.dashboard.places.table.photos,
     dataIndex: 'photos',
     key: 'photos',
     align: 'center',
-    width: 60,
+    width: 90,
     render: (text, record: IPlace) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
@@ -148,17 +149,17 @@ export const columnsTablePlaces: ColumnsType<IPlace> = [
     ),
   },
   {
-    title: 'Persons',
+    title: t.dashboard.places.table.persons,
     dataIndex: 'persons',
     key: 'persons',
     align: 'center',
-    width: 60,
+    width: 70,
     render: (text, record) => (
       <Typography.Text>{record.personsLocation.length}</Typography.Text>
     ),
   },
   {
-    title: 'Actions',
+    title: t.dashboard.places.table.actions,
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',

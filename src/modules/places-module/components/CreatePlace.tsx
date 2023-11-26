@@ -32,21 +32,10 @@ import {
 import { PlaceFormRules } from '@/modules/places-module/constants/PlaceFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
-import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useTranslation } from '@/components/internationalization';
+import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({ key: routes.dashboard.places.index, text: 'Places' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.places.create,
-    text: 'Create Place',
-    withLink: false,
-  }),
-];
 
 interface IPlaceForm {
   country: string;
@@ -118,8 +107,9 @@ export const CreatePlace: FC = () => {
     createPlaceMutate(form, {
       onSuccess: (data) => {
         notification.success({
-          message: 'Place created successfully',
-          description: 'You will be redirected to the place page',
+          message: t.dashboard.places.create.notification.success.title,
+          description:
+            t.dashboard.places.create.notification.success.description,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.places.place(data.data.id));
@@ -127,9 +117,11 @@ export const CreatePlace: FC = () => {
     });
   };
 
+  const placeFormRules = PlaceFormRules(t);
+
   const exceededDescription = isCharacterCountExceeded(
     descriptionCount,
-    PlaceFormRules.description.maxCharacters
+    placeFormRules.description.maxCharacters
   );
   const quillStyle = getQuillStyle(exceededDescription);
 
@@ -139,13 +131,30 @@ export const CreatePlace: FC = () => {
     callback: (message?: string) => void
   ) => {
     return ValidationOfRedactorValue({
-      maxCharacters: PlaceFormRules.description.maxCharacters,
-      message: PlaceFormRules.description.message,
+      maxCharacters: placeFormRules.description.maxCharacters,
+      message: placeFormRules.description.message,
       value,
       callback,
       t,
     });
   };
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.places.index,
+      text: t.dashboard.places.index,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.places.create,
+      text: t.dashboard.places.create.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -167,92 +176,83 @@ export const CreatePlace: FC = () => {
             <Card>
               <Form.Item
                 name="country"
-                label="Country"
-                rules={PlaceFormRules.country}
+                label={t.dashboard.places.form.country.label}
+                rules={placeFormRules.country}
                 hasFeedback
               >
                 <Input.TextArea
-                  placeholder="Input Country"
+                  placeholder={t.dashboard.places.form.country.placeholder}
                   count={{
                     show: true,
-                    max: PlaceFormRules.country[1].max,
+                    max: placeFormRules.country[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="city"
-                label="City"
-                rules={PlaceFormRules.city}
+                label={t.dashboard.places.form.city.label}
+                rules={placeFormRules.city}
                 hasFeedback
               >
                 <Input.TextArea
-                  placeholder="Input City"
+                  placeholder={t.dashboard.places.form.city.placeholder}
                   count={{
                     show: true,
-                    max: PlaceFormRules.city[1].max,
+                    max: placeFormRules.city[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="nameCemetery"
-                label="Name Cemetery"
-                rules={PlaceFormRules.nameCemetery}
+                label={t.dashboard.places.form.nameCemetery.label}
+                rules={placeFormRules.nameCemetery}
                 hasFeedback
                 tooltip={
-                  <span>
-                    You can write up to {PlaceFormRules.nameCemetery[1].max}{' '}
-                    characters. The name of the cemetery should be unique. After
-                    writing, you can save the place.
-                  </span>
+                  <span>{t.dashboard.places.form.nameCemetery.tooltip}</span>
                 }
               >
                 <Input.TextArea
-                  placeholder="Input Name Cemetery"
+                  placeholder={t.dashboard.places.form.nameCemetery.placeholder}
                   count={{
                     show: true,
-                    max: PlaceFormRules.nameCemetery[1].max,
+                    max: placeFormRules.nameCemetery[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="shortDescription"
-                label="Short Description"
-                rules={PlaceFormRules.shortDescription.rules}
+                label={t.dashboard.places.form.shortDescription.label}
+                rules={placeFormRules.shortDescription.rules}
                 hasFeedback
                 tooltip={
                   <span>
-                    You can write up to{' '}
-                    {PlaceFormRules.shortDescription.maxCharacters} characters.
-                    This description will be displayed on the main page as a
-                    preview of the place.
+                    {t.dashboard.places.form.shortDescription.tooltip}
                   </span>
                 }
               >
                 <Input.TextArea
-                  placeholder="Short Description"
+                  placeholder={
+                    t.dashboard.places.form.shortDescription.placeholder
+                  }
                   count={{
                     show: true,
-                    max: PlaceFormRules.shortDescription.maxCharacters,
+                    max: placeFormRules.shortDescription.maxCharacters,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="description"
-                label="Description"
+                label={t.dashboard.places.form.description.label}
                 rules={[
                   { validator: validateDescription },
-                  ...PlaceFormRules.description.rules,
+                  ...placeFormRules.description.rules,
                 ]}
                 tooltip={
-                  <span>
-                    You can write up to{' '}
-                    {PlaceFormRules.description.maxCharacters} characters. This
-                    description will be displayed on the place page.
-                  </span>
+                  <span>{t.dashboard.places.form.description.tooltip}</span>
                 }
               >
                 <ReactQuill
@@ -268,7 +268,7 @@ export const CreatePlace: FC = () => {
 
               <QuillCharacterCount
                 characterCount={descriptionCount}
-                maxCount={PlaceFormRules.description.maxCharacters}
+                maxCount={placeFormRules.description.maxCharacters}
               />
             </Card>
           </Col>
@@ -282,17 +282,17 @@ export const CreatePlace: FC = () => {
                   loading={isCreating}
                   icon={<SaveOutlined />}
                 >
-                  Save
+                  {t.dashboard.places.create.button.save}
                 </Button>
               </Card>
 
               <Card>
                 <Form.Item
-                  label="Location"
+                  label={t.dashboard.locationInfo.label}
                   name="location"
-                  rules={PlaceFormRules.location}
+                  rules={placeFormRules.location}
                   hasFeedback
-                  tooltip="You need to select a location on the map to determine the coordinates of the place."
+                  tooltip={<span>{t.dashboard.locationInfo.tooltip}</span>}
                 >
                   <MetaInfoLocationForm location={selectedLocation} />
                 </Form.Item>
@@ -304,17 +304,16 @@ export const CreatePlace: FC = () => {
 
               <Card>
                 <Form.Item
-                  label="Photo"
+                  label={t.dashboard.places.form.photo.label}
                   name="photo"
                   hasFeedback
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={PlaceFormRules.photo.rules}
+                  rules={placeFormRules.photo.rules}
                   shouldUpdate
                   tooltip={
                     <span>
-                      You can upload up to {PlaceFormRules.photo.maxCount}{' '}
-                      photo. After uploading, you should save the place.{' '}
+                      {t.dashboard.places.form.photo.tooltip}
                       <SupportedImageFormatsTooltip />
                     </span>
                   }
@@ -324,7 +323,8 @@ export const CreatePlace: FC = () => {
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 0}
                     >
-                      + Upload (Max: {PlaceFormRules.photo.maxCount})
+                      {t.dashboard.places.create.button.photo} (Max:{' '}
+                      {placeFormRules.photo.maxCount})
                     </Button>
                   </Upload>
                 </Form.Item>

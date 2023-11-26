@@ -8,6 +8,7 @@ import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { GetUpdateOptions } from '@/components';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 interface UpdatePersonStatusComponentProps {
   person: IPerson | null;
@@ -15,6 +16,7 @@ interface UpdatePersonStatusComponentProps {
 const UpdatePersonStatusComponent: React.FC<
   UpdatePersonStatusComponentProps
 > = ({ person }) => {
+  const { t } = useTranslation();
   const { data: me } = useMeQuery();
   const router = useRouter();
 
@@ -48,7 +50,7 @@ const UpdatePersonStatusComponent: React.FC<
     );
   };
 
-  const updateOptions = GetUpdateOptions(me);
+  const updateOptions = GetUpdateOptions(t, me);
 
   const isDisabled = GetDisabledStatus(status as string, me?.role as Role);
 

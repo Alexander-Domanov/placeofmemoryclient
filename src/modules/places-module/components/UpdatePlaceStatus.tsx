@@ -7,6 +7,7 @@ import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePla
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/components';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 interface UpdatePlaceStatusComponentProps {
   place: IPlace | null;
@@ -14,6 +15,7 @@ interface UpdatePlaceStatusComponentProps {
 const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
   place,
 }) => {
+  const { t } = useTranslation();
   const { data: me } = useMeQuery();
   const router = useRouter();
 
@@ -42,7 +44,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed status to: ${status} for place: ${place?.nameCemetery}`,
+            message: t.dashboard.places.updateModal.notification.success,
             placement: 'bottomLeft',
           });
         },
@@ -50,14 +52,14 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
     );
   };
 
-  const updateOptions = GetUpdateOptions(me);
+  const updateOptions = GetUpdateOptions(t, me);
 
   return (
     <>
       <List.Item
         actions={[
           <Button
-            title="Change status of place or edit"
+            title={t.dashboard.places.updateModal.buttonTitle}
             key={0}
             icon={<EditOutlined />}
             style={{ cursor: 'pointer', color: '#2c332c' }}
@@ -67,12 +69,15 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
         ]}
       />
       <Modal
-        title="Set new status"
+        title={t.dashboard.places.updateModal.title}
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
-        <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+        <Form.Item
+          label={t.dashboard.places.updateModal.form.label}
+          style={{ marginBottom: 10 }}
+        >
           <Select value={newStatus} onChange={handleMenuStatusClick}>
             {updateOptions}
           </Select>
@@ -85,7 +90,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
             router.push(routes.dashboard.places.place(id || ''));
           }}
         >
-          Edit
+          {t.dashboard.places.updateModal.edit}
         </Button>
       </Modal>
     </>

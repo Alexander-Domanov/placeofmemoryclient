@@ -244,7 +244,7 @@ export const PersonEdit: FC = () => {
     );
   };
 
-  const updateOptions = GetUpdateOptions(me);
+  const updateOptions = GetUpdateOptions(t, me);
 
   const isDisabled = GetDisabledStatus(status, me?.role as Role);
 

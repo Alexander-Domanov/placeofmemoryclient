@@ -3,6 +3,7 @@ import { Button, Flex, Form, Input } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
 import { validateMessages } from '@/common-dashboard';
+import { useTranslation } from '@/components/internationalization';
 
 const layout = {
   labelCol: { span: 6 },
@@ -15,6 +16,7 @@ interface LocationFormProps {
 }
 
 const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
+  const { t } = useTranslation();
   const [isButtonActive, setIsButtonActive] = useState(false);
 
   return (
@@ -28,26 +30,50 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
       >
         <Form.Item
           name={['country']}
-          label="Country"
-          rules={[{ required: true, whitespace: true }]}
+          label={t.dashboard.locationInfo.form.country.label}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              message: t.dashboard.locationInfo.form.country.rules.required,
+            },
+          ]}
           hasFeedback
         >
-          <Input placeholder="Input Country" allowClear status="warning" />
+          <Input
+            placeholder={t.dashboard.locationInfo.form.country.placeholder}
+            allowClear
+            status="warning"
+          />
         </Form.Item>
 
         <Form.Item
           name={['city']}
-          label="City"
-          rules={[{ required: true }]}
+          label={t.dashboard.locationInfo.form.city.label}
+          rules={[
+            {
+              required: true,
+              message: t.dashboard.locationInfo.form.city.rules.required,
+            },
+          ]}
           hasFeedback
         >
-          <Input placeholder="Input City" allowClear status="warning" />
+          <Input
+            placeholder={t.dashboard.locationInfo.form.city.placeholder}
+            allowClear
+            status="warning"
+          />
         </Form.Item>
 
         <Form.Item
           name={['formattedAddress']}
-          label="Address"
-          rules={[{ required: true }]}
+          label={t.dashboard.locationInfo.form.address.label}
+          rules={[
+            {
+              required: true,
+              message: t.dashboard.locationInfo.form.address.rules.required,
+            },
+          ]}
           hasFeedback
         >
           <Input placeholder="Input Name" allowClear status="warning" />
@@ -55,56 +81,134 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
 
         <Form.Item
           name={['location', 'lng']}
-          label="Longtitude"
-          rules={[{ type: 'number', min: -180, max: 180, required: true }]}
+          label={t.dashboard.locationInfo.form.longitude.label}
+          rules={[
+            {
+              type: 'number',
+              message: t.dashboard.locationInfo.form.longitude.rules.type,
+            },
+            {
+              min: -180,
+              message: t.dashboard.locationInfo.form.longitude.rules.min,
+            },
+            {
+              max: 180,
+              message: t.dashboard.locationInfo.form.longitude.rules.max,
+            },
+            {
+              required: true,
+              message: t.dashboard.locationInfo.form.longitude.rules.required,
+            },
+          ]}
           hasFeedback
         >
-          <Input placeholder="Input Longtitude" allowClear status="warning" />
+          <Input
+            placeholder={t.dashboard.locationInfo.form.longitude.placeholder}
+            allowClear
+            status="warning"
+          />
         </Form.Item>
 
         <Form.Item
           name={['location', 'lat']}
-          label="Latitude"
-          rules={[{ type: 'number', min: -90, max: 90, required: true }]}
+          label={t.dashboard.locationInfo.form.latitude.label}
+          rules={[
+            {
+              type: 'number',
+              message: t.dashboard.locationInfo.form.latitude.rules.type,
+            },
+            {
+              min: -90,
+              message: t.dashboard.locationInfo.form.latitude.rules.min,
+            },
+            {
+              max: 90,
+              message: t.dashboard.locationInfo.form.latitude.rules.max,
+            },
+            {
+              required: true,
+              message: t.dashboard.locationInfo.form.latitude.rules.required,
+            },
+          ]}
           hasFeedback
         >
-          <Input placeholder="Input Longtitude" allowClear status="warning" />
+          <Input
+            placeholder={t.dashboard.locationInfo.form.latitude.placeholder}
+            allowClear
+            status="warning"
+          />
         </Form.Item>
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
-            Fill Form
+            {t.dashboard.locationInfo.form.buttons.fillForm}
           </Button>
         </Form.Item>
 
         <Button
           type={isButtonActive ? 'text' : 'text'}
-          title="Show more details"
+          title={t.dashboard.locationInfo.form.buttons.details.title}
           icon={isButtonActive ? <CaretUpOutlined /> : <CaretDownOutlined />}
           onClick={() => {
             setIsButtonActive(!isButtonActive);
           }}
           className={isButtonActive ? 'active-button' : ''}
         >
-          Details
+          {t.dashboard.locationInfo.form.buttons.details.open}
         </Button>
 
         {isButtonActive && (
           <>
-            <Form.Item name={['administrativeAreaLevel1']} label="State">
-              <Input placeholder="Input State" allowClear />
+            <Form.Item
+              name={['administrativeAreaLevel1']}
+              label={
+                t.dashboard.locationInfo.form.administrativeAreaLevel1.label
+              }
+            >
+              <Input
+                placeholder={
+                  t.dashboard.locationInfo.form.administrativeAreaLevel1
+                    .placeholder
+                }
+                allowClear
+              />
             </Form.Item>
 
-            <Form.Item name={['administrativeAreaLevel2']} label="District">
-              <Input placeholder="Input District" allowClear />
+            <Form.Item
+              name={['administrativeAreaLevel2']}
+              label={
+                t.dashboard.locationInfo.form.administrativeAreaLevel2.label
+              }
+            >
+              <Input
+                placeholder={
+                  t.dashboard.locationInfo.form.administrativeAreaLevel2
+                    .placeholder
+                }
+                allowClear
+              />
             </Form.Item>
 
-            <Form.Item name={['street']} label="Street">
-              <Input placeholder="Input Street" allowClear />
+            <Form.Item
+              name={['street']}
+              label={t.dashboard.locationInfo.form.street.label}
+            >
+              <Input
+                placeholder={t.dashboard.locationInfo.form.street.placeholder}
+                allowClear
+              />
             </Form.Item>
 
-            <Form.Item name={['streetNumber']} label="Street Number">
-              <Input placeholder="Input Street Number" allowClear />
+            <Form.Item
+              name={['streetNumber']}
+              label={t.dashboard.locationInfo.form.streetNumber.label}
+            >
+              <Input
+                placeholder={
+                  t.dashboard.locationInfo.form.streetNumber.placeholder
+                }
+                allowClear
+              />
             </Form.Item>
           </>
         )}

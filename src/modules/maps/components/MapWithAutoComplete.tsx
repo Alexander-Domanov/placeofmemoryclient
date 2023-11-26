@@ -8,6 +8,7 @@ import {
 import { Button, Flex, Input, message } from 'antd';
 import { AimOutlined } from '@ant-design/icons';
 import { MapLocationProps } from '@/modules/maps/components/types/AutoCompleteMapComponentProps.type';
+import { useTranslation } from '@/components/internationalization';
 
 const initialCenter = {
   lat: 52.2296756,
@@ -16,6 +17,7 @@ const initialCenter = {
 const maxZoomLevel = 18;
 
 const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
+  const { t } = useTranslation();
   const { isLoaded } = useLoadScript({
     libraries: ['places'],
     version: 'weekly',
@@ -120,7 +122,7 @@ const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
           />
 
           <Input
-            placeholder="Show your location or Search location"
+            placeholder={t.dashboard.locationInfo.search}
             allowClear
             title={inputValue}
             value={inputValue}
@@ -148,14 +150,16 @@ const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
         onClick={handleSearchTypeChange}
         style={{ cursor: 'pointer', color: '#f66321' }}
       >
-        Remove marker
+        {t.dashboard.locationInfo.buttons.removeMarker}
       </Button>
 
       <Button
         onClick={() => setAllowMapClick(!allowMapClick)}
         style={{ cursor: 'pointer' }}
       >
-        {allowMapClick ? 'Disable Map Click' : 'Enable Map Click'}
+        {allowMapClick
+          ? t.dashboard.locationInfo.buttons.disable
+          : t.dashboard.locationInfo.buttons.enable}
       </Button>
     </Flex>
   ) : (

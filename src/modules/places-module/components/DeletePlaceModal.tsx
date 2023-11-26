@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { IPlace } from '@/types';
 import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 interface DeletePlaceModalProps {
   place: IPlace | null;
@@ -12,6 +13,7 @@ interface DeletePlaceModalProps {
 
 const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
@@ -31,7 +33,7 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
     deletePlaceMutationAsync(selectedPlace?.id || null, {
       onSuccess: () => {
         notification.success({
-          message: `Place: ${selectedPlace?.nameCemetery} deleted successfully`,
+          message: t.dashboard.places.notifications.delete.title,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.places.index);
@@ -57,7 +59,7 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
         actions={[
           <Button
             key="delete"
-            title="Delete"
+            title={t.dashboard.places.delete.title}
             icon={<DeleteOutlined />}
             style={buttonStyle}
             onClick={handleClick}
@@ -67,12 +69,12 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
       />
 
       <Modal
-        title="Confirm deletion"
+        title={t.dashboard.places.delete.titleConfirm}
         open={isDeleteModalVisible}
         onOk={deletePlace}
         onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
+        okText={t.dashboard.places.delete.delete}
+        cancelText={t.dashboard.places.delete.cancel}
         okButtonProps={{
           icon: <DeleteOutlined />,
           onMouseEnter: () => setIsHovered(true),
@@ -88,35 +90,7 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the place: &nbsp;
-            </span>
-            {selectedPlace?.nameCemetery}
-          </div>
-        </Space>
-      </Modal>
-      <Modal
-        title="Confirm deletion"
-        open={isDeleteModalVisible}
-        onOk={deletePlace}
-        onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
-        okButtonProps={{
-          icon: <DeleteOutlined />,
-          onMouseEnter: () => setIsHovered(true),
-          onMouseLeave: () => setIsHovered(false),
-          style: {
-            cursor: 'pointer',
-            color: isHovered ? '#fff' : '#ef2020',
-            backgroundColor: isHovered ? '#ef2020' : 'transparent',
-            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
-          },
-        }}
-      >
-        <Space>
-          <div className="site-description-item-profile-wrapper">
-            <span className="text-neutral-400">
-              Are you sure you want to delete the place: &nbsp;
+              {t.dashboard.places.delete.description}: &nbsp;
             </span>
             {selectedPlace?.nameCemetery}
           </div>

@@ -386,17 +386,51 @@ export const en: LocaleType = {
         buttonTitle: 'Change status of article',
         form: {
           label: 'Current status',
-          status: {
-            draft: 'Draft',
-            pending: 'Send for review',
-            published: 'Publish',
-            archived: 'Archive',
-          },
         },
         edit: 'Edit',
         notification: {
           success: 'Status updated successfully',
           error: 'Error updating status',
+        },
+      },
+      form: {
+        title: {
+          label: 'Title',
+          placeholder: 'Title',
+          tooltip:
+            'You can write up to 155 characters. After writing, you should save the article.',
+          rules: {
+            required: 'Title field is required',
+            max: 'Maximum length: 155 characters',
+          },
+        },
+        description: {
+          label: 'Short description',
+          placeholder: 'Short description',
+          tooltip:
+            'You can write up to 355 characters. After writing, you should save the article.',
+          rules: {
+            required: 'Short description field is required',
+            max: 'Maximum length: 355 characters',
+          },
+        },
+        content: {
+          label: 'Content',
+          tooltip:
+            'You can write up to 10 000 characters. After writing, you should save the article.',
+          rules: {
+            required: 'Content field is required',
+            max: 'Maximum length: 10 000 characters',
+          },
+        },
+        photo: {
+          label: 'Photo',
+          tooltip:
+            'You can upload up to 1 photo. After uploading, you should save the article.',
+          rules: {
+            required: 'Photo field is required',
+            max: 'Maximum length: 1 photo',
+          },
         },
       },
       create: {
@@ -407,46 +441,6 @@ export const en: LocaleType = {
             description: 'You will be redirected to the article page',
           },
           error: 'Error creating article',
-        },
-        form: {
-          title: {
-            label: 'Title',
-            placeholder: 'Title',
-            tooltip:
-              'You can write up to 155 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Title field is required',
-              max: 'Maximum length: 155 characters',
-            },
-          },
-          description: {
-            label: 'Short description',
-            placeholder: 'Short description',
-            tooltip:
-              'You can write up to 355 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Short description field is required',
-              max: 'Maximum length: 355 characters',
-            },
-          },
-          content: {
-            label: 'Content',
-            tooltip:
-              'You can write up to 10 000 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Content field is required',
-              max: 'Maximum length: 10 000 characters',
-            },
-          },
-          photo: {
-            label: 'Photo',
-            tooltip:
-              'You can upload up to 1 photo. After uploading, you should save the article.',
-            rules: {
-              required: 'Photo field is required',
-              max: 'Maximum length: 1 photo',
-            },
-          },
         },
         button: {
           save: 'Save',
@@ -468,63 +462,167 @@ export const en: LocaleType = {
           },
           error: 'Error updating article',
         },
-        form: {
-          title: {
-            label: 'Title',
-            placeholder: 'Title',
-            tooltip:
-              'You can write up to 155 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Title field is required',
-              max: 'Maximum length: 155 characters',
-            },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+    },
+    places: {
+      index: 'Places',
+      add: {
+        label: '+ Add',
+        title: 'Add place',
+      },
+      search: {
+        name: {
+          title: 'Search by name',
+          placeholder: 'Search by name',
+        },
+        country: {
+          title: 'Search by country',
+          placeholder: 'Search by country',
+        },
+        city: {
+          title: 'Search by city',
+          placeholder: 'Search by city',
+        },
+      },
+      table: {
+        id: 'ID',
+        owner: 'Owner',
+        name: 'Name',
+        country: 'Country',
+        city: 'City',
+        createdAt: 'Created At',
+        updatedAt: 'Updated At',
+        status: 'Status',
+        photos: 'Photos',
+        persons: 'Persons',
+        actions: 'Actions',
+      },
+      notifications: {
+        success: {
+          title: 'Place created successfully',
+          description: 'You will be redirected to the place page',
+        },
+        delete: {
+          title: 'Place deleted successfully',
+          description: 'You will be redirected to the places page',
+        },
+      },
+      form: {
+        country: {
+          label: 'Country',
+          placeholder: 'Country',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the place.',
+          rules: {
+            required: 'Country field is required',
+            max: 'Maximum length: 120 characters',
           },
-          description: {
-            label: 'Short description',
-            placeholder: 'Short description',
-            tooltip:
-              'You can write up to 355 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Short description field is required',
-              max: 'Maximum length: 355 characters',
-            },
+        },
+        city: {
+          label: 'City',
+          placeholder: 'City',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the city.',
+          rules: {
+            required: 'City field is required',
+            max: 'Maximum length: 120 characters',
           },
-          content: {
-            label: 'Content',
-            tooltip:
-              'You can write up to 10 000 characters. After writing, you should save the article.',
-            rules: {
-              required: 'Content field is required',
-              max: 'Maximum length: 10 000 characters',
-            },
+        },
+        nameCemetery: {
+          label: 'Name of cemetery',
+          placeholder: 'Name of cemetery',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the name of cemetery.',
+          rules: {
+            required: 'Name of cemetery field is required',
+            max: 'Maximum length: 120 characters',
           },
-          slug: {
-            label: 'Slug',
-            placeholder: 'Slug',
-            tooltip: `You can change the slug of the article.
-            This field is for SEO, it must be unique and contain only letters, numbers and dashes.
-            Can't start or end with a dash.`,
+        },
+        shortDescription: {
+          label: 'Short description',
+          placeholder: 'Short description',
+          tooltip:
+            'You can write up to 300 characters. After writing, you should save the article.',
+          rules: {
+            required: 'Short description field is required',
+            max: 'Maximum length: 300 characters',
           },
-          photo: {
-            label: 'Photo',
-            tooltip:
-              'You can upload up to 1 photo. After uploading, you should save the article.',
-            rules: {
-              required: 'Photo field is required',
-              max: 'Maximum length: 1 photo',
-            },
+        },
+        description: {
+          label: 'Description',
+          placeholder: 'Description',
+          tooltip:
+            'You can write up to 5 000 characters. After writing, you should save the article.',
+          rules: {
+            required: 'Description field is required',
+            max: 'Maximum length: 5 000 characters',
           },
-          status: {
-            label: 'Status',
-            draft: 'Draft',
-            pending: 'Send for review',
-            published: 'Publish',
-            archived: 'Archive',
+        },
+        photo: {
+          label: 'Photo',
+          tooltip:
+            'You can upload up to 1 photo. After uploading, you should save the article.',
+          rules: {
+            required: 'Photo field is required',
+            max: 'Maximum length: 1 photo',
           },
+        },
+      },
+      create: {
+        index: 'Create place',
+        notification: {
+          success: {
+            title: 'Place created successfully',
+            description: 'You will be redirected to the place page',
+          },
+          error: 'Error creating place',
         },
         button: {
           save: 'Save',
           photo: '+ Upload',
+        },
+      },
+      edit: {
+        index: 'Edit place',
+        notification: {
+          success: {
+            title: 'Place updated successfully',
+            description: 'You will be redirected to the place page',
+          },
+          update: {
+            title: 'Place updated successfully',
+          },
+          delete: {
+            title: 'Place deleted successfully',
+          },
+          error: 'Error updating place',
+        },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+      delete: {
+        title: 'Delete',
+        titleConfirm: 'Confirm deletion',
+        description: 'Are you sure you want to delete the place?',
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+      updateModal: {
+        title: 'Change status of place or edit',
+        buttonTitle: 'Change status of place',
+        form: {
+          label: 'Current status',
+        },
+        edit: 'Edit',
+        notification: {
+          success: 'Status updated successfully',
+          error: 'Error updating status',
         },
       },
     },
@@ -673,6 +771,19 @@ export const en: LocaleType = {
     },
     rules: {
       required: 'Please enter',
+      slug: {
+        label: 'Slug',
+        placeholder: 'This field is auto generated',
+        tooltip: `You can change the slug of the article.
+            This field is for SEO, it must be unique and contain only letters, numbers and dashes.
+            Can't start or end with a dash.`,
+        rules: {
+          required: 'Slug field is required',
+          max: 'Maximum length: 120 characters',
+          pattern: `Slug must contain only letters, numbers and dashes.
+                Can't start or end with a dash.`,
+        },
+      },
     },
     metaInfo: {
       publicLink: {
@@ -682,6 +793,101 @@ export const en: LocaleType = {
       owner: 'Owner',
       createdAt: 'Created At',
       updatedAt: 'Updated At',
+    },
+    locationInfo: {
+      label: 'Location',
+      formattedAddress: 'Formatted Address',
+      longitude: 'Longitude',
+      latitude: 'Latitude',
+      tooltip:
+        'You need to select a location on the map to determine the coordinates of the place.',
+      rules: {
+        required: 'Location field is required',
+      },
+      search: 'Show your location or Search location',
+      buttons: {
+        openMap: 'Open map',
+        clearTable: 'Clear Table',
+        fillTable: 'Fill Table',
+        define: 'Define Location',
+        removeMarker: 'Remove Marker',
+        disable: 'Disable Map Click',
+        enable: 'Enable Map Click',
+        panTo: 'Pan to Current Location',
+      },
+      form: {
+        country: {
+          label: 'Country',
+          placeholder: 'Country',
+          rules: {
+            required: 'Country field is required',
+          },
+        },
+        city: {
+          label: 'City',
+          placeholder: 'City',
+          rules: {
+            required: 'City field is required',
+          },
+        },
+        address: {
+          label: 'Address',
+          placeholder: 'Address',
+          rules: {
+            required: 'Address field is required',
+          },
+        },
+        longitude: {
+          label: 'Longitude',
+          placeholder: 'Longitude',
+          rules: {
+            required: 'Longitude field is required',
+            type: 'Longitude must be a number',
+            min: 'Longitude must be greater than or equal to -180',
+            max: 'Longitude must be less than or equal to 180',
+          },
+        },
+        latitude: {
+          label: 'Latitude',
+          placeholder: 'Latitude',
+          rules: {
+            required: 'Latitude field is required',
+            type: 'Latitude must be a number',
+            min: 'Latitude must be greater than or equal to -90',
+            max: 'Latitude must be less than or equal to 90',
+          },
+        },
+        administrativeAreaLevel1: {
+          label: 'State',
+          placeholder: 'Input State',
+        },
+        administrativeAreaLevel2: {
+          label: 'District',
+          placeholder: 'Input District',
+        },
+        street: {
+          label: 'Street',
+          placeholder: 'Input Street',
+        },
+        streetNumber: {
+          label: 'Street Number',
+          placeholder: 'Input Street Number',
+        },
+        buttons: {
+          fillForm: 'Fill Form',
+          details: {
+            title: 'Show more details',
+            open: 'Details',
+          },
+        },
+      },
+    },
+    updateStatus: {
+      label: 'Status',
+      draft: 'Draft',
+      pending: 'Send for review',
+      published: 'Publish',
+      archived: 'Archive',
     },
     selectStatus: {
       all: 'All',

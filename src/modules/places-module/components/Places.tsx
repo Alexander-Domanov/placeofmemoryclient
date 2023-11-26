@@ -6,22 +6,12 @@ import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
 import { FileStatuses, IPlace, Role } from '@/types';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
-import { columnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
+import { ColumnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
 import { CustomSelectInput } from '@/components';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useTranslation } from '@/components/internationalization';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.places.index,
-    text: 'Places',
-    withLink: false,
-  }),
-];
 
 const defaultPageSize = 10;
 
@@ -102,17 +92,31 @@ export const Places: FC = () => {
   // };
   //
   // const hasSelected = selectedRowKeys.length > 0;
+  const columnsTablePlaces = ColumnsTablePlaces(t);
   const fileStatuses = FileStatusOptions(t);
   const selectInputOptions =
     me?.role === Role.ADMIN
       ? [
           ...fileStatuses,
           {
-            label: 'Archived',
+            label: t.dashboard.selectStatus.archived,
             value: FileStatuses.ARCHIVED,
           },
         ]
       : fileStatuses;
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.places.index,
+      text: t.dashboard.places.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -124,10 +128,10 @@ export const Places: FC = () => {
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button
             type="primary"
-            title="Add new place"
+            title={t.dashboard.places.add.title}
             onClick={() => router.push(routes.dashboard.places.create)}
           >
-            + Add
+            {t.dashboard.places.add.label}
           </Button>
 
           {/* <Button */}
@@ -144,8 +148,8 @@ export const Places: FC = () => {
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by Name"
-            title="Search by Name"
+            placeholder={t.dashboard.places.search.name.placeholder}
+            title={t.dashboard.places.search.name.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchTerm: e.target.value })
@@ -154,8 +158,8 @@ export const Places: FC = () => {
           />
 
           <Input
-            placeholder="Search by Country"
-            title="Search by country"
+            placeholder={t.dashboard.places.search.country.placeholder}
+            title={t.dashboard.places.search.country.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchCountry: e.target.value })
@@ -164,8 +168,8 @@ export const Places: FC = () => {
           />
 
           <Input
-            placeholder="Search by City"
-            title="Search by city"
+            placeholder={t.dashboard.places.search.city.placeholder}
+            title={t.dashboard.places.search.city.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchCity: e.target.value })
@@ -174,7 +178,10 @@ export const Places: FC = () => {
           />
 
           <CustomSelectInput
-            defaultValue={{ value: FileStatuses.ALL, label: 'All' }}
+            defaultValue={{
+              value: FileStatuses.ALL,
+              label: t.dashboard.selectStatus.all,
+            }}
             options={selectInputOptions}
             onChange={onStatusChange}
           />

@@ -28,7 +28,7 @@ import { Places } from '@/modules/places-module/components/Places';
 import { columnsTablePersons } from '@/modules/persons-module';
 import { Articles } from '@/modules/articles-module';
 import { ColumnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
-import { columnsTablePlaces } from '@/modules/places-module';
+import { ColumnsTablePlaces } from '@/modules/places-module';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { CustomSelectInput } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
@@ -145,6 +145,7 @@ export const UserList: FC = () => {
   };
 
   const columnsTableArticles = ColumnsTableArticles(t);
+  const columnsTablePlaces = ColumnsTablePlaces(t);
 
   const items = [
     {
