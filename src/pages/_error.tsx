@@ -1,11 +1,14 @@
 import Head from 'next/head';
 import { Header } from '@/components';
+import { nameLogo } from '@/common/constants';
 
 const Error = ({ statusCode }: any) => {
   return (
     <>
       <Head>
-        <title>{statusCode || 404} | MOGIILKI</title>
+        <title>
+          {statusCode || 404} | {nameLogo}
+        </title>
       </Head>
       <Header />
       <div className="bg-dark-700 h-screen relative">

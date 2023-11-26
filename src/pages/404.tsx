@@ -4,13 +4,14 @@ import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IPageContacts } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { useTranslation } from '@/components/internationalization';
+import { nameLogo } from '@/common/constants';
 
 const NotFound = ({ contacts }: IPageContacts) => {
   const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>404 | MOGIILKI</title>
+        <title>404 | {nameLogo}</title>
       </Head>
       <SiteLayout contacts={contacts}>
         <div className="bg-dark-700  h-screen relative">
