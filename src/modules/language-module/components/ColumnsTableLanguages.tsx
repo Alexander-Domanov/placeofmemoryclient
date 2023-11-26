@@ -2,31 +2,34 @@ import { ColumnsType } from 'antd/es/table';
 import { Row, Typography } from 'antd';
 import React from 'react';
 import { ILanguageListItem } from '@/types';
-import DeleteLanguageComponent from '@/modules/language-module/components/DeleteLanguage';
 import UpdateLanguage from '@/modules/language-module/components/UpdateLanguege';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { LocaleType } from '@/components/internationalization';
+import DeleteLanguageComponent from '@/modules/language-module/components/DeleteLanguageModal';
 
-export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
+export const ColumnsTableLanguages = (
+  t: LocaleType
+): ColumnsType<ILanguageListItem> => [
   {
-    title: 'ID',
+    title: t.dashboard.languages.table.id,
     dataIndex: 'id',
     key: 'id',
     align: 'center',
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
-    title: 'Name',
+    title: t.dashboard.languages.table.name,
     dataIndex: 'name',
     key: 'name',
     render: (text) => <Typography.Text ellipsis>{text}</Typography.Text>,
   },
   {
-    title: 'Native',
+    title: t.dashboard.languages.table.native,
     dataIndex: 'native',
     key: 'native',
   },
   {
-    title: 'Code',
+    title: t.dashboard.languages.table.code,
     dataIndex: 'code',
     key: 'code',
     align: 'center',
@@ -37,13 +40,13 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     ),
   },
   {
-    title: 'Order',
+    title: t.dashboard.languages.table.order,
     dataIndex: 'order',
     key: 'order',
     align: 'center',
   },
   {
-    title: 'Сreated At',
+    title: t.dashboard.languages.table.createdAt,
     dataIndex: 'createdAt',
     key: 'createdAt',
     align: 'center',
@@ -57,7 +60,7 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
     ),
   },
   {
-    title: 'Updated At',
+    title: t.dashboard.languages.table.updatedAt,
     dataIndex: 'updatedAt',
     key: 'updatedAt',
     align: 'center',
@@ -72,13 +75,14 @@ export const columnsTableLanguages: ColumnsType<ILanguageListItem> = [
   },
 
   {
-    title: 'Actions',
+    title: t.dashboard.languages.table.actions,
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateLanguage language={record} />
+
         <DeleteLanguageComponent language={record} />
       </Row>
     ),

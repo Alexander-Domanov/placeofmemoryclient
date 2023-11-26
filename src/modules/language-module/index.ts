@@ -16,7 +16,6 @@ export { useOpenCloseModal } from '@/modules/language-module/utils/useOpenCloseM
 
 // constants
 export { FORM_ITEMS } from './constants/FORM_ITEMS';
-export { BREAD_CRUMBS_LANGUAGE } from './constants/BREAD_CRUMBS_LANGUAGE';
 
 // utils
 // export { getColumnsLanguages } from '@/modules/language-module/components/old/getColumnsLanguages';

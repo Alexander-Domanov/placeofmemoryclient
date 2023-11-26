@@ -3,6 +3,7 @@ import { Button, Form, Input, List, Modal, notification } from 'antd';
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { ILanguageListItem } from '@/types';
 import { FORM_ITEMS, useUpdateLanguage } from '@/modules/language-module';
+import { useTranslation } from '@/components/internationalization';
 
 interface UpdateLanguageComponentProps {
   language: ILanguageListItem | null;
@@ -10,6 +11,9 @@ interface UpdateLanguageComponentProps {
 const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
   language,
 }) => {
+  const { t } = useTranslation();
+  const formItems = FORM_ITEMS(t);
+
   const { id } = language || {
     id: null,
   };
@@ -57,7 +61,7 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
       <List.Item
         actions={[
           <Button
-            title="Edit"
+            title={t.dashboard.languages.edit.title}
             key={0}
             icon={<EditOutlined />}
             style={{ cursor: 'pointer', color: '#2c332c' }}
@@ -69,13 +73,13 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
 
       <Modal
         forceRender
-        title="Set new status"
+        title={t.dashboard.languages.form.titleUpdate}
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
         <Form layout="vertical" form={form} onFinish={onFinish}>
-          {FORM_ITEMS.map((item) => (
+          {formItems.map((item) => (
             <Form.Item
               key={item.name}
               label={item.label}
@@ -93,7 +97,7 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
               icon={<SaveOutlined />}
               loading={isUpdating}
             >
-              Save
+              {t.dashboard.languages.form.save}
             </Button>
           </Form.Item>
         </Form>

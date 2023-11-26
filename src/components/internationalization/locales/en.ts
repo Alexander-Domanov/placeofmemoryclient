@@ -591,6 +591,86 @@ export const en: LocaleType = {
         error: 'Error updating contacts',
       },
     },
+    languages: {
+      index: 'Languages',
+      add: {
+        label: '+ Add',
+        title: 'Add language',
+      },
+      edit: {
+        title: 'Edit language',
+      },
+      table: {
+        id: 'ID',
+        name: 'Name',
+        native: 'Native',
+        code: 'Code',
+        order: 'Order',
+        createdAt: 'Created At',
+        updatedAt: 'Updated At',
+        actions: 'Actions',
+      },
+      form: {
+        title: 'Add language',
+        titleUpdate: 'Edit language',
+        name: {
+          label: 'Name',
+          placeholder: 'Name',
+          rules: {
+            required: 'Name field is required',
+            pattern: 'Language name must contain only text!',
+          },
+        },
+        native: {
+          label: 'Native',
+          placeholder: 'Native',
+          rules: {
+            required: 'Native field is required',
+            pattern: 'Language name must contain only text!',
+          },
+        },
+        code: {
+          label: 'Code',
+          placeholder: 'Code',
+          rules: {
+            required: 'Code field is required',
+            pattern: 'Language name must contain only text!',
+            max: 'Code must be 2 characters or less!',
+          },
+        },
+        order: {
+          label: 'Order',
+          placeholder: 'Order',
+          rules: {
+            required: 'Order field is required',
+            pattern: 'Language name must contain only number!',
+          },
+        },
+        save: 'Save',
+      },
+      notifications: {
+        success: {
+          title: 'Language created successfully',
+          description: 'You will be redirected to the language page',
+        },
+        update: {
+          title: 'Language updated successfully',
+          description: 'You will be redirected to the language page',
+        },
+        delete: {
+          title: 'Language deleted successfully',
+          description: 'You will be redirected to the languages page',
+        },
+        error: 'Error creating language',
+      },
+      delete: {
+        title: 'Delete',
+        titleConfirm: 'Confirm deletion',
+        description: 'Are you sure you want to delete the language?',
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+    },
     rules: {
       required: 'Please enter',
     },

@@ -7,21 +7,13 @@ import {
 } from '@/modules/language-module';
 import { ILanguage } from '@/types';
 import { useGetListLanguages } from '@/services';
-import { columnsTableLanguages } from '@/modules/language-module/components/ColumnsTableLanguages';
+import { ColumnsTableLanguages } from '@/modules/language-module/components/ColumnsTableLanguages';
 import { routes } from '@/common/routing/routes';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.languages.index,
-    text: 'Languages',
-    withLink: false,
-  }),
-];
+import { useTranslation } from '@/components/internationalization';
 
 export const Languages = () => {
+  const { t } = useTranslation();
   const { languages, isLoading } = useGetListLanguages();
   const {
     mutateCreateLanguage,
@@ -39,6 +31,20 @@ export const Languages = () => {
   };
 
   if (isSuccessCreateLanguage) form.resetFields();
+  const columnsTableLanguages = ColumnsTableLanguages(t);
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.languages.index,
+      text: t.dashboard.languages.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -50,16 +56,16 @@ export const Languages = () => {
         <Button
           type="primary"
           onClick={() => setIsModalOpen(true)}
-          title="Add language"
+          title={t.dashboard.languages.add.title}
         >
-          + Add
+          {t.dashboard.languages.add.label}
         </Button>
       </Flex>
 
       <LanguageModalForm
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        title="Add language"
+        title={t.dashboard.languages.form.title}
         useForm={form}
         isSuccess={isSuccessCreateLanguage}
         isLoading={isLoadingCreateLanguage}

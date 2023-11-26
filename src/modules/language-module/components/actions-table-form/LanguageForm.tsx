@@ -1,13 +1,17 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
+import { SaveOutlined } from '@ant-design/icons';
 import { ILanguage } from '@/types';
 import { FORM_ITEMS, IAddLanguageForm } from '@/modules/language-module';
+import { useTranslation } from '@/components/internationalization';
 
 export const LanguageForm = ({
   onFinishSubmit,
   isSuccess,
   useForm,
 }: IAddLanguageForm) => {
+  const { t } = useTranslation();
+  const formItems = FORM_ITEMS(t);
   const onFinish = (values: ILanguage) => {
     onFinishSubmit(values);
     if (isSuccess) useForm.resetFields();
@@ -19,7 +23,7 @@ export const LanguageForm = ({
       onFinish={onFinish}
       style={{ width: 400 }}
     >
-      {FORM_ITEMS.map((item) => (
+      {formItems.map((item) => (
         <Form.Item
           key={item.name}
           label={item.label}
@@ -30,8 +34,8 @@ export const LanguageForm = ({
         </Form.Item>
       ))}
       <Form.Item className="flex justify-end">
-        <Button type="primary" htmlType="submit">
-          Save
+        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+          {t.dashboard.languages.form.save}
         </Button>
       </Form.Item>
     </Form>

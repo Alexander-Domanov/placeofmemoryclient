@@ -1,6 +1,7 @@
 import { Button, Modal } from 'antd';
 import React from 'react';
 import { IModalLanguage } from '@/modules/language-module';
+import { useTranslation } from '@/components/internationalization';
 
 export const LanguageModal = ({
   setIsModalOpen,
@@ -10,6 +11,7 @@ export const LanguageModal = ({
   showButtonFooter = false,
   handleCancelCallBack,
 }: IModalLanguage) => {
+  const { t } = useTranslation();
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -27,7 +29,7 @@ export const LanguageModal = ({
       footer={
         showButtonFooter && [
           <Button key="cancel" onClick={handleCancel}>
-            Cancel
+            {t.dashboard.languages.delete.cancel}
           </Button>,
           <Button key="ok" type="primary" onClick={handleOk}>
             OK

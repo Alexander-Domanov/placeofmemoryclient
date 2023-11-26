@@ -1,72 +1,74 @@
+import { LocaleType } from '@/components/internationalization';
+
 const REG_FORM_NUMBER = /^[0-9]+$/;
 const REG_FORM_TEXT = /^[a-zA-Z]+$/;
 const REG_FORM_NATIVE = /^[\p{L}]+$/u;
 
-export const FORM_ITEMS = [
+export const FORM_ITEMS = (t: LocaleType) => [
   {
-    label: 'Name',
+    label: t.dashboard.languages.form.name.label,
     name: 'name',
     rules: [
       {
         required: true,
-        message: 'Please input the language name!',
+        message: t.dashboard.languages.form.name.rules.required,
       },
       {
         pattern: REG_FORM_TEXT,
-        message: 'Language name must contain only text!',
+        message: t.dashboard.languages.form.name.rules.pattern,
       },
     ],
-    placeholder: 'Name',
+    placeholder: t.dashboard.languages.form.name.placeholder,
   },
   {
-    label: 'Native',
+    label: t.dashboard.languages.form.native.label,
     name: 'native',
     rules: [
       {
         required: true,
-        message: 'Please input the native language!',
+        message: t.dashboard.languages.form.native.rules.required,
       },
       {
         pattern: REG_FORM_NATIVE,
-        message: 'Language name must contain only text!',
+        message: t.dashboard.languages.form.native.rules.pattern,
       },
     ],
-    placeholder: 'Native',
+    placeholder: t.dashboard.languages.form.native.placeholder,
   },
   {
-    label: 'Code',
+    label: t.dashboard.languages.form.code.label,
     name: 'code',
     rules: [
       {
         required: true,
-        message: 'Please input the language code!',
+        message: t.dashboard.languages.form.code.rules.required,
       },
       {
         pattern: REG_FORM_TEXT,
-        message: 'Language name must contain only text!',
+        message: t.dashboard.languages.form.code.rules.pattern,
       },
 
       {
         max: 2,
-        message: 'Code must be 2 characters or less!',
+        message: t.dashboard.languages.form.code.rules.max,
       },
     ],
 
-    placeholder: 'Code',
+    placeholder: t.dashboard.languages.form.code.placeholder,
   },
   {
-    label: 'Order',
+    label: t.dashboard.languages.form.order.label,
     name: 'order',
     rules: [
       {
         required: true,
-        message: 'Please enter the order number for the language in the list',
+        message: t.dashboard.languages.form.order.rules.required,
       },
       {
         pattern: REG_FORM_NUMBER,
-        message: 'Language name must contain only number!',
+        message: t.dashboard.languages.form.order.rules.pattern,
       },
     ],
-    placeholder: 'Order',
+    placeholder: t.dashboard.languages.form.order.placeholder,
   },
 ];

@@ -70,6 +70,7 @@ export const Contacts: FC = () => {
         about: contacts.about,
       });
       setSelectedContacts(contacts);
+      setAboutText(contacts.about);
     }
   }, [contacts]);
 
