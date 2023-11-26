@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useDebounce } from 'usehooks-ts';
@@ -19,7 +19,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
   const { push, query } = useRouter();
   const { t } = useTranslation();
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -31,18 +31,18 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     useState<FilterCondition>(FilterCondition.gte);
   const [filterConditionDeathDate, setFilterConditionDeathDate] =
     useState<FilterCondition>(FilterCondition.lte);
-  const nameD = useDebounce(name, 500);
-  const lastNameD = useDebounce(lastName, 500);
-  const birthDateD = useDebounce(birthDate, 500);
-  const deathDateD = useDebounce(deathDate, 500);
-  const countryD = useDebounce(country, 500);
-  const cityD = useDebounce(city, 500);
+  const nameD = useDebounce(name, 1500);
+  const lastNameD = useDebounce(lastName, 1500);
+  const birthDateD = useDebounce(birthDate, 2000);
+  const deathDateD = useDebounce(deathDate, 2000);
+  const countryD = useDebounce(country, 2000);
+  const cityD = useDebounce(city, 1500);
 
   const currentYear = new Date().getFullYear();
 
   const pageParams = query.page as string;
 
-  const { dataPersons } = useGetPersonsMain({
+  const { dataPersons, isLoading } = useGetPersonsMain({
     pageNumber: Number(pageParams),
     ...(name && { name: nameD }),
     ...(lastName && { lastName: lastNameD }),
@@ -55,13 +55,9 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     persons,
   });
 
-  // const onPageChange = (page: number) => {
-  //   if (page === 1) {
-  //     router.push(routes.persons.index);
-  //   } else {
-  //     router.push(`${routes.persons.page(page)}`);
-  //   }
-  // };
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   const onPageChange = (newPage: number) => {
     if (dataPersons && newPage >= 1 && newPage <= dataPersons.pagesCount) {
@@ -89,6 +85,21 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     error: errorT,
   } = t.people.search.page;
 
+  const validateBirthDate = (birthDate: string) => {
+    const isValid =
+      yup.number().min(0).max(currentYear).isValidSync(+birthDate) &&
+      (!birthDate || birthDate.length === 4);
+
+    return isValid ? null : { errorT };
+  };
+  const validateDeathDate = (deathDate: string) => {
+    const isValid =
+      yup.number().min(0).max(currentYear).isValidSync(+deathDate) &&
+      (!deathDate || deathDate.length === 4);
+
+    return isValid ? null : { errorT };
+  };
+
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px] lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
       <div className="container">
@@ -104,13 +115,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-6 h-[1px] bg-dark-300" />
 
         <div className="mt-10">
-          {/* <form */}
-          {/*  className="max-w-3xl md:max-w-full" */}
-          {/*  ref={formRef} */}
-          {/*  // onSubmit={onSubmit} */}
-          {/*  // action={routes.persons.index} */}
-          {/* > */}
-          <div className="grid grid-cols-[180px_180px_300px] gap-3 lg:grid-cols-[1fr_1fr_300px] sm:grid-cols-2 sm:gap-3">
+          <div className="grid grid-cols-[190px_190px_300px] gap-3 lg:grid-cols-[1fr_1fr_300px] sm:grid-cols-2 sm:gap-3 justify-end">
             <div className="sm:order-1">
               <Input
                 type="text"
@@ -154,16 +159,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
                 value={birthDate}
                 maxLength={4}
                 className="flex-grow"
-                error={
-                  yup
-                    .number()
-                    .min(0)
-                    .max(currentYear)
-                    .isValidSync(+birthDate) &&
-                  (!birthDate || birthDate.length === 4)
-                    ? null
-                    : { errorT }
-                }
+                error={validateBirthDate(birthDate)}
                 label={birthDateT}
                 showErrorMessage={false}
                 onChange={(e) => setBirthDate(e.target.value)}
@@ -209,16 +205,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
                 type="text"
                 id="deathDate"
                 maxLength={4}
-                error={
-                  yup
-                    .number()
-                    .min(0)
-                    .max(currentYear)
-                    .isValidSync(+deathDate) &&
-                  (!deathDate || deathDate.length === 4)
-                    ? null
-                    : { errorT }
-                }
+                error={validateDeathDate(deathDate)}
                 value={deathDate}
                 label={deathDateT}
                 showErrorMessage={false}
@@ -226,31 +213,24 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
               />
             </div>
           </div>
-
-          {/* <div className="flex items-center gap-3 sm:gap-8 mt-4 flex-wrap"> */}
-          {/*  <Button variant="default" size="sm" className="sm:w-full"> */}
-          {/*    {searchT} */}
-          {/*  </Button> */}
-
-          {/*  <Button */}
-          {/*    variant="default" */}
-          {/*    size="sm" */}
-          {/*    type="button" */}
-          {/*    className="sm:w-full" */}
-          {/*    onClick={onClear} */}
-          {/*  > */}
-          {/*    {clearT} */}
-          {/*  </Button> */}
-          {/* </div> */}
-          {/* </form> */}
         </div>
 
         <div className="mt-10">
-          <div className="grid grid-cols-6 gap-4 lg:grid-cols-4  sm:grid-cols-2">
-            {dataPersons?.items.map((person) => (
-              <PersonsItemMain person={person} key={person.id} />
-            ))}
+          <div style={{ minHeight: loading ? '200px' : '0' }}>
+            {loading && (
+              <div className="flex justify-center mt-10 text-2xl text-dark-100">
+                Loading...
+              </div>
+            )}
           </div>
+
+          {!loading && (
+            <div className="grid grid-cols-6 gap-4 lg:grid-cols-4 sm:grid-cols-2">
+              {dataPersons?.items.map((person) => (
+                <PersonsItemMain person={person} key={person.id} />
+              ))}
+            </div>
+          )}
 
           {dataPersons?.items.length === 0 ? (
             <div className="flex justify-center mt-10 text-2xl text-dark-100">

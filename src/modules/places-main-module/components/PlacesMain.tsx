@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useDebounce } from 'usehooks-ts';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useGetPlacesMain } from '@/modules/places-main-module';
@@ -17,20 +17,28 @@ interface IProps {
 export const PlacesMain = ({ places }: IProps) => {
   const { push, query } = useRouter();
   const { t } = useTranslation();
+
+  const [loading, setLoading] = useState(false);
+
   const [name, setName] = useState<string>('');
   const [country, setCountry] = useState<string>('');
   const [city, setCity] = useState<string>('');
-  const vName = useDebounce(name, 500);
-  const vCountry = useDebounce(country, 500);
-  const vCity = useDebounce(city, 500);
+  const vName = useDebounce(name, 1500);
+  const vCountry = useDebounce(country, 1500);
+  const vCity = useDebounce(city, 1500);
   const pageParams = query.page as string;
-  const { dataPlaces } = useGetPlacesMain({
+  const { dataPlaces, isLoading } = useGetPlacesMain({
     pageNumber: Number(pageParams),
     name: vName,
     city: vCity,
     country: vCountry,
     places,
   });
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+
   const onPageChange = (newPage: number) => {
     if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
       push(routes.places.page(String(newPage)));
@@ -60,65 +68,84 @@ export const PlacesMain = ({ places }: IProps) => {
 
           <div className="mt-6 h-[1px] bg-dark-300" />
 
-          <div className="flex flex-col mt-10 ">
-            <div className="flex md:justify-center justify-end flex-wrap gap-4">
-              <Input
-                aria-label="пошук па назве"
-                value={name}
-                label={nameT}
-                className="w-[166px] h-[36px]"
-                onChange={(e) => setName(e.currentTarget.value)}
-              />
-              <Input
-                value={country}
-                aria-label="пошук па краіне"
-                label={countryT}
-                className="w-[166px] h-[36px]"
-                onChange={(e) => setCountry(e.currentTarget.value)}
-              />
-              <Input
-                value={city}
-                aria-label="пошук па горадзе"
-                label={cityT}
-                className="w-[166px] h-[36px]"
-                onChange={(e) => setCity(e.currentTarget.value)}
-              />
+          <div className="mt-10">
+            <div className="grid grid-cols-[200px_200px_200px] gap-3 justify-end sm:grid-cols-2 sm:gap-0">
+              <div className="sm:order-1 sm:col-span-2">
+                <Input
+                  type="text"
+                  id="name"
+                  value={name}
+                  label={nameT}
+                  onChange={(e) => setName(e.currentTarget.value)}
+                />
+              </div>
+
+              <div className="sm:order-2 sm:col-span-2">
+                <Input
+                  type="text"
+                  id="country"
+                  value={country}
+                  label={countryT}
+                  onChange={(e) => setCountry(e.currentTarget.value)}
+                />
+              </div>
+
+              <div className="sm:order-3 sm:col-span-2">
+                <Input
+                  type="text"
+                  id="city"
+                  value={city}
+                  label={cityT}
+                  onChange={(e) => setCity(e.currentTarget.value)}
+                />
+              </div>
             </div>
+
             <div className="mt-10">
-              <div>
-                {dataPlaces?.items.map((place) => (
-                  <div
-                    key={place.id}
-                    className="grid grid-cols-2 gap-8 mb-10 last:mb-0 lg:gap-5 lg:grid-cols-[4fr_6fr] sm:grid-cols-1 sm:gap-10"
-                  >
-                    <div>
-                      <Link
-                        href={routes.places.place(place.slug)}
-                        className="relative aspect-[532/244] block"
-                      >
-                        <Image
-                          src={place.photos[0]?.versions.huge.url}
-                          alt={place.nameCemetery}
-                          fill
-                          className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
-                        />
-                      </Link>
-                    </div>
+              <div style={{ minHeight: loading ? '200px' : '0' }}>
+                {loading && (
+                  <div className="flex justify-center mt-10 text-2xl text-dark-100">
+                    Loading...
+                  </div>
+                )}
+              </div>
 
-                    <div>
-                      <h2 className="text-3xl lg:text-xl">
-                        <Link href={routes.articles.getArticle(place.slug)}>
-                          {place.nameCemetery}
+              {!isLoading && (
+                <div>
+                  {dataPlaces?.items.map((place) => (
+                    <div
+                      key={place.id}
+                      className="grid grid-cols-2 gap-8 mb-10 last:mb-0 lg:gap-5 lg:grid-cols-[4fr_6fr] sm:grid-cols-1 sm:gap-10"
+                    >
+                      <div>
+                        <Link
+                          href={routes.places.place(place.slug)}
+                          className="relative aspect-[532/244] block"
+                        >
+                          <Image
+                            src={place.photos[0]?.versions.huge.url}
+                            alt={place.nameCemetery}
+                            fill
+                            className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
+                          />
                         </Link>
-                      </h2>
+                      </div>
 
-                      <div className="mt-8 text-base lg:mt-4 text-dark-100">
-                        {place.shortDescription}
+                      <div>
+                        <h2 className="text-3xl lg:text-xl">
+                          <Link href={routes.articles.getArticle(place.slug)}>
+                            {place.nameCemetery}
+                          </Link>
+                        </h2>
+
+                        <div className="mt-8 text-base lg:mt-4 text-dark-100">
+                          {place.shortDescription}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
 
               {dataPlaces?.items.length === 0 ? (
                 <div className="flex justify-center mt-10 text-2xl text-dark-100">
