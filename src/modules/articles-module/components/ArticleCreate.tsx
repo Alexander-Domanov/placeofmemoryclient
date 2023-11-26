@@ -148,19 +148,15 @@ export const ArticleCreate: FC = () => {
           <Col span={24} lg={16}>
             <Card>
               <Form.Item
-                label={t.dashboard.articles.create.form.title.label}
+                label={t.dashboard.articles.form.title.label}
                 name="title"
                 rules={articleFormRules.title}
                 validateFirst
                 hasFeedback
-                tooltip={
-                  <span>{t.dashboard.articles.create.form.title.tooltip}</span>
-                }
+                tooltip={<span>{t.dashboard.articles.form.title.tooltip}</span>}
               >
                 <Input.TextArea
-                  placeholder={
-                    t.dashboard.articles.create.form.title.placeholder
-                  }
+                  placeholder={t.dashboard.articles.form.title.placeholder}
                   count={{
                     show: true,
                     max: articleFormRules.title[1].max,
@@ -169,20 +165,18 @@ export const ArticleCreate: FC = () => {
               </Form.Item>
 
               <Form.Item
-                label={t.dashboard.articles.create.form.description.label}
+                label={t.dashboard.articles.form.description.label}
                 name="description"
                 rules={articleFormRules.description}
                 validateFirst
                 hasFeedback
                 tooltip={
-                  <span>
-                    {t.dashboard.articles.create.form.description.tooltip}
-                  </span>
+                  <span>{t.dashboard.articles.form.description.tooltip}</span>
                 }
               >
                 <Input.TextArea
                   placeholder={
-                    t.dashboard.articles.create.form.description.placeholder
+                    t.dashboard.articles.form.description.placeholder
                   }
                   count={{
                     show: true,
@@ -192,7 +186,7 @@ export const ArticleCreate: FC = () => {
               </Form.Item>
 
               <Form.Item
-                label={t.dashboard.articles.create.form.content.label}
+                label={t.dashboard.articles.form.content.label}
                 name="content"
                 validateFirst
                 rules={[
@@ -201,9 +195,7 @@ export const ArticleCreate: FC = () => {
                 ]}
                 hasFeedback
                 tooltip={
-                  <span>
-                    {t.dashboard.articles.create.form.content.tooltip}
-                  </span>
+                  <span>{t.dashboard.articles.form.content.tooltip}</span>
                 }
               >
                 <ReactQuill
@@ -239,7 +231,7 @@ export const ArticleCreate: FC = () => {
 
               <Card>
                 <Form.Item
-                  label={t.dashboard.articles.create.form.photo.label}
+                  label={t.dashboard.articles.form.photo.label}
                   name="photo"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
@@ -247,7 +239,7 @@ export const ArticleCreate: FC = () => {
                   shouldUpdate
                   tooltip={
                     <span>
-                      {t.dashboard.articles.create.form.photo.tooltip}
+                      {t.dashboard.articles.form.photo.tooltip}
                       <SupportedImageFormatsTooltip />
                     </span>
                   }

@@ -74,20 +74,16 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
         <Form.Item label={t.dashboard.articles.updateModal.form.label}>
           <Select value={newStatus} onChange={handleMenuStatusClick}>
             <Option value={Statuses.DRAFT}>
-              <EyeInvisibleOutlined />{' '}
-              {t.dashboard.articles.updateModal.form.status.draft}
+              <EyeInvisibleOutlined /> {t.dashboard.updateStatus.draft}
             </Option>
             <Option value={Statuses.PENDING_REVIEW}>
-              <ClockCircleOutlined />{' '}
-              {t.dashboard.articles.updateModal.form.status.pending}
+              <ClockCircleOutlined /> {t.dashboard.updateStatus.pending}
             </Option>
             <Option value={Statuses.PUBLISHED}>
-              <EyeOutlined />{' '}
-              {t.dashboard.articles.updateModal.form.status.published}
+              <EyeOutlined /> {t.dashboard.updateStatus.published}
             </Option>
             <Option value={Statuses.ARCHIVED}>
-              <InboxOutlined />{' '}
-              {t.dashboard.articles.updateModal.form.status.archived}
+              <InboxOutlined /> {t.dashboard.updateStatus.archived}
             </Option>
           </Select>
         </Form.Item>

@@ -213,19 +213,17 @@ export const ArticleEdit: FC = () => {
             <Col span={24} md={12} lg={16}>
               <Card>
                 <Form.Item
-                  label={t.dashboard.articles.edit.form.title.label}
+                  label={t.dashboard.articles.form.title.label}
                   name="title"
                   rules={articleFormRules.title}
                   validateFirst
                   hasFeedback
                   tooltip={
-                    <span>{t.dashboard.articles.edit.form.title.tooltip} </span>
+                    <span>{t.dashboard.articles.form.title.tooltip} </span>
                   }
                 >
                   <Input.TextArea
-                    placeholder={
-                      t.dashboard.articles.edit.form.title.placeholder
-                    }
+                    placeholder={t.dashboard.articles.form.title.placeholder}
                     count={{
                       show: true,
                       max: articleFormRules.title[1].max,
@@ -234,20 +232,18 @@ export const ArticleEdit: FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={t.dashboard.articles.edit.form.description.label}
+                  label={t.dashboard.articles.form.description.label}
                   name="description"
                   rules={articleFormRules.description}
                   validateFirst
                   hasFeedback
                   tooltip={
-                    <span>
-                      {t.dashboard.articles.edit.form.description.tooltip}
-                    </span>
+                    <span>{t.dashboard.articles.form.description.tooltip}</span>
                   }
                 >
                   <Input.TextArea
                     placeholder={
-                      t.dashboard.articles.edit.form.description.placeholder
+                      t.dashboard.articles.form.description.placeholder
                     }
                     count={{
                       show: true,
@@ -257,7 +253,7 @@ export const ArticleEdit: FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={t.dashboard.articles.edit.form.content.label}
+                  label={t.dashboard.articles.form.content.label}
                   name="content"
                   validateFirst
                   rules={[
@@ -266,9 +262,7 @@ export const ArticleEdit: FC = () => {
                   ]}
                   hasFeedback
                   tooltip={
-                    <span>
-                      {t.dashboard.articles.edit.form.content.tooltip}
-                    </span>
+                    <span>{t.dashboard.articles.form.content.tooltip}</span>
                   }
                 >
                   <ReactQuill
@@ -292,9 +286,7 @@ export const ArticleEdit: FC = () => {
             <Col span={24} md={12} lg={8}>
               <Flex vertical gap={16}>
                 <Card>
-                  <Form.Item
-                    label={t.dashboard.articles.edit.form.status.label}
-                  >
+                  <Form.Item label={t.dashboard.updateStatus.label}>
                     <Select
                       value={status}
                       onChange={onStatusChange}
@@ -303,34 +295,30 @@ export const ArticleEdit: FC = () => {
                     >
                       <Option value={Statuses.DRAFT}>
                         <EyeInvisibleOutlined />{' '}
-                        {t.dashboard.articles.edit.form.status.draft}
+                        {t.dashboard.updateStatus.draft}
                       </Option>
                       <Option value={Statuses.PENDING_REVIEW}>
                         <ClockCircleOutlined />{' '}
-                        {t.dashboard.articles.edit.form.status.pending}
+                        {t.dashboard.updateStatus.pending}
                       </Option>
                       <Option value={Statuses.PUBLISHED}>
-                        <EyeOutlined />{' '}
-                        {t.dashboard.articles.edit.form.status.published}
+                        <EyeOutlined /> {t.dashboard.updateStatus.published}
                       </Option>
                       <Option value={Statuses.ARCHIVED}>
-                        <InboxOutlined />{' '}
-                        {t.dashboard.articles.edit.form.status.archived}
+                        <InboxOutlined /> {t.dashboard.updateStatus.archived}
                       </Option>
                     </Select>
                   </Form.Item>
 
                   <Form.Item
-                    label={t.dashboard.articles.edit.form.slug.label}
+                    label={t.dashboard.rules.slug.label}
                     name="slug"
                     rules={articleFormRules.slug}
                     hasFeedback
-                    tooltip={t.dashboard.articles.edit.form.slug.tooltip}
+                    tooltip={t.dashboard.rules.slug.tooltip}
                   >
                     <Input.TextArea
-                      placeholder={
-                        t.dashboard.articles.edit.form.slug.placeholder
-                      }
+                      placeholder={t.dashboard.rules.slug.placeholder}
                       count={{
                         show: true,
                         max: articleFormRules.slug[1].max,
@@ -369,14 +357,14 @@ export const ArticleEdit: FC = () => {
 
                 <Card>
                   <Form.Item
-                    label={t.dashboard.articles.edit.form.photo.label}
+                    label={t.dashboard.articles.form.photo.label}
                     name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     rules={articleFormRules.photo.rules}
                     tooltip={
                       <span>
-                        {t.dashboard.articles.edit.form.photo.tooltip}{' '}
+                        {t.dashboard.articles.form.photo.tooltip}{' '}
                         <SupportedImageFormatsTooltip />
                       </span>
                     }
