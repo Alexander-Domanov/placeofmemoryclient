@@ -270,6 +270,7 @@ export const en: LocaleType = {
       users: 'Users',
       contacts: 'Contacts',
       languages: 'Languages',
+      logout: 'Logout',
     },
     map: {
       titleLink: 'Dashboard',
@@ -852,6 +853,7 @@ export const en: LocaleType = {
     },
     users: {
       index: 'Users',
+      indexH: 'User',
       search: {
         title: 'Search by name',
         placeholder: 'Search by name',

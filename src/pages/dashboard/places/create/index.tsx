@@ -2,12 +2,14 @@ import Head from 'next/head';
 import React from 'react';
 import { getDashboardLayout } from '@/components/layouts/DashboardLayout';
 import { CreatePlace } from '@/modules/places-module/components/CreatePlace';
+import { useTranslation } from '@/components/internationalization';
 
 const DashboardPlaceCreate = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>Create Place</title>
+        <title>{`${t.dashboard.places.create.index} | MOGILKI`}</title>
       </Head>
 
       <CreatePlace />

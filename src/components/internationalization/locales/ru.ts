@@ -277,6 +277,7 @@ export const ru: LocaleType = {
       users: 'Пользователи',
       contacts: 'Контакты',
       languages: 'Языки',
+      logout: 'Выход',
     },
     map: {
       titleLink: 'Приборная панель',
@@ -856,6 +857,7 @@ export const ru: LocaleType = {
     },
     users: {
       index: 'Пользователи',
+      indexH: 'Пользователь',
       search: {
         title: 'Поиск по имени',
         placeholder: 'Поиск по имени',

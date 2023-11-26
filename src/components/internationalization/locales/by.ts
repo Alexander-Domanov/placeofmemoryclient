@@ -287,6 +287,7 @@ export const by = {
       users: 'Карыстальнікі',
       contacts: 'Кантакты',
       languages: 'Мовы',
+      logout: 'Выйсці',
     },
     map: {
       titleLink: 'Прыборная панэль',
@@ -929,6 +930,7 @@ export const by = {
     },
     users: {
       index: 'Карыстальнікі',
+      indexH: 'Карыстальнік',
       search: {
         title: 'Пошук па імі',
         placeholder: 'Пошук па імі',
