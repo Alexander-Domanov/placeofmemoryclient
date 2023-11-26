@@ -49,15 +49,21 @@ import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRu
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
-import { useTranslation } from '@/components/internationalization';
+import { LocaleType, useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
-function breadcrumbs(name: string) {
+function breadcrumbs(name: string, t: LocaleType) {
   return [
     CreateBreadcrumb({ key: routes.main, icon: true }),
-    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-    CreateBreadcrumb({ key: routes.dashboard.persons.index, text: 'Persons' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.index,
+      text: t.dashboard.persons.index,
+    }),
     CreateBreadcrumb({
       key: routes.dashboard.persons.breadcrumbs(name),
       text: name,
@@ -188,7 +194,7 @@ export const PersonEdit: FC = () => {
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed status to: ${selectedStatus} for person: ${person?.firstName} ${person?.lastName}`,
+            message: t.dashboard.persons.edit.notification.update.title,
             placement: 'bottomLeft',
           });
         },
@@ -204,7 +210,7 @@ export const PersonEdit: FC = () => {
     deletePersonMutationAsync(selectedPerson?.id || null, {
       onSuccess: () => {
         notification.success({
-          message: `Person deleted successfully`,
+          message: t.dashboard.persons.edit.notification.delete.title,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.persons.index);
@@ -235,8 +241,7 @@ export const PersonEdit: FC = () => {
       {
         onSuccess: () => {
           notification.success({
-            message: 'Place updated successfully',
-            description: 'You will be redirected to the place page',
+            message: t.dashboard.persons.edit.notification.success.title,
             placement: 'bottomLeft',
           });
         },
@@ -248,9 +253,11 @@ export const PersonEdit: FC = () => {
 
   const isDisabled = GetDisabledStatus(status, me?.role as Role);
 
+  const personFormRules = PersonFormRules(t);
+
   const exceeded = isCharacterCountExceeded(
     biographyCount,
-    PersonFormRules.biography.maxCharacters
+    personFormRules.biography.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
 
@@ -260,8 +267,8 @@ export const PersonEdit: FC = () => {
     callback: (message?: string) => void
   ) => {
     return ValidationOfRedactorValue({
-      maxCharacters: PersonFormRules.biography.maxCharacters,
-      message: PersonFormRules.biography.message,
+      maxCharacters: personFormRules.biography.maxCharacters,
+      message: personFormRules.biography.message,
       value,
       callback,
       t,
@@ -274,7 +281,7 @@ export const PersonEdit: FC = () => {
     <Flex gap="large" vertical>
       <div>
         <Breadcrumb
-          items={breadcrumbs(`${person?.firstName} ${person?.lastName}`)}
+          items={breadcrumbs(`${person?.firstName} ${person?.lastName}`, t)}
         />
       </div>
 
@@ -285,16 +292,16 @@ export const PersonEdit: FC = () => {
               <Card>
                 <Form.Item
                   name="firstName"
-                  label="First Name"
-                  rules={PersonFormRules.firstName}
+                  label={t.dashboard.persons.form.name.label}
+                  rules={personFormRules.firstName}
                   hasFeedback
                 >
                   <Input
-                    placeholder="Input First Name"
+                    placeholder={t.dashboard.persons.form.name.placeholder}
                     allowClear
                     count={{
                       show: true,
-                      max: PersonFormRules.firstName[1].max,
+                      max: personFormRules.firstName[1].max,
                     }}
                     disabled={isDisabled}
                   />
@@ -302,16 +309,16 @@ export const PersonEdit: FC = () => {
 
                 <Form.Item
                   name="lastName"
-                  label="Last Name"
-                  rules={PersonFormRules.lastName}
+                  label={t.dashboard.persons.form.lastName.label}
+                  rules={personFormRules.lastName}
                   hasFeedback
                 >
                   <Input
-                    placeholder="Input Last Name"
+                    placeholder={t.dashboard.persons.form.lastName.placeholder}
                     allowClear
                     count={{
                       show: true,
-                      max: PersonFormRules.lastName[1].max,
+                      max: personFormRules.lastName[1].max,
                     }}
                     disabled={isDisabled}
                   />
@@ -319,33 +326,45 @@ export const PersonEdit: FC = () => {
 
                 <Form.Item
                   name="patronymic"
-                  label="Patronymic"
-                  rules={PersonFormRules.patronymic}
+                  label={t.dashboard.persons.form.patronymic.label}
+                  rules={personFormRules.patronymic}
                   hasFeedback
                 >
                   <Input
-                    placeholder="Input Patronymic"
+                    placeholder={
+                      t.dashboard.persons.form.patronymic.placeholder
+                    }
                     allowClear
                     count={{
                       show: true,
-                      max: PersonFormRules.patronymic[1].max,
+                      max: personFormRules.patronymic[1].max,
                     }}
                     disabled={isDisabled}
                   />
                 </Form.Item>
 
                 <Flex gap="large">
-                  <Form.Item name="birthDate" label="Birth Date">
+                  <Form.Item
+                    name="birthDate"
+                    label={t.dashboard.persons.form.birthDate.label}
+                  >
                     <DatePicker
-                      placeholder="Input Date"
+                      placeholder={
+                        t.dashboard.persons.form.birthDate.placeholder
+                      }
                       format="DD.MM.YYYY"
                       disabled={isDisabled}
                     />
                   </Form.Item>
 
-                  <Form.Item name="deathDate" label="Death Date">
+                  <Form.Item
+                    name="deathDate"
+                    label={t.dashboard.persons.form.deathDate.label}
+                  >
                     <DatePicker
-                      placeholder="Input Date"
+                      placeholder={
+                        t.dashboard.persons.form.deathDate.placeholder
+                      }
                       format="DD.MM.YYYY"
                       disabled={isDisabled}
                     />
@@ -354,50 +373,49 @@ export const PersonEdit: FC = () => {
 
                 <Form.Item
                   name="country"
-                  label="Country"
-                  rules={PersonFormRules.country}
+                  label={t.dashboard.persons.form.country.label}
+                  rules={personFormRules.country}
                   hasFeedback
-                  tooltip="This field is filled in automatically when you select a location on the map."
+                  tooltip={t.dashboard.persons.form.country.tooltip}
                 >
                   <Input
-                    placeholder="n/a"
+                    placeholder={t.dashboard.persons.form.country.na}
                     disabled
                     count={{
                       show: true,
-                      max: PersonFormRules.country[1].max,
+                      max: personFormRules.country[1].max,
                     }}
                   />
                 </Form.Item>
 
                 <Form.Item
                   name="city"
-                  label="City"
-                  rules={PersonFormRules.city}
+                  label={t.dashboard.persons.form.city.label}
+                  rules={personFormRules.city}
                   hasFeedback
-                  tooltip="This field is filled in automatically when you select a location on the map."
+                  tooltip={t.dashboard.persons.form.city.tooltip}
                 >
                   <Input
-                    placeholder="n/a"
+                    placeholder={t.dashboard.persons.form.city.na}
                     disabled
                     count={{
                       show: true,
-                      max: PersonFormRules.city[1].max,
+                      max: personFormRules.city[1].max,
                     }}
                   />
                 </Form.Item>
 
                 <Form.Item
                   name="biography"
-                  label="Biography"
+                  label={t.dashboard.persons.form.biography.label}
                   rules={[
                     { validator: validateDescription },
-                    ...PersonFormRules.biography.rules,
+                    ...personFormRules.biography.rules,
                   ]}
                   tooltip={
                     <span>
-                      You can use the rich text editor to format the text. The
-                      maximum number of characters is{' '}
-                      {PersonFormRules.biography.maxCharacters}.{' '}
+                      {t.dashboard.persons.form.biography.tooltip}{' '}
+                      {personFormRules.biography.maxCharacters}.{' '}
                     </span>
                   }
                 >
@@ -414,7 +432,7 @@ export const PersonEdit: FC = () => {
 
                 <QuillCharacterCount
                   characterCount={biographyCount}
-                  maxCount={PersonFormRules.biography.maxCharacters}
+                  maxCount={personFormRules.biography.maxCharacters}
                 />
               </Card>
             </Col>
@@ -422,7 +440,7 @@ export const PersonEdit: FC = () => {
             <Col span={24} lg={10} md={12}>
               <Flex vertical gap="middle">
                 <Card>
-                  <Form.Item label="Status">
+                  <Form.Item label={t.dashboard.updateStatus.label}>
                     <Select
                       value={status}
                       onChange={handleStatusChange}
@@ -436,16 +454,16 @@ export const PersonEdit: FC = () => {
                   {!isShowSlug && (
                     <Form.Item
                       name="slug"
-                      label="Slug"
-                      rules={PersonFormRules.slug}
+                      label={t.dashboard.rules.slug.label}
+                      rules={personFormRules.slug}
                       hasFeedback
-                      tooltip="You can change the slug of the person. This field is for SEO, it must be unique and contain only letters, numbers and dashes. Can't start or end with a dash."
+                      tooltip={t.dashboard.rules.slug.tooltip}
                     >
                       <Input.TextArea
-                        placeholder="This field is auto generated"
+                        placeholder={t.dashboard.rules.slug.placeholder}
                         count={{
                           show: true,
-                          max: PersonFormRules.slug[1].max,
+                          max: personFormRules.slug[1].max,
                         }}
                         disabled={isDisabled}
                       />
@@ -467,12 +485,12 @@ export const PersonEdit: FC = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      title="Save"
+                      title={t.dashboard.persons.edit.button.save}
                       icon={<SaveOutlined />}
                       loading={isUpdating}
                       disabled={isDisabled}
                     >
-                      Save
+                      {t.dashboard.persons.edit.button.save}
                     </Button>
 
                     <DeleteConfirmationModal<IPerson>
@@ -485,8 +503,8 @@ export const PersonEdit: FC = () => {
 
                 <Card>
                   <Form.Item
-                    label="Place"
-                    tooltip="Select a location from the list to link it to a specific location on the map."
+                    label={t.dashboard.persons.place.label}
+                    tooltip={t.dashboard.persons.place.tooltip}
                   >
                     <TitlePlaces
                       onFinishValue={setSelectedPlace}
@@ -502,18 +520,18 @@ export const PersonEdit: FC = () => {
                       onClick={clearSelectedPlace}
                       disabled={isDisabled}
                     >
-                      Clear
+                      {t.dashboard.persons.place.clear}
                     </Button>
                   </Row>
                 </Card>
 
                 <Card>
                   <Form.Item
-                    label="Location"
+                    label={t.dashboard.locationInfo.label}
                     name="location"
-                    rules={PersonFormRules.location}
+                    rules={personFormRules.location}
                     hasFeedback
-                    tooltip="You need to select a location on the map to determine the coordinates of the place."
+                    tooltip={<span>{t.dashboard.locationInfo.tooltip}</span>}
                   >
                     <MetaInfoLocationForm location={selectedLocation} />
                   </Form.Item>
@@ -527,24 +545,22 @@ export const PersonEdit: FC = () => {
                 <Flex vertical gap="middle">
                   <Card>
                     <Form.Item
-                      label="Photos"
+                      label={t.dashboard.persons.form.photo.label}
                       name="photo"
                       hasFeedback
                       valuePropName="fileList"
                       getValueFromEvent={normFile}
-                      rules={PersonFormRules.photo.rules}
+                      rules={personFormRules.photo.rules}
                       tooltip={
                         <span>
-                          You can upload up to {PersonFormRules.photo.maxCount}{' '}
-                          photos, the first photo will be the main one. After
-                          uploading, you should save the person.{' '}
+                          {t.dashboard.persons.form.photo.tooltip}
                           <SupportedImageFormatsTooltip />
                         </span>
                       }
                     >
                       <Upload
                         {...uploadProps}
-                        maxCount={PersonFormRules.photo.maxCount}
+                        maxCount={personFormRules.photo.maxCount}
                         multiple
                         disabled={isDisabled}
                       >
@@ -552,7 +568,8 @@ export const PersonEdit: FC = () => {
                           icon={<UploadOutlined />}
                           disabled={fileList.length > 2 || isDisabled}
                         >
-                          + Upload (Max: {PersonFormRules.photo.maxCount})
+                          {t.dashboard.persons.create.button.photo} (Max:{' '}
+                          {personFormRules.photo.maxCount})
                         </Button>
                       </Upload>
                     </Form.Item>

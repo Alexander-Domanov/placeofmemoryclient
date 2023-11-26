@@ -7,6 +7,7 @@ import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson'
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 interface DeletePersonModalProps {
   person: IPerson | null;
@@ -14,6 +15,7 @@ interface DeletePersonModalProps {
 
 const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
@@ -34,7 +36,7 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
     deletePersonMutationAsync(selectedPerson?.id || null, {
       onSuccess: () => {
         notification.success({
-          message: `Person: ${selectedPerson?.firstName} deleted successfully`,
+          message: t.dashboard.persons.notifications.delete.title,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.persons.index);
@@ -66,7 +68,7 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
         actions={[
           <Button
             key="delete"
-            title="Delete"
+            title={t.dashboard.persons.delete.title}
             icon={<DeleteOutlined />}
             style={buttonStyle}
             onClick={handleClick}
@@ -77,12 +79,12 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
       />
 
       <Modal
-        title="Confirm deletion"
+        title={t.dashboard.persons.delete.titleConfirm}
         open={isDeleteModalVisible}
         onOk={deletePerson}
         onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
+        okText={t.dashboard.persons.delete.delete}
+        cancelText={t.dashboard.persons.delete.cancel}
         okButtonProps={{
           icon: <DeleteOutlined />,
           onMouseEnter: () => setIsHovered(true),
@@ -98,7 +100,7 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the person: &nbsp;
+              {t.dashboard.persons.delete.description}: &nbsp;
             </span>
             {selectedPerson?.firstName}
           </div>

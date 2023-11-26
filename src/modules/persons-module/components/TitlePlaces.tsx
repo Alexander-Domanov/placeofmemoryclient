@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { AutoComplete, Flex, Select } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { useTitlePlaces } from '@/modules/places-module/hooks/useTtitlePlaces';
+import { useTranslation } from '@/components/internationalization';
 
 const { Option } = Select;
 
@@ -36,6 +37,7 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({
   onFinishValue,
   disabled,
 }) => {
+  const { t } = useTranslation();
   const [searchParam, setSearchParam] = useState('name');
 
   const [pagination, setPagination] = useState({
@@ -88,20 +90,20 @@ export const TitlePlaces: FC<TitlePlacesFormProps> = ({
         disabled={disabled}
       >
         <Option key="name" value="name">
-          Name
+          {t.dashboard.persons.place.name}
         </Option>
         <Option key="city" value="city">
-          City
+          {t.dashboard.persons.place.city}
         </Option>
         <Option key="country" value="country">
-          Country
+          {t.dashboard.persons.place.country}
         </Option>
       </Select>
 
       <AutoComplete
         style={{ width: '100%' }}
         onSearch={handleSearch}
-        placeholder="Search for a place"
+        placeholder={t.dashboard.persons.place.searchPlaceholder}
         options={options}
         onSelect={(value) => {
           const placeDetail = findIdFromOption(value);

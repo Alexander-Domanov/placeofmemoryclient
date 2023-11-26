@@ -22,22 +22,12 @@ import {
 import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
-import { columnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
+import { ColumnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
 import { CustomSelectInput } from '@/components';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { personsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
 import { useTranslation } from '@/components/internationalization';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.persons.index,
-    text: 'Persons',
-    withLink: false,
-  }),
-];
 
 const defaultPageSize = 10;
 
@@ -164,23 +154,33 @@ export const Persons: FC = () => {
 
   const selectConditionBirthDate = (
     <Select
-      style={{ width: 80 }}
+      style={{ width: 90 }}
       defaultValue="gte"
       onChange={onChangeBirthDateFilter}
     >
-      <Select.Option value="gte">More</Select.Option>
-      <Select.Option value="lte">Less</Select.Option>
+      <Select.Option value="gte">
+        {' '}
+        {t.dashboard.persons.search.more}
+      </Select.Option>
+      <Select.Option value="lte">
+        {' '}
+        {t.dashboard.persons.search.less}
+      </Select.Option>
     </Select>
   );
 
   const selectConditionDeathDate = (
     <Select
-      style={{ width: 80 }}
+      style={{ width: 90 }}
       defaultValue="lte"
       onChange={onChangeDeathDateFilter}
     >
-      <Select.Option value="gte">More</Select.Option>
-      <Select.Option value="lte">Less</Select.Option>
+      <Select.Option value="gte">
+        {t.dashboard.persons.search.more}
+      </Select.Option>
+      <Select.Option value="lte">
+        {t.dashboard.persons.search.less}
+      </Select.Option>
     </Select>
   );
 
@@ -196,6 +196,8 @@ export const Persons: FC = () => {
           },
         ]
       : fileStatuses;
+
+  const columnsTablePersons = ColumnsTablePersons(t);
 
   const selectColumnsTablePlaces =
     me?.role === Role.USER || me?.role === Role.AUTHOR
@@ -213,6 +215,19 @@ export const Persons: FC = () => {
       ? { x: 1000 }
       : { x: 1300 };
 
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.index,
+      text: t.dashboard.persons.index,
+      withLink: false,
+    }),
+  ];
+
   return (
     <Flex gap="large" vertical>
       <div>
@@ -223,15 +238,15 @@ export const Persons: FC = () => {
         <Flex align="center" gap="middle">
           <Button
             type="primary"
-            title="Add new person"
+            title={t.dashboard.persons.add.title}
             onClick={() => router.push(routes.dashboard.persons.create)}
           >
-            + Add
+            {t.dashboard.persons.add.label}
           </Button>
 
           <Button
             type={isButtonActive ? 'dashed' : 'default'}
-            title="Show more filters"
+            title={t.dashboard.persons.filters.placeholder}
             icon={isButtonActive ? <CaretUpOutlined /> : <CaretDownOutlined />}
             onClick={() => {
               onShowMoreFilters();
@@ -239,14 +254,14 @@ export const Persons: FC = () => {
             }}
             className={isButtonActive ? 'active-button' : ''}
           >
-            Filters
+            {t.dashboard.persons.filters.title}
           </Button>
         </Flex>
 
         <Flex align="center" gap="middle" wrap="wrap">
           <Input
-            placeholder="Search by First Name"
-            title="Search by first Name"
+            placeholder={t.dashboard.persons.search.name.placeholder}
+            title={t.dashboard.persons.search.name.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchName: e.target.value })
@@ -255,8 +270,8 @@ export const Persons: FC = () => {
           />
 
           <Input
-            placeholder="Search by Last Name"
-            title="Search by last Name"
+            placeholder={t.dashboard.persons.search.lastName.placeholder}
+            title={t.dashboard.persons.search.lastName.title}
             allowClear
             onChange={(e) =>
               setPagination({ ...pagination, searchLastName: e.target.value })
@@ -267,7 +282,7 @@ export const Persons: FC = () => {
           <CustomSelectInput
             defaultValue={{
               value: FileStatuses.ALL,
-              label: 'All',
+              label: t.dashboard.selectStatus.all,
             }}
             options={selectInputOptions}
             onChange={onStatusChange}
@@ -281,8 +296,8 @@ export const Persons: FC = () => {
             <InputNumber
               addonBefore={selectConditionBirthDate}
               maxLength={4}
-              placeholder="Year of birth"
-              title="Search by year of birth"
+              placeholder={t.dashboard.persons.search.birthDate.placeholder}
+              title={t.dashboard.persons.search.birthDate.title}
               style={{ width: 190 }}
               onChange={onChangeBirthDate}
             />
@@ -291,14 +306,14 @@ export const Persons: FC = () => {
               addonBefore={selectConditionDeathDate}
               maxLength={4}
               style={{ width: 190 }}
-              placeholder="Year of death"
-              title="Search by year of death"
+              placeholder={t.dashboard.persons.search.deathDate.placeholder}
+              title={t.dashboard.persons.search.deathDate.title}
               onChange={onChangeDeathDate}
             />
 
             <Input
-              placeholder="Search by Country"
-              title="Search by country"
+              placeholder={t.dashboard.persons.search.country.placeholder}
+              title={t.dashboard.persons.search.country.title}
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchCountry: e.target.value })
@@ -307,8 +322,8 @@ export const Persons: FC = () => {
             />
 
             <Input
-              placeholder="Search by City"
-              title="Search by city"
+              placeholder={t.dashboard.persons.search.city.placeholder}
+              title={t.dashboard.persons.search.city.title}
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchCity: e.target.value })

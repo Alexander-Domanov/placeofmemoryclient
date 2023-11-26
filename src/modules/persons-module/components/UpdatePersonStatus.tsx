@@ -42,7 +42,7 @@ const UpdatePersonStatusComponent: React.FC<
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed status to: ${status} for person: ${person?.firstName}`,
+            message: t.dashboard.persons.updateModal.notification.success,
             placement: 'bottomLeft',
           });
         },
@@ -75,14 +75,17 @@ const UpdatePersonStatusComponent: React.FC<
         ]}
       />
       <Modal
-        title="Change status of person or edit"
+        title={t.dashboard.persons.updateModal.title}
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
         {isDisabled ? (
           <Form>
-            <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+            <Form.Item
+              label={t.dashboard.persons.updateModal.form.label}
+              style={{ marginBottom: 10 }}
+            >
               <Select
                 value={newStatus}
                 onChange={handleMenuStatusClick}
@@ -99,12 +102,15 @@ const UpdatePersonStatusComponent: React.FC<
                 router.push(routes.dashboard.persons.person(id || ''));
               }}
             >
-              Edit
+              {t.dashboard.articles.updateModal.edit}
             </Button>
           </Form>
         ) : (
           <Form>
-            <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+            <Form.Item
+              label={t.dashboard.persons.updateModal.form.label}
+              style={{ marginBottom: 10 }}
+            >
               <Select value={newStatus} onChange={handleMenuStatusClick}>
                 {updateOptions}
               </Select>
@@ -117,7 +123,7 @@ const UpdatePersonStatusComponent: React.FC<
                 router.push(routes.dashboard.persons.person(id || ''));
               }}
             >
-              Edit
+              {t.dashboard.articles.updateModal.edit}
             </Button>
           </Form>
         )}

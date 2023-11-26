@@ -47,17 +47,6 @@ import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
 
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-  CreateBreadcrumb({ key: routes.dashboard.persons.index, text: 'Persons' }),
-  CreateBreadcrumb({
-    key: routes.dashboard.persons.create,
-    text: 'Create Person',
-    withLink: false,
-  }),
-];
-
 interface IPersonForm {
   firstName: string;
   lastName: string;
@@ -151,8 +140,9 @@ export const CreatePerson: FC = () => {
     createPerson(form, {
       onSuccess: (data) => {
         notification.success({
-          message: 'Person created successfully',
-          description: 'You will be redirected to the person page',
+          message: t.dashboard.persons.create.notification.success.title,
+          description:
+            t.dashboard.persons.create.notification.success.description,
           placement: 'bottomLeft',
         });
         router.push(routes.dashboard.persons.person(data.data.id));
@@ -160,9 +150,11 @@ export const CreatePerson: FC = () => {
     });
   };
 
+  const personFormRules = PersonFormRules(t);
+
   const exceeded = isCharacterCountExceeded(
     biographyCount,
-    PersonFormRules.biography.maxCharacters
+    personFormRules.biography.maxCharacters
   );
   const quillStyle = getQuillStyle(exceeded);
 
@@ -172,8 +164,8 @@ export const CreatePerson: FC = () => {
     callback: (message?: string) => void
   ) => {
     return ValidationOfRedactorValue({
-      maxCharacters: PersonFormRules.biography.maxCharacters,
-      message: PersonFormRules.biography.message,
+      maxCharacters: personFormRules.biography.maxCharacters,
+      message: personFormRules.biography.message,
       value,
       callback,
       t,
@@ -188,6 +180,23 @@ export const CreatePerson: FC = () => {
     'YYYY/MM/DD',
     'YYYY-MM-DD',
     'DD-MM-YYYY',
+  ];
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.index,
+      text: t.dashboard.persons.index,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.persons.create,
+      text: t.dashboard.persons.create.index,
+      withLink: false,
+    }),
   ];
 
   return (
@@ -210,63 +219,69 @@ export const CreatePerson: FC = () => {
             <Card>
               <Form.Item
                 name="firstName"
-                label="First Name"
-                rules={PersonFormRules.firstName}
+                label={t.dashboard.persons.form.name.label}
+                rules={personFormRules.firstName}
                 hasFeedback
               >
                 <Input
-                  placeholder="Input First Name"
+                  placeholder={t.dashboard.persons.form.name.placeholder}
                   allowClear
                   count={{
                     show: true,
-                    max: PersonFormRules.firstName[1].max,
+                    max: personFormRules.firstName[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="lastName"
-                label="Last Name"
-                rules={PersonFormRules.lastName}
+                label={t.dashboard.persons.form.lastName.label}
+                rules={personFormRules.lastName}
                 hasFeedback
               >
                 <Input
-                  placeholder="Input Last Name"
+                  placeholder={t.dashboard.persons.form.lastName.placeholder}
                   allowClear
                   count={{
                     show: true,
-                    max: PersonFormRules.lastName[1].max,
+                    max: personFormRules.lastName[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="patronymic"
-                label="Patronymic"
-                rules={PersonFormRules.patronymic}
+                label={t.dashboard.persons.form.patronymic.label}
+                rules={personFormRules.patronymic}
                 hasFeedback
               >
                 <Input
-                  placeholder="Input Patronymic"
+                  placeholder={t.dashboard.persons.form.patronymic.placeholder}
                   allowClear
                   count={{
                     show: true,
-                    max: PersonFormRules.patronymic[1].max,
+                    max: personFormRules.patronymic[1].max,
                   }}
                 />
               </Form.Item>
 
               <Flex gap="large">
-                <Form.Item name="birthDate" label="Birth Date">
+                <Form.Item
+                  name="birthDate"
+                  label={t.dashboard.persons.form.birthDate.label}
+                >
                   <DatePicker
-                    placeholder="Input Date"
+                    placeholder={t.dashboard.persons.form.birthDate.placeholder}
                     format={dateFormatList}
                   />
                 </Form.Item>
 
-                <Form.Item name="deathDate" label="Death Date">
+                <Form.Item
+                  name="deathDate"
+                  label={t.dashboard.persons.form.deathDate.label}
+                >
                   <DatePicker
-                    placeholder="Input Date"
+                    placeholder={t.dashboard.persons.form.deathDate.placeholder}
                     format={dateFormatList}
                   />
                 </Form.Item>
@@ -274,50 +289,49 @@ export const CreatePerson: FC = () => {
 
               <Form.Item
                 name="country"
-                label="Country"
-                rules={PersonFormRules.country}
+                label={t.dashboard.persons.form.country.label}
+                rules={personFormRules.country}
                 hasFeedback
-                tooltip="This field is filled in automatically when you select a location on the map."
+                tooltip={t.dashboard.persons.form.country.tooltip}
               >
                 <Input
-                  placeholder="n/a"
+                  placeholder={t.dashboard.persons.form.country.na}
                   disabled
                   count={{
                     show: true,
-                    max: PersonFormRules.country[1].max,
+                    max: personFormRules.country[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="city"
-                label="City"
-                rules={PersonFormRules.city}
+                label={t.dashboard.persons.form.city.label}
+                rules={personFormRules.city}
                 hasFeedback
-                tooltip="This field is filled in automatically when you select a location on the map."
+                tooltip={t.dashboard.persons.form.city.tooltip}
               >
                 <Input
-                  placeholder="n/a"
+                  placeholder={t.dashboard.persons.form.city.na}
                   disabled
                   count={{
                     show: true,
-                    max: PersonFormRules.city[1].max,
+                    max: personFormRules.city[1].max,
                   }}
                 />
               </Form.Item>
 
               <Form.Item
                 name="biography"
-                label="Biography"
+                label={t.dashboard.persons.form.biography.label}
                 rules={[
                   { validator: validateDescription },
-                  ...PersonFormRules.biography.rules,
+                  ...personFormRules.biography.rules,
                 ]}
                 tooltip={
                   <span>
-                    You can use the rich text editor to format the text. The
-                    maximum number of characters is{' '}
-                    {PersonFormRules.biography.maxCharacters}.{' '}
+                    {t.dashboard.persons.form.biography.tooltip}
+                    {personFormRules.biography.maxCharacters}.{' '}
                   </span>
                 }
               >
@@ -334,7 +348,7 @@ export const CreatePerson: FC = () => {
 
               <QuillCharacterCount
                 characterCount={biographyCount}
-                maxCount={PersonFormRules.biography.maxCharacters}
+                maxCount={personFormRules.biography.maxCharacters}
               />
             </Card>
           </Col>
@@ -349,15 +363,15 @@ export const CreatePerson: FC = () => {
                     loading={isCreating}
                     icon={<SaveOutlined />}
                   >
-                    Save
+                    {t.dashboard.persons.create.button.save}
                   </Button>
                 </Space>
               </Card>
 
               <Card>
                 <Form.Item
-                  label="Place"
-                  tooltip="Select a location from the list to link it to a specific location on the map."
+                  label={t.dashboard.persons.place.label}
+                  tooltip={t.dashboard.persons.place.tooltip}
                 >
                   <TitlePlaces onFinishValue={setSelectedPlace} />
                 </Form.Item>
@@ -366,18 +380,18 @@ export const CreatePerson: FC = () => {
 
                 <Row justify="end">
                   <Button type="dashed" onClick={clearSelectedPlace}>
-                    Clear
+                    {t.dashboard.persons.place.clear}
                   </Button>
                 </Row>
               </Card>
 
               <Card>
                 <Form.Item
-                  label="Location"
+                  label={t.dashboard.locationInfo.label}
                   name="location"
-                  rules={PersonFormRules.location}
+                  rules={personFormRules.location}
                   hasFeedback
-                  tooltip="You need to select a location on the map to determine the coordinates of the place."
+                  tooltip={<span>{t.dashboard.locationInfo.tooltip}</span>}
                 >
                   <MetaInfoLocationForm location={selectedLocation} />
                 </Form.Item>
@@ -389,32 +403,31 @@ export const CreatePerson: FC = () => {
 
               <Card>
                 <Form.Item
-                  label="Photos"
+                  label={t.dashboard.persons.form.photo.label}
                   name="photo"
                   hasFeedback
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
-                  rules={PersonFormRules.photo.rules}
+                  rules={personFormRules.photo.rules}
                   shouldUpdate
                   tooltip={
                     <span>
-                      You can upload up to {PersonFormRules.photo.maxCount}{' '}
-                      photos, the first photo will be the main one. After
-                      uploading, you should save the person.{' '}
+                      {t.dashboard.persons.form.photo.tooltip}
                       <SupportedImageFormatsTooltip />
                     </span>
                   }
                 >
                   <Upload
                     {...uploadProps}
-                    maxCount={PersonFormRules.photo.maxCount}
+                    maxCount={personFormRules.photo.maxCount}
                     multiple
                   >
                     <Button
                       icon={<UploadOutlined />}
                       disabled={fileList.length > 2}
                     >
-                      + Upload (Max: {PersonFormRules.photo.maxCount})
+                      {t.dashboard.persons.create.button.photo} (Max:{' '}
+                      {personFormRules.photo.maxCount})
                     </Button>
                   </Upload>
                 </Form.Item>

@@ -281,6 +281,8 @@ export const en: LocaleType = {
       // button: 'Add Image',
       // search: 'Search',
       // noData: 'No data',
+      support: 'Supported formats',
+      maxFileSize: 'Max allowed file size',
       image: {
         title: 'File Information',
         alt: 'Alt',
@@ -616,6 +618,228 @@ export const en: LocaleType = {
       updateModal: {
         title: 'Change status of place or edit',
         buttonTitle: 'Change status of place',
+        form: {
+          label: 'Current status',
+        },
+        edit: 'Edit',
+        notification: {
+          success: 'Status updated successfully',
+          error: 'Error updating status',
+        },
+      },
+    },
+    persons: {
+      index: 'Persons',
+      add: {
+        label: '+ Add',
+        title: 'Add person',
+      },
+      filters: {
+        title: 'Filters',
+        placeholder: 'Show more filters',
+      },
+      search: {
+        more: 'More',
+        less: 'Less',
+        name: {
+          title: 'Search by name',
+          placeholder: 'Search by name',
+        },
+        lastName: {
+          title: 'Search by last name',
+          placeholder: 'Search by last name',
+        },
+        birthDate: {
+          title: 'Birth date',
+          placeholder: 'Search by birth date',
+        },
+        deathDate: {
+          title: 'Death date',
+          placeholder: 'Search by death date',
+        },
+        country: {
+          title: 'Search by country',
+          placeholder: 'Search by country',
+        },
+        city: {
+          title: 'Search by city',
+          placeholder: 'Search by city',
+        },
+      },
+      form: {
+        name: {
+          label: 'First Name',
+          placeholder: 'First Name',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the first name.',
+          rules: {
+            required: 'First Name field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        lastName: {
+          label: 'Last Name',
+          placeholder: 'Last Name',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the last name.',
+          rules: {
+            required: 'Last Name field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        patronymic: {
+          label: 'Patronymic',
+          placeholder: 'Patronymic',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the patronymic.',
+          rules: {
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        biography: {
+          label: 'Biography',
+          placeholder: 'Biography',
+          tooltip:
+            'You can write up to 500 characters. After writing, you should save the article.',
+          rules: {
+            max: 'Maximum length: 500 characters',
+          },
+        },
+        birthDate: {
+          label: 'Birth Date',
+          placeholder: 'Birth Date',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the birth date.',
+          rules: {
+            required: 'Birth Date field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        deathDate: {
+          label: 'Death Date',
+          placeholder: 'Death Date',
+          tooltip:
+            'You can write up to 120 characters. After writing, you should save the death date.',
+          rules: {
+            required: 'Death Date field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        country: {
+          label: 'Country',
+          placeholder: 'Country',
+          na: 'N/A',
+          tooltip:
+            'This field is filled in automatically when you select a location on the map.',
+          rules: {
+            required: 'Country field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        city: {
+          label: 'City',
+          placeholder: 'City',
+          na: 'N/A',
+          tooltip:
+            'This field is filled in automatically when you select a location on the map.',
+          rules: {
+            required: 'City field is required',
+            max: 'Maximum length: 120 characters',
+          },
+        },
+        photo: {
+          label: 'Photo',
+          tooltip:
+            'You can upload up to 3 photos, the first photo will be the main one. After uploading, you should save the person.',
+          rules: {
+            required: 'Photo field is required',
+            max: 'Maximum length: 3 photos',
+          },
+        },
+      },
+      place: {
+        label: 'Place',
+        placeholder: 'Place',
+        name: 'Name',
+        country: 'Country',
+        city: 'City',
+        searchPlaceholder: 'Search for a place',
+        selectedPlace: 'Selected place',
+        address: 'Formatted address',
+        tooltip:
+          'Select a location from the list to link it to a specific location on the map.',
+        clear: 'Clear',
+      },
+      create: {
+        index: 'Create person',
+        notification: {
+          success: {
+            title: 'Person created successfully',
+            description: 'You will be redirected to the person page',
+          },
+          error: 'Error creating place',
+        },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+      edit: {
+        index: 'Edit person',
+        notification: {
+          success: {
+            title: 'Person updated successfully',
+            description: 'You will be redirected to the person page',
+          },
+          update: {
+            title: 'Person updated successfully',
+          },
+          delete: {
+            title: 'Person deleted successfully',
+          },
+          error: 'Error updating person',
+        },
+        button: {
+          save: 'Save',
+          photo: '+ Upload',
+        },
+      },
+      table: {
+        id: 'ID',
+        owner: 'Owner',
+        name: 'First Name',
+        lastName: 'Last Name',
+        birthDate: 'Birth Date',
+        deathDate: 'Death Date',
+        country: 'Country',
+        city: 'City',
+        createdAt: 'Created At',
+        updatedAt: 'Updated At',
+        placeId: 'Place ID',
+        status: 'Status',
+        photos: 'Photos',
+        actions: 'Actions',
+      },
+      notifications: {
+        success: {
+          title: 'Person created successfully',
+          description: 'You will be redirected to the person page',
+        },
+        delete: {
+          title: 'Person deleted successfully',
+          description: 'You will be redirected to the persons page',
+        },
+      },
+      delete: {
+        title: 'Delete',
+        titleConfirm: 'Confirm deletion',
+        description: 'Are you sure you want to delete the person?',
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+      updateModal: {
+        title: 'Change status of person or edit',
+        buttonTitle: 'Change status of person',
         form: {
           label: 'Current status',
         },

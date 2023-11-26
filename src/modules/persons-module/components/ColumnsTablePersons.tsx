@@ -9,10 +9,11 @@ import UpdatePersonStatusComponent from '@/modules/persons-module/components/Upd
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import DeletePersonComponent from '@/modules/persons-module/components/DeletePersonModal';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
+import { LocaleType } from '@/components/internationalization';
 
-export const columnsTablePersons: ColumnsType<IPerson> = [
+export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
   {
-    title: 'ID',
+    title: t.dashboard.persons.table.id,
     dataIndex: 'id',
     key: 'id',
     width: 50,
@@ -22,12 +23,13 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
-    title: 'Owner',
+    title: t.dashboard.persons.table.owner,
     dataIndex: 'owner',
     key: 'ownerId',
     align: 'center',
     width: 65,
     sorter: true,
+    ellipsis: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
       <Tooltip
@@ -41,7 +43,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
   },
 
   {
-    title: 'First Name',
+    title: t.dashboard.persons.table.name,
     dataIndex: 'firstName',
     key: 'name',
     width: 100,
@@ -65,7 +67,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ),
   },
   {
-    title: 'Last Name',
+    title: t.dashboard.persons.table.lastName,
     dataIndex: 'lastName',
     key: 'lastName',
     width: 100,
@@ -73,20 +75,10 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     sortDirections: ['ascend', 'descend'],
   },
   {
-    title: 'Birth Date',
+    title: t.dashboard.persons.table.birthDate,
     dataIndex: 'birthDate',
     key: 'birthDate',
-    width: 100,
-    align: 'center',
-    sorter: true,
-    sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
-  },
-  {
-    title: 'Death Date',
-    dataIndex: 'deathDate',
-    key: 'deathDate',
-    width: 100,
+    width: 80,
     align: 'center',
     sorter: true,
     ellipsis: true,
@@ -94,7 +86,18 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
   {
-    title: 'Country',
+    title: t.dashboard.persons.table.deathDate,
+    dataIndex: 'deathDate',
+    key: 'deathDate',
+    width: 80,
+    align: 'center',
+    sorter: true,
+    ellipsis: true,
+    sortDirections: ['ascend', 'descend'],
+    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
+  },
+  {
+    title: t.dashboard.persons.table.country,
     dataIndex: 'country',
     key: 'country',
     width: 80,
@@ -102,7 +105,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ellipsis: true,
   },
   {
-    title: 'City',
+    title: t.dashboard.persons.table.city,
     dataIndex: 'city',
     key: 'city',
     width: 80,
@@ -110,7 +113,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ellipsis: true,
   },
   {
-    title: 'Created At',
+    title: t.dashboard.persons.table.createdAt,
     dataIndex: 'createdAt',
     key: 'createdAt',
     width: 100,
@@ -127,7 +130,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ),
   },
   {
-    title: 'Updated At',
+    title: t.dashboard.persons.table.updatedAt,
     dataIndex: 'updatedAt',
     key: 'updatedAt',
     width: 100,
@@ -144,7 +147,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ),
   },
   {
-    title: 'PlaceId',
+    title: t.dashboard.persons.table.placeId,
     dataIndex: 'place',
     key: 'place',
     align: 'center',
@@ -160,7 +163,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ),
   },
   {
-    title: 'Status',
+    title: t.dashboard.persons.table.status,
     dataIndex: 'status',
     key: 'status',
     align: 'center',
@@ -170,11 +173,12 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     render: (text: string) => ColorStatusTag(text),
   },
   {
-    title: 'Photos',
+    title: t.dashboard.persons.table.photos,
     dataIndex: 'photos',
     key: 'photos',
     align: 'center',
     width: 80,
+    ellipsis: true,
     render: (text, record: IPerson) => (
       <Image.PreviewGroup
         preview
@@ -203,7 +207,7 @@ export const columnsTablePersons: ColumnsType<IPerson> = [
     ),
   },
   {
-    title: 'Actions',
+    title: t.dashboard.persons.table.actions,
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
