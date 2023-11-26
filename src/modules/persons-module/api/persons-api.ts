@@ -38,7 +38,7 @@ export const getPerson = (id: string | undefined | string[]) => {
   return authInstance.get<IPerson>(`persons/${id}`);
 };
 
-interface GetPersonsPublicParams {
+interface IGetPersonsPublicParams {
   pageSize?: number;
   pageNumber?: number;
   lang?: string;
@@ -52,7 +52,7 @@ interface GetPersonsPublicParams {
   filterConditionDeathDate?: string;
 }
 
-export const getPersonsPublic = (params: GetPersonsPublicParams) => {
+export const getPersonsPublic = (params: IGetPersonsPublicParams) => {
   const {
     pageSize = 10,
     pageNumber = 1,
@@ -96,4 +96,40 @@ export const getPersonPublic = (slug: string, lang = 'by') => {
       },
     }
   );
+};
+
+export const getPersonsPublicMain = async (params: IGetPersonsPublicParams) => {
+  const {
+    pageSize = 24,
+    pageNumber = 1,
+    lang = 'by',
+    name = '',
+    lastName = '',
+    birthDate = null,
+    country = '',
+    city = '',
+    deathDate = null,
+    filterConditionBirthDate = FilterCondition.gte,
+    filterConditionDeathDate = FilterCondition.lte,
+  } = params;
+
+  const res = await axios.get<IGetPersonsResponse>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/persons/public/all`,
+    {
+      params: {
+        pageSize,
+        pageNumber,
+        lang,
+        name,
+        lastName,
+        birthDate,
+        country,
+        city,
+        deathDate,
+        filterConditionBirthDate,
+        filterConditionDeathDate,
+      },
+    }
+  );
+  return res.data;
 };

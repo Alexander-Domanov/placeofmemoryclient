@@ -1,12 +1,13 @@
 import Head from 'next/head';
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useTranslation } from '@/components/internationalization';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IContacts, IGetPersonsResponse } from '@/types';
 import { PersonsMain } from '@/modules/persons-module/components/PersonsMain';
-import { getPersonsPublic } from '@/modules/persons-module/api/persons-api';
+import { getPersonsPublicMain } from '@/modules/persons-module/api/persons-api';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
+import { generateArray } from '@/common/helpers/generateArray';
 import { nameLogo } from '@/common/constants';
 
 interface Props {
@@ -30,10 +31,14 @@ const PersonsPage: NextPage<Props> = ({ contacts, persons }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: persons } = await getPersonsPublic({
+export const getStaticProps: GetStaticProps = async (
+  context
+): Promise<{ props: Props; revalidate: number }> => {
+  const page = context.params?.page as string;
+
+  const persons = await getPersonsPublicMain({
     pageSize: SITE_PERSONS_PER_PAGE,
-    pageNumber: 1,
+    pageNumber: +page,
     lang: context.locale,
   });
 
@@ -45,6 +50,27 @@ export const getStaticProps: GetStaticProps = async (context) => {
       contacts,
     },
     revalidate: 30,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const by = await getPersonsPublicMain({
+    pageSize: SITE_PERSONS_PER_PAGE,
+  });
+
+  const pathsBy = generateArray(2, by.pagesCount).map((page) => ({
+    params: { page: `${page}` },
+    locale: 'by',
+  }));
+
+  const pathsRu = generateArray(2, by.pagesCount).map((page) => ({
+    params: { page: `${page}` },
+    locale: 'ru',
+  }));
+
+  return {
+    paths: [...pathsBy, ...pathsRu],
+    fallback: 'blocking',
   };
 };
 
