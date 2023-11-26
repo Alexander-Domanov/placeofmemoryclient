@@ -14,6 +14,7 @@ import { IUser, IUserWithShortExtensions } from '@/types';
 import { useUpdateUserRole } from '@/modules/users-module/hooks/useUpdateUserRole';
 import { useUpdateUserStatus } from '@/modules/users-module/hooks/useUpdateUserStatus';
 import { routes } from '@/common/routing/routes';
+import { useTranslation } from '@/components/internationalization';
 
 const { Option } = Select;
 
@@ -28,6 +29,7 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
   showEditButton = true,
 }) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { id, role, status } = user || { id: null, role: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
@@ -53,7 +55,8 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed role to: ${role} for user: ${user?.userName}`,
+            message:
+              t.dashboard.users.updateModal.notification.updateRole.success,
             placement: 'bottomLeft',
           });
         },
@@ -68,7 +71,8 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
       {
         onSuccess: () => {
           notification.success({
-            message: `Changed status to: ${status} for user: ${user?.userName}`,
+            message:
+              t.dashboard.users.updateModal.notification.updateStatus.success,
             placement: 'bottomLeft',
           });
         },
@@ -85,12 +89,12 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
       return (
         <Button
           type="default"
-          title="Update user status and role"
+          title={t.dashboard.users.updateModal.button.title}
           icon={<EditOutlined />}
           style={{ cursor: 'pointer', color: '#2c332c' }}
           onClick={handleEditClick}
         >
-          Update
+          {t.dashboard.users.updateModal.button.update}
         </Button>
       );
     }
@@ -109,13 +113,16 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
     <>
       <List.Item actions={[showButtonDelete(showButton)]} />
       <Modal
-        title="Change status, role or edit"
+        title={t.dashboard.users.updateModal.title}
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
         <br />
-        <Form.Item label="Current role" style={{ marginBottom: 10 }}>
+        <Form.Item
+          label={t.dashboard.users.updateModal.form.label}
+          style={{ marginBottom: 10 }}
+        >
           <Select
             value={newRole}
             onChange={handleMenuRoleClick}
@@ -123,24 +130,27 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
             disabled={isRoleUpdating}
           >
             <Option value="ADMIN">
-              <UpOutlined /> Admin
+              <UpOutlined /> {t.dashboard.users.selectRole.admin}
             </Option>
 
             <Option value="EDITOR">
-              <SolutionOutlined /> Editor
+              <SolutionOutlined /> {t.dashboard.users.selectRole.editor}
             </Option>
 
             <Option value="AUTHOR">
-              <FormOutlined /> Author
+              <FormOutlined /> {t.dashboard.users.selectRole.author}
             </Option>
 
             <Option value="USER">
-              <DownOutlined /> User
+              <DownOutlined /> {t.dashboard.users.selectRole.user}
             </Option>
           </Select>
         </Form.Item>
 
-        <Form.Item label="Current status" style={{ marginBottom: 10 }}>
+        <Form.Item
+          label={t.dashboard.users.updateModal.form.label2}
+          style={{ marginBottom: 10 }}
+        >
           <Select
             value={newStatus}
             onChange={handleMenuStatusClick}
@@ -148,11 +158,11 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
             disabled={isStatusUpdating}
           >
             <Option value="ACTIVE">
-              <CheckCircleOutlined /> Active
+              <CheckCircleOutlined /> {t.dashboard.users.selectStatus.active}
             </Option>
 
             <Option value="BANNED">
-              <LockOutlined /> Banned
+              <LockOutlined /> {t.dashboard.users.selectStatus.banned}
             </Option>
           </Select>
         </Form.Item>
@@ -165,7 +175,7 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
               router.push(routes.dashboard.users.user(id || ''));
             }}
           >
-            Edit
+            {t.dashboard.users.updateModal.edit}
           </Button>
         )}
       </Modal>

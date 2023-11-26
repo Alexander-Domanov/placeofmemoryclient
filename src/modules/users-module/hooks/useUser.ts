@@ -31,5 +31,5 @@ export const useUser = (data: IPaginationUser) => {
     }
   }, [error]);
 
-  return { user, isLoading, isSuccess };
+  return { user, isLoading, isSuccess, me };
 };

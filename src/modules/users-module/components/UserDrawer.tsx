@@ -15,6 +15,7 @@ import { RenderImage } from '@/components';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { useTranslation } from '@/components/internationalization';
 
 interface DescriptionItemProps {
   title: string;
@@ -33,6 +34,8 @@ interface UserDrawerProps {
 }
 
 export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
+  const { t } = useTranslation();
+
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] =
     useState<IUserWithShortExtensions | null>(null);
@@ -58,7 +61,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             }
             ghost
           >
-            more…
+            {t.dashboard.users.drawer.more}
           </Button>,
         ]}
       />
@@ -87,7 +90,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
                 <DescriptionItem
-                  title="User Name"
+                  title={t.dashboard.users.drawer.name}
                   content={selectedUser?.userName}
                 />
               </Col>
@@ -95,32 +98,39 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
                 <DescriptionItem
-                  title="First Name"
-                  content={selectedUser?.firstName || 'N/A'}
+                  title={t.dashboard.users.drawer.lastName}
+                  content={
+                    selectedUser?.firstName || t.dashboard.users.drawer.na
+                  }
                 />
               </Col>
             </Row>
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
-                <DescriptionItem title="Email" content={selectedUser?.email} />
+                <DescriptionItem
+                  title={t.dashboard.users.drawer.email}
+                  content={selectedUser?.email}
+                />
               </Col>
             </Row>
           </Space>
         </Space>
 
-        <Divider orientation="left">User Information</Divider>
+        <Divider orientation="left">
+          {t.dashboard.users.drawer.userInformation}
+        </Divider>
 
         <Row>
           <Col span={10}>
             <DescriptionItem
-              title="Role"
+              title={t.dashboard.users.drawer.role}
               content={ColorRoleTag(selectedUser?.role as string)}
             />
           </Col>
 
           <Col span={10}>
             <DescriptionItem
-              title="Status"
+              title={t.dashboard.users.drawer.status}
               content={ColorStatusUserTag(selectedUser?.status as string, true)}
             />
           </Col>
@@ -128,75 +138,83 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
 
         <Row>
           <Col span={12}>
-            <Divider orientation="right">Places</Divider>
+            <Divider orientation="right">
+              {t.dashboard.users.drawer.places}
+            </Divider>
 
             <DescriptionItem
-              title="Draft"
+              title={t.dashboard.users.drawer.drafts}
               content={selectedUser?.places?.drafts?.length || 0}
             />
 
             <DescriptionItem
-              title="Pending to review"
+              title={t.dashboard.users.drawer.pending}
               content={selectedUser?.places?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
-              title="Published"
+              title={t.dashboard.users.drawer.published}
               content={selectedUser?.places?.publications?.length || 0}
             />
           </Col>
 
           <Col span={12}>
-            <Divider orientation="right">Persons</Divider>
+            <Divider orientation="right">
+              {t.dashboard.users.drawer.persons}
+            </Divider>
             <DescriptionItem
-              title="Draft"
+              title={t.dashboard.users.drawer.drafts}
               content={selectedUser?.persons?.drafts?.length || 0}
             />
 
             <DescriptionItem
-              title="Pending to review"
+              title={t.dashboard.users.drawer.pending}
               content={selectedUser?.persons?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
-              title="Published"
+              title={t.dashboard.users.drawer.published}
               content={selectedUser?.persons?.publications?.length || 0}
             />
           </Col>
 
           <Col span={12}>
-            <Divider orientation="right">Articles</Divider>
+            <Divider orientation="right">
+              {t.dashboard.users.drawer.articles}
+            </Divider>
 
             <DescriptionItem
-              title="Draft"
+              title={t.dashboard.users.drawer.drafts}
               content={selectedUser?.articles?.drafts?.length || 0}
             />
 
             <DescriptionItem
-              title="Pending to review"
+              title={t.dashboard.users.drawer.pending}
               content={selectedUser?.articles?.pendingReview?.length || 0}
             />
 
             <DescriptionItem
-              title="Published"
+              title={t.dashboard.users.drawer.published}
               content={selectedUser?.articles?.publications?.length || 0}
             />
           </Col>
         </Row>
 
-        <Divider orientation="left">Other Information</Divider>
+        <Divider orientation="left">
+          {t.dashboard.users.drawer.otherInformation}
+        </Divider>
 
         <Row>
           <Col span={12}>
             <DescriptionItem
-              title="Added"
+              title={t.dashboard.users.drawer.added}
               content={convertDateToFormat(selectedUser?.createdAt)}
             />
           </Col>
 
           <Col span={12}>
             <DescriptionItem
-              title="Last Updated"
+              title={t.dashboard.users.drawer.updated}
               content={convertDateToFormat(selectedUser?.updatedAt)}
             />
           </Col>

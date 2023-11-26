@@ -7,12 +7,15 @@ import { RenderImage } from '@/components';
 import { ColorStatusUserTag } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 import { ColorRoleTag } from '@/modules/users-module/components/helpers/ColorRoleTag';
 import { UserDrawer } from '@/modules/users-module/components/UserDrawer';
-import DeleteUserComponent from '@/modules/users-module/components/DeleteUser';
 import { routes } from '@/common/routing/routes';
 import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/UpdateUserStatusAndRole';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
+import { LocaleType } from '@/components/internationalization';
+import DeleteUserComponent from '@/modules/users-module/components/DeleteUserModal';
 
-export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
+export const ColumnsTableUsers = (
+  t: LocaleType
+): ColumnsType<IUserWithShortExtensions> => [
   {
     dataIndex: 'id',
     key: 'id',
@@ -28,7 +31,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     ),
   },
   {
-    title: 'Name',
+    title: t.dashboard.users.table.name,
     dataIndex: 'userName',
     key: 'userName',
     width: 130,
@@ -46,7 +49,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     ),
   },
   {
-    title: 'Email',
+    title: t.dashboard.users.table.email,
     dataIndex: 'email',
     key: 'email',
     width: 250,
@@ -55,7 +58,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text) => <Typography.Text>{text}</Typography.Text>,
   },
   {
-    title: 'Created At',
+    title: t.dashboard.users.table.createdAt,
     dataIndex: 'createdAt',
     key: 'createdAt',
     width: 120,
@@ -72,7 +75,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     ),
   },
   {
-    title: 'Status',
+    title: t.dashboard.users.table.status,
     dataIndex: 'status',
     key: 'status',
     align: 'center',
@@ -82,7 +85,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text: string) => ColorStatusUserTag(text, false),
   },
   {
-    title: 'Role',
+    title: t.dashboard.users.table.role,
     dataIndex: 'role',
     key: 'role',
     align: 'center',
@@ -92,7 +95,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text: string) => ColorRoleTag(text),
   },
   {
-    title: 'View Profile',
+    title: t.dashboard.users.table.view,
     dataIndex: 'view profile',
     key: 'view profile',
     align: 'center',
@@ -104,7 +107,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     ),
   },
   {
-    title: 'Actions',
+    title: t.dashboard.users.table.actions,
     dataIndex: 'actions',
     key: 'actions',
     align: 'center',
@@ -112,6 +115,7 @@ export const columnsTableUsers: ColumnsType<IUserWithShortExtensions> = [
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateUserStatusAndRoleComponent user={record} showButton={false} />
+
         <DeleteUserComponent user={record} />
       </Row>
     ),

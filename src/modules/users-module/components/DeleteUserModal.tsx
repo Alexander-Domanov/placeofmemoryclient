@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Modal, notification, Space } from 'antd';
+import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import { IUser, IUserWithShortExtensions } from '@/types';
 import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
+import { useTranslation } from '@/components/internationalization';
+import { routes } from '@/common/routing/routes';
 
 interface DeleteUserModalProps {
   user: IUser | IUserWithShortExtensions | null;
-  showButton: boolean;
 }
 
-const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
-  user,
-  showButton,
-}) => {
+const DeleteUserComponent: React.FC<DeleteUserModalProps> = ({ user }) => {
+  const { t } = useTranslation();
+  const router = useRouter();
+
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<
     IUser | IUserWithShortExtensions | null
   >(null);
+  const [isHovered, setIsHovered] = useState(false);
+
   const { deleteUserMutation } = useDeleteUser();
 
   const showDeleteModal = () => {
@@ -31,76 +35,64 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
     deleteUserMutation(selectedUser?.id || null, {
       onSuccess: () => {
         notification.success({
-          message: `User: ${selectedUser?.userName} deleted successfully`,
+          message: t.dashboard.users.notifications.delete.title,
           placement: 'bottomLeft',
         });
+        router.push(routes.dashboard.users.index);
       },
     });
     setDeleteModalVisible(false);
   };
 
-  const showButtonDelete = (showButton: boolean) => {
-    const handleClick = () => {
-      setSelectedUser(user);
-      showDeleteModal();
-    };
+  const buttonStyle = {
+    cursor: 'pointer',
+    color: '#ef2020',
+  };
 
-    if (showButton) {
-      return (
-        <Button
-          danger
-          type="primary"
-          title="Delete"
-          icon={<DeleteOutlined />}
-          onClick={handleClick}
-        >
-          Delete
-        </Button>
-      );
-    }
-    return (
-      <Button
-        title="Delete"
-        icon={<DeleteOutlined />}
-        style={{ cursor: 'pointer', color: '#ef2020' }}
-        onClick={handleClick}
-        ghost
-      />
-    );
+  const handleClick = () => {
+    setSelectedUser(user);
+    showDeleteModal();
   };
 
   return (
     <>
-      {showButtonDelete(showButton)}
+      <List.Item
+        key={user?.id}
+        actions={[
+          <Button
+            key="delete"
+            title={t.dashboard.users.delete.title}
+            icon={<DeleteOutlined />}
+            style={buttonStyle}
+            onClick={handleClick}
+            ghost
+          />,
+        ]}
+      />
+
       <Modal
-        title="Confirm deletion"
+        title={t.dashboard.users.delete.titleConfirm}
         open={isDeleteModalVisible}
         onOk={deleteUser}
         onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
+        okText={t.dashboard.users.delete.delete}
+        cancelText={t.dashboard.users.delete.cancel}
+        okButtonProps={{
+          icon: <DeleteOutlined />,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+          style: {
+            cursor: 'pointer',
+            color: isHovered ? '#fff' : '#ef2020',
+            backgroundColor: isHovered ? '#ef2020' : 'transparent',
+            border: isHovered ? '1px solid #ef2020' : '1px solid #d9d9d9',
+          },
+        }}
       >
         <Space>
           <div className="site-description-item-profile-wrapper">
             <span className="text-neutral-400">
-              Are you sure you want to delete the user: &nbsp;
-            </span>
-            {selectedUser?.userName}
-          </div>
-        </Space>
-      </Modal>
-      <Modal
-        title="Confirm deletion"
-        open={isDeleteModalVisible}
-        onOk={deleteUser}
-        onCancel={handleDeleteCancel}
-        okText="Delete"
-        cancelText="Cancel"
-      >
-        <Space>
-          <div className="site-description-item-profile-wrapper">
-            <span className="text-neutral-400">
-              Are you sure you want to delete the user: &nbsp;
+              {t.dashboard.users.delete.description}: &nbsp;
             </span>
             {selectedUser?.userName}
           </div>
@@ -110,4 +102,4 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   );
 };
 
-export default DeleteUserModal;
+export default DeleteUserComponent;

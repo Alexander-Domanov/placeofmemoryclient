@@ -7,6 +7,7 @@ import {
   Image,
   Input,
   List,
+  notification,
   Row,
   Space,
   Spin,
@@ -20,19 +21,18 @@ import { TablePaginationConfig } from 'antd/lib';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { useUser } from '@/modules/users-module/hooks/useUser';
 import { routes } from '@/common/routing/routes';
-import { IPlace, IUser } from '@/types';
+import { FileStatuses, IPlace, IUser, Role } from '@/types';
 import UpdateUserStatusAndRoleComponent from '@/modules/users-module/components/UpdateUserStatusAndRole';
-import DeleteUserModal from '@/modules/users-module/components/DeleteUserModal';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
-import { Places } from '@/modules/places-module/components/Places';
-import { columnsTablePersons } from '@/modules/persons-module';
-import { Articles } from '@/modules/articles-module';
+import { ColumnsTablePersons } from '@/modules/persons-module';
 import { ColumnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
 import { ColumnsTablePlaces } from '@/modules/places-module';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
-import { CustomSelectInput } from '@/components';
+import { CustomSelectInput, DeleteConfirmationModal } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { useTranslation } from '@/components/internationalization';
+import { LocaleType, useTranslation } from '@/components/internationalization';
+import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
+import { FileStatusOptions } from '@/common-dashboard';
 
 interface DescriptionItemProps {
   title: string;
@@ -51,11 +51,17 @@ const ListItems = ({ title, content }: DescriptionItemProps) => (
   </List.Item>
 );
 
-function breadcrumbs(sectionName: string) {
+function breadcrumbs(sectionName: string, t: LocaleType) {
   return [
     CreateBreadcrumb({ key: routes.main, icon: true }),
-    CreateBreadcrumb({ key: routes.dashboard.index, text: 'Dashboard' }),
-    CreateBreadcrumb({ key: routes.dashboard.users.index, text: 'Users' }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.users.index,
+      text: t.dashboard.users.index,
+    }),
     CreateBreadcrumb({
       key: routes.dashboard.users.breadcrumbs(sectionName),
       text: sectionName,
@@ -86,7 +92,7 @@ export const UserList: FC = () => {
 
   const name = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
-  const { user, isLoading } = useUser({
+  const { user, isLoading, me } = useUser({
     id: userId,
     pageNumber: page,
     pageSize,
@@ -95,6 +101,7 @@ export const UserList: FC = () => {
     sorting,
     extensions,
   });
+  const { deleteUserMutation } = useDeleteUser();
 
   useEffect(() => {
     if (user) {
@@ -131,6 +138,18 @@ export const UserList: FC = () => {
     }
   };
 
+  const onDeletePlace = () => {
+    deleteUserMutation(selectedUser?.id || null, {
+      onSuccess() {
+        notification.success({
+          message: t.dashboard.users.notifications.delete.title,
+          placement: 'bottomLeft',
+        });
+        router.push(routes.dashboard.users.index);
+      },
+    });
+  };
+
   const handleTableChange = (
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>,
@@ -146,10 +165,22 @@ export const UserList: FC = () => {
 
   const columnsTableArticles = ColumnsTableArticles(t);
   const columnsTablePlaces = ColumnsTablePlaces(t);
+  const columnsTablePersons = ColumnsTablePersons(t);
+  const fileStatuses = FileStatusOptions(t);
+  const selectInputOptions =
+    me?.role === Role.ADMIN
+      ? [
+          ...fileStatuses,
+          {
+            label: t.dashboard.selectStatus.archived,
+            value: FileStatuses.ARCHIVED,
+          },
+        ]
+      : fileStatuses;
 
   const items = [
     {
-      label: 'Info',
+      label: t.dashboard.users.list.items.info,
       key: 'info',
       children: (
         <Flex vertical gap="large">
@@ -175,21 +206,33 @@ export const UserList: FC = () => {
                   <List split={false} size="small">
                     <ListItems title="ID" content={selectedUser?.id} />
 
-                    <ListItems title="Name" content={selectedUser?.userName} />
-
-                    <ListItems title="Email" content={selectedUser?.email} />
-
-                    <ListItems title="Role" content={selectedUser?.role} />
-
-                    <ListItems title="Status" content={selectedUser?.status} />
+                    <ListItems
+                      title={t.dashboard.users.list.name}
+                      content={selectedUser?.userName}
+                    />
 
                     <ListItems
-                      title="Created At"
+                      title={t.dashboard.users.list.email}
+                      content={selectedUser?.email}
+                    />
+
+                    <ListItems
+                      title={t.dashboard.users.list.role}
+                      content={selectedUser?.role}
+                    />
+
+                    <ListItems
+                      title={t.dashboard.users.list.status}
+                      content={selectedUser?.status}
+                    />
+
+                    <ListItems
+                      title={t.dashboard.users.list.createdAt}
                       content={convertDateToFormat(selectedUser?.createdAt)}
                     />
 
                     <ListItems
-                      title="Updated At"
+                      title={t.dashboard.users.list.updatedAt}
                       content={convertDateToFormat(selectedUser?.updatedAt)}
                     />
                   </List>
@@ -202,7 +245,11 @@ export const UserList: FC = () => {
                       showButton
                       showEditButton={false}
                     />
-                    <DeleteUserModal user={selectedUser} showButton />
+
+                    <DeleteConfirmationModal<IUser>
+                      item={selectedUser}
+                      onDelete={onDeletePlace}
+                    />
                   </Space>
                 </Col>
               </Row>
@@ -212,13 +259,14 @@ export const UserList: FC = () => {
       ),
     },
     {
-      label: 'Places',
+      label: t.dashboard.users.list.items.places,
       key: 'places',
       children: (
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by Name"
+              placeholder={t.dashboard.places.search.city.placeholder}
+              title={t.dashboard.places.search.city.title}
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })
@@ -227,14 +275,11 @@ export const UserList: FC = () => {
             />
 
             <CustomSelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Draft', value: 'draft' },
-                { label: 'PendingReview', value: 'pendingReview' },
-                { label: 'Published', value: 'published' },
-                { label: 'Archived', value: 'archived' },
-              ]}
+              defaultValue={{
+                value: FileStatuses.ALL,
+                label: t.dashboard.selectStatus.all,
+              }}
+              options={selectInputOptions}
               onChange={onStatusChange}
             />
           </Flex>
@@ -267,13 +312,14 @@ export const UserList: FC = () => {
       ),
     },
     {
-      label: 'Persons',
+      label: t.dashboard.users.list.items.persons,
       key: 'persons',
       children: (
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by Name"
+              placeholder={t.dashboard.persons.search.name.placeholder}
+              title={t.dashboard.persons.search.name.title}
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })
@@ -282,14 +328,11 @@ export const UserList: FC = () => {
             />
 
             <CustomSelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Draft', value: 'draft' },
-                { label: 'PendingReview', value: 'pendingReview' },
-                { label: 'Published', value: 'published' },
-                { label: 'Archived', value: 'archived' },
-              ]}
+              defaultValue={{
+                value: FileStatuses.ALL,
+                label: t.dashboard.selectStatus.all,
+              }}
+              options={selectInputOptions}
               onChange={onStatusChange}
             />
           </Flex>
@@ -322,13 +365,14 @@ export const UserList: FC = () => {
       ),
     },
     {
-      label: 'Articles',
+      label: t.dashboard.users.list.items.articles,
       key: 'articles',
       children: (
         <Flex gap="large" vertical>
           <Flex justify="end" align="center" gap="middle" wrap="wrap">
             <Input
-              placeholder="Search by Title"
+              placeholder={t.dashboard.articles.search.placeholder}
+              title={t.dashboard.articles.search.title}
               allowClear
               onChange={(e) =>
                 setPagination({ ...pagination, searchTerm: e.target.value })
@@ -337,14 +381,11 @@ export const UserList: FC = () => {
             />
 
             <CustomSelectInput
-              defaultValue={{ value: 'all', label: 'All' }}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'Draft', value: 'draft' },
-                { label: 'PendingReview', value: 'pendingReview' },
-                { label: 'Published', value: 'published' },
-                { label: 'Archived', value: 'archived' },
-              ]}
+              defaultValue={{
+                value: FileStatuses.ALL,
+                label: t.dashboard.selectStatus.all,
+              }}
+              options={selectInputOptions}
               onChange={onStatusChange}
             />
           </Flex>
@@ -380,7 +421,7 @@ export const UserList: FC = () => {
   return (
     <Flex gap="large" vertical>
       <div>
-        <Breadcrumb items={breadcrumbs(`${selectedUser?.userName}`)} />
+        <Breadcrumb items={breadcrumbs(`${selectedUser?.userName}`, t)} />
       </div>
 
       <Row gutter={[8, 8]}>

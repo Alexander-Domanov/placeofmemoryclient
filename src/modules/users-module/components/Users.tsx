@@ -9,29 +9,18 @@ import {
   UserRolesForSelect,
   UserStatusesForSelect,
 } from '@/types';
-import { columnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
 import { CustomSelectInput } from '@/components';
 import { routes } from '@/common/routing/routes';
-import { userStatusOptions } from '@/modules/users-module/components/helpers/options-user-statuses-select-input';
-import { userRolesOptions } from '@/modules/users-module/components/helpers/options-user-roles-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-
-const breadcrumbs = [
-  CreateBreadcrumb({ key: routes.main, icon: true }),
-  CreateBreadcrumb({
-    key: routes.dashboard.index,
-    text: 'Dashboard',
-  }),
-  CreateBreadcrumb({
-    key: routes.dashboard.users.index,
-    text: 'Users',
-    withLink: false,
-  }),
-];
+import { useTranslation } from '@/components/internationalization';
+import { ColumnsTableUsers } from '@/modules/users-module/components/ColumnsTableUsers';
+import { UserStatusOptions } from '@/modules/users-module/components/helpers/options-user-statuses-select-input';
+import { UserRolesOptions } from '@/modules/users-module/components/helpers/options-user-roles-select-input';
 
 const defaultPageSize = 10;
 
 export const Users: FC = () => {
+  const { t } = useTranslation();
   const [pagination, setPagination] = useState({
     searchTerm: '',
   });
@@ -91,6 +80,22 @@ export const Users: FC = () => {
       setSorting({ field: null, order: null });
     }
   };
+  const columnsTableUsers = ColumnsTableUsers(t);
+  const userStatusOptions = UserStatusOptions(t);
+  const userRolesOptions = UserRolesOptions(t);
+
+  const breadcrumbs = [
+    CreateBreadcrumb({ key: routes.main, icon: true }),
+    CreateBreadcrumb({
+      key: routes.dashboard.index,
+      text: t.dashboard.indexTitle,
+    }),
+    CreateBreadcrumb({
+      key: routes.dashboard.users.index,
+      text: t.dashboard.users.index,
+      withLink: false,
+    }),
+  ];
 
   return (
     <Flex gap="large" vertical>
@@ -100,8 +105,8 @@ export const Users: FC = () => {
 
       <Flex align="center" justify="end" gap="middle" wrap="wrap">
         <Input
-          placeholder="Search by name"
-          title="Search by name"
+          placeholder={t.dashboard.users.search.placeholder}
+          title={t.dashboard.users.search.placeholder}
           allowClear
           onChange={(e) =>
             setPagination({ ...pagination, searchTerm: e.target.value })
@@ -110,13 +115,19 @@ export const Users: FC = () => {
         />
 
         <CustomSelectInput
-          defaultValue={{ value: UserStatusesForSelect.ALL, label: 'All' }}
+          defaultValue={{
+            value: UserStatusesForSelect.ALL,
+            label: t.dashboard.users.selectStatus.all,
+          }}
           options={userStatusOptions}
           onChange={onStatusChange}
         />
 
         <CustomSelectInput
-          defaultValue={{ value: UserRolesForSelect.ALL, label: 'All' }}
+          defaultValue={{
+            value: UserRolesForSelect.ALL,
+            label: t.dashboard.users.selectRole.all,
+          }}
           options={userRolesOptions}
           onChange={onRoleChange}
         />

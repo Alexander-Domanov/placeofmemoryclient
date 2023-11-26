@@ -1,8 +1,21 @@
 import { UserStatusesForSelect } from '@/types';
+import { LocaleType } from '@/components/internationalization';
 
-export const userStatusOptions = [
-  { label: 'All', value: UserStatusesForSelect.ALL },
-  { label: 'Active', value: UserStatusesForSelect.Active },
-  { label: 'Banned', value: UserStatusesForSelect.Banned },
-  { label: 'Pending', value: UserStatusesForSelect.Pending },
+export const UserStatusOptions = (t: LocaleType) => [
+  {
+    label: t.dashboard.users.selectStatus.all,
+    value: UserStatusesForSelect.ALL,
+  },
+  {
+    label: t.dashboard.users.selectStatus.active,
+    value: UserStatusesForSelect.Active,
+  },
+  {
+    label: t.dashboard.users.selectStatus.banned,
+    value: UserStatusesForSelect.Banned,
+  },
+  {
+    label: t.dashboard.users.selectStatus.pending,
+    value: UserStatusesForSelect.Pending,
+  },
 ];
