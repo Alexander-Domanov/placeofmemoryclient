@@ -23,6 +23,8 @@ import styles from './DashboardHeader.module.scss';
 import { routes } from '@/common/routing/routes';
 import { useLogout } from '@/modules/auth-modules/logout-module';
 import { GetMenuItems } from '@/components/layouts/components/GetMenuItems';
+import { LanguageSwitcher } from '@/components/internationalization';
+import { nameLogo } from '@/common/constants';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -71,11 +73,12 @@ export const DashboardHeader: FC = () => {
         <Flex align="center" justify="space-between" gap="middle">
           <div>
             <Link href={routes.main} className={styles.logo}>
-              MOGILKI
+              {nameLogo}
             </Link>
           </div>
 
           <Flex align="center" gap="middle">
+            <LanguageSwitcher />
             <DashboardSelectLanguage />
 
             <Flex align="center" gap="small" className={styles.userInfo}>
