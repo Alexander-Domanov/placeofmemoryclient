@@ -5,7 +5,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import { BsTelephone } from 'react-icons/bs';
 import { AiOutlineMail } from 'react-icons/ai';
 import { routes } from '@/common/routing/routes';
-import { NAVIGATION_LINK } from '@/common/constants';
+import { nameLogo, NAVIGATION_LINK } from '@/common/constants';
 import { Container } from '@/components';
 import { INavigationLinks } from '@/common/constants/NAVIGATION_LINK';
 
@@ -15,7 +15,7 @@ export const Footer = () => {
       <Container className="bg-dark-900">
         <div className="flex justify-between pt-[70px] font-light leading-6 text-sm text-light-300">
           <section className="font-kelsi grid text-3xl grid-cols-1">
-            <Link href={routes.main}>MOGILKI</Link>
+            <Link href={routes.main}>{nameLogo}</Link>
           </section>
           <nav className="flex flex-col gap-6">
             <span className="text-base font-semibold">Старонки</span>

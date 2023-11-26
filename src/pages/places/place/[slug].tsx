@@ -10,6 +10,7 @@ import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { IPageContacts, IPlace } from '@/types';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import Error from '@/pages/_error';
+import { nameLogo } from '@/common/constants';
 
 interface IPageProps extends IPageContacts {
   place: IPlace;
@@ -61,7 +62,9 @@ const Place = ({ place, contacts, statusCode }: IPageProps) => {
   return (
     <div>
       <Head>
-        <title>{t.places.place.indexTitle} | MOGILKI</title>
+        <title>
+          {t.places.place.indexTitle} | {nameLogo}
+        </title>
       </Head>
       <SiteLayout contacts={contacts}>
         <PlaceMain place={place} />

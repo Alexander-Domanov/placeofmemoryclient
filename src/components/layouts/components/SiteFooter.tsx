@@ -8,7 +8,7 @@ import {
   FaRegEnvelope,
   FaTelegram,
 } from 'react-icons/fa6';
-import { NAVIGATION_LINK } from '@/common/constants';
+import { nameLogo, NAVIGATION_LINK } from '@/common/constants';
 import { routes } from '@/common/routing/routes';
 import { IContacts } from '@/types';
 import { useTranslation } from '@/components/internationalization';
@@ -31,7 +31,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
         >
           <div className="sm:order-4 sm:col-span-2 sm:text-center">
             <div className="font-kelsi text-[32px] lg:text-2xl">
-              <Link href={routes.main}>MOGILKI</Link>
+              <Link href={routes.main}>{nameLogo}</Link>
             </div>
           </div>
 

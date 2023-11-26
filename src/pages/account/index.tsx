@@ -6,13 +6,14 @@ import { useTranslation } from '@/components/internationalization';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { IPageContacts } from '@/types';
+import { nameLogo } from '@/common/constants';
 
 const Settings: FC<IPageContacts> = ({ contacts }) => {
   const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{`${t.account.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.account.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

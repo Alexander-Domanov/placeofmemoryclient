@@ -10,6 +10,7 @@ import { IContacts, IGetArticlesResponse } from '@/types';
 import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
 import { generateArray } from '@/common/helpers/generateArray';
 import { routes } from '@/common/routing/routes';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -22,7 +23,7 @@ const Articles: FC<Props> = ({ contacts, posts }) => {
   return (
     <>
       <Head>
-        <title>{`${t.articles.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.articles.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

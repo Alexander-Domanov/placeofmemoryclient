@@ -7,6 +7,7 @@ import { getPersonsPublic } from '@/modules/persons-module/api/persons-api';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { PersonsSearchMain } from '@/modules/persons-module/components/PersonsSearchMain';
 import { useTranslation } from '@/components/internationalization';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -19,7 +20,7 @@ const PersonsSearchPage: NextPage<Props> = ({ contacts, persons }) => {
   return (
     <>
       <Head>
-        <title>{`${t.people.search.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.people.search.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

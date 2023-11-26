@@ -5,6 +5,7 @@ import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { About } from '@/modules/about-module/About';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { IContacts } from '@/types';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -15,7 +16,7 @@ const AboutTheProject: NextPage<Props> = ({ contacts }) => {
   return (
     <>
       <Head>
-        <title>{`${t.aboutTheProject.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.aboutTheProject.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

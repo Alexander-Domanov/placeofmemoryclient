@@ -7,6 +7,7 @@ import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { MapMain } from '@/modules/maps';
 import { getPersonsForMap } from '@/modules/dashboard-module/api/persons-for-map-api';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -18,7 +19,7 @@ const Map: FC<Props> = ({ contacts, persons }) => {
   return (
     <>
       <Head>
-        <title>{`${t.map.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.map.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

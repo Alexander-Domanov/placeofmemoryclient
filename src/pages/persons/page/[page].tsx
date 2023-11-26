@@ -9,6 +9,7 @@ import { getPersonsPublic } from '@/modules/persons-module/api/persons-api';
 import { SITE_PERSONS_PER_PAGE } from '@/modules/persons-module/constants/persons-constants';
 import { generateArray } from '@/common/helpers/generateArray';
 import { routes } from '@/common/routing/routes';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -21,7 +22,7 @@ const PersonsPage: NextPage<Props> = ({ contacts, persons }) => {
   return (
     <>
       <Head>
-        <title>{`${t.people.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.people.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

@@ -7,6 +7,7 @@ import { getArticlesPublic } from '@/modules/articles-module/api/articles-api';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IContacts, IGetArticlesResponse } from '@/types';
 import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   contacts: IContacts;
@@ -19,7 +20,7 @@ const ArticlesPage: NextPage<Props> = ({ contacts, posts }) => {
   return (
     <>
       <Head>
-        <title>{`${t.articles.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.articles.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

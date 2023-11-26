@@ -3,7 +3,7 @@ import { Container } from '@/components/layouts/components/Containter';
 import { routes } from '@/common/routing/routes';
 import { useUserStore } from '@/store/userStore';
 import { DropdownMenuHeader } from '@/components';
-import { AUTH_LINK, NAVIGATION_LINK } from '@/common/constants';
+import { AUTH_LINK, nameLogo, NAVIGATION_LINK } from '@/common/constants';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { LanguageSwitcher } from '@/components/internationalization';
 import { INavigationLinks } from '@/common/constants/NAVIGATION_LINK';
@@ -20,7 +20,7 @@ export function Header() {
       <Container className="bg-dark-900 w-full container">
         <section className="flex justify-between items-center font-normal leading-3 text-sm text-light-300">
           <div className="flex items-center font-kelsi text-xl">
-            <Link href={routes.main}>MOGILKI</Link>
+            <Link href={routes.main}>{nameLogo}</Link>
           </div>
           {width && width > 1023 && (
             <nav className="flex justify-center align-middle items-center">

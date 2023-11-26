@@ -7,6 +7,7 @@ import { IContacts, IGetPlacesResponse } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { getPlacesMain } from '@/services';
+import { nameLogo } from '@/common/constants';
 
 interface IProps {
   places: IGetPlacesResponse;
@@ -50,7 +51,7 @@ const Places = ({ places, contacts }: IProps) => {
   return (
     <>
       <Head>
-        <title>{`${t.places.indexTitle} | MOGILKI`}</title>
+        <title>{`${t.places.indexTitle} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

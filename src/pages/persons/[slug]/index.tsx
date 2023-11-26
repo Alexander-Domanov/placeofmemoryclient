@@ -8,6 +8,7 @@ import { IContacts, IPerson } from '@/types';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { PersonMain } from '@/modules/persons-module/components/PersonMain';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   person: IPerson;
@@ -18,7 +19,7 @@ const PersonPage: NextPage<Props> = ({ person, contacts }) => {
   return (
     <>
       <Head>
-        <title>{`${person.firstName} ${person.lastName} | MOGILKI`}</title>
+        <title>{`${person.firstName} ${person.lastName} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>

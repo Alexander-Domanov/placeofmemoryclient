@@ -7,6 +7,8 @@ export const IMAGE_FORMATS = [
   'image/webp',
 ];
 
+export const nameLogo = 'MOGILKI';
+
 export const dateTimeFormat = 'DD.MM.YY HH:mm';
 
 export const MaxAllowedFileSize = 10;

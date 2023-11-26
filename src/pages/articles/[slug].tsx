@@ -9,6 +9,7 @@ import {
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IArticle, IContacts } from '@/types';
 import Error from '@/pages/_error';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   post: IArticle;
@@ -23,7 +24,7 @@ const ArticlePage: NextPage<Props> = ({ contacts, post, statusCode }) => {
   return (
     <>
       <Head>
-        <title>{`${post.title} | MOGILKI`}</title>
+        <title>{`${post.title} | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>
