@@ -16,8 +16,9 @@ export const useUpload = (
 
   const onAllFilesUploaded = () => {
     notification.success({
-      message: 'File upload',
-      description: 'All files uploaded successfully',
+      message: t.dashboard.gallery.image.notifications.upload.success.title,
+      description:
+        t.dashboard.gallery.image.notifications.upload.success.description,
       placement: 'bottomLeft',
     });
 
