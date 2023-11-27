@@ -35,7 +35,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
   const lastNameD = useDebounce(lastName, 1500);
   const birthDateD = useDebounce(birthDate, 2000);
   const deathDateD = useDebounce(deathDate, 2000);
-  const countryD = useDebounce(country, 2000);
+  const countryD = useDebounce(country, 1500);
   const cityD = useDebounce(city, 1500);
 
   const currentYear = new Date().getFullYear();
@@ -218,7 +218,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         <div className="mt-10">
           <div style={{ minHeight: loading ? '200px' : '0' }}>
             {loading && (
-              <div className="flex justify-center mt-10 text-2xl text-dark-100">
+              <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
                 Loading...
               </div>
             )}
@@ -233,7 +233,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
           )}
 
           {dataPersons?.items.length === 0 ? (
-            <div className="flex justify-center mt-10 text-2xl text-dark-100">
+            <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
               {noDataT}
             </div>
           ) : (
