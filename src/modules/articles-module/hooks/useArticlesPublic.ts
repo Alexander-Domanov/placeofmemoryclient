@@ -7,7 +7,7 @@ import { IPaginationPublicArticles } from '@/types';
 
 export const useArticlesPublic = (data: IPaginationPublicArticles) => {
   const {
-    data: articles,
+    data: foundArticles,
     isLoading,
     refetch,
     isFetching,
@@ -29,5 +29,5 @@ export const useArticlesPublic = (data: IPaginationPublicArticles) => {
     }
   }, [error]);
 
-  return { articles, isLoading, refetch, isFetching };
+  return { foundArticles, isLoading, refetch, isFetching };
 };

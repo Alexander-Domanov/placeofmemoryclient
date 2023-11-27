@@ -10,6 +10,7 @@ import { useTranslation } from '@/components/internationalization';
 import { IGetPlacesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
+import { NoDataComponent } from '@/components';
 
 interface IProps {
   places: IGetPlacesResponse;
@@ -64,7 +65,6 @@ export const PlacesMain = ({ places }: IProps) => {
     archive: archiveT,
     city: cityT,
     title: titleT,
-    noData: noDataT,
   } = t.places.page;
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
@@ -170,9 +170,7 @@ export const PlacesMain = ({ places }: IProps) => {
               )}
 
               {dataPlaces?.items.length === 0 ? (
-                <div className="flex justify-center mt-40 text-2xl text-dark-100 mb-40">
-                  {noDataT}
-                </div>
+                <NoDataComponent />
               ) : (
                 <div className="mt-20 md:mt-10">
                   <AntPagination

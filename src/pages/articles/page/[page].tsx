@@ -27,7 +27,7 @@ const Articles: FC<Props> = ({ contacts, posts }) => {
       </Head>
 
       <SiteLayout contacts={contacts}>
-        <ArticlesMain posts={posts} />
+        <ArticlesMain articles={posts} />
       </SiteLayout>
     </>
   );

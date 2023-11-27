@@ -4,6 +4,10 @@ export const en: LocaleType = {
   404: {
     description: 'This page could not be found',
   },
+  common: {
+    notFound: 'NOTHING FOUND',
+    noData: 'NO DATA',
+  },
   header: {
     articles: 'Articles',
     places: 'Places',
@@ -143,7 +147,7 @@ export const en: LocaleType = {
     page: {
       title: 'Articles',
       article: 'Articles',
-      noData: 'NO DATA',
+      // noData: 'NO DATA',
       search: 'SEARCH BY TITLE',
     },
     article: {
@@ -159,7 +163,7 @@ export const en: LocaleType = {
       name: 'NAME',
       country: 'COUNTRY',
       city: 'CITY',
-      noData: 'NOTHING FOUND',
+      // noData: 'NOTHING FOUND',
     },
     place: {
       page: {
@@ -172,7 +176,7 @@ export const en: LocaleType = {
           show: 'Show Map',
           hide: 'Hide Map',
         },
-        notData: 'NO DATA',
+        // notData: 'NO DATA',
       },
       indexTitle: 'Place',
     },
@@ -195,14 +199,14 @@ export const en: LocaleType = {
         lte: 'LESS THAN',
         search: 'SEARCH',
         clear: 'CLEAR',
-        noData: 'NOTHING FOUND',
+        // noData: 'NOTHING FOUND',
       },
     },
     page: {
       title: 'Archive_People',
       archive: 'Archive',
       people: '_People',
-      noData: 'NО DATA',
+      // noData: 'NО DATA',
     },
     person: {
       indexTitle: 'Person',
@@ -216,7 +220,7 @@ export const en: LocaleType = {
           show: 'Show Map',
           hide: 'Hide Map',
         },
-        notData: 'NO DATA',
+        notData: 'n/a',
         prev: 'Previous',
       },
     },

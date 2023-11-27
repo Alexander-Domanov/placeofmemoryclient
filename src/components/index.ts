@@ -24,3 +24,5 @@ export * from './dashboard/helpers/MetaInfoLocationForm';
 export * from './dashboard/helpers/MetaInfoSelectedPlaceForm';
 export * from './dashboard/helpers/GetUpdateOptions';
 export * from './dashboard/helpers/DeleteConfirmationModal';
+// noData
+export * from './noData/NoDataComponent';

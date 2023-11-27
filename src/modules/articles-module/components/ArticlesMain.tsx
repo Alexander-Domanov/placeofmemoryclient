@@ -11,12 +11,13 @@ import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-const
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useArticlesPublic } from '@/modules/articles-module/hooks/useArticlesPublic';
 import { useTranslation } from '@/components/internationalization';
+import { NoDataComponent } from '@/components';
 
 interface Props {
-  posts: IGetArticlesResponse;
+  articles: IGetArticlesResponse;
 }
 
-export const ArticlesMain: FC<Props> = ({ posts }) => {
+export const ArticlesMain: FC<Props> = ({ articles }) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -26,7 +27,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const title = useDebounce(inputValue, 500);
 
-  const { articles } = useArticlesPublic({
+  const { foundArticles } = useArticlesPublic({
     title: title.toLowerCase(),
     pageSize: 5,
     lang: router.locale?.toLowerCase(),
@@ -39,11 +40,11 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   useEffect(() => {
     if (inputValue.length > 0) {
-      setSearchResults(articles?.items || []);
+      setSearchResults(foundArticles?.items || []);
     } else {
       setSearchResults([]);
     }
-  }, [articles]);
+  }, [foundArticles]);
 
   const onPageChange = (page: number) => {
     if (page === 1) {
@@ -55,12 +56,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
   const isDropdownOpen = searchResults.length > 0;
 
-  const {
-    title: titleT,
-    article: articleT,
-    search: searchT,
-    noData: noDataT,
-  } = t.articles.page;
+  const { title: titleT, article: articleT, search: searchT } = t.articles.page;
 
   return (
     <div className="bg-dark-700 pt-[60px] pb-[60px] pl-[60px] pr-[60px] md:pt-[28px] md:pb-[28px]  lg:pl-[12px] lg:pr-[12px] md:pl-[4px] md:pr-[4px]">
@@ -125,7 +121,7 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
 
         <div className="mt-10">
           <div>
-            {posts?.items.map((post) => (
+            {articles?.items.map((post) => (
               <div
                 key={post.id}
                 className="grid grid-cols-2 gap-8 mb-10 last:mb-0 lg:gap-5 lg:grid-cols-[4fr_6fr] sm:grid-cols-1 sm:gap-10"
@@ -159,16 +155,14 @@ export const ArticlesMain: FC<Props> = ({ posts }) => {
             ))}
           </div>
 
-          {posts?.items.length === 0 ? (
-            <div className="flex justify-center mt-40 text-2xl text-dark-100 mb-40">
-              {noDataT}
-            </div>
+          {articles?.items.length === 0 ? (
+            <NoDataComponent />
           ) : (
             <div className="mt-20 md:mt-10">
               <AntPagination
                 page={Number(router.query.page) || 1}
                 pageSize={SITE_ARTICLES_PER_PAGE}
-                total={posts.totalCount}
+                total={articles.totalCount}
                 onPageChange={onPageChange}
               />
             </div>

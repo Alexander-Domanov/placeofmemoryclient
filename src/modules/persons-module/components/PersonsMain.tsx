@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useDebounce } from 'usehooks-ts';
@@ -10,6 +10,7 @@ import { PersonsItemMain } from '@/modules/persons-module/components/PersonsItem
 import { useTranslation } from '@/components/internationalization';
 import { Input } from '@/ui';
 import { useGetPersonsMain } from '@/modules/persons-module/hooks/useGetPersonsMain';
+import { NoDataComponent } from '@/components';
 
 interface Props {
   persons: IGetPersonsResponse;
@@ -64,12 +65,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
       push(routes.persons.page(Number(newPage)));
     }
   };
-  const {
-    title: titleT,
-    archive: archiveT,
-    people: peopleT,
-    noData: noDataT,
-  } = t.people.page;
+  const { title: titleT, archive: archiveT, people: peopleT } = t.people.page;
 
   const {
     name: nameT,
@@ -233,9 +229,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
           )}
 
           {dataPersons?.items.length === 0 ? (
-            <div className="flex justify-center mt-40 text-2xl text-dark-100 mb-40">
-              {noDataT}
-            </div>
+            <NoDataComponent />
           ) : (
             <div className="mt-20 md:mt-10">
               <AntPagination

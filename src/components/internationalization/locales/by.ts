@@ -2,6 +2,10 @@ export const by = {
   404: {
     description: 'Гэтую старонку не ўдалося знайсці',
   },
+  common: {
+    notFound: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+    noData: 'НЯМА ДАДЗЕНЫХ',
+  },
   header: {
     articles: 'Артыкулы',
     places: 'Месца',
@@ -156,7 +160,7 @@ export const by = {
     page: {
       title: 'Артыкулы',
       article: 'Артыкулы',
-      noData: 'НЯМА ДАДЗЕНЫХ',
+      // noData: 'НЯМА ДАДЗЕНЫХ',
       search: 'ЗНАЙСЦІ ПА ЗАГАЛОЎКУ',
     },
     article: {
@@ -172,7 +176,7 @@ export const by = {
       name: 'НАЗВА',
       country: 'КРАІНА',
       city: 'ГОРАД',
-      noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+      // noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
     },
     place: {
       indexTitle: 'Месца',
@@ -186,7 +190,7 @@ export const by = {
           show: 'Паказаць мапу',
           hide: 'Схаваць мапу',
         },
-        notData: 'НЯМА ДАДЗЕНЫХ',
+        // notData: 'НЯМА ДАДЗЕНЫХ',
       },
     },
   },
@@ -209,14 +213,14 @@ export const by = {
         lte: 'МЕНШ ЧЫМ',
         search: 'ПОШУК',
         clear: 'АЧЫСЦІЦЬ',
-        noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+        // noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
       },
     },
     page: {
       title: 'Архіў_Людзей',
       archive: 'Архіў',
       people: '_Людзей',
-      noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
+      // noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
     },
     person: {
       indexTitle: 'Чалавек',
@@ -230,7 +234,7 @@ export const by = {
           show: 'Паказаць мапу',
           hide: 'Схаваць мапу',
         },
-        notData: 'НЯМА ДАДЗЕНЫХ',
+        notData: 'Няма дадзеных',
         prev: 'Папярэдні',
       },
     },
