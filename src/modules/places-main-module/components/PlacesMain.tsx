@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useDebounce } from 'usehooks-ts';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useGetPlacesMain } from '@/modules/places-main-module';
@@ -14,9 +14,22 @@ import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 interface IProps {
   places: IGetPlacesResponse;
 }
+
+const CityTooltip: FC<{ city: string; country: string }> = ({
+  city,
+  country,
+}) => (
+  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 rounded-lg">
+    <div className="text-lg font-bold break-after-all text-center">
+      {country} ({city})
+    </div>
+  </div>
+);
+
 export const PlacesMain = ({ places }: IProps) => {
   const { push, query } = useRouter();
   const { t } = useTranslation();
+  const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -121,6 +134,8 @@ export const PlacesMain = ({ places }: IProps) => {
                         <Link
                           href={routes.places.place(place.slug)}
                           className="relative aspect-[532/244] block"
+                          onMouseEnter={() => setHoveredItem(place.id)}
+                          onMouseLeave={() => setHoveredItem(null)}
                         >
                           <Image
                             src={place.photos[0]?.versions.huge.url}
@@ -128,6 +143,13 @@ export const PlacesMain = ({ places }: IProps) => {
                             fill
                             className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
                           />
+
+                          {hoveredItem === place.id && (
+                            <CityTooltip
+                              city={place.city}
+                              country={place.country}
+                            />
+                          )}
                         </Link>
                       </div>
 
