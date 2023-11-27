@@ -266,6 +266,7 @@ export const ru: LocaleType = {
   dashboard: {
     indexTitle: 'Приборная панель',
     menu: {
+      menu: 'Меню',
       dashboard: 'Приборная панель',
       map: 'Карта',
       gallery: 'Галерея',

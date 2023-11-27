@@ -23,7 +23,10 @@ import styles from './DashboardHeader.module.scss';
 import { routes } from '@/common/routing/routes';
 import { useLogout } from '@/modules/auth-modules/logout-module';
 import { GetMenuItems } from '@/components/layouts/components/GetMenuItems';
-import { LanguageSwitcher } from '@/components/internationalization';
+import {
+  LanguageSwitcher,
+  useTranslation,
+} from '@/components/internationalization';
 import { nameLogo } from '@/common/constants';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -33,6 +36,7 @@ const { Header } = Layout;
 const { Text } = Typography;
 
 export const DashboardHeader: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { data: me } = useMeQuery();
@@ -113,7 +117,7 @@ export const DashboardHeader: FC = () => {
         }}
       >
         <Drawer
-          title="Menu"
+          title={t.dashboard.menu.menu}
           placement="right"
           open={isDrawerOpen}
           onClose={() => setIsDrawerOpen(false)}

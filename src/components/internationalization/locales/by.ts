@@ -276,6 +276,7 @@ export const by = {
   dashboard: {
     indexTitle: 'Прыборная панэль',
     menu: {
+      menu: 'Меню',
       dashboard: 'Прыборная панэль',
       map: 'Мапа',
       gallery: 'Галерэя',

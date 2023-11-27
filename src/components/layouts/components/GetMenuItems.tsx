@@ -19,6 +19,7 @@ import { GiCandleFlame } from 'react-icons/gi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { routes } from '@/common/routing/routes';
 import { Role } from '@/types';
+import { useTranslation } from '@/components/internationalization';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -40,81 +41,91 @@ function getItem(
 
 const DIVIDER = { type: 'divider' };
 
-const menuItems = {
-  common: [
-    getItem(
-      <Link href={routes.dashboard.index}>Map</Link>,
-      routes.dashboard.index,
-      <GrMapLocation />
-    ),
-    getItem(
-      <Link href={routes.dashboard.gallery.index}>Gallery</Link>,
-      routes.dashboard.gallery.index,
-      <IoImagesOutline />
-    ),
-  ],
-  articles: [
-    getItem(
-      <Link href={routes.dashboard.articles.index}>Articles</Link>,
-      routes.dashboard.articles.index,
-      <FaNewspaper />
-    ),
-  ],
-  places: [
-    getItem(
-      <Link href={routes.dashboard.places.index}>Places</Link>,
-      routes.dashboard.places.index,
-      <GiCandleFlame />
-    ),
-  ],
-  persons: [
-    getItem(
-      <Link href={routes.dashboard.persons.index}>Persons</Link>,
-      routes.dashboard.persons.index,
-      <FaPeopleGroup />
-    ),
-  ],
-  logout: [
-    {
-      key: 'logout',
-      label: 'Logout',
-      icon: <FaRightFromBracket />,
-      danger: true,
-    },
-  ],
-};
-
-const groupingCommon = (): MenuItem[] => {
-  const { common } = menuItems;
-  return [
-    getItem(
-      'Dashboard',
-      'dashboard',
-      <LuLayoutDashboard />,
-      [...common],
-      'group'
-    ),
-  ];
-};
-
-const groupingContent = (): MenuItem[] => {
-  const { articles, places, persons } = menuItems;
-  return [
-    getItem(
-      'Content',
-      'content',
-      <AppstoreOutlined />,
-      [...articles, ...places, ...persons],
-      'group'
-    ),
-  ];
-};
-
 export const GetMenuItems = (
   me?: { role: Role },
   onLogout?: () => void
 ): MenuItem[] => {
+  const { t } = useTranslation();
+
+  const menuItems = {
+    common: [
+      getItem(
+        <Link href={routes.dashboard.index}>{t.dashboard.menu.map}</Link>,
+        routes.dashboard.index,
+        <GrMapLocation />
+      ),
+      getItem(
+        <Link href={routes.dashboard.gallery.index}>
+          {t.dashboard.menu.gallery}
+        </Link>,
+        routes.dashboard.gallery.index,
+        <IoImagesOutline />
+      ),
+    ],
+    articles: [
+      getItem(
+        <Link href={routes.dashboard.articles.index}>
+          {t.dashboard.menu.articles}
+        </Link>,
+        routes.dashboard.articles.index,
+        <FaNewspaper />
+      ),
+    ],
+    places: [
+      getItem(
+        <Link href={routes.dashboard.places.index}>
+          {t.dashboard.menu.places}
+        </Link>,
+        routes.dashboard.places.index,
+        <GiCandleFlame />
+      ),
+    ],
+    persons: [
+      getItem(
+        <Link href={routes.dashboard.persons.index}>
+          {t.dashboard.menu.people}
+        </Link>,
+        routes.dashboard.persons.index,
+        <FaPeopleGroup />
+      ),
+    ],
+    logout: [
+      {
+        key: 'logout',
+        label: t.dashboard.menu.logout,
+        icon: <FaRightFromBracket />,
+        danger: true,
+      },
+    ],
+  };
+
   const { common, persons, articles, logout } = menuItems;
+
+  const groupingCommon = (): MenuItem[] => {
+    const { common } = menuItems;
+    return [
+      getItem(
+        t.dashboard.menu.dashboard,
+        'dashboard',
+        <LuLayoutDashboard />,
+        [...common],
+        'group'
+      ),
+    ];
+  };
+
+  const groupingContent = (): MenuItem[] => {
+    const { articles, places, persons } = menuItems;
+    return [
+      getItem(
+        t.dashboard.menu.content,
+        'content',
+        <AppstoreOutlined />,
+        [...articles, ...places, ...persons],
+        'group'
+      ),
+    ];
+  };
 
   const logoutItem = [
     ...logout.map((item) => ({ ...item, onClick: onLogout })),
@@ -127,22 +138,28 @@ export const GetMenuItems = (
       ...groupingContent(),
       DIVIDER,
       getItem(
-        'Settings',
+        t.dashboard.menu.settings,
         'settings',
         <SettingOutlined />,
         [
           getItem(
-            <Link href={routes.dashboard.users.index}>Users</Link>,
+            <Link href={routes.dashboard.users.index}>
+              {t.dashboard.menu.users}
+            </Link>,
             routes.dashboard.users.index,
             <FaUsersCog />
           ),
           getItem(
-            <Link href={routes.dashboard.contacts.index}>Contacts</Link>,
+            <Link href={routes.dashboard.contacts.index}>
+              {t.dashboard.menu.contacts}
+            </Link>,
             routes.dashboard.contacts.index,
             <ContactsOutlined />
           ),
           getItem(
-            <Link href={routes.dashboard.languages.index}>Languages</Link>,
+            <Link href={routes.dashboard.languages.index}>
+              {t.dashboard.menu.languages}
+            </Link>,
             routes.dashboard.languages.index,
             <BsPencilSquare />
           ),
@@ -156,7 +173,7 @@ export const GetMenuItems = (
       ...groupingCommon(),
       DIVIDER,
       getItem(
-        'Content',
+        t.dashboard.menu.content,
         'content',
         <AppstoreOutlined />,
         [...articles, ...persons],
@@ -176,7 +193,7 @@ export const GetMenuItems = (
       ...groupingCommon(),
       DIVIDER,
       getItem(
-        'Content',
+        t.dashboard.menu.content,
         'content',
         <AppstoreOutlined />,
         [...persons],

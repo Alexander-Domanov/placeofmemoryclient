@@ -259,6 +259,7 @@ export const en: LocaleType = {
   dashboard: {
     indexTitle: 'Dashboard',
     menu: {
+      menu: 'Menu',
       dashboard: 'Dashboard',
       map: 'Map',
       gallery: 'Gallery',
