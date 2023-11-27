@@ -20,6 +20,7 @@ import { useGetPlaceMain } from '@/modules/places-main-module';
 import { IPlace } from '@/types';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
+import { NoDataComponent } from '@/components';
 
 export const PlaceMain = ({ place }: { place: IPlace }) => {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
   //   </div>
   // );
 
-  const { map, notData, description, archive, grave, titleLink, location } =
+  const { map, description, archive, grave, titleLink, location } =
     t.places.place.page;
 
   const lightGalleryRef = useRef<any>(null);
@@ -188,9 +189,7 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
             </Link>
           </>
         ) : (
-          <div className="text-lg first-letter:uppercase mt-10 text-center">
-            {notData}
-          </div>
+          <NoDataComponent />
         )}
       </div>
     </div>
