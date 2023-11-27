@@ -147,7 +147,7 @@ export const ru: LocaleType = {
     page: {
       title: 'Статьи',
       article: 'Статьи',
-      noData: 'Нет данных',
+      noData: 'НЕТ ДАННЫХ',
       search: 'НАЙТИ ПО ЗАГОЛОВКУ',
     },
     article: {
@@ -163,7 +163,7 @@ export const ru: LocaleType = {
       name: 'ИМЯ',
       country: 'СТРАНА',
       city: 'ГОРОД',
-      noData: 'нет страниц',
+      noData: 'НИЧЕГО НЕ НАЙДЕНО',
     },
     place: {
       page: {
@@ -176,7 +176,7 @@ export const ru: LocaleType = {
           show: 'Показать карту',
           hide: 'Скрыть карту',
         },
-        notData: 'нет данных',
+        notData: 'НЕТ ДАННЫХ',
       },
       indexTitle: 'Место',
     },
@@ -207,7 +207,7 @@ export const ru: LocaleType = {
       title: 'Архив_Людей',
       archive: 'Архив',
       people: '_Людей',
-      noData: 'НИЧЕГО НЕ НАЙДЕНО',
+      noData: 'НЕТ ДАННЫХ',
     },
     person: {
       indexTitle: 'Человек',
@@ -221,7 +221,7 @@ export const ru: LocaleType = {
           show: 'Показать карту',
           hide: 'Скрыть карту',
         },
-        notData: 'нет данных',
+        notData: 'НЕТ ДАННЫХ',
         prev: 'Предыдущий',
       },
     },

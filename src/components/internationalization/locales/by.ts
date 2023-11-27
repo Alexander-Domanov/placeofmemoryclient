@@ -156,7 +156,7 @@ export const by = {
     page: {
       title: 'Артыкулы',
       article: 'Артыкулы',
-      noData: 'Няма артыкулаў',
+      noData: 'НЯМА ДАДЗЕНЫХ',
       search: 'ЗНАЙСЦІ ПА ЗАГАЛОЎКУ',
     },
     article: {
@@ -172,7 +172,7 @@ export const by = {
       name: 'НАЗВА',
       country: 'КРАІНА',
       city: 'ГОРАД',
-      noData: 'няма старонак',
+      noData: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
     },
     place: {
       indexTitle: 'Месца',
@@ -186,7 +186,7 @@ export const by = {
           show: 'Паказаць мапу',
           hide: 'Схаваць мапу',
         },
-        notData: 'няма дадзеных',
+        notData: 'НЯМА ДАДЗЕНЫХ',
       },
     },
   },
@@ -230,7 +230,7 @@ export const by = {
           show: 'Паказаць мапу',
           hide: 'Схаваць мапу',
         },
-        notData: 'няма дадзеных',
+        notData: 'НЯМА ДАДЗЕНЫХ',
         prev: 'Папярэдні',
       },
     },

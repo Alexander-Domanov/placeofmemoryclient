@@ -143,7 +143,7 @@ export const en: LocaleType = {
     page: {
       title: 'Articles',
       article: 'Articles',
-      noData: 'No data',
+      noData: 'NO DATA',
       search: 'SEARCH BY TITLE',
     },
     article: {
@@ -159,7 +159,7 @@ export const en: LocaleType = {
       name: 'NAME',
       country: 'COUNTRY',
       city: 'CITY',
-      noData: 'no pages',
+      noData: 'NOTHING FOUND',
     },
     place: {
       page: {
@@ -172,7 +172,7 @@ export const en: LocaleType = {
           show: 'Show Map',
           hide: 'Hide Map',
         },
-        notData: 'no data',
+        notData: 'NO DATA',
       },
       indexTitle: 'Place',
     },
@@ -202,7 +202,7 @@ export const en: LocaleType = {
       title: 'Archive_People',
       archive: 'Archive',
       people: '_People',
-      noData: 'NOTHING FOUND',
+      noData: 'NО DATA',
     },
     person: {
       indexTitle: 'Person',
@@ -216,7 +216,7 @@ export const en: LocaleType = {
           show: 'Show Map',
           hide: 'Hide Map',
         },
-        notData: 'no data',
+        notData: 'NO DATA',
         prev: 'Previous',
       },
     },

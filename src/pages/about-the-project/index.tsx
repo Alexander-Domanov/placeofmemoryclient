@@ -25,8 +25,10 @@ const AboutTheProject: NextPage<Props> = ({ contacts }) => {
     </>
   );
 };
-export const getStaticProps: GetStaticProps = async () => {
-  const { data: contacts } = await getContacts();
+export const getStaticProps: GetStaticProps = async (context) => {
+  const lang = context.locale?.toLowerCase() || 'by';
+
+  const { data: contacts } = await getContacts(lang);
 
   return {
     props: {
