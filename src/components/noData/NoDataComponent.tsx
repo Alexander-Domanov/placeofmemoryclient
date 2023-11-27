@@ -6,7 +6,7 @@ export const NoDataComponent: FC = () => {
 
   return (
     <div
-      className="flex justify-center mt-40 text-2xl text-dark-100 mb-20"
+      className="flex justify-center mt-20 text-2xl text-dark-100"
       style={{ minHeight: '200px' }}
     >
       {t.common.noData}
