@@ -30,6 +30,11 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
         new Error(t.dashboard.locationInfo.form.longitude.rules.range)
       );
     }
+    if (value.toString().length > 15) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.longitude.rules.maxLength)
+      );
+    }
     return Promise.resolve();
   };
   const checkLat = (_: any, value: number) => {
@@ -42,6 +47,11 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
     if (value > 90 || value < -90) {
       return Promise.reject(
         new Error(t.dashboard.locationInfo.form.latitude.rules.range)
+      );
+    }
+    if (value.toString().length > 15) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.latitude.rules.maxLength)
       );
     }
     return Promise.resolve();
@@ -60,6 +70,10 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           name={['country']}
           label={t.dashboard.locationInfo.form.country.label}
           rules={[
+            {
+              max: 120,
+              message: t.dashboard.locationInfo.form.country.rules.max,
+            },
             {
               required: true,
               whitespace: true,
@@ -80,6 +94,10 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           label={t.dashboard.locationInfo.form.city.label}
           rules={[
             {
+              max: 120,
+              message: t.dashboard.locationInfo.form.city.rules.max,
+            },
+            {
               required: true,
               message: t.dashboard.locationInfo.form.city.rules.required,
             },
@@ -98,6 +116,10 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           label={t.dashboard.locationInfo.form.address.label}
           rules={[
             {
+              max: 180,
+              message: t.dashboard.locationInfo.form.address.rules.max,
+            },
+            {
               required: true,
               message: t.dashboard.locationInfo.form.address.rules.required,
             },
@@ -110,6 +132,7 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
         <Form.Item
           name={['location', 'lng']}
           validateDebounce={300}
+          validateFirst
           label={t.dashboard.locationInfo.form.longitude.label}
           rules={[
             { validator: checkLng },

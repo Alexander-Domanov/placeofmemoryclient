@@ -1145,6 +1145,7 @@ export const en: LocaleType = {
           placeholder: 'Country',
           rules: {
             required: 'Country field is required',
+            max: 'Maximum length: 120 characters',
           },
         },
         city: {
@@ -1152,6 +1153,7 @@ export const en: LocaleType = {
           placeholder: 'City',
           rules: {
             required: 'City field is required',
+            max: 'Maximum length: 120 characters',
           },
         },
         address: {
@@ -1159,6 +1161,7 @@ export const en: LocaleType = {
           placeholder: 'Address',
           rules: {
             required: 'Address field is required',
+            max: 'Maximum length: 180 characters',
           },
         },
         longitude: {
@@ -1168,8 +1171,9 @@ export const en: LocaleType = {
             required: 'Longitude field is required',
             type: 'Longitude must be a number',
             range: 'Longitude must be between -180 and 180',
-            min: 'Longitude must be greater than or equal to -180',
-            max: 'Longitude must be less than or equal to 180',
+            // min: 'Longitude must be greater than or equal to -180',
+            // max: 'Longitude must be less than or equal to 180',
+            maxLength: 'Maximum length: 15 characters',
           },
         },
         latitude: {
@@ -1179,8 +1183,9 @@ export const en: LocaleType = {
             required: 'Latitude field is required',
             type: 'Latitude must be a number',
             range: 'Longitude must be between -90 and 90',
-            min: 'Latitude must be greater than or equal to -90',
-            max: 'Latitude must be less than or equal to 90',
+            // min: 'Latitude must be greater than or equal to -90',
+            // max: 'Latitude must be less than or equal to 90',
+            maxLength: 'Maximum length: 15 characters',
           },
         },
         administrativeAreaLevel1: {
