@@ -15,7 +15,7 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
   const { titleT, buttonT } = t.home.page.homeArticles;
   return (
     <>
-      {posts.items.length && (
+      {posts.items.length > 0 && (
         <div className="bg-dark-700 py-36 lg:py-16 sm:py-12">
           <div className="container">
             <div className="relative flex flex-col w-full">

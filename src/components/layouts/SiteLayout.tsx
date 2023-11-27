@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import { PropsWithChildren } from 'react';
 import { Roboto } from 'next/font/google';
+import { clsx } from 'clsx';
 import { Header } from '@/components';
 import { SiteFooter } from '@/components/layouts/components/SiteFooter';
 import { IContacts } from '@/types';
@@ -20,13 +21,13 @@ export const SiteLayout: NextPage<PropsWithChildren<Props>> = ({
   contacts,
 }) => {
   return (
-    <>
+    <div className={clsx('flex flex-col min-h-screen', roboto.className)}>
       <Header />
 
-      <main className={roboto.className}>{children}</main>
+      <main className="flex-grow flex-shrink-0 bg-dark-700">{children}</main>
 
       <SiteFooter contacts={contacts} />
-    </>
+    </div>
   );
 };
 

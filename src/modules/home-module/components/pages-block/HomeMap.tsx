@@ -16,7 +16,7 @@ export const HomeMap: FC = () => {
     linkT,
   } = t.home.page.homeMap;
   return (
-    <div className="pt-[140px] pb-[70px] lg:py-16">
+    <div className="pt-[140px] pb-[70px] lg:py-16 bg-white">
       <div className="container ">
         <div className="grid grid-cols-2 sm:grid-cols-1 sm:gap-8">
           <div className="pr-8">
