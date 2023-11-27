@@ -28,7 +28,7 @@ export const en: LocaleType = {
         titleT: 'Sign in to your account',
         buttonGT: 'Sign in with',
         descriptionT: 'or sign in with your email',
-        emailT: 'EMAIL ADDRESS',
+        emailT: 'EMAIL',
         passwordT: 'PASSWORD',
         forgotT: 'Forgot password?',
         buttonSignInT: 'Sign In',
@@ -56,7 +56,7 @@ export const en: LocaleType = {
         buttonShowFormT: 'Sign Up',
         buttonHiddenFormT: 'Hide Form',
         nameT: 'USERNAME',
-        emailT: 'EMAIL ADDRESS',
+        emailT: 'EMAIL',
         passwordT: 'PASSWORD',
         descriptionFormT:
           'Password must be at least 6 characters, include uppercase and lowercase letters, and numbers.',
@@ -91,7 +91,7 @@ export const en: LocaleType = {
         titleT: 'Forgot Password?',
         descriptionFirstT: `Enter the email address you used to register, and we will send you instructions to reset your password.`,
         descriptionSecondT: `For security reasons, we do NOT store your password. So relax, we assure you that we will never send your password by email.`,
-        emailT: 'EMAIL ADDRESS',
+        emailT: 'EMAIL',
         captchaT: {
           titleT: 'This site is protected by reCAPTCHA Enterprise and Google',
           private: 'Privacy Policy',
@@ -1173,7 +1173,7 @@ export const en: LocaleType = {
             range: 'Longitude must be between -180 and 180',
             // min: 'Longitude must be greater than or equal to -180',
             // max: 'Longitude must be less than or equal to 180',
-            maxLength: 'Maximum length: 15 characters',
+            maxLength: 'Maximum length: 10 characters',
           },
         },
         latitude: {
@@ -1185,7 +1185,7 @@ export const en: LocaleType = {
             range: 'Longitude must be between -90 and 90',
             // min: 'Latitude must be greater than or equal to -90',
             // max: 'Latitude must be less than or equal to 90',
-            maxLength: 'Maximum length: 15 characters',
+            maxLength: 'Maximum length: 10 characters',
           },
         },
         administrativeAreaLevel1: {

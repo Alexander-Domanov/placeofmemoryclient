@@ -50,6 +50,7 @@ export const AccountSettingForm = ({
     >
       <Input
         type="text"
+        id="userName"
         label={t.account.page.name}
         {...register('userName')}
         error={errors?.userName?.message}
@@ -57,6 +58,7 @@ export const AccountSettingForm = ({
 
       <Input
         type="text"
+        id="city"
         label={t.account.page.city}
         {...register('city')}
         error={errors?.city?.message}

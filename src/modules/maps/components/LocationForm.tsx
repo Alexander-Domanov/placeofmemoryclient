@@ -30,7 +30,7 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
         new Error(t.dashboard.locationInfo.form.longitude.rules.range)
       );
     }
-    if (value.toString().length > 15) {
+    if (value.toString().length > 10) {
       return Promise.reject(
         new Error(t.dashboard.locationInfo.form.longitude.rules.maxLength)
       );
@@ -49,7 +49,7 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
         new Error(t.dashboard.locationInfo.form.latitude.rules.range)
       );
     }
-    if (value.toString().length > 15) {
+    if (value.toString().length > 10) {
       return Promise.reject(
         new Error(t.dashboard.locationInfo.form.latitude.rules.maxLength)
       );
@@ -144,7 +144,6 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           hasFeedback
         >
           <Input
-            // type="number"
             placeholder={t.dashboard.locationInfo.form.longitude.placeholder}
             allowClear
             status="warning"
@@ -196,6 +195,12 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
               label={
                 t.dashboard.locationInfo.form.administrativeAreaLevel1.label
               }
+              rules={[
+                {
+                  max: 120,
+                  message: t.dashboard.locationInfo.form.city.rules.max,
+                },
+              ]}
             >
               <Input
                 placeholder={
@@ -211,6 +216,12 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
               label={
                 t.dashboard.locationInfo.form.administrativeAreaLevel2.label
               }
+              rules={[
+                {
+                  max: 120,
+                  message: t.dashboard.locationInfo.form.city.rules.max,
+                },
+              ]}
             >
               <Input
                 placeholder={
@@ -224,6 +235,12 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
             <Form.Item
               name={['street']}
               label={t.dashboard.locationInfo.form.street.label}
+              rules={[
+                {
+                  max: 120,
+                  message: t.dashboard.locationInfo.form.city.rules.max,
+                },
+              ]}
             >
               <Input
                 placeholder={t.dashboard.locationInfo.form.street.placeholder}
@@ -234,6 +251,12 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
             <Form.Item
               name={['streetNumber']}
               label={t.dashboard.locationInfo.form.streetNumber.label}
+              rules={[
+                {
+                  max: 120,
+                  message: t.dashboard.locationInfo.form.city.rules.max,
+                },
+              ]}
             >
               <Input
                 placeholder={
