@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
@@ -8,7 +8,7 @@ import { FileStatuses, IPlace, Role } from '@/types';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { routes } from '@/common/routing/routes';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
-import { CustomSelectInput } from '@/components';
+import { CustomSelectInput, DashboardSelectLanguage } from '@/components';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useTranslation } from '@/components/internationalization';
 import { ColumnsTableArticles } from '@/modules/articles-module/components/ColumnsTableArticles';
@@ -107,9 +107,11 @@ export const Articles: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
         <div>

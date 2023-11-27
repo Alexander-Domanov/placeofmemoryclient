@@ -32,6 +32,7 @@ import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdateP
 import MapDrawer from '@/modules/maps/components/MapDrawer';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
+  DashboardSelectLanguage,
   DeleteConfirmationModal,
   GetCharacterCount,
   GetUpdateOptions,
@@ -279,11 +280,13 @@ export const PersonEdit: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb
           items={breadcrumbs(`${person?.firstName} ${person?.lastName}`, t)}
         />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>

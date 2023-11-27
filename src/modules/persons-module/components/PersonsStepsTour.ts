@@ -26,8 +26,8 @@ export const personsStepsTour: TourProps['steps'] = [
       ) as HTMLElement,
   },
   {
-    title: 'Select Language',
-    description: 'Select a language to view the content.',
+    title: 'Select Language for Content',
+    description: 'Select a language to view the content in that language.',
     target: () =>
       document.querySelector(
         '.ant-select-selection-search-input'

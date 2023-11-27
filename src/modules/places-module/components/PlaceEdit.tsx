@@ -29,6 +29,7 @@ import MapDrawer from '@/modules/maps/components/MapDrawer';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import MapWithMarkersComponent from '@/modules/maps/components/MapWithMarkers';
 import {
+  DashboardSelectLanguage,
   DeleteConfirmationModal,
   GetCharacterCount,
   GetUpdateOptions,
@@ -237,9 +238,11 @@ export const PlaceEdit: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs(place?.nameCemetery as string, t)} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onFinish}>

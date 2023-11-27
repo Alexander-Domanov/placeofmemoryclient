@@ -18,7 +18,6 @@ import { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
 import { UserOutlined } from '@ant-design/icons';
 import { useMeQuery } from '@/services';
-import { DashboardSelectLanguage } from '@/components';
 import styles from './DashboardHeader.module.scss';
 import { routes } from '@/common/routing/routes';
 import { useLogout } from '@/modules/auth-modules/logout-module';
@@ -83,7 +82,6 @@ export const DashboardHeader: FC = () => {
 
           <Flex align="center" gap="middle">
             <LanguageSwitcher />
-            <DashboardSelectLanguage />
 
             <Flex align="center" gap="small" className={styles.userInfo}>
               <Tooltip

@@ -7,7 +7,7 @@ const ChevronDownIcon: FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
-    style={{ color: '#fff' }}
+    style={{ color: '#4E4E4E' }}
     viewBox="0 0 24 24"
     stroke="currentColor"
     className="w-4 h-4 ml-1"
@@ -43,13 +43,13 @@ export const DashboardSelectLanguage = () => {
             theme={{
               components: {
                 Select: {
-                  selectorBg: 'rgb(44 44 44)',
-                  optionActiveBg: '#d5dae0',
-                  colorBgElevated: '#4E4E4E',
-                  controlItemBgActive: '#a4a2a2',
+                  // selectorBg: 'rgb(44 44 44)',
+                  // optionActiveBg: '#d5dae0',
+                  // colorBgElevated: '#4E4E4E',
+                  // controlItemBgActive: '#a4a2a2',
                   controlOutline: 'transparent',
-                  colorText: '#fff',
-                  lineType: 'round',
+                  // colorText: '#fff',
+                  // lineType: 'round',
                 },
               },
             }}

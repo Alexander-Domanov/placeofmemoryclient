@@ -50,7 +50,7 @@ export const LanguageSwitcher: FC = () => {
         aria-label="language switcher"
         className="bg-transparent px-3 text-sm outline-none focus:border-0"
       >
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-white">
           {currentLanguage!.title} <ChevronDownIcon />
         </div>
       </DropdownMenuTrigger>

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import {
   Breadcrumb,
   Button,
@@ -23,7 +23,7 @@ import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { ColumnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
-import { CustomSelectInput } from '@/components';
+import { CustomSelectInput, DashboardSelectLanguage } from '@/components';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { personsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
@@ -230,9 +230,11 @@ export const Persons: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Flex justify="space-between" align="center" gap="middle" wrap="wrap">
         <Flex align="center" gap="middle">

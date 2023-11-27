@@ -14,14 +14,14 @@ export const useContacts = () => {
     error,
   } = useQuery({
     queryKey: ['contacts', { lang: me?.lang }],
-    queryFn: () => getContacts(),
+    queryFn: () => getContacts(me?.lang),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
     cacheTime: 0,
     staleTime: 0,
     retry: 0,
-    enabled: !!me,
+    // enabled: !!me,
     refetchOnMount: 'always',
   });
 

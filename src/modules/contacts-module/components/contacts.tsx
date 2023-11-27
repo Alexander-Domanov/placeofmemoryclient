@@ -22,7 +22,11 @@ import { useUpdateContacts } from '@/modules/contacts-module/hooks/useUpdateCont
 import { IContacts, IContactsForm } from '@/types';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { GetCharacterCount, QuillCharacterCount } from '@/components';
+import {
+  DashboardSelectLanguage,
+  GetCharacterCount,
+  QuillCharacterCount,
+} from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { AboutFormRules } from '@/modules/about-module/constants/AboutFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
@@ -138,9 +142,11 @@ export const Contacts: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Spin size="large" spinning={isFetching}>
         <Form

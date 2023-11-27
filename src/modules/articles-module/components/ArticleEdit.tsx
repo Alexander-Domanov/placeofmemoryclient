@@ -31,6 +31,7 @@ import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { useUpdateArticle } from '@/modules/articles-module/hooks/useUpdateArticle';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import {
+  DashboardSelectLanguage,
   DeleteConfirmationModal,
   GetCharacterCount,
   MetaInfoForm,
@@ -203,9 +204,11 @@ export const ArticleEdit: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs(article?.title || '', t)} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Spin spinning={isLoading}>
         <Form layout="vertical" form={form} onFinish={onSubmit}>
