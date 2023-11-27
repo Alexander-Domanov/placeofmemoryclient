@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { Button, Flex, Form, Input } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { validateMessages } from '@/common-dashboard';
 import { useTranslation } from '@/components/internationalization';
 
 const layout = {
@@ -19,6 +18,35 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
   const { t } = useTranslation();
   const [isButtonActive, setIsButtonActive] = useState(false);
 
+  const checkLng = (_: any, value: number) => {
+    // eslint-disable-next-line
+    if (isNaN(value)) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.longitude.rules.type)
+      );
+    }
+    if (value > 180 || value < -180) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.longitude.rules.range)
+      );
+    }
+    return Promise.resolve();
+  };
+  const checkLat = (_: any, value: number) => {
+    // eslint-disable-next-line
+    if (isNaN(value)) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.latitude.rules.type)
+      );
+    }
+    if (value > 90 || value < -90) {
+      return Promise.reject(
+        new Error(t.dashboard.locationInfo.form.latitude.rules.range)
+      );
+    }
+    return Promise.resolve();
+  };
+
   return (
     <Flex gap="small" vertical>
       <Form
@@ -26,7 +54,7 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
         form={form}
         name="dynamic_form_nest_item"
         onFinish={onFinish}
-        validateMessages={validateMessages}
+        // validateMessages={validateMessages}
       >
         <Form.Item
           name={['country']}
@@ -81,20 +109,10 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
 
         <Form.Item
           name={['location', 'lng']}
+          validateDebounce={300}
           label={t.dashboard.locationInfo.form.longitude.label}
           rules={[
-            {
-              type: 'number',
-              message: t.dashboard.locationInfo.form.longitude.rules.type,
-            },
-            {
-              min: -180,
-              message: t.dashboard.locationInfo.form.longitude.rules.min,
-            },
-            {
-              max: 180,
-              message: t.dashboard.locationInfo.form.longitude.rules.max,
-            },
+            { validator: checkLng },
             {
               required: true,
               message: t.dashboard.locationInfo.form.longitude.rules.required,
@@ -103,6 +121,7 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           hasFeedback
         >
           <Input
+            // type="number"
             placeholder={t.dashboard.locationInfo.form.longitude.placeholder}
             allowClear
             status="warning"
@@ -111,20 +130,10 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
 
         <Form.Item
           name={['location', 'lat']}
+          validateFirst
           label={t.dashboard.locationInfo.form.latitude.label}
           rules={[
-            {
-              type: 'number',
-              message: t.dashboard.locationInfo.form.latitude.rules.type,
-            },
-            {
-              min: -90,
-              message: t.dashboard.locationInfo.form.latitude.rules.min,
-            },
-            {
-              max: 90,
-              message: t.dashboard.locationInfo.form.latitude.rules.max,
-            },
+            { validator: checkLat },
             {
               required: true,
               message: t.dashboard.locationInfo.form.latitude.rules.required,

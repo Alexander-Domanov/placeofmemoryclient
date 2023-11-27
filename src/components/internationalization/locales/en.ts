@@ -1167,6 +1167,7 @@ export const en: LocaleType = {
           rules: {
             required: 'Longitude field is required',
             type: 'Longitude must be a number',
+            range: 'Longitude must be between -180 and 180',
             min: 'Longitude must be greater than or equal to -180',
             max: 'Longitude must be less than or equal to 180',
           },
@@ -1177,6 +1178,7 @@ export const en: LocaleType = {
           rules: {
             required: 'Latitude field is required',
             type: 'Latitude must be a number',
+            range: 'Longitude must be between -90 and 90',
             min: 'Latitude must be greater than or equal to -90',
             max: 'Latitude must be less than or equal to 90',
           },
