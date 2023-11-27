@@ -5,10 +5,7 @@ export const NoDataComponent: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div
-      className="flex justify-center mt-20 text-2xl text-dark-100"
-      style={{ minHeight: '200px' }}
-    >
+    <div className="flex justify-center py-20 text-2xl text-dark-100">
       {t.common.noData}
     </div>
   );
