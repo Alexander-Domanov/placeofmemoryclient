@@ -170,7 +170,7 @@ export const PlacesMain = ({ places }: IProps) => {
               )}
 
               {dataPlaces?.items.length === 0 ? (
-                <div className="flex justify-center mt-10 text-2xl text-dark-100">
+                <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
                   {noDataT}
                 </div>
               ) : (
