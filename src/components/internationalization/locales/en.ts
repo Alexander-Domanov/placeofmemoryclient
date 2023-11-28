@@ -29,7 +29,7 @@ export const en: LocaleType = {
   auth: {
     signIn: {
       page: {
-        titleT: 'Sign in to your account',
+        titleT: 'Sign in',
         buttonGT: 'Sign in with',
         descriptionT: 'or sign in with your email',
         emailT: 'EMAIL',
