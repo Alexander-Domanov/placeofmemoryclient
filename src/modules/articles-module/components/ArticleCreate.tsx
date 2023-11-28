@@ -21,6 +21,7 @@ import { IFieldData, IGalleryFile } from '@/types';
 import { useCreateArticle } from '../hooks/useCreateArticle';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import {
+  DashboardSelectLanguage,
   GetCharacterCount,
   QuillCharacterCount,
   SupportedImageFormatsTooltip,
@@ -131,9 +132,11 @@ export const ArticleCreate: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Form
         layout="vertical"

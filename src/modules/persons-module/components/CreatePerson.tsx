@@ -32,6 +32,7 @@ import { useCreatePerson } from '@/modules/persons-module/hooks/useCreatePerson'
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import { TitlePlaces } from '@/modules/persons-module/components/TitlePlaces';
 import {
+  DashboardSelectLanguage,
   GetCharacterCount,
   MetaInfoLocationForm,
   MetaInfoSelectedPlaceForm,
@@ -200,9 +201,11 @@ export const CreatePerson: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Form
         layout="vertical"

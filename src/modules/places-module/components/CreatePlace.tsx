@@ -24,6 +24,7 @@ import { useCreatePlace } from '@/modules/places-module/hooks/useCreatePlace';
 import { routes } from '@/common/routing/routes';
 import { useUpload } from '@/modules/gallery-module/hooks/useUpload';
 import {
+  DashboardSelectLanguage,
   GetCharacterCount,
   MetaInfoLocationForm,
   QuillCharacterCount,
@@ -158,9 +159,11 @@ export const CreatePlace: FC = () => {
 
   return (
     <Flex gap="large" vertical>
-      <div>
+      <Flex justify="space-between">
         <Breadcrumb items={breadcrumbs} />
-      </div>
+
+        <DashboardSelectLanguage />
+      </Flex>
 
       <Form
         layout="vertical"
