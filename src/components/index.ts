@@ -26,3 +26,5 @@ export * from './dashboard/helpers/GetUpdateOptions';
 export * from './dashboard/helpers/DeleteConfirmationModal';
 // noData
 export * from './noData/NoDataComponent';
+
+export { Logo } from './logo/Logo';
