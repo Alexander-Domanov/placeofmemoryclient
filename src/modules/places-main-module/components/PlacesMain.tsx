@@ -43,7 +43,7 @@ export const PlacesMain = ({ places }: IProps) => {
   const pageParams = query.page as string;
   const { dataPlaces, isLoading } = useGetPlacesMain({
     pageNumber: Number(pageParams),
-    name: vName,
+    name: vName.toLowerCase(),
     city: vCity,
     country: vCountry,
     places,

@@ -46,6 +46,7 @@ export const useGetPersonsMain = ({
       'persons-main',
       pageNumber,
       name,
+      lastName,
       country,
       city,
       deathYear,

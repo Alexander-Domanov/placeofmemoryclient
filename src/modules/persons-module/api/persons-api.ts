@@ -67,7 +67,6 @@ export const getPersonsPublic = (params: IGetPersonsPublicParams) => {
     filterConditionBirthDate = FilterCondition.gte,
     filterConditionDeathDate = FilterCondition.lte,
   } = params;
-
   return axios.get<IGetPersonsResponse>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/persons/public/all`,
     {
