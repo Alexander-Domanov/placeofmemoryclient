@@ -128,8 +128,14 @@ export const Persons: FC = () => {
     sorter: SorterResult<IPerson> | any
   ) => {
     if (sorter && sorter.columnKey) {
-      const orderBy = sorter.order === 'ascend' ? 'asc' : 'desc';
-      setSorting({ field: sorter.columnKey, order: orderBy });
+      let field = sorter.columnKey;
+      if (field === 'birthDate') {
+        field = 'birthYear';
+      } else if (field === 'deathDate') {
+        field = 'deathYear';
+      }
+      const order = sorter.order === 'ascend' ? 'asc' : 'desc';
+      setSorting({ field, order });
     } else {
       setSorting({ field: null, order: null });
     }

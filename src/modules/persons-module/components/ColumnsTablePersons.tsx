@@ -77,11 +77,11 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
   {
     title: t.dashboard.persons.table.birthDate,
     dataIndex: 'birthDate',
-    key: 'birthDate',
+    key: 'birthYear',
     width: 80,
     align: 'center',
-    sorter: true,
     ellipsis: true,
+    sorter: true,
     sortDirections: ['ascend', 'descend'],
     // render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
@@ -103,6 +103,8 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     width: 80,
     align: 'center',
     ellipsis: true,
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
   },
   {
     title: t.dashboard.persons.table.city,
@@ -111,6 +113,8 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     width: 80,
     align: 'center',
     ellipsis: true,
+    sorter: true,
+    sortDirections: ['ascend', 'descend'],
   },
   {
     title: t.dashboard.persons.table.createdAt,
