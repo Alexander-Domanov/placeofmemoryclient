@@ -5,6 +5,7 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { ILocation, IPerson } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { mapOptions } from '@/modules/maps/components/options/MapOptions';
+import { useTranslation } from '@/components/internationalization';
 
 const containerStyle = {
   // height: '100%',
@@ -33,6 +34,8 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
   locations,
   markerIcon = false,
 }) => {
+  const { t } = useTranslation();
+
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
     libraries: ['places'],
@@ -60,12 +63,12 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
     setMap(map);
   }, []);
 
-  const panTo = useCallback(({ lat, lng }: { lat: number; lng: number }) => {
-    if (mapRef.current) {
-      mapRef.current.panTo({ lat, lng });
-      mapRef.current.setZoom(15);
-    }
-  }, []);
+  // const panTo = useCallback(({ lat, lng }: { lat: number; lng: number }) => {
+  //   if (mapRef.current) {
+  //     mapRef.current.panTo({ lat, lng });
+  //     mapRef.current.setZoom(15);
+  //   }
+  // }, []);
 
   const onUnmount = useCallback(() => {
     mapRef.current = null;
@@ -100,29 +103,49 @@ const MapMainWithMarkersComponent: FC<MapMainWithMarkersProps> = ({
         //     </div>
         //   </div>`;
 
-        const contentString = `
+        const na = t.people.person.page.notData;
+
+        let contentString = '';
+        if (markerIcon) {
+          contentString = `
          <div class="flex gap-2 flex-col">
           <img src="${url}" alt="${p.firstName} ${
-          p.lastName
-        }" class="max-w-60 max-h-full object-contain rounded-lg">
+            p.lastName
+          }" class="max-w-60 max-h-full object-contain rounded-lg">
             <div class="text-black text-center">
              <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-             <p class="mb-1">${p.birthDate || 'n/a'} - ${p.deathDate || 'n/a'}
+             <p class="mb-1">${p.birthDate || na} - ${p.deathDate || na}
              </p>
             </div>
-            {markerIcon && (
-          <a href="/persons/${
+          <a href="/persons/person/${
             p?.slug || ''
           }" class="cursor-pointer text-blue-500 text-center">
            <span class="hover:underline">${p?.slug || ''}</span>
           </a>
-        )}
           <div class="text-black text-center">
               <p class="font-bold m-1">
                 ${p.location.lat}, ${p.location.lng}
               </p>
           </div>
         </div>`;
+        } else {
+          contentString = `
+         <div class="flex gap-2 flex-col">
+          <img src="${url}" alt="${p.firstName} ${
+            p.lastName
+          }" class="max-w-60 max-h-full object-contain rounded-lg">
+            <div class="text-black text-center">
+             <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
+             <p class="mb-1">${p.birthDate || na} - ${p.deathDate || na}
+             </p>
+            </div>
+          <div class="text-black text-center">
+              <p class="font-bold m-1">
+                ${p.location.lat}, ${p.location.lng}
+              </p>
+          </div>
+        </div>`;
+        }
 
         marker.addListener('click', () => {
           infoWindow.close();

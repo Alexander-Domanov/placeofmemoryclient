@@ -89,6 +89,8 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
           // animation: google.maps.Animation.DROP,
         });
 
+        const na = t.people.person.page.notData;
+
         const contentString = `
          <div class="flex gap-2 flex-col">
           <img src="${p.url}" alt="${p.firstName} ${
@@ -96,11 +98,9 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
         }" class="max-w-60 max-h-full object-contain rounded-lg">
             <div class="text-black text-center">
              <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
-             <p class="mb-1">${p.birthDate || 'n/a'} - ${
-          p.deathDate || 'n/a'
-        }</p>
+             <p class="mb-1">${p.birthDate || na} - ${p.deathDate || na}</p>
             </div>
-          <a href="/persons/${
+          <a href="/persons/person/${
             p?.slug || ''
           }" class="cursor-pointer text-blue-500 text-center">
            <span class="hover:underline">${p?.slug || ''}</span>
