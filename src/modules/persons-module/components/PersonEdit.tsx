@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Col,
-  DatePicker,
   Flex,
   Form,
   Input,
@@ -18,11 +17,16 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { ICreatePerson, IGalleryFile, ILocation, IPerson, Role } from '@/types';
+import {
+  ICreatePerson,
+  IGalleryFile,
+  ILocation,
+  IPersonById,
+  Role,
+} from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
 import { useUpdatePerson } from '@/modules/persons-module/hooks/useUpdatePerson';
@@ -80,8 +84,12 @@ interface IPersonEditForm {
   biography: string;
   country: string;
   city: string;
-  birthDate: Date;
-  deathDate: Date;
+  birthDay: number | null;
+  birthMonth: number | null;
+  birthYear: number | null;
+  deathDay: number | null;
+  deathMonth: number | null;
+  deathYear: number | null;
   slug: string;
   photo: UploadFile<IGalleryFile>[];
 }
@@ -108,7 +116,9 @@ export const PersonEdit: FC = () => {
 
   const [selectedPlaceFromMap, setSelectedPlaceFromMap] =
     useState<IPlaceResultAfterExtract | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
+  const [selectedPerson, setSelectedPerson] = useState<IPersonById | null>(
+    null
+  );
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
   );
@@ -138,14 +148,14 @@ export const PersonEdit: FC = () => {
         firstName: person.firstName,
         lastName: person.lastName,
         patronymic: person.patronymic,
-        ...(person.birthDate && {
-          birthDate: dayjs(person.birthDate),
-        }),
+        birthDay: person.birthDay,
+        birthMonth: person.birthMonth,
+        birthYear: person.birthYear,
+        deathDay: person.deathDay,
+        deathMonth: person.deathMonth,
+        deathYear: person.deathYear,
         country: person.country,
         city: person.city,
-        ...(person.deathDate && {
-          deathDate: dayjs(person.deathDate),
-        }),
         biography: person.biography,
         photo: person.photos.map((f) => ({
           uid: f.uploadId,
@@ -227,8 +237,12 @@ export const PersonEdit: FC = () => {
       biography: values.biography,
       country: values.country,
       city: values.city,
-      birthDate: values.birthDate,
-      deathDate: values.deathDate,
+      birthDay: values.birthDay,
+      birthMonth: values.birthMonth,
+      birthYear: values.birthYear,
+      deathDay: values.deathDay,
+      deathMonth: values.deathMonth,
+      deathYear: values.deathYear,
       placeId: selectedPlace?.id as number,
       slug: values.slug,
       location: {
@@ -346,33 +360,143 @@ export const PersonEdit: FC = () => {
                   />
                 </Form.Item>
 
-                <Flex gap="large">
-                  <Form.Item
-                    name="birthDate"
-                    label={t.dashboard.persons.form.birthDate.label}
-                  >
-                    <DatePicker
-                      placeholder={
-                        t.dashboard.persons.form.birthDate.placeholder
-                      }
-                      format="DD.MM.YYYY"
-                      disabled={isDisabled}
-                    />
-                  </Form.Item>
+                <Form.Item>
+                  <Flex gap="small">
+                    <Form.Item
+                      name="birthDay"
+                      label={t.dashboard.persons.form.birthDay.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={
+                          t.dashboard.persons.form.birthDay.placeholder
+                        }
+                        disabled={isDisabled}
+                      >
+                        {Array.from({ length: 31 }, (_, i) => (
+                          <Select.Option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
 
-                  <Form.Item
-                    name="deathDate"
-                    label={t.dashboard.persons.form.deathDate.label}
-                  >
-                    <DatePicker
-                      placeholder={
-                        t.dashboard.persons.form.deathDate.placeholder
-                      }
-                      format="DD.MM.YYYY"
-                      disabled={isDisabled}
-                    />
-                  </Form.Item>
-                </Flex>
+                    <Form.Item
+                      name="birthMonth"
+                      label={t.dashboard.persons.form.birthMonth.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={
+                          t.dashboard.persons.form.birthMonth.placeholder
+                        }
+                        disabled={isDisabled}
+                      >
+                        {Array.from({ length: 12 }, (_, i) => (
+                          <Select.Option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="birthYear"
+                      label={t.dashboard.persons.form.birthYear.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={
+                          t.dashboard.persons.form.birthYear.placeholder
+                        }
+                        disabled={isDisabled}
+                      >
+                        {Array.from(
+                          { length: new Date().getFullYear() },
+                          (_, i) => {
+                            const year = new Date().getFullYear() - i;
+                            return (
+                              <Select.Option key={year} value={year}>
+                                {year}
+                              </Select.Option>
+                            );
+                          }
+                        )}
+                      </Select>
+                    </Form.Item>
+                  </Flex>
+
+                  <Flex gap="small">
+                    <Form.Item
+                      name="deathDay"
+                      label={t.dashboard.persons.form.deathDay.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={
+                          t.dashboard.persons.form.deathDay.placeholder
+                        }
+                        disabled={isDisabled}
+                      >
+                        {Array.from({ length: 31 }, (_, i) => (
+                          <Select.Option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="deathMonth"
+                      label={t.dashboard.persons.form.deathMonth.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        disabled={isDisabled}
+                        placeholder={
+                          t.dashboard.persons.form.deathMonth.placeholder
+                        }
+                      >
+                        {Array.from({ length: 12 }, (_, i) => (
+                          <Select.Option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="deathYear"
+                      label={t.dashboard.persons.form.deathYear.label}
+                    >
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={
+                          t.dashboard.persons.form.deathYear.placeholder
+                        }
+                        disabled={isDisabled}
+                      >
+                        {Array.from(
+                          { length: new Date().getFullYear() },
+                          (_, i) => {
+                            const year = new Date().getFullYear() - i;
+                            return (
+                              <Select.Option key={year} value={year}>
+                                {year}
+                              </Select.Option>
+                            );
+                          }
+                        )}
+                      </Select>
+                    </Form.Item>
+                  </Flex>
+                </Form.Item>
 
                 <Form.Item
                   name="country"
@@ -493,7 +617,7 @@ export const PersonEdit: FC = () => {
                       {t.dashboard.persons.edit.button.save}
                     </Button>
 
-                    <DeleteConfirmationModal<IPerson>
+                    <DeleteConfirmationModal<IPersonById>
                       item={selectedPerson}
                       onDelete={onDeletePerson}
                       disabled={isDisabled}

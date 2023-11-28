@@ -15,7 +15,6 @@ import { InitDetail } from 'lightgallery/lg-events';
 import { routes } from '@/common/routing/routes';
 import { IPerson } from '@/types';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
-import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useTranslation } from '@/components/internationalization';
@@ -89,13 +88,9 @@ export const PersonMain: FC<Props> = ({ person }) => {
                 </div>
 
                 <div className="mt-2 text-dark-100 text-xl md:text-lg">
-                  {person.birthDate
-                    ? convertDateToFormat(person.birthDate, 'DD.MM.YYYY')
-                    : noDataT}
+                  {person.birthDate ? person.birthDate : noDataT}
                   &nbsp;-&nbsp;
-                  {person.deathDate
-                    ? convertDateToFormat(person.deathDate, 'DD.MM.YYYY')
-                    : noDataT}
+                  {person.deathDate ? person.deathDate : noDataT}
                 </div>
 
                 <div className="mt-10">

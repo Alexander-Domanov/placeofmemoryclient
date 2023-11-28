@@ -3,8 +3,12 @@ export interface ICreatePerson {
   lastName: string;
   patronymic: string;
   biography: string;
-  birthDate: Date;
-  deathDate: Date;
+  birthDay: number | null;
+  birthMonth: number | null;
+  birthYear: number | null;
+  deathDay: number | null;
+  deathMonth: number | null;
+  deathYear: number | null;
   country: string;
   city: string;
   ids: string[];

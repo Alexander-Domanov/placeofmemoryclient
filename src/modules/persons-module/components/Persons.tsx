@@ -36,8 +36,8 @@ interface IPagination {
   searchLastName: string;
   searchCountry: string;
   searchCity: string;
-  birthDate?: string | null;
-  deathDate?: string | null;
+  birthYear?: string | null;
+  deathYear?: string | null;
   filterConditionBirthDate?: FilterCondition;
   filterConditionDeathDate?: FilterCondition;
 }
@@ -81,8 +81,8 @@ export const Persons: FC = () => {
     city,
     lastName,
     sorting,
-    birthDate: pagination.birthDate,
-    deathDate: pagination.deathDate,
+    birthYear: pagination.birthYear,
+    deathYear: pagination.deathYear,
     filterConditionBirthDate: pagination.filterConditionBirthDate,
     filterConditionDeathDate: pagination.filterConditionDeathDate,
   });
@@ -107,18 +107,18 @@ export const Persons: FC = () => {
   const onChangeBirthDate = (value: number | null) => {
     if (value) {
       value.toString().length === 4 &&
-        setPagination({ ...pagination, birthDate: value.toString() });
+        setPagination({ ...pagination, birthYear: value.toString() });
     } else {
-      setPagination({ ...pagination, birthDate: null });
+      setPagination({ ...pagination, birthYear: null });
     }
   };
 
   const onChangeDeathDate = (value: number | null) => {
     if (value) {
       value.toString().length === 4 &&
-        setPagination({ ...pagination, deathDate: value.toString() });
+        setPagination({ ...pagination, deathYear: value.toString() });
     } else {
-      setPagination({ ...pagination, deathDate: null });
+      setPagination({ ...pagination, deathYear: null });
     }
   };
 

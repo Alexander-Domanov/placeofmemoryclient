@@ -14,10 +14,10 @@ interface IPersonsProps {
   lang?: string;
   name?: string;
   lastName?: string;
-  birthDate?: string;
+  birthYear?: string;
   country?: string;
   city?: string;
-  deathDate?: string;
+  deathYear?: string;
   filterConditionBirthDate?: string;
   filterConditionDeathDate?: string;
 }
@@ -27,8 +27,8 @@ export const useGetPersonsMain = ({
   lastName,
   country,
   city,
-  deathDate,
-  birthDate,
+  deathYear,
+  birthYear,
   filterConditionBirthDate,
   filterConditionDeathDate,
   persons,
@@ -48,8 +48,8 @@ export const useGetPersonsMain = ({
       name,
       country,
       city,
-      deathDate,
-      birthDate,
+      deathYear,
+      birthYear,
       filterConditionBirthDate,
       filterConditionDeathDate,
     ],
@@ -61,8 +61,8 @@ export const useGetPersonsMain = ({
         lang: locale,
         pageNumber,
         lastName,
-        deathDate,
-        birthDate,
+        deathYear,
+        birthYear,
         filterConditionBirthDate,
         filterConditionDeathDate,
       }),

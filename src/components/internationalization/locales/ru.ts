@@ -716,8 +716,8 @@ export const ru: LocaleType = {
           },
         },
         birthDate: {
-          label: 'Дата рождения',
-          placeholder: 'Дата рождения',
+          label: 'День рождения',
+          placeholder: 'День рождения',
           tooltip:
             'Вы можете написать до 120 символов. После написания вы должны сохранить дату рождения.',
           rules: {
@@ -725,15 +725,39 @@ export const ru: LocaleType = {
             max: 'Максимальная длина: 120 символов',
           },
         },
+        birthDay: {
+          label: 'Дата Рождения',
+          placeholder: 'Дата',
+        },
+        birthMonth: {
+          label: 'Месяц Рождения',
+          placeholder: 'Месяц',
+        },
+        birthYear: {
+          label: 'Год Рождения',
+          placeholder: 'Год',
+        },
         deathDate: {
           label: 'Дата смерти',
           placeholder: 'Дата смерти',
           tooltip:
             'Вы можете написать до 120 символов. После написания вы должны сохранить дату смерти.',
           rules: {
-            required: 'Поле Дата смерти обязательно для заполнения',
+            // required: 'Поле Дата смерти обязательно для заполнения',
             max: 'Максимальная длина: 120 символов',
           },
+        },
+        deathDay: {
+          label: 'День Смерти',
+          placeholder: 'День',
+        },
+        deathMonth: {
+          label: 'Месяц Смерти',
+          placeholder: 'Месяц',
+        },
+        deathYear: {
+          label: 'Год Смерти',
+          placeholder: 'Год',
         },
         country: {
           label: 'Страна',

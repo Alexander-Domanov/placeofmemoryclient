@@ -83,7 +83,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     sorter: true,
     ellipsis: true,
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
+    // render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
   {
     title: t.dashboard.persons.table.deathDate,
@@ -94,7 +94,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     sorter: true,
     ellipsis: true,
     sortDirections: ['ascend', 'descend'],
-    render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
+    // render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
   },
   {
     title: t.dashboard.persons.table.country,

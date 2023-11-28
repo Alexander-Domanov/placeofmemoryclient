@@ -6,6 +6,7 @@ import {
   IGetPersonsResponse,
   IPaginationPersons,
   IPerson,
+  IPersonById,
 } from '@/types';
 
 export const getPersons = (data: IPaginationPersons) => {
@@ -35,7 +36,7 @@ export const updatePerson = (id: string, data: ICreatePerson) => {
 };
 
 export const getPerson = (id: string | undefined | string[]) => {
-  return authInstance.get<IPerson>(`persons/${id}`);
+  return authInstance.get<IPersonById>(`persons/${id}`);
 };
 
 interface IGetPersonsPublicParams {
@@ -44,10 +45,10 @@ interface IGetPersonsPublicParams {
   lang?: string;
   name?: string;
   lastName?: string;
-  birthDate?: string;
+  birthYear?: string;
   country?: string;
   city?: string;
-  deathDate?: string;
+  deathYear?: string;
   filterConditionBirthDate?: string;
   filterConditionDeathDate?: string;
 }
@@ -59,10 +60,10 @@ export const getPersonsPublic = (params: IGetPersonsPublicParams) => {
     lang = 'by',
     name = '',
     lastName = '',
-    birthDate = null,
+    birthYear = null,
     country = '',
     city = '',
-    deathDate = null,
+    deathYear = null,
     filterConditionBirthDate = FilterCondition.gte,
     filterConditionDeathDate = FilterCondition.lte,
   } = params;
@@ -76,10 +77,10 @@ export const getPersonsPublic = (params: IGetPersonsPublicParams) => {
         lang,
         name,
         lastName,
-        birthDate,
+        birthYear,
         country,
         city,
-        deathDate,
+        deathYear,
         filterConditionBirthDate,
         filterConditionDeathDate,
       },
@@ -105,10 +106,10 @@ export const getPersonsPublicMain = async (params: IGetPersonsPublicParams) => {
     lang = 'by',
     name = '',
     lastName = '',
-    birthDate = null,
+    birthYear = null,
     country = '',
     city = '',
-    deathDate = null,
+    deathYear = null,
     filterConditionBirthDate = FilterCondition.gte,
     filterConditionDeathDate = FilterCondition.lte,
   } = params;
@@ -122,10 +123,10 @@ export const getPersonsPublicMain = async (params: IGetPersonsPublicParams) => {
         lang,
         name,
         lastName,
-        birthDate,
+        birthYear,
         country,
         city,
-        deathDate,
+        deathYear,
         filterConditionBirthDate,
         filterConditionDeathDate,
       },

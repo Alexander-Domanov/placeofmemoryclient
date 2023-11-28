@@ -20,8 +20,8 @@ export interface IPaginationPersons extends IPagination {
   lastName: string;
   country: string;
   city: string;
-  birthDate?: string | null;
-  deathDate?: string | null;
+  birthYear?: string | null;
+  deathYear?: string | null;
   filterConditionBirthDate?: FilterCondition;
   filterConditionDeathDate?: FilterCondition;
 }

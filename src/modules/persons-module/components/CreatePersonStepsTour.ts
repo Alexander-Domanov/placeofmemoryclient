@@ -76,7 +76,7 @@ export const CreatePersonStepsTour = (
     description: t.dashboard.persons.create.tour.steps.birthDate.description,
     target: () =>
       document.querySelector(
-        '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex .ant-form-item:nth-child(1)'
+        '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex'
       ) as HTMLElement,
     prevButtonProps: {
       children: t.dashboard.persons.create.tour.previous,
@@ -90,7 +90,7 @@ export const CreatePersonStepsTour = (
     description: t.dashboard.persons.create.tour.steps.deathDate.description,
     target: () =>
       document.querySelector(
-        '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex .ant-form-item:nth-child(2)'
+        '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex:nth-child(2)'
       ) as HTMLElement,
     prevButtonProps: {
       children: t.dashboard.persons.create.tour.previous,

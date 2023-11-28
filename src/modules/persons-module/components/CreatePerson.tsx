@@ -6,13 +6,13 @@ import {
   Button,
   Card,
   Col,
-  DatePicker,
   Flex,
   FloatButton,
   Form,
   Input,
   notification,
   Row,
+  Select,
   Space,
   Tour,
   Upload,
@@ -54,8 +54,12 @@ interface IPersonForm {
   biography: string;
   country: string;
   city: string;
-  birthDate: Date;
-  deathDate: Date;
+  birthDay: number | null;
+  birthMonth: number | null;
+  birthYear: number | null;
+  deathDay: number | null;
+  deathMonth: number | null;
+  deathYear: number | null;
   photo: UploadFile<IGalleryFile>[];
 }
 
@@ -125,8 +129,12 @@ export const CreatePerson: FC = () => {
       lastName: values.lastName,
       patronymic: values.patronymic,
       biography: values.biography,
-      birthDate: values.birthDate,
-      deathDate: values.deathDate,
+      birthDay: values.birthDay,
+      birthMonth: values.birthMonth,
+      birthYear: values.birthYear,
+      deathDay: values.deathDay,
+      deathMonth: values.deathMonth,
+      deathYear: values.deathYear,
       country: values.country,
       city: values.city,
       placeId: selectedPlace?.id as number,
@@ -172,16 +180,6 @@ export const CreatePerson: FC = () => {
     });
   };
   const createPersonStepsTour = CreatePersonStepsTour(ref, t);
-
-  const dateFormatList = [
-    'DD.MM.YYYY',
-    'YYYY',
-    'MM.YYYY',
-    'DD/MM/YYYY',
-    'YYYY/MM/DD',
-    'YYYY-MM-DD',
-    'DD-MM-YYYY',
-  ];
 
   const breadcrumbs = [
     CreateBreadcrumb({ key: routes.main, icon: true }),
@@ -266,27 +264,137 @@ export const CreatePerson: FC = () => {
                 />
               </Form.Item>
 
-              <Flex gap="large">
-                <Form.Item
-                  name="birthDate"
-                  label={t.dashboard.persons.form.birthDate.label}
-                >
-                  <DatePicker
-                    placeholder={t.dashboard.persons.form.birthDate.placeholder}
-                    format={dateFormatList}
-                  />
-                </Form.Item>
+              <Form.Item>
+                <Flex gap="small">
+                  <Form.Item
+                    name="birthDay"
+                    label={t.dashboard.persons.form.birthDay.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.birthDay.placeholder
+                      }
+                    >
+                      {Array.from({ length: 31 }, (_, i) => (
+                        <Select.Option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
 
-                <Form.Item
-                  name="deathDate"
-                  label={t.dashboard.persons.form.deathDate.label}
-                >
-                  <DatePicker
-                    placeholder={t.dashboard.persons.form.deathDate.placeholder}
-                    format={dateFormatList}
-                  />
-                </Form.Item>
-              </Flex>
+                  <Form.Item
+                    name="birthMonth"
+                    label={t.dashboard.persons.form.birthMonth.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.birthMonth.placeholder
+                      }
+                    >
+                      {Array.from({ length: 12 }, (_, i) => (
+                        <Select.Option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="birthYear"
+                    label={t.dashboard.persons.form.birthYear.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.birthYear.placeholder
+                      }
+                    >
+                      {Array.from(
+                        { length: new Date().getFullYear() },
+                        (_, i) => {
+                          const year = new Date().getFullYear() - i;
+                          return (
+                            <Select.Option key={year} value={year}>
+                              {year}
+                            </Select.Option>
+                          );
+                        }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </Flex>
+
+                <Flex gap="small">
+                  <Form.Item
+                    name="deathDay"
+                    label={t.dashboard.persons.form.deathDay.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.deathDay.placeholder
+                      }
+                    >
+                      {Array.from({ length: 31 }, (_, i) => (
+                        <Select.Option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="deathMonth"
+                    label={t.dashboard.persons.form.deathMonth.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.deathMonth.placeholder
+                      }
+                    >
+                      {Array.from({ length: 12 }, (_, i) => (
+                        <Select.Option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="deathYear"
+                    label={t.dashboard.persons.form.deathYear.label}
+                  >
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder={
+                        t.dashboard.persons.form.deathYear.placeholder
+                      }
+                    >
+                      {Array.from(
+                        { length: new Date().getFullYear() },
+                        (_, i) => {
+                          const year = new Date().getFullYear() - i;
+                          return (
+                            <Select.Option key={year} value={year}>
+                              {year}
+                            </Select.Option>
+                          );
+                        }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </Flex>
+              </Form.Item>
 
               <Form.Item
                 name="country"

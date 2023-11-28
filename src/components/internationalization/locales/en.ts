@@ -721,15 +721,39 @@ export const en: LocaleType = {
             max: 'Maximum length: 120 characters',
           },
         },
+        birthDay: {
+          label: 'Birth Day',
+          placeholder: 'Day',
+        },
+        birthMonth: {
+          label: 'Birth Month',
+          placeholder: 'Month',
+        },
+        birthYear: {
+          label: 'Birth Year',
+          placeholder: 'Year',
+        },
         deathDate: {
           label: 'Death Date',
           placeholder: 'Death Date',
           tooltip:
             'You can write up to 120 characters. After writing, you should save the death date.',
           rules: {
-            required: 'Death Date field is required',
+            // required: 'Death Date field is required',
             max: 'Maximum length: 120 characters',
           },
+        },
+        deathDay: {
+          label: 'Death Day',
+          placeholder: 'Day',
+        },
+        deathMonth: {
+          label: 'Death Month',
+          placeholder: 'Month',
+        },
+        deathYear: {
+          label: 'Death Year',
+          placeholder: 'Year',
         },
         country: {
           label: 'Country',

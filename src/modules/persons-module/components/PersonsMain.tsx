@@ -24,18 +24,18 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [birthYear, setBirthYear] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [deathDate, setDeathDate] = useState('');
+  const [deathYear, setDeathYear] = useState('');
   const [filterConditionBirthDate, setFilterConditionBirthDate] =
     useState<FilterCondition>(FilterCondition.gte);
   const [filterConditionDeathDate, setFilterConditionDeathDate] =
     useState<FilterCondition>(FilterCondition.lte);
   const nameD = useDebounce(name, 1500);
   const lastNameD = useDebounce(lastName, 1500);
-  const birthDateD = useDebounce(birthDate, 2000);
-  const deathDateD = useDebounce(deathDate, 2000);
+  const birthDateD = useDebounce(birthYear, 2000);
+  const deathDateD = useDebounce(deathYear, 2000);
   const countryD = useDebounce(country, 1500);
   const cityD = useDebounce(city, 1500);
 
@@ -47,10 +47,10 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     pageNumber: Number(pageParams),
     ...(name && { name: nameD }),
     ...(lastName && { lastName: lastNameD }),
-    ...(birthDate && { birthDate: birthDateD }),
+    ...(birthYear && { birthYear: birthDateD }),
     ...(country && { country: countryD }),
     ...(city && { city: cityD }),
-    ...(deathDate && { deathDate: deathDateD }),
+    ...(deathYear && { deathYear: deathDateD }),
     ...(filterConditionBirthDate && { filterConditionBirthDate }),
     ...(filterConditionDeathDate && { filterConditionDeathDate }),
     persons,
@@ -151,14 +151,14 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
               <Input
                 type="text"
-                id="birthDate"
-                value={birthDate}
+                id="birthYear"
+                value={birthYear}
                 maxLength={4}
                 className="flex-grow"
-                error={validateBirthDate(birthDate)}
+                error={validateBirthDate(birthYear)}
                 label={birthDateT}
                 showErrorMessage={false}
-                onChange={(e) => setBirthDate(e.target.value)}
+                onChange={(e) => setBirthYear(e.target.value)}
               />
             </div>
 
@@ -199,13 +199,13 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
               <Input
                 type="text"
-                id="deathDate"
+                id="deathYear"
                 maxLength={4}
-                error={validateDeathDate(deathDate)}
-                value={deathDate}
+                error={validateDeathDate(deathYear)}
+                value={deathYear}
                 label={deathDateT}
                 showErrorMessage={false}
-                onChange={(e) => setDeathDate(e.target.value)}
+                onChange={(e) => setDeathYear(e.target.value)}
               />
             </div>
           </div>
