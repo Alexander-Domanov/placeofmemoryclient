@@ -191,7 +191,7 @@ export const Persons: FC = () => {
       ? [
           ...fileStatuses,
           {
-            label: 'Archived',
+            label: t.dashboard.selectStatus.archived,
             value: FileStatuses.ARCHIVED,
           },
         ]
