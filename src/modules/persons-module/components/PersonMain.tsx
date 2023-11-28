@@ -65,7 +65,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
         <div className="overflow-hidden">
           <BreadcrumbMain
             items={[
-              { text: titleT, link: routes.persons.index },
+              { text: titleT, link: routes.persons.page(Number(1)) },
               { text: `${person.firstName} ${person.lastName}` },
             ]}
           />
