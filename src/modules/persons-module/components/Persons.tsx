@@ -26,7 +26,7 @@ import { ColumnsTablePersons } from '@/modules/persons-module/components/Columns
 import { CustomSelectInput, DashboardSelectLanguage } from '@/components';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { personsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
+import { PersonsStepsTour } from '@/modules/persons-module/components/PersonsStepsTour';
 import { useTranslation } from '@/components/internationalization';
 
 const defaultPageSize = 10;
@@ -198,6 +198,7 @@ export const Persons: FC = () => {
       : fileStatuses;
 
   const columnsTablePersons = ColumnsTablePersons(t);
+  const personsStepsTour = PersonsStepsTour(t);
 
   const selectColumnsTablePlaces =
     me?.role === Role.USER || me?.role === Role.AUTHOR

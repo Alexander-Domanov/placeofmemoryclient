@@ -657,11 +657,11 @@ export const en: LocaleType = {
         },
         birthDate: {
           title: 'Birth date',
-          placeholder: 'Search by birth date',
+          placeholder: 'Year of birth',
         },
         deathDate: {
           title: 'Death date',
-          placeholder: 'Search by death date',
+          placeholder: 'Year of death',
         },
         country: {
           title: 'Search by country',
@@ -789,6 +789,94 @@ export const en: LocaleType = {
           save: 'Save',
           photo: '+ Upload',
         },
+        tour: {
+          next: 'Next',
+          previous: 'Previos',
+          finish: 'Finish',
+          steps: {
+            createPerson: {
+              title: 'Create a Person',
+              description:
+                "Welcome to the person creation page. Let's get started!",
+            },
+            basicInformation: {
+              title: 'Basic Information',
+              description: 'Fill in the basic information about the person.',
+            },
+            firstName: {
+              title: 'First Name',
+              description: 'Enter the first name of the person.',
+            },
+            lastName: {
+              title: 'Last Name',
+              description: 'Enter the last name of the person.',
+            },
+            patronymic: {
+              title: 'Patronymic',
+              description: 'Enter the patronymic name of the person.',
+            },
+            birthDate: {
+              title: 'Birth Date',
+              description: 'Select the birth date of the person.',
+            },
+            deathDate: {
+              title: 'Death Date',
+              description: 'Select the death date of the person.',
+            },
+            country: {
+              title: 'Country',
+              description:
+                'This field is filled in automatically when you select a location on the map.',
+            },
+            city: {
+              title: 'City',
+              description:
+                'This field is filled in automatically when you select a location on the map.',
+            },
+            biography: {
+              title: 'Biography',
+              description:
+                "Share some details about the person's life in the biography section.",
+            },
+            selectPlace: {
+              title: 'Select a Place',
+              description:
+                'Choose from the published places by name, if you know what the name of the place is. This could be the name of a cemetery or other mass grave of people. This is to link people into clusters.',
+            },
+            selectedPlaceInformation: {
+              title: 'Selected Place Information',
+              description: 'Review information about the selected place.',
+            },
+            clearSelectedPlace: {
+              title: 'Clear Selected Place',
+              description: 'If needed, you can clear the selected place.',
+            },
+            selectLocationOnMap: {
+              title: 'Select Location on Map',
+              description: 'Pinpoint the exact location on the map.',
+            },
+            selectedLocationInformation: {
+              title: 'Selected Location Information',
+              description:
+                'Review information about the pinpoint the exact location on the map.',
+            },
+            uploadPhotos: {
+              title: 'Upload Photos',
+              description:
+                'Add photos of the person. You can upload multiple photos.',
+            },
+            save: {
+              title: 'Save',
+              description:
+                "Once you've filled in the details, click 'Save' to create the person.",
+            },
+            tourCompleted: {
+              title: 'Tour Completed',
+              description:
+                'Congratulations! You have completed the person creation process.',
+            },
+          },
+        },
       },
       edit: {
         index: 'Edit person',
@@ -853,6 +941,73 @@ export const en: LocaleType = {
         notification: {
           success: 'Status updated successfully',
           error: 'Error updating status',
+        },
+      },
+      tour: {
+        next: 'Next',
+        previous: 'Previous',
+        finish: 'Finish',
+        steps: {
+          top: {
+            title: 'Top',
+            description: 'First step, you can add new person.',
+          },
+          name: {
+            title: 'Search by First Name',
+            description: 'Enter the first name to search for a person.',
+            placeHolder: 'Search by name',
+          },
+          lastName: {
+            title: 'Search by Last Name',
+            description: 'Enter the last name to search for a person.',
+            placeHolder: 'Search by last name',
+          },
+          lang: {
+            title: 'Select Language for Content',
+            description:
+              'Select a language to view the content in that language.',
+            placeHolder: 'Select Language for Content',
+          },
+          filter: {
+            title: 'Open Filters',
+            description: 'Click here to open the filters.',
+          },
+          dataBirth: {
+            title: 'Search by Year of Birth',
+            description:
+              'Enter the year of birth to search for persons born in that year.',
+            placeHolder: 'Year of birth',
+          },
+          dataDeath: {
+            title: 'Search by Year of Death',
+            description:
+              'Enter the year of death to search for persons who died in that year.',
+            placeHolder: 'Year of death',
+          },
+          country: {
+            title: 'Search by Country',
+            description:
+              'Enter the country to search for persons in that country.',
+            placeHolder: 'Search by country',
+          },
+          city: {
+            title: 'Search by City',
+            description: 'Enter the city to search for persons in that city.',
+            placeHolder: 'Search by city',
+          },
+          table: {
+            title: 'Table',
+            description:
+              'This is the table of persons. You can see their details here.',
+          },
+          next: {
+            title: 'Next Page',
+            description: 'Click here to navigate to the next page.',
+          },
+          finish: {
+            title: 'Page Size',
+            description: 'Choose the number of items per page here.',
+          },
         },
       },
     },

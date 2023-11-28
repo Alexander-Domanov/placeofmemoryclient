@@ -42,7 +42,7 @@ import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtil
 import { PersonFormRules } from '@/modules/persons-module/constants/PersonFormRules';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
-import { createPersonStepsTour } from '@/modules/persons-module/components/CreatePersonStepsTour';
+import { CreatePersonStepsTour } from '@/modules/persons-module/components/CreatePersonStepsTour';
 import { useTranslation } from '@/components/internationalization';
 
 const { isCharacterCountExceeded, getQuillStyle } = characterCountUtils;
@@ -171,6 +171,7 @@ export const CreatePerson: FC = () => {
       t,
     });
   };
+  const createPersonStepsTour = CreatePersonStepsTour(ref, t);
 
   const dateFormatList = [
     'DD.MM.YYYY',
@@ -447,7 +448,7 @@ export const CreatePerson: FC = () => {
       <Tour
         open={open}
         onClose={() => setOpen(false)}
-        steps={createPersonStepsTour(ref)}
+        steps={createPersonStepsTour}
       />
     </Flex>
   );

@@ -28,6 +28,7 @@ export const LanguageForm = ({
           key={item.name}
           label={item.label}
           name={item.name}
+          validateFirst
           rules={item.rules}
         >
           <Input placeholder={item.placeholder} />

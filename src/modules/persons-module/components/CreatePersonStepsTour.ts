@@ -1,150 +1,258 @@
 import { TourProps } from 'antd';
 import { RefObject } from 'react';
+import { LocaleType } from '@/components/internationalization';
 
-export const createPersonStepsTour = (
-  ref: RefObject<any>
+export const CreatePersonStepsTour = (
+  ref: RefObject<any>,
+  t: LocaleType
 ): TourProps['steps'] => [
   {
-    title: 'Create a Person',
-    description: "Welcome to the person creation page. Let's get started!",
+    title: t.dashboard.persons.create.tour.steps.createPerson.title,
+    description: t.dashboard.persons.create.tour.steps.createPerson.description,
     target: () => document.querySelector('.ant-form') as HTMLElement,
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Basic Information',
-    description: 'Fill in the basic information about the person.',
+    title: t.dashboard.persons.create.tour.steps.basicInformation.title,
+    description:
+      t.dashboard.persons.create.tour.steps.basicInformation.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'First Name',
-    description: 'Enter the first name of the person.',
+    title: t.dashboard.persons.create.tour.steps.firstName.title,
+    description: t.dashboard.persons.create.tour.steps.firstName.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(1)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Last Name',
-    description: 'Enter the last name of the person.',
+    title: t.dashboard.persons.create.tour.steps.lastName.title,
+    description: t.dashboard.persons.create.tour.steps.lastName.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(2)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Patronymic',
-    description: 'Enter the patronymic name of the person.',
+    title: t.dashboard.persons.create.tour.steps.patronymic.title,
+    description: t.dashboard.persons.create.tour.steps.patronymic.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(3)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Birth Date',
-    description: 'Select the birth date of the person.',
+    title: t.dashboard.persons.create.tour.steps.birthDate.title,
+    description: t.dashboard.persons.create.tour.steps.birthDate.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex .ant-form-item:nth-child(1)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Death Date',
-    description: 'Select the death date of the person.',
+    title: t.dashboard.persons.create.tour.steps.deathDate.title,
+    description: t.dashboard.persons.create.tour.steps.deathDate.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-flex .ant-form-item:nth-child(2)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Country',
-    description:
-      'This field is filled in automatically when you select a location on the map.',
+    title: t.dashboard.persons.create.tour.steps.country.title,
+    description: t.dashboard.persons.create.tour.steps.country.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(5)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'City',
-    description:
-      'This field is filled in automatically when you select a location on the map.',
+    title: t.dashboard.persons.create.tour.steps.city.title,
+    description: t.dashboard.persons.create.tour.steps.city.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(6)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Biography',
-    description:
-      "Share some details about the person's life in the biography section.",
+    title: t.dashboard.persons.create.tour.steps.biography.title,
+    description: t.dashboard.persons.create.tour.steps.biography.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(1) .ant-form-item:nth-child(7)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Select a Place',
-    description:
-      'Choose from the published places by name, if you know what the name of the place is. ' +
-      'This could be the name of a cemetery or other mass grave of people. This is to link people into clusters.',
+    title: t.dashboard.persons.create.tour.steps.selectPlace.title,
+    description: t.dashboard.persons.create.tour.steps.selectPlace.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card:nth-child(2) .ant-card-body .ant-form-item:nth-child(1)'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Selected Place Information',
-    description: 'Review information about the selected place.',
+    title: t.dashboard.persons.create.tour.steps.selectedPlaceInformation.title,
+    description:
+      t.dashboard.persons.create.tour.steps.selectedPlaceInformation
+        .description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card:nth-child(2) .ant-card-body'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Clear Selected Place',
-    description: 'If needed, you can clear the selected place.',
+    title: t.dashboard.persons.create.tour.steps.clearSelectedPlace.title,
+    description:
+      t.dashboard.persons.create.tour.steps.clearSelectedPlace.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card:nth-child(2) .ant-card-body .ant-row .ant-btn-dashed'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Select Location on Map',
-    description: 'Pinpoint the exact location on the map.',
-    target: () => ref.current,
-  },
-  {
-    title: 'Selected Location Information',
+    title: t.dashboard.persons.create.tour.steps.selectLocationOnMap.title,
     description:
-      'Review information about the pinpoint the exact  location on the map.',
+      t.dashboard.persons.create.tour.steps.selectLocationOnMap.description,
+    target: () => ref.current,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
+  },
+  {
+    title:
+      t.dashboard.persons.create.tour.steps.selectedLocationInformation.title,
+    description:
+      t.dashboard.persons.create.tour.steps.selectedLocationInformation
+        .description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card:nth-child(3) .ant-card-body .ant-form-item'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Upload Photos',
-    description: 'Add photos of the person. You can upload multiple photos.',
+    title: t.dashboard.persons.create.tour.steps.uploadPhotos.title,
+    description: t.dashboard.persons.create.tour.steps.uploadPhotos.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card:nth-child(4) .ant-card-body .ant-form-item'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Save',
-    description:
-      'Once you\'ve filled in the details, click "Save" to create the person.',
+    title: t.dashboard.persons.create.tour.steps.save.title,
+    description: t.dashboard.persons.create.tour.steps.save.description,
     target: () =>
       document.querySelector(
         '.ant-form .ant-row .ant-col:nth-child(2) .ant-card .ant-card-body .ant-btn-primary'
       ) as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.next,
+    },
   },
   {
-    title: 'Tour Completed',
+    title: t.dashboard.persons.create.tour.steps.tourCompleted.title,
     description:
-      'Congratulations! You have completed the person creation process.',
+      t.dashboard.persons.create.tour.steps.tourCompleted.description,
     target: () => document.querySelector('.ant-float-button') as HTMLElement,
+    prevButtonProps: {
+      children: t.dashboard.persons.create.tour.previous,
+    },
+    nextButtonProps: {
+      children: t.dashboard.persons.create.tour.finish,
+    },
   },
 ];

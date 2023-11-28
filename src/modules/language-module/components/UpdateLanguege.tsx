@@ -47,7 +47,7 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
       {
         onSuccess: () => {
           notification.success({
-            message: `Language ${values.name} was successfully updated`,
+            message: t.dashboard.languages.notifications.update.title,
             placement: 'bottomLeft',
           });
           setModalVisible(false);
