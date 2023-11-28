@@ -330,10 +330,7 @@ export const CreatePerson: FC = () => {
                   ...personFormRules.biography.rules,
                 ]}
                 tooltip={
-                  <span>
-                    {t.dashboard.persons.form.biography.tooltip}
-                    {personFormRules.biography.maxCharacters}.{' '}
-                  </span>
+                  <span>{t.dashboard.persons.form.biography.tooltip}</span>
                 }
               >
                 <ReactQuill
