@@ -237,7 +237,7 @@ export const en: LocaleType = {
     page: {
       title: 'Interactive_Map',
       header: 'Interactive Map',
-      search: 'FIND',
+      search: 'SEARCH',
       loading: 'Loading',
     },
   },
