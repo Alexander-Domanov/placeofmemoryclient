@@ -12,21 +12,19 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
-import Link from 'next/link';
 import { FaBars } from 'react-icons/fa6';
 import { MenuProps } from 'antd/es/menu';
 import { useRouter } from 'next/router';
 import { UserOutlined } from '@ant-design/icons';
 import { useMeQuery } from '@/services';
 import styles from './DashboardHeader.module.scss';
-import { routes } from '@/common/routing/routes';
 import { useLogout } from '@/modules/auth-modules/logout-module';
 import { GetMenuItems } from '@/components/layouts/components/GetMenuItems';
 import {
   LanguageSwitcher,
   useTranslation,
 } from '@/components/internationalization';
-import { nameLogo } from '@/common/constants';
+import { Logo } from '@/components';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -74,11 +72,7 @@ export const DashboardHeader: FC = () => {
     <>
       <Header className={styles.header} style={{ background: 'rgb(44 44 44)' }}>
         <Flex align="center" justify="space-between" gap="middle">
-          <div>
-            <Link href={routes.main} className={styles.logo}>
-              {nameLogo}
-            </Link>
-          </div>
+          <Logo />
 
           <Flex align="center" gap="middle">
             <LanguageSwitcher />
