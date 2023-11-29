@@ -244,13 +244,14 @@ export const PersonEdit: FC = () => {
       deathMonth: values.deathMonth,
       deathYear: values.deathYear,
       placeId: selectedPlace?.id as number,
-      slug: values.slug,
+      slug: values.slug || selectedPerson?.slug,
       location: {
         place: selectedPlace?.namePlace as string,
         ...selectedLocation,
       } as ILocation,
       ids: values.photo.map((file) => file.response?.uploadId || ''),
     };
+
     updatePersonMutation(
       { id: personId, person: newPerson },
       {
