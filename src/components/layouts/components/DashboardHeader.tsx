@@ -46,14 +46,14 @@ export const DashboardHeader: FC = () => {
 
   const onLogout = () => {
     confirm({
-      title: 'Do you want to logout?',
+      title: t.dashboard.logout.title,
       okType: 'danger',
       maskClosable: true,
       async onOk() {
         await sendLogoutAsync();
 
         notification.success({
-          message: 'You was logged out',
+          message: t.dashboard.logout.notifications.success.title,
           placement: 'bottomLeft',
         });
       },

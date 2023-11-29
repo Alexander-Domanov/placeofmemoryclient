@@ -1279,6 +1279,17 @@ export const ru: LocaleType = {
         delete: 'Удалить',
       },
     },
+    logout: {
+      title: 'Выйти',
+      description: 'Вы уверены, что хотите выйти?',
+      cancel: 'Отмена',
+      logout: 'Выйти',
+      notifications: {
+        success: {
+          title: 'Вы успешно вышли',
+        },
+      },
+    },
     rules: {
       required: 'Пожалуйста, введите',
       slug: {

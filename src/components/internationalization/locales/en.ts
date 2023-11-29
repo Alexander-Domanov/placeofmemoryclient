@@ -1277,6 +1277,17 @@ export const en: LocaleType = {
         delete: 'Delete',
       },
     },
+    logout: {
+      title: 'Logout',
+      description: 'Are you sure you want to logout?',
+      cancel: 'Cancel',
+      logout: 'Logout',
+      notifications: {
+        success: {
+          title: 'Logout successfully',
+        },
+      },
+    },
     rules: {
       required: 'Please enter',
       slug: {

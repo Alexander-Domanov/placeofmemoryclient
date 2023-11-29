@@ -1285,6 +1285,17 @@ export const by = {
         delete: 'Выдаліць',
       },
     },
+    logout: {
+      title: 'Выйсці',
+      description: 'Вы ўпэўнены, што хочаце выйсці?',
+      cancel: 'Адмяніць',
+      logout: 'Выйсці',
+      notifications: {
+        success: {
+          title: 'Вы паспяхова выйшлі',
+        },
+      },
+    },
     rules: {
       required: 'Калі ласка, увядзіце',
       slug: {
