@@ -224,6 +224,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePersonStatusComponent person={record} />
+
         <DeletePersonComponent person={record} />
       </Row>
     ),

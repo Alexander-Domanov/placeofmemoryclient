@@ -66,6 +66,7 @@ const UpdatePersonStatusComponent: React.FC<
         actions={[
           <Button
             key={0}
+            title={t.dashboard.persons.updateModal.buttonTitle}
             icon={<EditOutlined />}
             style={buttonStyle}
             onClick={handleEditClick}
