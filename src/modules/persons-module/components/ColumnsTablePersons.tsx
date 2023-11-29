@@ -47,6 +47,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     dataIndex: 'firstName',
     key: 'name',
     width: 100,
+    ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -71,6 +72,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     dataIndex: 'lastName',
     key: 'lastName',
     width: 100,
+    ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
   },
@@ -156,6 +158,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     key: 'place',
     align: 'center',
     width: 60,
+    ellipsis: true,
     render: (text, record) => (
       <Tooltip
         title={`name: ${record.place.name}`}
@@ -172,6 +175,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     key: 'status',
     align: 'center',
     width: 65,
+    ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text: string) => ColorStatusTag(text),
@@ -190,23 +194,23 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
           src: photo.versions.huge.url,
         }))}
       >
-        <Tooltip
-          title={`ID: ${record?.photos[0]?.uploadId}`}
-          placement="leftBottom"
-          color="#1087f6"
-          key={record?.photos[0]?.uploadId}
-        >
-          <Space size="middle">
-            <Badge size="small" count={record?.photos.length}>
-              <Image
-                src={record?.photos[0]?.versions.huge.url}
-                width={40}
-                style={{ borderRadius: 4 }}
-                fallback={pictureBackup}
-              />
-            </Badge>
-          </Space>
-        </Tooltip>
+        {/* <Tooltip */}
+        {/*  title={`ID: ${record?.photos[0]?.uploadId}`} */}
+        {/*  placement="leftBottom" */}
+        {/*  color="#1087f6" */}
+        {/*  key={record?.photos[0]?.uploadId} */}
+        {/* > */}
+        <Space size="middle">
+          <Badge size="small" count={record?.photos.length}>
+            <Image
+              src={record?.photos[0]?.versions.huge.url}
+              width={40}
+              style={{ borderRadius: 4 }}
+              fallback={pictureBackup}
+            />
+          </Badge>
+        </Space>
+        {/* </Tooltip> */}
       </Image.PreviewGroup>
     ),
   },
@@ -216,6 +220,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     key: 'actions',
     align: 'center',
     width: 80,
+    ellipsis: true,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePersonStatusComponent person={record} />

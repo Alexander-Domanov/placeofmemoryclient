@@ -1413,6 +1413,7 @@ export const by = {
       archived: 'Архіў',
     },
     selectStatus: {
+      title: 'Выберыце статус',
       all: 'Усе',
       draft: 'Чарнавікі',
       pending: 'Адпраўлены на праверку',

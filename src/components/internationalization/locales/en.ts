@@ -1405,6 +1405,7 @@ export const en: LocaleType = {
       archived: 'Archive',
     },
     selectStatus: {
+      title: 'Select status',
       all: 'All',
       draft: 'Draft',
       pending: 'Send for review',

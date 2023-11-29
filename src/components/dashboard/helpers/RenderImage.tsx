@@ -11,6 +11,7 @@ export const RenderImage = (
     <Row justify="center">
       <Badge size="default">
         <Image
+          key={url}
           src={url}
           width={size}
           preview={isPreview}

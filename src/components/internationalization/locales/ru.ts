@@ -1407,6 +1407,7 @@ export const ru: LocaleType = {
       archived: 'Архив',
     },
     selectStatus: {
+      title: 'Выберите статус',
       all: 'Все',
       draft: 'Черновики',
       pending: 'Отправлено на рассмотрение',

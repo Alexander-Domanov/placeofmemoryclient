@@ -1,5 +1,6 @@
 import { Select } from 'antd';
 import { FC } from 'react';
+import { useTranslation } from '@/components/internationalization';
 
 interface SelectInputProps {
   defaultValue: { value: string; label: string };
@@ -11,19 +12,22 @@ export const CustomSelectInput: FC<SelectInputProps> = ({
   defaultValue,
   options,
   onChange,
-}) => (
-  <Select
-    labelInValue
-    title="Select a condition"
-    defaultValue={defaultValue}
-    style={{ width: 150 }}
-    onChange={onChange}
-    options={options}
-  >
-    {options.map((option) => (
-      <Select.Option key={option.value} value={option.value}>
-        {option.label}
-      </Select.Option>
-    ))}
-  </Select>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Select
+      labelInValue
+      title={t.dashboard.selectStatus.title}
+      defaultValue={defaultValue}
+      style={{ width: 150 }}
+      onChange={onChange}
+      options={options}
+    >
+      {options.map((option) => (
+        <Select.Option key={option.value} value={option.value}>
+          {option.label}
+        </Select.Option>
+      ))}
+    </Select>
+  );
+};

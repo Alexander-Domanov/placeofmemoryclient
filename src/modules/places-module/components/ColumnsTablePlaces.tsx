@@ -27,6 +27,7 @@ export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
     key: 'ownerId',
     align: 'center',
     width: 80,
+    ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
@@ -131,19 +132,20 @@ export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
     key: 'photos',
     align: 'center',
     width: 90,
+    ellipsis: true,
     render: (text, record: IPlace) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
-          <Tooltip
-            title={`ID: ${photo.uploadId}`}
-            placement="leftBottom"
-            color="#1087f6"
-            key={index}
-          >
-            <Typography.Text>
-              {RenderImage(photo.versions.huge.url, 40, true)}
-            </Typography.Text>
-          </Tooltip>
+          // <Tooltip
+          //   title={`ID: ${photo.uploadId}`}
+          //   placement="leftBottom"
+          //   color="#1087f6"
+          //   key={index}
+          // >
+          <Typography.Text key={index}>
+            {RenderImage(photo.versions.huge.url, 40, true)}
+          </Typography.Text>
+          // </Tooltip>
         ))}
       </Row>
     ),
@@ -154,6 +156,7 @@ export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
     key: 'persons',
     align: 'center',
     width: 70,
+    ellipsis: true,
     render: (text, record) => (
       <Typography.Text>{record.personsLocation.length}</Typography.Text>
     ),
@@ -164,6 +167,7 @@ export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
     key: 'actions',
     align: 'center',
     width: 80,
+    ellipsis: true,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdatePlaceStatus place={record} />

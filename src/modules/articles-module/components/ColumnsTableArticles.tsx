@@ -26,6 +26,7 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     dataIndex: 'owner',
     key: 'ownerId',
     width: 80,
+    ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
     align: 'center',
@@ -97,6 +98,7 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     dataIndex: 'status',
     key: 'status',
     width: 60,
+    ellipsis: true,
     align: 'center',
     sorter: true,
     sortDirections: ['ascend', 'descend'],
@@ -107,20 +109,21 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     dataIndex: 'photos',
     key: 'photos',
     width: 80,
+    ellipsis: true,
     align: 'center',
     render: (text, record: IArticle) => (
       <Row justify="space-evenly">
         {record.photos.map((photo, index) => (
-          <Tooltip
-            title={`ID: ${photo.uploadId}`}
-            placement="leftBottom"
-            color="#1087f6"
-            key={index}
-          >
-            <Typography.Text key={index}>
-              {RenderImage(photo.versions.huge.url, 40, true)}
-            </Typography.Text>
-          </Tooltip>
+          // <Tooltip
+          //   title={`ID: ${photo.uploadId}`}
+          //   placement="leftBottom"
+          //   color="#1087f6"
+          //   key={index}
+          // >
+          <Typography.Text key={index}>
+            {RenderImage(photo.versions.huge.url, 40, true)}
+          </Typography.Text>
+          // </Tooltip>
         ))}
       </Row>
     ),
@@ -131,6 +134,7 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     key: 'actions',
     width: 80,
     align: 'center',
+    ellipsis: true,
     render: (text, record) => (
       <Row justify="space-evenly">
         <UpdateArticleStatusComponent article={record} />
