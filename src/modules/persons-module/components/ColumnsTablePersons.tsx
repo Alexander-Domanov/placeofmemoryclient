@@ -44,22 +44,6 @@ function parseDate(input: string): {
   };
 }
 
-function renderDayAndMonth(day: string | null, month: string | null) {
-  if (day !== null && month !== null) {
-    return (
-      <span>
-        <span className="text-neutral-400">{day}</span>.
-        <span className="text-neutral-400">{month}</span>.
-      </span>
-    );
-  }
-  return (
-    <span className="text-neutral-400">
-      {day !== null ? day : ''}.{month !== null ? month : ''}
-    </span>
-  );
-}
-
 export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
   {
     title: t.dashboard.persons.table.id,
