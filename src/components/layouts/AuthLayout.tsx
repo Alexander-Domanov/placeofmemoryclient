@@ -6,9 +6,9 @@ interface IAuthLayoutProps {
   children: ReactNode;
   videoSrc?: string;
 }
-
-const baseVideoSrc =
-  'https://media.istockphoto.com/id/1406990292/video/bright-sunlight-breaks-through-lush-grass-waving-in-wind.mp4?s=mp4-640x640-is&k=20&c=Wg69EHKzHPK8-KVau4NYV88A4Fs7nmLc_aqDiwJRPsM=';
+const baseVideoSrc = '/videos/sign.mp4';
+// const baseVideoSrc =
+//   'https://media.istockphoto.com/id/1406990292/video/bright-sunlight-breaks-through-lush-grass-waving-in-wind.mp4?s=mp4-640x640-is&k=20&c=Wg69EHKzHPK8-KVau4NYV88A4Fs7nmLc_aqDiwJRPsM=';
 
 export const AuthLayout = ({
   children,
@@ -22,7 +22,7 @@ export const AuthLayout = ({
           <section className="w-[450px] bg-accent-100">
             <video
               playsInline
-              className="auth-sidebar-video object-cover w-full h-full"
+              className="auth-sidebar-video object-cover w-full h-full bg-dark-700"
               autoPlay
               loop
               muted
