@@ -17,7 +17,7 @@ import { useTranslation } from '@/components/internationalization';
 
 // const videoForLayout =
 //   'https://media.istockphoto.com/id/670852240/video/nature-photographer.mp4?s=mp4-640x640-is&k=20&c=MWW5_lvT4duO8Ztd45Q1Xy6dmDrBaQ0mWGHVITArPJo=';
-const videoForLayout = '/videos/sing.mp4';
+const videoForLayout = '/videos/sign.mp4';
 
 export const SignUp = () => {
   const { t } = useTranslation();
