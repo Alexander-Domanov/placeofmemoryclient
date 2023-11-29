@@ -11,6 +11,55 @@ import DeletePersonComponent from '@/modules/persons-module/components/DeletePer
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 import { LocaleType } from '@/components/internationalization';
 
+function parseDate(input: string): {
+  day: string | null;
+  joinedDate: string | null;
+  month: string | null;
+  year: string | null;
+} {
+  if (!input) return { day: null, joinedDate: null, month: null, year: null };
+  if (input.includes(' ')) {
+    const parts = input.split(' ');
+    return {
+      day: parts[0],
+      joinedDate: parts[1],
+      month: null,
+      year: null,
+    };
+  }
+  if (input.includes('.')) {
+    const parts = input.split('.');
+    return {
+      day: parts[0],
+      joinedDate: input,
+      month: parts[1],
+      year: parts[2],
+    };
+  }
+  return {
+    day: null,
+    joinedDate: input,
+    month: null,
+    year: null,
+  };
+}
+
+function renderDayAndMonth(day: string | null, month: string | null) {
+  if (day !== null && month !== null) {
+    return (
+      <span>
+        <span className="text-neutral-400">{day}</span>.
+        <span className="text-neutral-400">{month}</span>.
+      </span>
+    );
+  }
+  return (
+    <span className="text-neutral-400">
+      {day !== null ? day : ''}.{month !== null ? month : ''}
+    </span>
+  );
+}
+
 export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
   {
     title: t.dashboard.persons.table.id,
@@ -81,22 +130,38 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     dataIndex: 'birthDate',
     key: 'birthYear',
     width: 80,
-    align: 'center',
+    align: 'end',
     ellipsis: true,
     sorter: true,
     sortDirections: ['ascend', 'descend'],
-    // render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
+    render: (text: string) => (
+      <Tooltip
+        title={parseDate(text)?.day}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{parseDate(text)?.joinedDate}</Typography.Text>
+      </Tooltip>
+    ),
   },
   {
     title: t.dashboard.persons.table.deathDate,
     dataIndex: 'deathDate',
     key: 'deathDate',
     width: 80,
-    align: 'center',
+    align: 'end',
     sorter: true,
     ellipsis: true,
     sortDirections: ['ascend', 'descend'],
-    // render: (text: string) => convertDateToFormat(text, 'DD.MM.YYYY'),
+    render: (text: string) => (
+      <Tooltip
+        title={parseDate(text)?.day}
+        placement="leftBottom"
+        color="#1087f6"
+      >
+        <Typography.Text>{parseDate(text)?.joinedDate}</Typography.Text>
+      </Tooltip>
+    ),
   },
   {
     title: t.dashboard.persons.table.country,
