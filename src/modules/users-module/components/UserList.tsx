@@ -33,6 +33,8 @@ import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrum
 import { LocaleType, useTranslation } from '@/components/internationalization';
 import { useDeleteUser } from '@/modules/users-module/hooks/useDeleteUser';
 import { FileStatusOptions } from '@/common-dashboard';
+import { getColorRole } from '@/modules/users-module/components/helpers/ColorRoleTag';
+import { getColorStatusUser } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
 
 interface DescriptionItemProps {
   title: string;
@@ -218,12 +220,14 @@ export const UserList: FC = () => {
 
                     <ListItems
                       title={t.dashboard.users.list.role}
-                      content={selectedUser?.role}
+                      content={getColorRole(selectedUser?.role || null, t).text}
                     />
 
                     <ListItems
                       title={t.dashboard.users.list.status}
-                      content={selectedUser?.status}
+                      content={
+                        getColorStatusUser(selectedUser?.status || null, t).text
+                      }
                     />
 
                     <ListItems

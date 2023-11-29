@@ -101,6 +101,7 @@ const UpdateUserStatusAndRoleComponent: React.FC<DeleteUserComponentProps> = ({
     return (
       <Button
         key={0}
+        title={t.dashboard.users.updateModal.button.title}
         icon={<EditOutlined />}
         style={{ cursor: 'pointer', color: '#2c332c' }}
         onClick={handleEditClick}
