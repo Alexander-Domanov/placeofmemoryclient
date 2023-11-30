@@ -26,6 +26,7 @@ import {
   ILocation,
   IPersonById,
   Role,
+  Statuses,
 } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
@@ -266,6 +267,18 @@ export const PersonEdit: FC = () => {
   };
 
   const updateOptions = GetUpdateOptions(t, me);
+
+  if (
+    status === Statuses.PUBLISHED ||
+    me?.role === Role.USER ||
+    me?.role === Role.AUTHOR
+  ) {
+    updateOptions.push(
+      <Select.Option key={Statuses.PUBLISHED} value={Statuses.PUBLISHED}>
+        {t.dashboard.updateStatus.published}
+      </Select.Option>
+    );
+  }
 
   const isDisabled = GetDisabledStatus(status, me?.role as Role);
 
