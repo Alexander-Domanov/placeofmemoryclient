@@ -3,6 +3,8 @@ import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-
 export function extractPlaceData(
   place: google.maps.places.PlaceResult | google.maps.GeocoderResult
 ): IPlaceResultAfterExtract {
+  const lat = place.geometry?.location?.lat().toFixed(6) || '0';
+  const lng = place.geometry?.location?.lng().toFixed(6) || '0';
   return {
     country:
       place.address_components?.find((c) => c.types.includes('country'))
@@ -29,8 +31,8 @@ export function extractPlaceData(
         ?.long_name || '',
     location: {
       place: place.formatted_address?.split(',')[0] || '',
-      lat: place.geometry?.location?.lat() || 0,
-      lng: place.geometry?.location?.lng() || 0,
+      lat: parseFloat(lat),
+      lng: parseFloat(lng),
     },
     formattedAddress: place.formatted_address || '',
   };
