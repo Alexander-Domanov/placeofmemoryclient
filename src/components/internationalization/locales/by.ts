@@ -1297,7 +1297,7 @@ export const by = {
       },
     },
     rules: {
-      required: 'Калі ласка, увядзіце',
+      required: 'Калі ласка, увядзіце:',
       slug: {
         label: 'Слаг',
         placeholder: 'Генеруецца аўтаматычна',

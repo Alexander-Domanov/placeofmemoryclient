@@ -229,7 +229,7 @@ export const PlaceEdit: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: placeFormRules.description.maxCharacters,
-      message: placeFormRules.description.message,
+      message: t.dashboard.places.form.description.label,
       value,
       callback,
       t,
