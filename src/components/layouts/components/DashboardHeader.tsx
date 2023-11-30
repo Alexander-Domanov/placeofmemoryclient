@@ -25,6 +25,7 @@ import {
   useTranslation,
 } from '@/components/internationalization';
 import { Logo } from '@/components';
+import { getColorRole } from '@/modules/users-module/components/helpers/ColorRoleTag';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -79,7 +80,8 @@ export const DashboardHeader: FC = () => {
 
             <Flex align="center" gap="small" className={styles.userInfo}>
               <Tooltip
-                title={`role: ${me?.role}`}
+                // title={`role: ${me?.role}`}
+                title={getColorRole(me?.role || null, t).text}
                 placement="bottom"
                 color="#1087f6"
               >
