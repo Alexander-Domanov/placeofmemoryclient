@@ -17,10 +17,10 @@ interface Props {
 }
 
 export const PersonsMain: FC<Props> = ({ persons }) => {
-  const { push, query } = useRouter();
+  const { push, query, pathname, replace } = useRouter();
   const { t } = useTranslation();
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -43,7 +43,14 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
   const pageParams = query.page as string;
 
-  const { dataPersons, isLoading } = useGetPersonsMain({
+  useEffect(() => {
+    replace({
+      pathname,
+      query: { ...query, page: 1 },
+    });
+  }, [nameD, lastNameD, birthDateD, deathDateD, countryD, cityD]);
+
+  const { dataPersons, isFetchingPersons } = useGetPersonsMain({
     pageNumber: Number(pageParams),
     ...(name && { name: nameD }),
     ...(lastName && { lastName: lastNameD }),
@@ -55,10 +62,6 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
     ...(filterConditionDeathDate && { filterConditionDeathDate }),
     persons,
   });
-
-  useEffect(() => {
-    setLoading(isLoading);
-  }, [isLoading]);
 
   const onPageChange = (newPage: number) => {
     if (dataPersons && newPage >= 1 && newPage <= dataPersons.pagesCount) {
@@ -88,6 +91,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
 
     return isValid ? null : { errorT };
   };
+
   const validateDeathDate = (deathDate: string) => {
     const isValid =
       yup.number().min(0).max(currentYear).isValidSync(+deathDate) &&
@@ -212,15 +216,15 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
         </div>
 
         <div className="mt-10">
-          <div style={{ minHeight: loading ? '200px' : '0' }}>
-            {loading && (
+          <div style={{ minHeight: isFetchingPersons ? '200px' : '0' }}>
+            {isFetchingPersons && (
               <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
                 Loading...
               </div>
             )}
           </div>
 
-          {!loading && (
+          {!isFetchingPersons && (
             <div className="grid grid-cols-6 gap-4 lg:grid-cols-4 sm:grid-cols-2">
               {dataPersons?.items.map((person) => (
                 <PersonsItemMain person={person} key={person.id} />
