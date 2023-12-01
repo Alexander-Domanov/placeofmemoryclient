@@ -7,13 +7,26 @@ import {
 } from '@ant-design/icons';
 import { Select } from 'antd';
 import { Role, Statuses } from '@/types';
-import { LocaleType } from '@/components/internationalization';
+import { useTranslation } from '@/components/internationalization';
 
 const { Option } = Select;
 
-export const GetUpdateOptions = (t: LocaleType, me?: { role: Role }) => {
+export const GetUpdateOptions = (data: {
+  // t: LocaleType;
+  status: Statuses;
+  me?: { role: Role };
+}) => {
+  const { t } = useTranslation();
+  const { status, me } = data;
   const isAdminOrEditor = me?.role === Role.USER || me?.role === Role.AUTHOR;
   if (isAdminOrEditor) {
+    if (status === Statuses.PUBLISHED) {
+      return [
+        <Option key={Statuses.PUBLISHED} value={Statuses.PUBLISHED}>
+          <EyeOutlined /> {t.dashboard.updateStatus.published}
+        </Option>,
+      ];
+    }
     return [
       <Option key={Statuses.DRAFT} value={Statuses.DRAFT}>
         <EyeInvisibleOutlined /> {t.dashboard.updateStatus.draft}

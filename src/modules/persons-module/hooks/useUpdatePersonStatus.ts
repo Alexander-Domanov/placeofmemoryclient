@@ -17,6 +17,7 @@ export const useUpdatePersonStatus = () => {
     ...noRefetch,
     onSuccess: () => {
       client.invalidateQueries(['persons']);
+      client.invalidateQueries({ queryKey: ['gallery'] });
       client.invalidateQueries(['person']);
       client.invalidateQueries(['user']);
     },

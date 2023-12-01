@@ -139,6 +139,7 @@ const GalleryForm: FC<{
   selectedFile: IExtendGalleryFile | null;
   isDisabled: boolean;
   isUpdating: boolean;
+  showAlt: boolean;
   onSubmit: (values: FormValues) => void;
   onDeleteFile: () => void;
 }> = ({
@@ -146,35 +147,38 @@ const GalleryForm: FC<{
   selectedFile,
   isDisabled,
   isUpdating,
+  showAlt,
   onSubmit,
   onDeleteFile,
 }) => {
   const { t } = useTranslation();
   return (
     <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-      <Form.Item label={t.dashboard.gallery.image.alt} name="alt">
-        <Input
-          placeholder={t.dashboard.gallery.image.alt}
-          disabled={isDisabled}
-        />
-      </Form.Item>
+      {showAlt && (
+        <Form.Item label={t.dashboard.gallery.image.alt} name="alt">
+          <Input
+            placeholder={t.dashboard.gallery.image.alt}
+            disabled={isDisabled}
+          />
+        </Form.Item>
+      )}
 
-      <Form.Item
-        label={t.dashboard.gallery.image.status}
-        name="status"
-        style={{ marginBottom: 0 }}
-      >
-        <Input placeholder={t.dashboard.gallery.image.status} disabled />
-        {/* <Select> */}
-        {/*  <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> */}
-        {/*  <Option value={GalleryFileStatuses.PENDING_REVIEW}> */}
-        {/*    Pending Review */}
-        {/*  </Option> */}
-        {/*  <Option value={GalleryFileStatuses.PUBLISHED}> */}
-        {/*    Published */}
-        {/*  </Option> */}
-        {/* </Select> */}
-      </Form.Item>
+      {/* <Form.Item */}
+      {/*  label={t.dashboard.gallery.image.status} */}
+      {/*  name="status" */}
+      {/*  style={{ marginBottom: 0 }} */}
+      {/* > */}
+      {/*  <Input placeholder={t.dashboard.gallery.image.status} disabled /> */}
+      {/*  /!* <Select> *!/ */}
+      {/*  /!*  <Option value={GalleryFileStatuses.DRAFT}>Draft</Option> *!/ */}
+      {/*  /!*  <Option value={GalleryFileStatuses.PENDING_REVIEW}> *!/ */}
+      {/*  /!*    Pending Review *!/ */}
+      {/*  /!*  </Option> *!/ */}
+      {/*  /!*  <Option value={GalleryFileStatuses.PUBLISHED}> *!/ */}
+      {/*  /!*    Published *!/ */}
+      {/*  /!*  </Option> *!/ */}
+      {/*  /!* </Select> *!/ */}
+      {/* </Form.Item> */}
 
       <GalleryFileDetails file={selectedFile as IExtendGalleryFile} />
 
@@ -236,7 +240,7 @@ export const GalleryFileInfoModal: FC = () => {
     deleteGalleryFileMutateAsync(file?.uploadId, {
       onSuccess() {
         notification.success({
-          message: t.dashboard.gallery.image.notifications.success.title,
+          message: t.dashboard.gallery.image.notifications.upload.remove.title,
           description:
             t.dashboard.gallery.image.notifications.success.description,
           placement: 'bottomLeft',
@@ -263,6 +267,7 @@ export const GalleryFileInfoModal: FC = () => {
     file?.status as string,
     me?.role as Role
   );
+  const isAdministrator = me?.role === Role.ADMIN || me?.role === Role.EDITOR;
 
   const { width } = useWindowSize();
   const isSmallWidth = width && width < 639;
@@ -274,6 +279,7 @@ export const GalleryFileInfoModal: FC = () => {
         selectedFile={selectedFile}
         isDisabled={isDisabled}
         isUpdating={isUpdating}
+        showAlt={isAdministrator}
         onSubmit={onSubmit}
         onDeleteFile={onDeleteFile}
       />
