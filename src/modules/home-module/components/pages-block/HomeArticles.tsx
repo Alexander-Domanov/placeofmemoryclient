@@ -37,6 +37,9 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
                         fill
                         quality={85}
                       />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 text-white p-4">
+                        {post.title}
+                      </div>
                     </Link>
                   </div>
                 ))}
@@ -45,10 +48,11 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
               <a
                 href={routes.articles.index}
                 className="absolute top-1/2 -translate-y-1/2 right-[-80px] inline-flex items-center px-10 uppercase
-                tracking-[2px] font-bold text-dark-700 h-[72px] bg-white rounded-[100px] shadow-button
+                tracking-[2px] font-bold text-dark-700 h-[72px] bg-white rounded-[100px]
                 2xl:right-0
                 lg:h-14 lg:px-8
-                sm:relative sm:right-0 sm:top-0 sm:translate-y-0 sm:h-11 sm:text-sm sm:px-6 sm:mt-6 sm:ml-auto"
+                sm:relative sm:right-0 sm:top-0 sm:translate-y-0 sm:h-11 sm:text-sm sm:px-6 sm:mt-6 sm:ml-auto
+                hover:shadow-iconHover shadow-lg transition-all duration-300"
               >
                 {buttonT}
                 <FaArrowRightLong className="ml-4" size={24} />
