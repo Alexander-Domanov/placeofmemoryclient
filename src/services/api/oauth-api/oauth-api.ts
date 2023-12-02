@@ -30,10 +30,14 @@ export const passwordRecoveryAPI: IAuthAPI = {
 
     return authInstance.post('auth/check-recovery-code', { recoveryCode });
   },
-  passwordRecoveryWithRecaptcha: (data) => {
+  passwordRecoveryWithRecaptcha: async ({ data, lang }) => {
     const { email, recaptcha } = data;
 
-    return authInstance.post('auth/password-recovery', { email, recaptcha });
+    return await authInstance.post('auth/password-recovery', {
+      email,
+      recaptcha,
+      lang,
+    });
   },
 };
 
@@ -42,7 +46,11 @@ interface IAuthAPI {
   checkRecoveryCode: (
     data: Omit<INewPasswordRequest, 'newPassword'>
   ) => Promise<AxiosResponse<IPasswordRecoveryRequestWithRecaptcha>>;
-  passwordRecoveryWithRecaptcha: (
-    data: IPasswordRecoveryRequestWithRecaptcha
-  ) => Promise<AxiosResponse>;
+  passwordRecoveryWithRecaptcha: ({
+    data,
+    lang,
+  }: {
+    data: IPasswordRecoveryRequestWithRecaptcha;
+    lang: string;
+  }) => Promise<AxiosResponse>;
 }

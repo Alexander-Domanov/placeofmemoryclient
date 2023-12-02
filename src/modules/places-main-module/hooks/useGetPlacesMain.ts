@@ -22,12 +22,11 @@ export const useGetPlacesMain = ({
     isFetching: isFetchingPlaces,
     isLoading,
   } = useQuery(
-    ['places-main', pageNumber, name, country, city],
+    ['places-main', pageNumber, name, country, city, locale],
     () => getPlacesMain({ name, country, city, lang: locale, pageNumber }),
     {
       ...noRefetch,
       initialData: places,
-      cacheTime: 0,
       staleTime: 0,
     }
   );

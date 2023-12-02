@@ -82,37 +82,39 @@ export const PlacesMain = ({ places }: IProps) => {
           <div className="mt-6 h-[1px] bg-dark-300" />
 
           <div className="mt-10">
-            <div className="grid grid-cols-[200px_200px_200px] gap-3 justify-end sm:grid-cols-2 sm:gap-0">
-              <div className="sm:order-1 sm:col-span-2">
-                <Input
-                  type="text"
-                  id="name"
-                  value={name}
-                  label={nameT}
-                  onChange={(e) => setName(e.currentTarget.value)}
-                />
-              </div>
+            {pageParams === '1' && (
+              <div className="grid grid-cols-[200px_200px_200px] gap-3 justify-end sm:grid-cols-2 sm:gap-0">
+                <div className="sm:order-1 sm:col-span-2">
+                  <Input
+                    type="text"
+                    id="name"
+                    value={name}
+                    label={nameT}
+                    onChange={(e) => setName(e.currentTarget.value)}
+                  />
+                </div>
 
-              <div className="sm:order-2 sm:col-span-2">
-                <Input
-                  type="text"
-                  id="country"
-                  value={country}
-                  label={countryT}
-                  onChange={(e) => setCountry(e.currentTarget.value)}
-                />
-              </div>
+                <div className="sm:order-2 sm:col-span-2">
+                  <Input
+                    type="text"
+                    id="country"
+                    value={country}
+                    label={countryT}
+                    onChange={(e) => setCountry(e.currentTarget.value)}
+                  />
+                </div>
 
-              <div className="sm:order-3 sm:col-span-2">
-                <Input
-                  type="text"
-                  id="city"
-                  value={city}
-                  label={cityT}
-                  onChange={(e) => setCity(e.currentTarget.value)}
-                />
+                <div className="sm:order-3 sm:col-span-2">
+                  <Input
+                    type="text"
+                    id="city"
+                    value={city}
+                    label={cityT}
+                    onChange={(e) => setCity(e.currentTarget.value)}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mt-10">
               <div style={{ minHeight: loading ? '200px' : '0' }}>
