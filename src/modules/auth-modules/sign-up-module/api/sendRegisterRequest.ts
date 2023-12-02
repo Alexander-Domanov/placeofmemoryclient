@@ -4,6 +4,17 @@ export const sendRegisterRequest = ({
   email,
   password,
   userName,
-}: Omit<any, 'confirmPassword'>) => {
-  return authInstance.post('auth/registration', { userName, email, password });
+  lang,
+}: {
+  email: string;
+  password: number;
+  userName: string;
+  lang: string;
+}) => {
+  return authInstance.post('auth/registration', {
+    userName,
+    email,
+    password,
+    lang,
+  });
 };

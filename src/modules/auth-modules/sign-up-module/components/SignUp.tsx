@@ -20,7 +20,7 @@ import { useTranslation } from '@/components/internationalization';
 const videoForLayout = '/videos/sign.mp4';
 
 export const SignUp = () => {
-  const { t } = useTranslation();
+  const { t, localeLanguage } = useTranslation();
   const [showOrHiddenForm, setShowOrHiddenForm] = useState<boolean>(false);
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema());
@@ -30,7 +30,8 @@ export const SignUp = () => {
     setCustomError
   );
   const registeredDataSubmit = (data: any) => {
-    sendRegisteredData(data);
+    const { email, password, userName } = data;
+    sendRegisteredData({ email, password, userName, lang: localeLanguage });
   };
   useChangingLanguageError({ errors, trigger });
   const { width } = useWindowSize();

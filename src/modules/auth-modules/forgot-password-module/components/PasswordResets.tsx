@@ -16,7 +16,7 @@ import { useTranslation } from '@/components/internationalization';
 import { useChangingLanguageError } from '@/common/hooks/useChangingLanguageError';
 
 export const PasswordResets = () => {
-  const { t } = useTranslation();
+  const { t, localeLanguage } = useTranslation();
   const [captcha, setCaptcha] = useState('');
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
@@ -33,8 +33,10 @@ export const PasswordResets = () => {
   };
   const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     const { email } = data;
-
-    sendLinkPasswordRecovery({ email, recaptcha: captcha });
+    sendLinkPasswordRecovery({
+      data: { email, recaptcha: captcha },
+      lang: localeLanguage,
+    });
     reset();
   };
   useChangingLanguageError({ errors, trigger });
