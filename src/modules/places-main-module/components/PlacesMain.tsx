@@ -118,7 +118,7 @@ export const PlacesMain = ({ places }: IProps) => {
               <div style={{ minHeight: loading ? '200px' : '0' }}>
                 {loading && (
                   <div className="flex justify-center mt-10 text-2xl text-dark-100">
-                    Loading...
+                    {t.common.loading}
                   </div>
                 )}
               </div>

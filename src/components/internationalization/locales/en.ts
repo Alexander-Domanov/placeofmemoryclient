@@ -7,6 +7,7 @@ export const en: LocaleType = {
   common: {
     notFound: 'NOTHING FOUND',
     noData: 'NO DATA',
+    loading: 'Loading...',
   },
   header: {
     articles: 'Articles',

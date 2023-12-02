@@ -7,6 +7,7 @@ export const ru: LocaleType = {
   common: {
     notFound: 'НИЧЕГО НЕ НАЙДЕНО',
     noData: 'НЕТ ДАННЫХ',
+    loading: 'Загрузка...',
   },
   header: {
     articles: 'Статьи',

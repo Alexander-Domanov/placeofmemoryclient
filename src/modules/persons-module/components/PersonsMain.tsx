@@ -215,7 +215,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
           <div style={{ minHeight: loading ? '200px' : '0' }}>
             {loading && (
               <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
-                Loading...
+                {t.common.loading}
               </div>
             )}
           </div>

@@ -5,6 +5,7 @@ export const by = {
   common: {
     notFound: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
     noData: 'НЯМА ДАДЗЕНЫХ',
+    loading: 'Загрузка...',
   },
   header: {
     articles: 'Артыкулы',
