@@ -71,7 +71,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
                     <FaRegEnvelope className="text-base" />
                   </div>
 
-                  <div className="text-sm font-light leading-none truncate">
+                  <div className="text-sm font-light leading-none">
                     <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
                   </div>
                 </div>
