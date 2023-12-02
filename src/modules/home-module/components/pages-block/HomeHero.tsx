@@ -43,11 +43,11 @@ export const HomeHero: FC = () => {
           <div>
             <div className="sm:text-center">
               <Link
-                href={routes.places.index}
+                href={routes.places.page(String(1))}
                 className="mt-[120px] ml-[140px] uppercase tracking-[1.6px] inline-flex relative h-[72px] bg-white items-center px-10 text-dark-200 font-bold rounded-[100px]
                 before:absolute before:-left-[140px] lg:before:-left-[80px] before:top-1/2 before:h-[1px] before:w-[140px]
                 lg:before:w-[80px] before:bg-dark-900 lg:mt-[80px] lg:ml-[80px] lg:h-14 lg:px-8
-                sm:mt-16 sm:before:hidden sm:ml-0 sm:h-11 sm:px-6 sm:text-sm"
+                sm:mt-16 sm:before:hidden sm:ml-0 sm:h-11 sm:px-6 sm:text-sm hover:shadow-iconHover shadow-lg transition-all duration-300"
               >
                 {linkButton}
                 <FaArrowRightLong className="ml-4" size={20} />
