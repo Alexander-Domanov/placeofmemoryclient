@@ -119,6 +119,31 @@ export const en: LocaleType = {
         buttonT: 'Create New Password',
       },
     },
+    registrationConfirmation: {
+      emailSuccessMessage: {
+        headTitleT: 'Email Confirmation',
+        titleT: 'Congratulations!',
+        descriptionT: 'Your email has been confirmed',
+        signInT: 'Sign in',
+      },
+    },
+    resendForm: {
+      headTitle: 'Resending Password Recovery Confirmation',
+      titleT: 'Resend Form',
+      resendLinkT: 'Resend verification link',
+      emailT: 'Email',
+      sendT: 'Send',
+      errorT: {
+        emailT: 'Email is a required field',
+      },
+    },
+    ResendingVerificationLink: {
+      headTitleT: 'Email Verification Link Expired',
+      titleT: 'Email verification link expired',
+      descriptionT:
+        ' Looks like the verification link has expired. Not to worry, we can send the link again',
+      resendLinkT: ' Resend verification link',
+    },
   },
   home: {
     page: {
@@ -1320,7 +1345,7 @@ export const en: LocaleType = {
       longitude: 'Longitude',
       latitude: 'Latitude',
       tooltip:
-        'You need to select a location on the map to determine the coordinates of the place.',
+        "You need to select a location on the map (enter an address, place in the search field, or simply double-click on the map). After choosing the location, you will see a marker on the map, then press the 'Fill Table' button and click the 'Fill Form' button.",
       rules: {
         required: 'Location field is required',
       },

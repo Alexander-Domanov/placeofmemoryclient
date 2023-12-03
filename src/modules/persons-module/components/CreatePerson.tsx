@@ -480,23 +480,6 @@ export const CreatePerson: FC = () => {
 
               <Card>
                 <Form.Item
-                  label={t.dashboard.persons.place.label}
-                  tooltip={t.dashboard.persons.place.tooltip}
-                >
-                  <TitlePlaces onFinishValue={setSelectedPlace} />
-                </Form.Item>
-
-                <MetaInfoSelectedPlaceForm place={selectedPlace} />
-
-                <Row justify="end">
-                  <Button type="dashed" onClick={clearSelectedPlace}>
-                    {t.dashboard.persons.place.clear}
-                  </Button>
-                </Row>
-              </Card>
-
-              <Card>
-                <Form.Item
                   label={t.dashboard.locationInfo.label}
                   name="location"
                   rules={personFormRules.location}
@@ -541,6 +524,23 @@ export const CreatePerson: FC = () => {
                     </Button>
                   </Upload>
                 </Form.Item>
+              </Card>
+
+              <Card>
+                <Form.Item
+                  label={t.dashboard.persons.place.label}
+                  tooltip={t.dashboard.persons.place.tooltip}
+                >
+                  <TitlePlaces onFinishValue={setSelectedPlace} />
+                </Form.Item>
+
+                <MetaInfoSelectedPlaceForm place={selectedPlace} />
+
+                <Row justify="end">
+                  <Button type="dashed" onClick={clearSelectedPlace}>
+                    {t.dashboard.persons.place.clear}
+                  </Button>
+                </Row>
               </Card>
             </Flex>
           </Col>

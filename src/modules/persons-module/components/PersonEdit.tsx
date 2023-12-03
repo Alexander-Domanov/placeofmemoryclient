@@ -630,30 +630,6 @@ export const PersonEdit: FC = () => {
 
                 <Card>
                   <Form.Item
-                    label={t.dashboard.persons.place.label}
-                    tooltip={t.dashboard.persons.place.tooltip}
-                  >
-                    <TitlePlaces
-                      onFinishValue={setSelectedPlace}
-                      disabled={isDisabled}
-                    />
-                  </Form.Item>
-
-                  <MetaInfoSelectedPlaceForm place={selectedPlace} />
-
-                  <Row justify="end">
-                    <Button
-                      type="dashed"
-                      onClick={clearSelectedPlace}
-                      disabled={isDisabled}
-                    >
-                      {t.dashboard.persons.place.clear}
-                    </Button>
-                  </Row>
-                </Card>
-
-                <Card>
-                  <Form.Item
                     label={t.dashboard.locationInfo.label}
                     name="location"
                     rules={personFormRules.location}
@@ -714,6 +690,30 @@ export const PersonEdit: FC = () => {
                     </Flex>
                   </Card>
                 </Flex>
+
+                <Card>
+                  <Form.Item
+                    label={t.dashboard.persons.place.label}
+                    tooltip={t.dashboard.persons.place.tooltip}
+                  >
+                    <TitlePlaces
+                      onFinishValue={setSelectedPlace}
+                      disabled={isDisabled}
+                    />
+                  </Form.Item>
+
+                  <MetaInfoSelectedPlaceForm place={selectedPlace} />
+
+                  <Row justify="end">
+                    <Button
+                      type="dashed"
+                      onClick={clearSelectedPlace}
+                      disabled={isDisabled}
+                    >
+                      {t.dashboard.persons.place.clear}
+                    </Button>
+                  </Row>
+                </Card>
               </Flex>
             </Col>
           </Row>
