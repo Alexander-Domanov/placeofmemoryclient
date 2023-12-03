@@ -32,7 +32,7 @@ export const ResendingVerificationEmail: FC<PropsType> = ({ code }) => {
       </Head>
       <Header />
       {isSuccess && <EmailSuccessMessage />}
-      {isError && <ResendLink path="recovery/resend-form" />}
+      {isError && <ResendLink path="registration/resend-form" />}
     </>
   );
 };
