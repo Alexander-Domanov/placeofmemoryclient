@@ -26,8 +26,7 @@ export const CreateNewPasswordForm = ({
     onSubmitHandler(password);
     reset();
   };
-  const { placeholderT, descriptionT, labelT, buttonT } =
-    t.auth.recovery.recoveryPage;
+  const { descriptionT, labelT, buttonT } = t.auth.recovery.recoveryPage;
   return (
     <>
       <form
@@ -37,7 +36,7 @@ export const CreateNewPasswordForm = ({
         <Input
           label={labelT}
           id="password"
-          placeholder={placeholderT}
+          // placeholder={placeholderT}
           error={errors?.password?.message}
           {...register('password')}
         />
