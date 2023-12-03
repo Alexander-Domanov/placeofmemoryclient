@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useState } from 'react';
 import { StyleProvider } from '@ant-design/cssinjs';
-import '@/styles/globals.css';
+import '../styles/globals.css';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import {
@@ -27,6 +27,15 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  // useEffect(() => {
+  //   if ('serviceWorker' in navigator) {
+  //     navigator.serviceWorker
+  //       .register('../../sw.js')
+  //       // eslint-disable-next-line no-console
+  //       .then((registration) => console.log('scope is: ', registration.scope));
+  //   }
+  // }, []);
+
   const [queryClient] = useState(
     () =>
       new QueryClient({

@@ -219,7 +219,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
           <div style={{ minHeight: isFetchingPersons ? '200px' : '0' }}>
             {isFetchingPersons && (
               <div className="flex justify-center mt-20 text-2xl text-dark-100 mb-20">
-                Loading...
+                {t.common.loading}
               </div>
             )}
           </div>

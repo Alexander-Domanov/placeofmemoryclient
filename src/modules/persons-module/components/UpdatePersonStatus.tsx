@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IPerson, Role } from '@/types';
+import { IPerson, Role, Statuses } from '@/types';
 import { useUpdatePersonStatus } from '@/modules/persons-module/hooks/useUpdatePersonStatus';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
@@ -50,7 +50,7 @@ const UpdatePersonStatusComponent: React.FC<
     );
   };
 
-  const updateOptions = GetUpdateOptions(t, me);
+  const updateOptions = GetUpdateOptions({ status: status as Statuses, me });
 
   const isDisabled = GetDisabledStatus(status as string, me?.role as Role);
 

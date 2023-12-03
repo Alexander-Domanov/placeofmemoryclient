@@ -7,6 +7,7 @@ export const ru: LocaleType = {
   common: {
     notFound: 'НИЧЕГО НЕ НАЙДЕНО',
     noData: 'НЕТ ДАННЫХ',
+    loading: 'Загрузка...',
   },
   header: {
     articles: 'Статьи',
@@ -114,7 +115,7 @@ export const ru: LocaleType = {
       },
       recoveryPage: {
         labelT: 'НОВЫЙ ПАРОЛЬ',
-        placeholderT: '6+ символов',
+        // placeholderT: '6+ символов',
         descriptionT: `Пароль должен содержать 1-9, a-z, A-Z и определенные символы`,
         buttonT: 'Создать новый пароль',
       },

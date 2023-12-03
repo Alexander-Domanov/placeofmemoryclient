@@ -120,10 +120,11 @@ export const Contacts: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: aboutFormRules.about.maxCharacters,
-      message: aboutFormRules.about.message,
+      message: t.dashboard.contacts.form.about.label,
       value,
       callback,
       t,
+      isCanEmpty: true,
     });
   };
 

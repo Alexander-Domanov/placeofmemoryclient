@@ -174,10 +174,11 @@ export const CreatePerson: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: personFormRules.biography.maxCharacters,
-      message: personFormRules.biography.message,
+      message: t.dashboard.persons.form.biography.label,
       value,
       callback,
       t,
+      isCanEmpty: true,
     });
   };
   const createPersonStepsTour = CreatePersonStepsTour(ref, t);

@@ -86,7 +86,7 @@ export const Gallery: FC = () => {
       withLink: false,
     }),
   ];
-  const typeFileOptions = TypeFileOptions(t);
+  const typeFileOptions = TypeFileOptions(t, me?.role as Role);
 
   return (
     <Flex gap="large" vertical>

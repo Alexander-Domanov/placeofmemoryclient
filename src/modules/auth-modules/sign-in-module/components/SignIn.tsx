@@ -15,7 +15,7 @@ import { useTranslation } from '@/components/internationalization';
 import { useChangingLanguageError } from '@/common/hooks/useChangingLanguageError';
 
 export const SignIn = () => {
-  const { t } = useTranslation();
+  const { t, localeLanguage } = useTranslation();
   const {
     emailT,
     buttonSignInT,
@@ -46,6 +46,7 @@ export const SignIn = () => {
     sendLoginData({
       email,
       password,
+      lang: localeLanguage,
     });
   };
 

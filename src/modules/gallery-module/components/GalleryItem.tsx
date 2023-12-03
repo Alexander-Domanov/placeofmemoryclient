@@ -4,34 +4,52 @@ import { BsEye, BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useDashboardModalsStore } from '@/store';
 import { IGalleryFile, Statuses } from '@/types';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
+import { LocaleType, useTranslation } from '@/components/internationalization';
+import { getColorStatus } from '@/components';
 
 interface Props {
   file: IGalleryFile;
 }
 
-const getStatusIcon = (status: string) => {
+const getStatusIcon = (status: string, t: LocaleType) => {
   switch (status) {
     case Statuses.PUBLISHED:
       return (
-        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+        <Tooltip
+          title={`${getColorStatus(status, t).text}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
           <BsEyeFill color="green" size={24} />
         </Tooltip>
       );
     case Statuses.DRAFT:
       return (
-        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+        <Tooltip
+          title={`${getColorStatus(status, t).text}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
           <BsEyeSlashFill color="red" size={24} />
         </Tooltip>
       );
     case Statuses.PENDING_REVIEW:
       return (
-        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+        <Tooltip
+          title={`${getColorStatus(status, t).text}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
           <BsEye color="orange" size={24} />
         </Tooltip>
       );
     case Statuses.ARCHIVED:
       return (
-        <Tooltip title={`${status}`} placement="leftBottom" color="#1087f6">
+        <Tooltip
+          title={`${getColorStatus(status, t).text}`}
+          placement="leftBottom"
+          color="#1087f6"
+        >
           <BsEyeSlashFill color="lightgrey" size={24} />
         </Tooltip>
       );
@@ -41,6 +59,7 @@ const getStatusIcon = (status: string) => {
 };
 
 export const GalleryItem: FC<Props> = ({ file }) => {
+  const { t } = useTranslation();
   const { setIsOpen, setUploadId } = useDashboardModalsStore(
     (state) => state.fileInfoModal
   );
@@ -50,7 +69,7 @@ export const GalleryItem: FC<Props> = ({ file }) => {
     setIsOpen(true);
   };
 
-  const statusIcon = getStatusIcon(file.status);
+  const statusIcon = getStatusIcon(file.status, t);
 
   return (
     <div

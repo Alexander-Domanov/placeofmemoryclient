@@ -5,6 +5,7 @@ export const by = {
   common: {
     notFound: 'НІЧОГА НЕ ЗНАЙДЗЕНА',
     noData: 'НЯМА ДАДЗЕНЫХ',
+    loading: 'Загрузка...',
   },
   header: {
     articles: 'Артыкулы',
@@ -122,7 +123,7 @@ export const by = {
       },
       recoveryPage: {
         labelT: 'НОВЫ ПАРОЛЬ',
-        placeholderT: '6+ знакаў"',
+        // placeholderT: '6+ знакаў"',
         descriptionT: `  Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы
          `,
         buttonT: 'Стварыце новы пароль',
@@ -1297,7 +1298,7 @@ export const by = {
       },
     },
     rules: {
-      required: 'Калі ласка, увядзіце',
+      required: 'Калі ласка, увядзіце:',
       slug: {
         label: 'Слаг',
         placeholder: 'Генеруецца аўтаматычна',

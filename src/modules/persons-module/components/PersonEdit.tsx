@@ -26,6 +26,7 @@ import {
   ILocation,
   IPersonById,
   Role,
+  Statuses,
 } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
@@ -265,7 +266,7 @@ export const PersonEdit: FC = () => {
     );
   };
 
-  const updateOptions = GetUpdateOptions(t, me);
+  const updateOptions = GetUpdateOptions({ status: status as Statuses, me });
 
   const isDisabled = GetDisabledStatus(status, me?.role as Role);
 
@@ -284,10 +285,11 @@ export const PersonEdit: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: personFormRules.biography.maxCharacters,
-      message: personFormRules.biography.message,
+      message: t.dashboard.persons.form.biography.label,
       value,
       callback,
       t,
+      isCanEmpty: true,
     });
   };
 

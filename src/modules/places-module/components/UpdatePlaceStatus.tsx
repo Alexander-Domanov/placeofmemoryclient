@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IPlace } from '@/types';
+import { IPlace, Statuses } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/components';
@@ -52,7 +52,7 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
     );
   };
 
-  const updateOptions = GetUpdateOptions(t, me);
+  const updateOptions = GetUpdateOptions({ status: status as Statuses, me });
 
   return (
     <>

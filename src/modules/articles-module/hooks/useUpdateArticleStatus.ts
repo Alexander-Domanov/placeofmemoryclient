@@ -18,6 +18,7 @@ export const useUpdateArticleStatus = () => {
     onSuccess: () => {
       client.invalidateQueries(['articles']);
       client.invalidateQueries(['article']);
+      client.invalidateQueries({ queryKey: ['gallery'] });
       client.invalidateQueries(['user']);
     },
     onError: (error: IResponseError) => {

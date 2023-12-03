@@ -20,7 +20,13 @@ import dynamic from 'next/dynamic';
 import { UploadFile } from 'antd/es/upload/interface';
 import { SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import { IPlaceResultAfterExtract } from '@/modules/maps/components/types/place-result-after-extract.type';
-import { ICreatePlace, IGalleryFile, ILocation, IPlace } from '@/types';
+import {
+  ICreatePlace,
+  IGalleryFile,
+  ILocation,
+  IPlace,
+  Statuses,
+} from '@/types';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
 import { routes } from '@/common/routing/routes';
@@ -214,7 +220,7 @@ export const PlaceEdit: FC = () => {
 
   const placeFormRules = PlaceFormRules(t);
 
-  const updateOptions = GetUpdateOptions(t, me);
+  const updateOptions = GetUpdateOptions({ status: status as Statuses, me });
 
   const exceededDescription = isCharacterCountExceeded(
     GetCharacterCount(descriptionText),
@@ -229,7 +235,7 @@ export const PlaceEdit: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: placeFormRules.description.maxCharacters,
-      message: placeFormRules.description.message,
+      message: t.dashboard.places.form.description.label,
       value,
       callback,
       t,

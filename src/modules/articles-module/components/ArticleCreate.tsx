@@ -106,7 +106,7 @@ export const ArticleCreate: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: articleFormRules.content.maxCharacters,
-      message: articleFormRules.content.message,
+      message: t.dashboard.articles.form.content.label,
       value,
       callback,
       t,

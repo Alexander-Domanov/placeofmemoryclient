@@ -6,12 +6,21 @@ interface IContentValidationOptions {
   value: string;
   callback: (message?: string) => void;
   t: LocaleType;
+  isCanEmpty?: boolean;
 }
 
 export const ValidationOfRedactorValue = (
   options: IContentValidationOptions
 ) => {
-  const { value, maxCharacters, message, callback, t } = options;
+  const {
+    value,
+    maxCharacters,
+    message,
+    callback,
+    t,
+    isCanEmpty = false,
+  } = options;
+
   const contentWithoutTags = (value as string)?.replace(/<[^>]*>/g, '') || '';
   const isEmptyContent = (value as string)?.trim() === '<p><br></p>';
 
@@ -19,8 +28,8 @@ export const ValidationOfRedactorValue = (
 
   if (isExceeded) {
     callback(message);
-  } else if (isEmptyContent) {
-    callback(`${t.dashboard.rules.required} ${message.split(' ')[0]}`);
+  } else if (isEmptyContent && !isCanEmpty) {
+    callback(`${t.dashboard.rules.required} "${message.split(' ')[0]}"`);
   } else {
     callback();
   }

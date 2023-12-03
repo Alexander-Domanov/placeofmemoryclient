@@ -8,10 +8,10 @@ import {
   FaRegEnvelope,
   FaTelegram,
 } from 'react-icons/fa6';
-import { nameLogo, NAVIGATION_LINK } from '@/common/constants';
-import { routes } from '@/common/routing/routes';
+import { NAVIGATION_LINK } from '@/common/constants';
 import { IContacts } from '@/types';
 import { useTranslation } from '@/components/internationalization';
+import { Logo } from '@/components';
 
 interface Props {
   contacts: IContacts;
@@ -30,9 +30,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
           sm:grid-cols-[120px_1fr] sm:gap-x-4 sm:gap-y-14"
         >
           <div className="sm:order-4 sm:col-span-2 sm:text-center">
-            <div className="font-kelsi text-[32px] lg:text-2xl">
-              <Link href={routes.main}>{nameLogo}</Link>
-            </div>
+            <Logo />
           </div>
 
           <div className="sm:order-2">
@@ -71,7 +69,7 @@ export const SiteFooter: FC<Props> = ({ contacts }) => {
                     <FaRegEnvelope className="text-base" />
                   </div>
 
-                  <div className="text-sm font-light leading-none truncate">
+                  <div className="text-sm font-light leading-none">
                     <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
                   </div>
                 </div>
