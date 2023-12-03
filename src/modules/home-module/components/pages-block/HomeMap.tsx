@@ -55,7 +55,7 @@ export const HomeMap: FC = () => {
               <Image
                 src={homeMap}
                 alt="map"
-                className="rounded-tl-3xl rounded-bl-3xl hover:shadow-button shadow-lg transition-all duration-300"
+                className="rounded-tl-xl rounded-bl-xl sm:rounded-lg hover:shadow-button shadow-lg transition-all duration-300"
               />
             </Link>
           </div>
