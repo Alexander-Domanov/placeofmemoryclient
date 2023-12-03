@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps = async (
     lang: context.locale,
     pageNumber: page,
   });
+
   const { data: contacts } = await getContacts();
   return {
     props: { places, contacts },

@@ -138,11 +138,16 @@ export const PlacesMain = ({ places }: IProps) => {
                           className="relative aspect-[532/244] block"
                           onMouseEnter={() => setHoveredItem(place.id)}
                           onMouseLeave={() => setHoveredItem(null)}
+                          as="image"
+                          rel="preload"
                         >
                           <Image
                             src={place.photos[0]?.versions.huge.url}
                             alt={place.nameCemetery}
                             fill
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPUqQcAAN0ArWVCiMAAAAAASUVORK5CYII="
+                            sizes="(max-width: 1200px) 600px, 33vw"
                             className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
                           />
 
