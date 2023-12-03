@@ -7,6 +7,7 @@ export const routes = {
   unProtectedPaths: [
     '/',
     '/auth/forgot-password',
+    '/auth/registration/resend-form',
     '/auth/recovery/resend-form',
     '/auth/login',
     '/auth/recovery',
