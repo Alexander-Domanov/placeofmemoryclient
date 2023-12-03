@@ -9,16 +9,16 @@ interface Props {
   person: IPerson;
 }
 
-const CityTooltip: FC<{ city: string; country: string }> = ({
-  city,
-  country,
-}) => (
-  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 rounded-sm">
-    <div className="text-xs font-bold break-after-all text-center">
-      {country} ({city})
-    </div>
-  </div>
-);
+// const CityTooltip: FC<{ city: string; country: string }> = ({
+//   city,
+//   country,
+// }) => (
+//   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 rounded-sm">
+//     <div className="text-xs font-bold break-after-all text-center">
+//       {country} ({city})
+//     </div>
+//   </div>
+// );
 
 const CityMobileTooltip: FC<{ city: string; country: string }> = ({
   city,
