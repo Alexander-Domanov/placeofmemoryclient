@@ -1345,7 +1345,7 @@ export const en: LocaleType = {
       longitude: 'Longitude',
       latitude: 'Latitude',
       tooltip:
-        'You need to select a location on the map to determine the coordinates of the place.',
+        "You need to select a location on the map (enter an address, place in the search field, or simply double-click on the map). After choosing the location, you will see a marker on the map, then press the 'Fill Table' button and click the 'Fill Form' button.",
       rules: {
         required: 'Location field is required',
       },
