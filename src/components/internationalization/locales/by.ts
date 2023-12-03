@@ -123,7 +123,7 @@ export const by = {
       },
       recoveryPage: {
         labelT: 'НОВЫ ПАРОЛЬ',
-        placeholderT: '6+ знакаў"',
+        // placeholderT: '6+ знакаў"',
         descriptionT: `  Пароль павінен змяшчаць 1-9, a-z, A-Z і вызначаныя сімвалы
          `,
         buttonT: 'Стварыце новы пароль',
