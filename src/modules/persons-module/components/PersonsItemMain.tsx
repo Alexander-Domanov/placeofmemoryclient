@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IPerson } from '@/types';
 import { routes } from '@/common/routing/routes';
+import { useWindowSize } from '@/common/hooks/useWindowResize';
 
 interface Props {
   person: IPerson;
@@ -19,8 +20,31 @@ const CityTooltip: FC<{ city: string; country: string }> = ({
   </div>
 );
 
+const CityMobileTooltip: FC<{ city: string; country: string }> = ({
+  city,
+  country,
+}) => (
+  <div className="absolute top-0 left-0 flex items-center justify-center right-0 bg-black bg-opacity-30 transition-all duration-300 text-light-300 p-1 rounded-t-sm">
+    <div className="text-xs font-bold break-after-all text-center">
+      {country} ({city})
+    </div>
+  </div>
+);
+
 export const PersonsItemMain: FC<Props> = ({ person }) => {
   const [isHovered, setHovered] = useState(false);
+
+  const { width } = useWindowSize();
+  const isTable = width && width < 767;
+
+  useEffect(() => {
+    if (isTable) {
+      setHovered(true);
+    } else {
+      setHovered(false);
+    }
+  }, [isTable]);
+
   return (
     <div
       key={person.id}
@@ -40,7 +64,7 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
             className="object-cover rounded-t-sm"
           />
           {isHovered && (
-            <CityTooltip city={person.city} country={person.country} />
+            <CityMobileTooltip city={person.city} country={person.country} />
           )}
         </div>
 
