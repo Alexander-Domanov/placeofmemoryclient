@@ -3,12 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    domains: ['**'],
     remotePatterns: [
       {
         protocol: 'https',
-        port: '',
-        hostname: 'place.cygan.lol',
-        pathname: '/**'
+        hostname: '**',
       },
     ],
   },
