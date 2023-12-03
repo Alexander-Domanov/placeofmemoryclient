@@ -288,7 +288,7 @@ export const by = {
       content: 'Кантэнт',
       articles: 'Артыкулы',
       places: 'Месца',
-      people: 'Людзі',
+      people: 'Асобы',
       settings: 'Наладжваньне',
       users: 'Карыстальнікі',
       contacts: 'Кантакты',
