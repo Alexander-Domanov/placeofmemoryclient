@@ -77,10 +77,11 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
       });
 
       const markers = selectedLocations.map((p) => {
+        const offset = 0.0001;
         const marker = new google.maps.Marker({
           position: {
-            lat: p.location.lat,
-            lng: p.location.lng,
+            lat: p.location.lat + (Math.random() - 0.5) * offset,
+            lng: p.location.lng + (Math.random() - 0.5) * offset,
           },
           map: mapRef.current,
           icon: '/leaflet/reshot-icon.svg',

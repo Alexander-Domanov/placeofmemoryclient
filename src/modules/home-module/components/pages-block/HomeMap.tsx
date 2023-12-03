@@ -3,7 +3,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import Image from 'next/image';
 import Link from 'next/link';
 import { routes } from '@/common/routing/routes';
-import homeMap from '@/assets/images/home-map.png';
+import homeMap from '@/assets/images/map.png';
 import { useTranslation } from '@/components/internationalization';
 
 export const HomeMap: FC = () => {
@@ -52,7 +52,11 @@ export const HomeMap: FC = () => {
 
           <div>
             <Link href={routes.map.index}>
-              <Image src={homeMap} alt="map" />
+              <Image
+                src={homeMap}
+                alt="map"
+                className="rounded-tl-xl rounded-bl-xl sm:rounded-lg hover:shadow-button shadow-lg transition-all duration-300"
+              />
             </Link>
           </div>
         </div>

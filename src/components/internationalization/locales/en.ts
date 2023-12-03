@@ -114,7 +114,7 @@ export const en: LocaleType = {
       },
       recoveryPage: {
         labelT: 'NEW PASSWORD',
-        placeholderT: '6+ characters',
+        // placeholderT: '6+ characters',
         descriptionT: `Password must contain 1-9, a-z, A-Z, and certain characters`,
         buttonT: 'Create New Password',
       },
