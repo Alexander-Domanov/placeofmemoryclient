@@ -13,6 +13,7 @@ interface IProps {
   places: IGetPlacesResponse;
   contacts: IContacts;
 }
+
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<{ props: IProps; revalidate: number }> => {
@@ -22,26 +23,37 @@ export const getStaticProps: GetStaticProps = async (
     lang: context.locale,
     pageNumber: page,
   });
+
   const { data: contacts } = await getContacts();
+
   return {
     props: { places, contacts },
     revalidate: 30,
   };
 };
-export const getStaticPaths: GetStaticPaths = async () => {
-  const by = await getPlacesMain({ lang: 'by' });
-  const ru = await getPlacesMain({ lang: 'ru' });
 
-  const pathsBy = generateArray(2, by.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'by',
-  }));
-  const pathsRu = generateArray(2, ru.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'ru',
-  }));
+export const getStaticPaths: GetStaticPaths = async (context) => {
+  const fetchData = async (lang: string) => {
+    const data = await getPlacesMain({
+      lang,
+    });
+
+    return { data, lang };
+  };
+
+  const [...allPlaces] = await Promise.all(
+    (context.locales || []).map((locale) => fetchData(locale))
+  );
+
+  const paths = allPlaces.map((places) => {
+    return generateArray(1, places.data.pagesCount).map((page) => ({
+      params: { page: `${page}` },
+      locale: places.lang,
+    }));
+  });
+
   return {
-    paths: [...pathsBy, ...pathsRu],
+    paths: paths.flat(),
     fallback: 'blocking',
   };
 };

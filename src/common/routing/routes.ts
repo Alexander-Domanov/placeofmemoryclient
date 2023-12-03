@@ -1,3 +1,5 @@
+const DEFAULT_LANGUAGE = 'by';
+
 export const routes = {
   auth: {
     signIn: '/auth/login/',
@@ -31,6 +33,17 @@ export const routes = {
   articles: {
     index: '/articles',
     getArticle: (slug: string) => `${routes.articles.index}/${slug}`,
+    getArticleWithLang: (slug: string, lang: string) => {
+      let link = '';
+
+      if (lang !== DEFAULT_LANGUAGE) {
+        link += `/${lang}`;
+      }
+
+      link += `${routes.articles.index}/${slug}`;
+
+      return link;
+    },
   },
   places: {
     index: '/places',

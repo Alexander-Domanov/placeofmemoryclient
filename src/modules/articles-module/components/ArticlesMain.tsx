@@ -7,7 +7,7 @@ import { useDebounce, useOnClickOutside } from 'usehooks-ts';
 import { routes } from '@/common/routing/routes';
 import { IArticle, IGetArticlesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
-import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
+import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/constants/articles-constants';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useArticlesPublic } from '@/modules/articles-module/hooks/useArticlesPublic';
 import { useTranslation } from '@/components/internationalization';

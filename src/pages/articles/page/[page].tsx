@@ -7,7 +7,7 @@ import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getArticlesPublic } from '@/modules/articles-module/api/articles-api';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IContacts, IGetArticlesResponse } from '@/types';
-import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/articles-constants';
+import { SITE_ARTICLES_PER_PAGE } from '@/modules/articles-module/constants/articles-constants';
 import { generateArray } from '@/common/helpers/generateArray';
 import { routes } from '@/common/routing/routes';
 import { nameLogo } from '@/common/constants';
@@ -64,24 +64,30 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsBy } = await getArticlesPublic({
-    title: '',
-    pageSize: SITE_ARTICLES_PER_PAGE,
+export const getStaticPaths: GetStaticPaths = async (context) => {
+  const fetchData = async (lang: string) => {
+    const { data } = await getArticlesPublic({
+      title: '',
+      pageSize: SITE_ARTICLES_PER_PAGE,
+      lang,
+    });
+
+    return { data, lang };
+  };
+
+  const [...allPosts] = await Promise.all(
+    (context.locales || []).map((locale) => fetchData(locale))
+  );
+
+  const paths = allPosts.map((posts) => {
+    return generateArray(2, posts.data.pagesCount).map((page) => ({
+      params: { page: `${page}` },
+      locale: posts.lang,
+    }));
   });
 
-  const pathsBy = generateArray(2, postsBy.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'by',
-  }));
-
-  const pathsRu = generateArray(2, postsBy.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'ru',
-  }));
-
   return {
-    paths: [...pathsBy, ...pathsRu],
+    paths: paths.flat(),
     fallback: 'blocking',
   };
 };

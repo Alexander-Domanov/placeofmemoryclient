@@ -12,7 +12,8 @@
     "stylelint": "stylelint \"**/*.{css,scss}\" --fix",
     "fix": "yarn eslint && yarn prettier",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "sitemap": "next-sitemap"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.1",

@@ -53,23 +53,29 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const by = await getPersonsPublicMain({
-    pageSize: SITE_PERSONS_PER_PAGE,
+export const getStaticPaths: GetStaticPaths = async (context) => {
+  const fetchData = async (lang: string) => {
+    const data = await getPersonsPublicMain({
+      pageSize: SITE_PERSONS_PER_PAGE,
+      lang,
+    });
+
+    return { data, lang };
+  };
+
+  const [...allPersons] = await Promise.all(
+    (context.locales || []).map((locale) => fetchData(locale))
+  );
+
+  const paths = allPersons.map((persons) => {
+    return generateArray(1, persons.data.pagesCount).map((page) => ({
+      params: { page: `${page}` },
+      locale: persons.lang,
+    }));
   });
 
-  const pathsBy = generateArray(2, by.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'by',
-  }));
-
-  const pathsRu = generateArray(2, by.pagesCount).map((page) => ({
-    params: { page: `${page}` },
-    locale: 'ru',
-  }));
-
   return {
-    paths: [...pathsBy, ...pathsRu],
+    paths: paths.flat(),
     fallback: 'blocking',
   };
 };

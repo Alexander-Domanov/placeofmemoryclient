@@ -10,6 +10,7 @@ import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IArticle, IContacts } from '@/types';
 import Error from '@/pages/_error';
 import { nameLogo } from '@/common/constants';
+import { SITE_PREGENERATED_ARTICLES_COUNT } from '@/modules/articles-module/constants/articles-constants';
 
 interface Props {
   post: IArticle;
@@ -58,32 +59,31 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsBy } = await getArticlesPublic({
-    title: '',
-    pageSize: 20,
-    pageNumber: 1,
-    lang: 'by',
-  });
-  const { data: postsRu } = await getArticlesPublic({
-    title: '',
-    pageSize: 20,
-    pageNumber: 1,
-    lang: 'ru',
-  });
+export const getStaticPaths: GetStaticPaths = async (context) => {
+  const fetchData = async (lang: string) => {
+    const { data } = await getArticlesPublic({
+      title: '',
+      pageSize: SITE_PREGENERATED_ARTICLES_COUNT,
+      pageNumber: 1,
+      lang,
+    });
 
-  const pathsBy = postsBy.items.map((post) => ({
-    params: { slug: post.slug },
-    locale: 'by',
-  }));
+    return { data, lang };
+  };
 
-  const pathsRu = postsRu.items.map((post) => ({
-    params: { slug: post.slug },
-    locale: 'ru',
-  }));
+  const [...allPosts] = await Promise.all(
+    (context.locales || []).map((locale) => fetchData(locale))
+  );
+
+  const paths = allPosts.map((posts) => {
+    return posts.data.items.map((post) => ({
+      params: { slug: post.slug },
+      locale: posts.lang,
+    }));
+  });
 
   return {
-    paths: [...pathsBy, ...pathsRu],
+    paths: paths.flat(),
     fallback: 'blocking',
   };
 };

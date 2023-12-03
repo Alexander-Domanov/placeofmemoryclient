@@ -1,0 +1,2 @@
+export const SITE_ARTICLES_PER_PAGE = 5;
+export const SITE_PREGENERATED_ARTICLES_COUNT = 20;
