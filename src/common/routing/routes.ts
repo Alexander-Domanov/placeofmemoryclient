@@ -7,6 +7,7 @@ export const routes = {
   unProtectedPaths: [
     '/',
     '/auth/forgot-password',
+    '/auth/recovery/resend-form',
     '/auth/login',
     '/auth/recovery',
     '/auth/registration',
@@ -21,6 +22,7 @@ export const routes = {
     '/places/[page]',
     '/places/place/person',
     '/_error',
+    '/auth/registration-confirmation',
     '/404',
   ],
   dropdownMenuHeader: {

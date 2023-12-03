@@ -11,3 +11,6 @@ export interface IPasswordRecoveryRequestWithRecaptcha {
 export interface ILoginResponse {
   accessToken: string;
 }
+export type RegConfirmation = {
+  confirmationCode: string;
+};
