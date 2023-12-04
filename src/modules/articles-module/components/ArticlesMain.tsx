@@ -108,7 +108,7 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
                         className="rounded-sm"
                       />
 
-                      <Link href={routes.articles.getArticle(result.slug)}>
+                      <Link href={routes.articles.article(result.slug)}>
                         <span className="text-light-300 ">{result.title}</span>
                       </Link>
                     </div>
@@ -128,7 +128,7 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
               >
                 <div>
                   <Link
-                    href={routes.articles.getArticle(post.slug)}
+                    href={routes.articles.article(post.slug)}
                     className="relative aspect-[532/244] block"
                   >
                     <Image
@@ -142,7 +142,7 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
 
                 <div>
                   <h2 className="text-3xl lg:text-xl">
-                    <Link href={routes.articles.getArticle(post.slug)}>
+                    <Link href={routes.articles.article(post.slug)}>
                       {post.title}
                     </Link>
                   </h2>

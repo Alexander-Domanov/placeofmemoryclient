@@ -35,9 +35,10 @@ export const routes = {
   main: '/',
   articles: {
     index: '/articles',
-    getArticle: (slug: string) => `${routes.articles.index}/${slug}`,
-    getArticleWithLang: (slug: string, lang: string) => {
-      let link = '';
+    page: (page: number) => `${routes.articles.index}/${page}`,
+    article: (slug: string) => `${routes.articles.index}/article/${slug}`,
+    articleFullRoute: (slug: string, lang: string) => {
+      let link = process.env.SITE_URL || 'https://pf.cygan.lol';
 
       if (lang !== DEFAULT_LANGUAGE) {
         link += `/${lang}`;
@@ -52,12 +53,33 @@ export const routes = {
     index: '/places',
     page: (page: string) => `${routes.places.index}/${page}`,
     place: (slug: string) => `${routes.places.index}/place/${slug}`,
+    placeFullRoute: (slug: string, lang: string) => {
+      let link = process.env.SITE_URL || 'https://pf.cygan.lol';
+
+      if (lang !== DEFAULT_LANGUAGE) {
+        link += `/${lang}`;
+      }
+
+      link += `${routes.places.index}/${slug}`;
+
+      return link;
+    },
   },
   persons: {
     index: '/persons',
     page: (page: number) => `${routes.persons.index}/${page}`,
     person: (slug: string) => `${routes.persons.index}/person/${slug}`,
-    // search: () => `${routes.persons.index}/search`,
+    personFullRoute: (slug: string, lang: string) => {
+      let link = process.env.SITE_URL || 'https://pf.cygan.lol';
+
+      if (lang !== DEFAULT_LANGUAGE) {
+        link += `/${lang}`;
+      }
+
+      link += `${routes.persons.index}/${slug}`;
+
+      return link;
+    },
   },
   aboutTheProject: {
     index: '/about-the-project',

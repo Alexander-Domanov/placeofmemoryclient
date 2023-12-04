@@ -27,7 +27,7 @@ export const HomeArticles: FC<Props> = ({ posts }) => {
                 {posts.items.map((post) => (
                   <div key={post.id} data-id={post.id}>
                     <Link
-                      href={routes.articles.getArticle(post.slug)}
+                      href={routes.articles.article(post.slug)}
                       className="relative aspect-[2.2/1] block"
                     >
                       <Image

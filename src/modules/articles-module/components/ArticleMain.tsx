@@ -19,7 +19,7 @@ export const ArticleMain: FC<Props> = ({ post }) => {
         <div className="overflow-hidden">
           <BreadcrumbMain
             items={[
-              { text: t.articles.indexTitle, link: routes.articles.index },
+              { text: t.articles.indexTitle, link: routes.articles.page(1) },
               { text: post.title },
             ]}
           />

@@ -11,7 +11,7 @@ export interface INavigationLinks {
 const NAVIGATION_LINK = (): INavigationLinks[] => {
   const { t } = useTranslation();
   return [
-    { title: t.header.articles, link: routes.articles.index },
+    { title: t.header.articles, link: routes.articles.page(1) },
     { title: t.header.places, link: routes.places.page(String(1)) },
     { title: t.header.people, link: routes.persons.page(Number(1)) },
     { title: t.header.aboutProject, link: routes.aboutTheProject.index },

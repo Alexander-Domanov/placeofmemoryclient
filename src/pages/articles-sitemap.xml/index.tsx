@@ -22,10 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return posts.data.items.map(
       (post) =>
         ({
-          loc: `${process.env.SITE_URL}${routes.articles.getArticleWithLang(
-            post.slug,
-            posts.lang
-          )}`,
+          loc: routes.articles.articleFullRoute(post.slug, posts.lang),
           lastmod: post.updatedAt,
           changefreq: 'daily',
           priority: 0.7,
@@ -36,4 +33,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSideSitemapLegacy(context, paths.flat());
 };
 
-export default function Sitemap() {}
+export default function PostsSitemap() {}

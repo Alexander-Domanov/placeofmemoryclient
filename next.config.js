@@ -10,6 +10,8 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    deviceSizes: [640, 750, 1080, 1200, 1920],
+    minimumCacheTTL: 604800,
   },
   i18n: {
     locales: ['by', 'ru', 'en'],

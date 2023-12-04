@@ -6,6 +6,7 @@ import { IGetArticlesResponse } from '@/types/articles/get-articles-response.typ
 import { SiteHomePage } from '@/modules/home-module/components/SiteHomePage';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { IContacts } from '@/types';
+import { nameLogo } from '@/common/constants';
 
 interface Props {
   posts: IGetArticlesResponse;
@@ -17,7 +18,7 @@ const Home = ({ posts, time, contacts }: Props) => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>{`Home | ${nameLogo}`}</title>
       </Head>
 
       <SiteLayout contacts={contacts}>
