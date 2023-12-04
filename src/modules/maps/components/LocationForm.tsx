@@ -126,7 +126,11 @@ const LocationForm: FC<LocationFormProps> = ({ form, onFinish }) => {
           ]}
           hasFeedback
         >
-          <Input placeholder="Input Name" allowClear status="warning" />
+          <Input
+            placeholder={t.dashboard.locationInfo.form.address.placeholder}
+            allowClear
+            status="warning"
+          />
         </Form.Item>
 
         <Form.Item
