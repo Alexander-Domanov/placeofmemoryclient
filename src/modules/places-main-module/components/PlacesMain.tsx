@@ -172,7 +172,7 @@ export const PlacesMain = ({ places }: IProps) => {
 
                     <div>
                       <h2 className="text-3xl lg:text-xl">
-                        <Link href={routes.articles.getArticle(place.slug)}>
+                        <Link href={routes.articles.article(place.slug)}>
                           {place.nameCemetery}
                         </Link>
                       </h2>
