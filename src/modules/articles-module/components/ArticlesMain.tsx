@@ -47,11 +47,7 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
   }, [foundArticles]);
 
   const onPageChange = (page: number) => {
-    if (page === 1) {
-      router.push(routes.articles.index);
-    } else {
-      router.push(`${routes.articles.index}/page/${page}`);
-    }
+    router.push(`${routes.articles.page(page)}`);
   };
 
   const isDropdownOpen = searchResults.length > 0;
