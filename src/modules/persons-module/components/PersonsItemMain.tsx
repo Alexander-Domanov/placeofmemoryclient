@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IPerson } from '@/types';
@@ -37,20 +37,12 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
   const { width } = useWindowSize();
   const isTable = width && width < 767;
 
-  useEffect(() => {
-    if (isTable) {
-      setHovered(true);
-    } else {
-      setHovered(false);
-    }
-  }, [isTable]);
-
   return (
     <div
       key={person.id}
       className="hover:shadow-iconHover shadow-lg transition-all duration-300"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => !isTable && setHovered(true)}
+      onMouseLeave={() => !isTable && setHovered(false)}
     >
       <Link
         href={routes.persons.person(person.slug)}
@@ -63,7 +55,11 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
             alt={`${person.firstName} ${person.lastName}`}
             className="object-cover rounded-t-sm"
           />
-          {isHovered && (
+          {!isTable && isHovered && (
+            <CityMobileTooltip city={person.city} country={person.country} />
+          )}
+
+          {isTable && (
             <CityMobileTooltip city={person.city} country={person.country} />
           )}
         </div>
