@@ -15,6 +15,7 @@ export const useDeleteArticle = () => {
     mutationFn: (id: number | null) => deleteArticle(id),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['articles'] });
+      client.invalidateQueries({ queryKey: ['gallery'] });
     },
     ...noRefetch,
     onError: (error: IResponseError) => {

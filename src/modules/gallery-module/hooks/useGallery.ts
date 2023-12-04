@@ -23,6 +23,9 @@ export const useGallery = (
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
+    cacheTime: 0,
+    retry: 0,
+    refetchOnMount: 'always',
   });
 
   return { gallery, isLoading, isFetching, isSuccess, refetch, me };
