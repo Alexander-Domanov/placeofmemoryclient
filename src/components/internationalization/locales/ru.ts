@@ -40,8 +40,8 @@ export const ru: LocaleType = {
         noAccT: 'У вас нет аккаунта?',
         signUpT: 'Зарегистрироваться',
         schema: {
-          emailT: 'Поле Email обязательно',
-          passwordT: 'Поле Пароль обязательно',
+          emailT: 'Поле "Адрес электронной почты" обязательно',
+          passwordT: 'Поле "Пароль" обязательно',
         },
         customErrors:
           'Неправильный пароль, email или имя пользователя. Попробуйте ещё раз, пожалуйста',
@@ -76,8 +76,9 @@ export const ru: LocaleType = {
             max: 'Максимальное количество символов: 30',
           },
           email: {
-            required: 'Поле "Email" обязательно для заполнения',
-            email: 'Email должен быть валидным',
+            required:
+              'Поле "Адрес электронной почты" обязательно для заполнения',
+            email: 'Адрес электронной почты должен быть валидным',
           },
           password: {
             required: 'Поле "Пароль" обязательно для заполнения',
@@ -135,7 +136,7 @@ export const ru: LocaleType = {
       emailT: 'Электронная почта',
       sendT: 'Отправить',
       errorT: {
-        emailT: 'Поле "Email" обязательно для заполнения',
+        emailT: 'Поле "Адрес электронной почты" обязательно для заполнения',
       },
     },
     ResendingVerificationLink: {
@@ -1088,7 +1089,7 @@ export const ru: LocaleType = {
       table: {
         id: 'ID',
         name: 'Имя',
-        email: 'Email',
+        email: 'Адрес электронной почты',
         status: 'Статус',
         role: 'Роль',
         createdAt: 'Создано',
@@ -1104,7 +1105,7 @@ export const ru: LocaleType = {
       },
       list: {
         name: 'Имя',
-        email: 'Email',
+        email: 'Адрес электронной почты',
         role: 'Роль',
         status: 'Статус',
         createdAt: 'Создано',
@@ -1122,7 +1123,7 @@ export const ru: LocaleType = {
         name: 'Имя пользователя',
         lastName: 'Фамилия пользователя',
         na: 'Незаполнено',
-        email: 'Email',
+        email: 'Адрес электронной почты',
         userInformation: 'Информация о пользователе',
         status: 'Статус',
         role: 'Роль',
@@ -1210,11 +1211,11 @@ export const ru: LocaleType = {
           },
         },
         email: {
-          label: 'Email',
+          label: 'Адрес электронной почты',
           placeholder: 'Введите email',
           rules: {
-            required: 'Поле "Email" обязательно',
-            email: 'Email должен быть валидным',
+            required: 'Поле "Адрес электронной почты" обязательно',
+            email: 'Адрес электронной почты должен быть валидным',
           },
         },
         updatedAt: 'Обновлено',

@@ -36,12 +36,14 @@ export const ResendVerificationForm: FC<PropsType> = ({
     <div className="flex justify-center h-[calc(100vh-65px)]  bg-dark-700 items-center">
       <div className="flex flex-col gap-5 align-middle sm:w-[320px] ms:w-[360px] w-[416px]">
         <h2 className="text-2xl font-bold text-center">{resendLinkT}</h2>
+
         <form
           className="flex gap-3 mt-8 flex-col"
           onSubmit={handleSubmit(submitData)}
         >
           <Input
             type="email"
+            id="email"
             label={emailT}
             error={error}
             {...register('email')}
