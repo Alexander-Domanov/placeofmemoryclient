@@ -6,7 +6,7 @@ import { IContacts, IGerPersonsForMapResponse } from '@/types';
 import { SiteLayout } from '@/components/layouts/SiteLayout';
 import { getContacts } from '@/modules/contacts-module/api/contacts-api';
 import { MapMain } from '@/modules/maps';
-import { getPersonsForMap } from '@/modules/dashboard-module/api/persons-for-map-api';
+import { getPersonsPublicPersons } from '@/modules/dashboard-module/api/persons-for-map-api';
 import { nameLogo } from '@/common/constants';
 
 interface Props {
@@ -30,7 +30,7 @@ const Map: FC<Props> = ({ contacts, persons }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: persons } = await getPersonsForMap(context.locale);
+  const { data: persons } = await getPersonsPublicPersons(context.locale);
   const { data: contacts } = await getContacts();
 
   return {
