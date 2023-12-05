@@ -8,6 +8,8 @@ export enum Role {
 export enum StatusUser {
   ACTIVE = 'ACTIVE',
   BANNED = 'BANNED',
+  PENDING = 'PENDING',
+  DELETED = 'DELETED',
 }
 
 export interface IMeType {

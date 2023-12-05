@@ -26,6 +26,8 @@ import {
 } from '@/components/internationalization';
 import { Logo } from '@/components';
 import { getColorRole } from '@/modules/users-module/components/helpers/ColorRoleTag';
+import { getColorStatusUser } from '@/modules/users-module/components/helpers/ColorStatusUserTag';
+import { StatusUser } from '@/types';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -68,6 +70,13 @@ export const DashboardHeader: FC = () => {
   };
 
   const items: MenuItem[] = GetMenuItems(me, onLogout);
+  const role = getColorRole(me?.role || null, t).text;
+
+  const status = getColorStatusUser(me?.status || null, t).text;
+  const avatarStyle =
+    me?.status === StatusUser.BANNED
+      ? { border: '2px solid red' }
+      : { border: '2px solid #ffffff' };
 
   return (
     <>
@@ -80,12 +89,21 @@ export const DashboardHeader: FC = () => {
 
             <Flex align="center" gap="small" className={styles.userInfo}>
               <Tooltip
-                // title={`role: ${me?.role}`}
-                title={getColorRole(me?.role || null, t).text}
+                title={
+                  <div>
+                    <Text className={styles.username}>{role}</Text>
+                    <hr />
+                    <Text className={styles.username}>{status}</Text>
+                  </div>
+                }
                 placement="bottom"
                 color="#1087f6"
               >
-                <Avatar src={me?.urlAvatar} icon={<UserOutlined />} />
+                <Avatar
+                  src={me?.urlAvatar}
+                  icon={<UserOutlined />}
+                  style={avatarStyle}
+                />
               </Tooltip>
 
               <Text className={styles.username}>{me?.userName}</Text>

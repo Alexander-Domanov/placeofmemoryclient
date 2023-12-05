@@ -1462,6 +1462,19 @@ export const en: LocaleType = {
       cancel: 'Cancel',
       delete: 'Delete',
     },
+    modalInfo: {
+      title: 'Account Suspension Notice',
+      description: {
+        paragraphs: [
+          'Dear user, we regret to inform you that your account has been temporarily suspended in our system.',
+          'Your access to certain features has been restricted. At the moment, you can only view content, and you do not have the ability to make any changes.',
+          'If you have any questions or believe that the suspension was applied in error, please contact our support service.',
+          'Thank you for your understanding and cooperation.',
+        ],
+      },
+      cancel: 'Cancel',
+      ok: 'OK',
+    },
     save: 'Save',
   },
 };

@@ -1,10 +1,18 @@
 import { NextPage } from 'next';
-import React, { PropsWithChildren, ReactElement } from 'react';
-import { Layout } from 'antd';
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
+import { Layout, List, Modal } from 'antd';
 import dynamic from 'next/dynamic';
 import { DashboardModals } from '@/components';
 import styles from './DashboardLayout.module.scss';
 import { DashboardHeader } from '@/components/layouts/components/DashboardHeader';
+import { useMeQuery } from '@/services';
+import { StatusUser } from '@/types';
+import { useTranslation } from '@/components/internationalization';
 
 const DynamicDashboardSidebar = dynamic(
   () => import('./components/DashboardSidebar'),
@@ -16,6 +24,18 @@ const DynamicDashboardSidebar = dynamic(
 const { Content } = Layout;
 
 const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
+  const { t } = useTranslation();
+  const { data: me } = useMeQuery();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
+  }, [me?.status]);
+
   return (
     <>
       <Layout>
@@ -29,6 +49,34 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
           </Layout>
         </Layout>
       </Layout>
+
+      <Modal
+        title={t.dashboard.modalInfo.title}
+        centered
+        open={isModalVisible}
+        okText={t.dashboard.modalInfo.ok}
+        cancelText={t.dashboard.modalInfo.cancel}
+        onOk={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}
+      >
+        <List split={false}>
+          <List.Item>
+            {t.dashboard.modalInfo.description.paragraphs[0]}
+          </List.Item>
+
+          <List.Item>
+            {t.dashboard.modalInfo.description.paragraphs[1]}
+          </List.Item>
+
+          <List.Item>
+            {t.dashboard.modalInfo.description.paragraphs[2]}
+          </List.Item>
+
+          <List.Item>
+            {t.dashboard.modalInfo.description.paragraphs[3]}
+          </List.Item>
+        </List>
+      </Modal>
 
       <DashboardModals />
     </>

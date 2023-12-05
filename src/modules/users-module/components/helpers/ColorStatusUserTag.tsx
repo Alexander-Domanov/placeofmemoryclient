@@ -6,21 +6,22 @@ import {
   SyncOutlined,
 } from '@ant-design/icons';
 import { LocaleType, useTranslation } from '@/components/internationalization';
+import { StatusUser } from '@/types';
 
 export const getColorStatusUser = (status: string | null, t: LocaleType) => {
   let color = 'default-color';
   let text = 'Unknown Status';
   let icon = <MinusCircleOutlined />;
 
-  if (status === 'ACTIVE') {
+  if (status === StatusUser.ACTIVE) {
     color = 'green';
     text = t.dashboard.users.selectStatus.active;
     icon = <CheckCircleTwoTone twoToneColor="#74c782" />;
-  } else if (status === 'BANNED') {
+  } else if (status === StatusUser.BANNED) {
     color = 'red';
     text = t.dashboard.users.selectStatus.banned;
     icon = <LockTwoTone twoToneColor="#f5222d" />;
-  } else if (status === 'PENDING') {
+  } else if (status === StatusUser.PENDING) {
     color = 'geekblue';
     text = t.dashboard.users.selectStatus.pending;
     icon = <SyncOutlined spin />;
