@@ -19,7 +19,7 @@ import { useUpdateGalleryFile } from '../hooks/useUpdateGalleryFile';
 import { useGalleryFile } from '../hooks/useGalleryFile';
 import { useDashboardModalsStore } from '@/store';
 import { useDeleteGalleryFile } from '../hooks/useDeleteGalleryFile';
-import { FileStatuses, IExtendGalleryFile, Role } from '@/types';
+import { FileStatuses, IExtendGalleryFile, Role, StatusUser } from '@/types';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
 import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
@@ -220,6 +220,7 @@ export const GalleryFileInfoModal: FC = () => {
   const [selectedFile, setSelectedFile] = useState<IExtendGalleryFile | null>(
     null
   );
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -263,10 +264,17 @@ export const GalleryFileInfoModal: FC = () => {
     });
   };
 
-  const isDisabled = GetDisabledStatus(
-    file?.status as string,
-    me?.role as Role
-  );
+  useEffect(() => {
+    if (
+      me?.status === StatusUser.BANNED ||
+      GetDisabledStatus(file?.status as string, me?.role as Role)
+    ) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, file?.status]);
+
   const isAdministrator = me?.role === Role.ADMIN || me?.role === Role.EDITOR;
 
   const { width } = useWindowSize();
