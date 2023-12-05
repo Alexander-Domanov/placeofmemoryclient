@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { FaTrash, FaUpload } from 'react-icons/fa';
 import {
   useDeleteAvatar,
@@ -9,8 +9,22 @@ import { Spinner } from '@/ui/spinner/Spinner';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
 import { ImageComponent } from '@/ui/image/ImageComponent';
 import { useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
+import { StatusUser } from '@/types';
 
 export const AvatarBlock = () => {
+  const { data: me } = useMeQuery();
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
+
   const { urlAvatar, setUrlAvatar } = useUserStore();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showErrorSizeImage, setShowErrorSizeImage] = useState<boolean>(false);
@@ -65,7 +79,7 @@ export const AvatarBlock = () => {
           height={width && width > 639 ? 130 : 120}
           alt="user-avatar"
         />
-        {isHovered && (
+        {isHovered && !isDisabled && (
           <div
             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
             style={{ borderRadius: '50%' }}
