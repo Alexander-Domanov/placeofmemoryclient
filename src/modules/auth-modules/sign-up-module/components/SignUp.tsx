@@ -25,7 +25,7 @@ export const SignUp = () => {
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema());
 
-  const { sendRegisteredData, isLoading } = useRegister(
+  const { sendRegisteredData, isLoading, isSuccess } = useRegister(
     () => reset(),
     setCustomError
   );
@@ -59,77 +59,85 @@ export const SignUp = () => {
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
-      {!showOrHiddenForm && (
+      {!isSuccess ? (
+        <div className="text-center mt-4 text-dark-150">
+          {t.auth.signUp.page.sentEmailT} &nbsp;
+        </div>
+      ) : (
         <>
-          <Button
-            onClick={OAUTH_AUTHORIZATION.registrationGoogle}
-            className="gap-1"
-          >
-            {buttonGoogleT}&nbsp; <FaGoogle size={isMobile ? 22 : 33} />
-            oogle
+          {!showOrHiddenForm && (
+            <>
+              <Button
+                onClick={OAUTH_AUTHORIZATION.registrationGoogle}
+                className="gap-1"
+              >
+                {buttonGoogleT}&nbsp; <FaGoogle size={isMobile ? 22 : 33} />
+                oogle
+              </Button>
+
+              <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
+                <div className="flex-grow  h-[1px] bg-dark-300" />
+
+                <span className="mx-4">{descriptionT}</span>
+
+                <div className="flex-grow h-[1px] bg-dark-300" />
+              </div>
+            </>
+          )}
+
+          <Button onClick={() => setShowOrHiddenForm(!showOrHiddenForm)}>
+            {!showOrHiddenForm ? buttonShowFormT : buttonHiddenFormT}
           </Button>
 
-          <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
-            <div className="flex-grow  h-[1px] bg-dark-300" />
+          {showOrHiddenForm && (
+            <form
+              className="flex flex-col gap-3 mt-8"
+              onSubmit={handleSubmit(registeredDataSubmit)}
+            >
+              <Input
+                type="text"
+                id="userName"
+                label={nameT}
+                error={errors?.userName?.message}
+                {...register('userName')}
+              />
 
-            <span className="mx-4">{descriptionT}</span>
+              <Input
+                type="email"
+                id="email"
+                label={emailT}
+                error={errors?.email?.message}
+                {...register('email')}
+              />
 
-            <div className="flex-grow h-[1px] bg-dark-300" />
+              <Input
+                // placeholder={passwordPlaceholderT}
+                type="password"
+                id="password"
+                error={errors?.password?.message}
+                label={passwordT}
+                {...register('password')}
+              />
+
+              <div className="text-xs flex justify-center text-dark-150">
+                <span>{descriptionFormT}</span>
+              </div>
+
+              <Button disabled={isLoading} className="mt-8" type="submit">
+                {isLoading ? <Spinner /> : buttonSignUpT}
+              </Button>
+            </form>
+          )}
+
+          <div className="flex gap-1 text-sm justify-center">
+            <span> {descriptionSignInT}</span>
+
+            <Link className="underline" href={routes.auth.signIn}>
+              {signInLinkT}
+            </Link>
           </div>
         </>
       )}
-
-      <Button onClick={() => setShowOrHiddenForm(!showOrHiddenForm)}>
-        {!showOrHiddenForm ? buttonShowFormT : buttonHiddenFormT}
-      </Button>
-
-      {showOrHiddenForm && (
-        <form
-          className="flex flex-col gap-3 mt-8"
-          onSubmit={handleSubmit(registeredDataSubmit)}
-        >
-          <Input
-            type="text"
-            id="userName"
-            label={nameT}
-            error={errors?.userName?.message}
-            {...register('userName')}
-          />
-
-          <Input
-            type="email"
-            id="email"
-            label={emailT}
-            error={errors?.email?.message}
-            {...register('email')}
-          />
-
-          <Input
-            // placeholder={passwordPlaceholderT}
-            type="password"
-            id="password"
-            error={errors?.password?.message}
-            label={passwordT}
-            {...register('password')}
-          />
-
-          <div className="text-xs flex justify-center text-dark-150">
-            <span>{descriptionFormT}</span>
-          </div>
-
-          <Button disabled={isLoading} className="mt-8" type="submit">
-            {isLoading ? <Spinner /> : buttonSignUpT}
-          </Button>
-        </form>
-      )}
-
-      <div className="flex gap-1 text-sm justify-center">
-        <span> {descriptionSignInT}</span>
-
-        <Link className="underline" href={routes.auth.signIn}>
-          {signInLinkT}
-        </Link>
-      </div>
     </AuthLayout>
   );
 };

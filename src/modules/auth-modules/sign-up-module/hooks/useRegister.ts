@@ -15,6 +15,7 @@ export const useRegister = (
     data,
     isLoading,
     variables,
+    isSuccess,
     mutate: sendRegisteredData,
   } = useMutation({
     mutationFn: sendRegisterRequest,
@@ -35,5 +36,6 @@ export const useRegister = (
     sendRegisteredData,
     variables,
     isLoading,
+    isSuccess,
   };
 };
