@@ -31,7 +31,8 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
   center,
   locations,
 }) => {
-  const { t } = useTranslation();
+  const { t, localeLanguage, defaultLocale } = useTranslation();
+  const lang = localeLanguage === defaultLocale ? '' : `/${localeLanguage}`;
 
   const { isLoaded } = useLoadScript({
     id: 'google-map-script',
@@ -101,9 +102,9 @@ const MapMainWithClusterMarkers: FC<MapWithMarkersProps> = ({
              <p class="font-bold m-1">${p.firstName} ${p.lastName}</p>
              <p class="mb-1">${p.birthDate || na} - ${p.deathDate || na}</p>
             </div>
-          <a href="/persons/person/${
-            p?.slug || ''
-          }" class="cursor-pointer text-blue-500 text-center">
+          <a href="${lang}/persons/person/${
+          p?.slug || ''
+        }" class="cursor-pointer text-blue-500 text-center">
            <span class="hover:underline">${p?.slug || ''}</span>
           </a>
           <div class="text-black text-center">
