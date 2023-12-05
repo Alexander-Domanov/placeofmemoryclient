@@ -1,10 +1,10 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, IPlace, Role } from '@/types';
+import { FileStatuses, IPlace, Role, StatusUser } from '@/types';
 import { usePlaces } from '@/modules/places-module/hooks/usePlaces';
 import { ColumnsTablePlaces } from '@/modules/places-module/components/ColumnsTablePlaces';
 import { routes } from '@/common/routing/routes';
@@ -31,6 +31,7 @@ export const Places: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const name = useDebounce(pagination.searchTerm.toLowerCase(), 500);
   const country = useDebounce(pagination.searchCountry, 500);
@@ -45,6 +46,14 @@ export const Places: FC = () => {
     city,
     sorting,
   });
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, status]);
 
   const onPageChange = (_page: number) => {
     setPage(_page);
@@ -132,6 +141,7 @@ export const Places: FC = () => {
             type="primary"
             title={t.dashboard.places.add.title}
             onClick={() => router.push(routes.dashboard.places.create)}
+            disabled={isDisabled}
           >
             {t.dashboard.places.add.label}
           </Button>

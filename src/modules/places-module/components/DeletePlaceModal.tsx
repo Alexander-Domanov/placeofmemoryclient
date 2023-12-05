@@ -1,11 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IPlace } from '@/types';
+import { IPlace, StatusUser } from '@/types';
 import { useDeletePlace } from '@/modules/places-module/hooks/useDeletePlace';
 import { routes } from '@/common/routing/routes';
 import { useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
 
 interface DeletePlaceModalProps {
   place: IPlace | null;
@@ -14,12 +15,22 @@ interface DeletePlaceModalProps {
 const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<IPlace | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { deletePlaceMutationAsync } = useDeletePlace();
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -45,6 +56,7 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
   const buttonStyle = {
     cursor: 'pointer',
     color: '#ef2020',
+    ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
   };
 
   const handleClick = () => {
@@ -64,6 +76,7 @@ const DeletePlaceComponent: FC<DeletePlaceModalProps> = ({ place }) => {
             style={buttonStyle}
             onClick={handleClick}
             ghost
+            disabled={isDisabled}
           />,
         ]}
       />

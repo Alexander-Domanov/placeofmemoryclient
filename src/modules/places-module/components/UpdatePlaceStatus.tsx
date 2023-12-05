@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IPlace, Statuses } from '@/types';
+import { IPlace, Statuses, StatusUser } from '@/types';
 import { useUpdatePlaceStatus } from '@/modules/places-module/hooks/useUpdatePlaceStatus';
 import { useMeQuery } from '@/services';
 import { GetUpdateOptions } from '@/components';
@@ -26,8 +26,17 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
   const stringId = id !== null ? id.toString() : null;
   const [isModalVisible, setModalVisible] = useState(false);
   const [newStatus, setNewStatus] = useState(status);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { updateStatusPlace } = useUpdatePlaceStatus();
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, status]);
 
   const handleEditClick = () => {
     setModalVisible(true);
@@ -62,7 +71,10 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
             title={t.dashboard.places.updateModal.buttonTitle}
             key={0}
             icon={<EditOutlined />}
-            style={{ cursor: 'pointer', color: '#2c332c' }}
+            style={{
+              cursor: 'pointer',
+              color: '#2c332c',
+            }}
             onClick={handleEditClick}
             ghost
           />,
@@ -78,7 +90,11 @@ const UpdatePlaceStatus: React.FC<UpdatePlaceStatusComponentProps> = ({
           label={t.dashboard.places.updateModal.form.label}
           style={{ marginBottom: 10 }}
         >
-          <Select value={newStatus} onChange={handleMenuStatusClick}>
+          <Select
+            value={newStatus}
+            onChange={handleMenuStatusClick}
+            disabled={isDisabled}
+          >
             {updateOptions}
           </Select>
         </Form.Item>

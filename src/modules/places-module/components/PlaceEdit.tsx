@@ -26,6 +26,7 @@ import {
   ILocation,
   IPlace,
   Statuses,
+  StatusUser,
 } from '@/types';
 import { usePlace } from '@/modules/places-module/hooks/usePlace';
 import { useUpdatePlace } from '@/modules/places-module/hooks/useUpdatePlace';
@@ -112,6 +113,7 @@ export const PlaceEdit: FC = () => {
   const descriptionCount = GetCharacterCount(descriptionText);
 
   const [status, setStatus] = useState('DRAFT');
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -164,6 +166,14 @@ export const PlaceEdit: FC = () => {
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const handleStatusChange = (selectedStatus: string) => {
     setStatus(selectedStatus);
@@ -267,6 +277,7 @@ export const PlaceEdit: FC = () => {
                       show: true,
                       max: placeFormRules.country[1].max,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -282,6 +293,7 @@ export const PlaceEdit: FC = () => {
                       show: true,
                       max: placeFormRules.city[1].max,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -302,6 +314,7 @@ export const PlaceEdit: FC = () => {
                       show: true,
                       max: placeFormRules.nameCemetery[1].max,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -324,6 +337,7 @@ export const PlaceEdit: FC = () => {
                       show: true,
                       max: placeFormRules.shortDescription.maxCharacters,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -364,7 +378,7 @@ export const PlaceEdit: FC = () => {
                       value={status}
                       onChange={handleStatusChange}
                       loading={isStatusUpdating}
-                      disabled={isStatusUpdating}
+                      disabled={isStatusUpdating || isDisabled}
                     >
                       {updateOptions}
                     </Select>
@@ -383,6 +397,7 @@ export const PlaceEdit: FC = () => {
                         show: true,
                         max: placeFormRules.slug[1].max,
                       }}
+                      disabled={isDisabled}
                     />
                   </Form.Item>
 
@@ -404,6 +419,7 @@ export const PlaceEdit: FC = () => {
                       title={t.dashboard.places.edit.button.save}
                       icon={<SaveOutlined />}
                       loading={isUpdating}
+                      disabled={isDisabled}
                     >
                       {t.dashboard.places.edit.button.save}
                     </Button>
@@ -411,6 +427,7 @@ export const PlaceEdit: FC = () => {
                     <DeleteConfirmationModal<IPlace>
                       item={selectedPlace}
                       onDelete={onDeletePlace}
+                      disabled={isDisabled}
                     />
                   </Space>
                 </Card>
@@ -426,7 +443,10 @@ export const PlaceEdit: FC = () => {
                     <MetaInfoLocationForm location={selectedLocation} />
                   </Form.Item>
 
-                  <MapDrawer onPlaceSelected={setSelectedPlaceFromMap} />
+                  <MapDrawer
+                    onPlaceSelected={setSelectedPlaceFromMap}
+                    disabled={isDisabled}
+                  />
                 </Card>
 
                 <Card>
@@ -443,10 +463,10 @@ export const PlaceEdit: FC = () => {
                       </span>
                     }
                   >
-                    <Upload {...uploadProps}>
+                    <Upload {...uploadProps} disabled={isDisabled}>
                       <Button
                         icon={<UploadOutlined />}
-                        disabled={fileList.length > 0}
+                        disabled={fileList.length > 0 || isDisabled}
                       >
                         {t.dashboard.places.create.button.photo} (Max:{' '}
                         {placeFormRules.photo.maxCount})
