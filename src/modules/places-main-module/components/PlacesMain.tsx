@@ -148,7 +148,7 @@ export const PlacesMain = ({ places }: IProps) => {
                         className="relative aspect-[532/244] block"
                         onMouseEnter={() => setHoveredItem(place.id)}
                         onMouseLeave={() => setHoveredItem(null)}
-                        as="image"
+                        // as="image"
                         rel="preload"
                       >
                         <Image
@@ -172,7 +172,7 @@ export const PlacesMain = ({ places }: IProps) => {
 
                     <div>
                       <h2 className="text-3xl lg:text-xl">
-                        <Link href={routes.articles.article(place.slug)}>
+                        <Link href={routes.places.place(place.slug)}>
                           {place.nameCemetery}
                         </Link>
                       </h2>
