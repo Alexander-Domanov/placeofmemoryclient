@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IPerson, Role } from '@/types';
+import { IPerson, Role, StatusUser } from '@/types';
 import { useDeletePerson } from '@/modules/persons-module/hooks/useDeletePerson';
 import { useMeQuery } from '@/services';
 import { GetDisabledStatus } from '@/common-dashboard';
@@ -16,13 +16,14 @@ interface DeletePersonModalProps {
 const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<IPerson | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { deletePersonMutationAsync } = useDeletePerson();
-  const { data: me } = useMeQuery();
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -45,10 +46,16 @@ const DeletePersonComponent: FC<DeletePersonModalProps> = ({ person }) => {
     setDeleteModalVisible(false);
   };
 
-  const isDisabled = GetDisabledStatus(
-    person?.status as string,
-    me?.role as Role
-  );
+  useEffect(() => {
+    if (
+      me?.status === StatusUser.BANNED ||
+      GetDisabledStatus(person?.status as string, me?.role as Role)
+    ) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, person?.status]);
 
   const handleClick = () => {
     setSelectedPerson(person);

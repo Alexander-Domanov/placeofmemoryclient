@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import {
   Breadcrumb,
   Button,
@@ -19,7 +19,13 @@ import {
   CaretUpOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { FileStatuses, FilterCondition, IPerson, Role } from '@/types';
+import {
+  FileStatuses,
+  FilterCondition,
+  IPerson,
+  Role,
+  StatusUser,
+} from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePersons } from '@/modules/persons-module/hooks/usePersons';
 import { ColumnsTablePersons } from '@/modules/persons-module/components/ColumnsTablePersons';
@@ -67,6 +73,8 @@ export const Persons: FC = () => {
   const [isShowMoreFilters, setIsShowMoreFilters] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
 
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const name = useDebounce(pagination.searchName, 500);
   const lastName = useDebounce(pagination.searchLastName, 500);
   const country = useDebounce(pagination.searchCountry, 500);
@@ -86,6 +94,14 @@ export const Persons: FC = () => {
     filterConditionBirthDate: pagination.filterConditionBirthDate,
     filterConditionDeathDate: pagination.filterConditionDeathDate,
   });
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const onPageChange = (_page: number) => {
     setPage(_page);
@@ -217,6 +233,10 @@ export const Persons: FC = () => {
         )
       : columnsTablePersons;
 
+  const selectColumnsTablePlacesForStatus = isDisabled
+    ? selectColumnsTablePlaces.filter((column) => column.key !== 'actions')
+    : selectColumnsTablePlaces;
+
   const setScrollForTable =
     me?.role === Role.USER || me?.role === Role.AUTHOR
       ? { x: 1000 }
@@ -249,6 +269,7 @@ export const Persons: FC = () => {
             type="primary"
             title={t.dashboard.persons.add.title}
             onClick={() => router.push(routes.dashboard.persons.create)}
+            disabled={isDisabled}
           >
             {t.dashboard.persons.add.label}
           </Button>

@@ -21,7 +21,7 @@ export const usePersonsForMap = (lang?: string, name?: string) => {
     cacheTime: 0,
     staleTime: 0,
     retry: 0,
-    enabled: !!me,
+    // enabled: !!me,
     refetchOnMount: 'always',
   });
 

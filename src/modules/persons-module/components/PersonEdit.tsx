@@ -27,6 +27,7 @@ import {
   IPersonById,
   Role,
   Statuses,
+  StatusUser,
 } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { usePerson } from '@/modules/persons-module/hooks/usePerson';
@@ -132,6 +133,8 @@ export const PersonEdit: FC = () => {
 
   const biographyCount = GetCharacterCount(biographyText);
 
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const [status, setStatus] = useState('DRAFT');
 
   const normFile = (e: any) => {
@@ -197,6 +200,17 @@ export const PersonEdit: FC = () => {
       setSelectedLocation(selectedPlaceFromMap.location as ILocation);
     }
   }, [selectedPlaceFromMap]);
+
+  useEffect(() => {
+    if (
+      me?.status === StatusUser.BANNED ||
+      GetDisabledStatus(status, me?.role as Role)
+    ) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, status]);
 
   const handleStatusChange = (selectedStatus: string) => {
     setStatus(selectedStatus);
@@ -267,8 +281,6 @@ export const PersonEdit: FC = () => {
   };
 
   const updateOptions = GetUpdateOptions({ status: status as Statuses, me });
-
-  const isDisabled = GetDisabledStatus(status, me?.role as Role);
 
   const personFormRules = PersonFormRules(t);
 
