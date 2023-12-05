@@ -1,10 +1,10 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { Breadcrumb, Button, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { TablePaginationConfig } from 'antd/lib';
 import { useRouter } from 'next/router';
-import { FileStatuses, IPlace, Role } from '@/types';
+import { FileStatuses, IPlace, Role, StatusUser } from '@/types';
 import { useArticles } from '@/modules/articles-module/hooks/useArticles';
 import { routes } from '@/common/routing/routes';
 import { FileStatusOptions } from '@/common-dashboard/helpers/options-file-statuses-select-input';
@@ -29,6 +29,7 @@ export const Articles: FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [status, setStatus] = useState(FileStatuses.ALL.toLowerCase());
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const title = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
@@ -39,6 +40,14 @@ export const Articles: FC = () => {
     title,
     sorting,
   });
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const onPageChange = (_page: number) => {
     setPage(_page);
@@ -119,6 +128,7 @@ export const Articles: FC = () => {
             type="primary"
             title={t.dashboard.articles.add.title}
             onClick={() => router.push(routes.dashboard.articles.create)}
+            disabled={isDisabled}
           >
             {t.dashboard.articles.add.label}
           </Button>

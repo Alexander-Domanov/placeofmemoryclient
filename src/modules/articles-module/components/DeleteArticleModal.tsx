@@ -1,11 +1,12 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, List, Modal, notification, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IArticle } from '@/types';
+import { IArticle, StatusUser } from '@/types';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import { routes } from '@/common/routing/routes';
 import { useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
 
 interface DeleteArticleModalProps {
   article: IArticle | null;
@@ -13,12 +14,22 @@ interface DeleteArticleModalProps {
 const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
 
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { deleteArticleMutation } = useDeleteArticle();
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
@@ -48,6 +59,7 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
   const buttonStyle = {
     cursor: 'pointer',
     color: '#ef2020',
+    ...(isDisabled && { opacity: 0.5, cursor: 'not-allowed' }),
   };
 
   return (
@@ -62,6 +74,7 @@ const DeleteArticleComponent: FC<DeleteArticleModalProps> = ({ article }) => {
             style={buttonStyle}
             onClick={handleClick}
             ghost
+            disabled={isDisabled}
           />,
         ]}
       />

@@ -40,11 +40,12 @@ import {
 } from '@/components';
 import { characterCountUtils } from '@/common-dashboard/utils/characterCountUtils';
 import { ArticleFormRules } from '@/modules/articles-module';
-import { IArticle, Statuses } from '@/types';
+import { IArticle, Statuses, StatusUser } from '@/types';
 import { ValidationOfRedactorValue } from '@/common-dashboard';
 import { CreateBreadcrumb } from '@/components/dashboard/helpers/CreateBreadcrumb';
 import { useDeleteArticle } from '@/modules/articles-module/hooks/useDeleteArticle';
 import { LocaleType, useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
 
 const { Option } = Select;
 
@@ -71,6 +72,7 @@ function breadcrumbs(name: string, t: LocaleType) {
 
 export const ArticleEdit: FC = () => {
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
 
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
@@ -93,6 +95,8 @@ export const ArticleEdit: FC = () => {
 
   const [contentText, setContentText] = useState<string>('');
   const characterCount = GetCharacterCount(contentText);
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { deleteArticleMutationAsync } = useDeleteArticle();
 
@@ -160,6 +164,14 @@ export const ArticleEdit: FC = () => {
       setStatus(article.status);
     }
   }, [article]);
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status, status]);
 
   const articleFormRules = ArticleFormRules(t);
 
@@ -231,6 +243,7 @@ export const ArticleEdit: FC = () => {
                       show: true,
                       max: articleFormRules.title[1].max,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -252,6 +265,7 @@ export const ArticleEdit: FC = () => {
                       show: true,
                       max: articleFormRules.description[1].max,
                     }}
+                    disabled={isDisabled}
                   />
                 </Form.Item>
 
@@ -294,7 +308,7 @@ export const ArticleEdit: FC = () => {
                       value={status}
                       onChange={onStatusChange}
                       loading={isStatusUpdating}
-                      disabled={isStatusUpdating}
+                      disabled={isStatusUpdating || isDisabled}
                     >
                       <Option value={Statuses.DRAFT}>
                         <EyeInvisibleOutlined />{' '}
@@ -326,6 +340,7 @@ export const ArticleEdit: FC = () => {
                         show: true,
                         max: articleFormRules.slug[1].max,
                       }}
+                      disabled={isDisabled}
                     />
                   </Form.Item>
 
@@ -347,6 +362,7 @@ export const ArticleEdit: FC = () => {
                       title={t.dashboard.articles.edit.button.save}
                       icon={<SaveOutlined />}
                       loading={isUpdating}
+                      disabled={isUpdating || isDisabled}
                     >
                       {t.dashboard.articles.edit.button.save}
                     </Button>
@@ -354,6 +370,7 @@ export const ArticleEdit: FC = () => {
                     <DeleteConfirmationModal<IArticle>
                       item={selectedArticle}
                       onDelete={onDeleteArticle}
+                      disabled={isDisabled}
                     />
                   </Space>
                 </Card>
@@ -372,10 +389,10 @@ export const ArticleEdit: FC = () => {
                       </span>
                     }
                   >
-                    <Upload {...uploadProps}>
+                    <Upload {...uploadProps} disabled={isDisabled}>
                       <Button
                         icon={<UploadOutlined />}
-                        disabled={fileList.length > 0}
+                        disabled={fileList.length > 0 || isDisabled}
                       >
                         {t.dashboard.articles.edit.button.photo} (Max:{' '}
                         {articleFormRules.photo.maxCount})

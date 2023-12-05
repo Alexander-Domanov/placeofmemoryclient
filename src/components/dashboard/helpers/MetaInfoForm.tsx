@@ -2,9 +2,10 @@ import React, { FC, useEffect, useState } from 'react';
 import { List, Typography } from 'antd';
 import Link from 'next/link';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
-import { IOwnerInfo, Statuses } from '@/types';
+import { IOwnerInfo, Statuses, StatusUser } from '@/types';
 import { GetEllipsisSlug } from '@/components';
 import { useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
 
 interface IInfoFormProps {
   slug: string | undefined;
@@ -24,15 +25,16 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
   updatedAt,
 }) => {
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    if (status === Statuses.PUBLISHED) {
+    if (status !== Statuses.PUBLISHED || me?.status === StatusUser.BANNED) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-  }, [status]);
+  }, [status, me?.status]);
 
   return (
     <List split={false}>
@@ -42,11 +44,11 @@ export const MetaInfoForm: FC<IInfoFormProps> = ({
             {t.dashboard.metaInfo.publicLink.label}: &nbsp;
           </span>
           {isDisabled ? (
+            t.dashboard.metaInfo.publicLink.no
+          ) : (
             <Link href={{ pathname: path }}>
               <GetEllipsisSlug slug={slug} />
             </Link>
-          ) : (
-            t.dashboard.metaInfo.publicLink.no
           )}
         </Typography.Text>
       </List.Item>

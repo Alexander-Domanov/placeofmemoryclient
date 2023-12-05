@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, List, Modal, notification, Select } from 'antd';
 import {
   ClockCircleOutlined,
@@ -8,10 +8,11 @@ import {
   InboxOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { IArticle, Statuses } from '@/types';
+import { IArticle, Statuses, StatusUser } from '@/types';
 import { useUpdateArticleStatus } from '@/modules/articles-module/hooks/useUpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
 import { useTranslation } from '@/components/internationalization';
+import { useMeQuery } from '@/services';
 
 const { Option } = Select;
 
@@ -21,12 +22,22 @@ interface Props {
 const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const { data: me } = useMeQuery();
 
   const { id, status } = article || { id: null, status: null };
   const [isModalVisible, setModalVisible] = useState(false);
   const [newStatus, setNewStatus] = useState(status);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { updateStatusArticle } = useUpdateArticleStatus();
+
+  useEffect(() => {
+    if (me?.status === StatusUser.BANNED) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [me?.status]);
 
   const handleEditClick = () => {
     setModalVisible(true);
@@ -72,7 +83,11 @@ const UpdateArticleStatusComponent: React.FC<Props> = ({ article }) => {
         footer={null}
       >
         <Form.Item label={t.dashboard.articles.updateModal.form.label}>
-          <Select value={newStatus} onChange={handleMenuStatusClick}>
+          <Select
+            value={newStatus}
+            onChange={handleMenuStatusClick}
+            disabled={isDisabled}
+          >
             <Option value={Statuses.DRAFT}>
               <EyeInvisibleOutlined /> {t.dashboard.updateStatus.draft}
             </Option>

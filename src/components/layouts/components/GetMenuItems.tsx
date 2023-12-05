@@ -18,7 +18,7 @@ import { GrMapLocation } from 'react-icons/gr';
 import { GiCandleFlame } from 'react-icons/gi';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { routes } from '@/common/routing/routes';
-import { Role } from '@/types';
+import { Role, StatusUser } from '@/types';
 import { useTranslation } from '@/components/internationalization';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -42,7 +42,7 @@ function getItem(
 const DIVIDER = { type: 'divider' };
 
 export const GetMenuItems = (
-  me?: { role: Role },
+  me?: { role: Role; status: StatusUser },
   onLogout?: () => void
 ): MenuItem[] => {
   const { t } = useTranslation();
@@ -205,5 +205,15 @@ export const GetMenuItems = (
   };
 
   const res = roleSpecificItems[me?.role || Role.USER] || common;
+
+  if (me?.status === StatusUser.BANNED && me?.role === Role.ADMIN) {
+    return [
+      ...groupingCommon(),
+      DIVIDER,
+      ...groupingContent(),
+      DIVIDER,
+      ...logoutItem,
+    ] as MenuItem[];
+  }
   return res as MenuItem[];
 };
