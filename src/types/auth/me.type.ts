@@ -5,6 +5,11 @@ export enum Role {
   USER = 'USER',
 }
 
+export enum StatusUser {
+  ACTIVE = 'ACTIVE',
+  BANNED = 'BANNED',
+}
+
 export interface IMeType {
   userId: number;
   userName: string | null;
@@ -13,4 +18,5 @@ export interface IMeType {
   urlAvatar: string | null;
   lang: string;
   role: Role;
+  status: StatusUser;
 }
