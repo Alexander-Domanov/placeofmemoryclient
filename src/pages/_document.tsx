@@ -1,13 +1,13 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import type { DocumentContext } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 
 const MyDocument = () => {
   return (
     <Html lang="by">
       <Head>
         <meta name="description" content="Mogilki" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/m.svg" />
       </Head>
 
       <body className="debug-screens">

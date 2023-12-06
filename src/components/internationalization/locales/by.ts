@@ -116,12 +116,11 @@ export const by = {
     recovery: {
       indexTile: 'Аднаўленне',
       resendPage: {
-        firstDescription: `Тэрмін дзеяння спасылкі для праверкі электроннай пошты скончыўся
-       `,
-        secondDescription: `Не хвалюйцеся, мы можам адправіць спасылку яшчэ раз
-       `,
-        forgotPasswordLink: `Паўторна адправіць спасылку для праверкі
-        `,
+        firstDescription:
+          'Тэрмін дзеяння спасылкі для праверкі электроннай пошты скончыўся',
+        secondDescription:
+          'Не хвалюйцеся, мы можам адправіць спасылку яшчэ раз',
+        forgotPasswordLink: 'Паўторна адправіць спасылку для праверкі',
       },
       recoveryPage: {
         labelT: 'НОВЫ ПАРОЛЬ',
