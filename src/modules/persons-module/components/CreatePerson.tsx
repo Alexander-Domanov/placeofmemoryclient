@@ -177,7 +177,6 @@ export const CreatePerson: FC = () => {
       message: t.dashboard.persons.form.biography,
       value,
       callback,
-      t,
       isCanEmpty: true,
     });
   };

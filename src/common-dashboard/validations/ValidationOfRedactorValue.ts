@@ -1,5 +1,3 @@
-import { LocaleType } from '@/components/internationalization';
-
 interface Imessage {
   rules: {
     required?: string;
@@ -11,7 +9,6 @@ interface IContentValidationOptions {
   message: Imessage;
   value: string;
   callback: (message?: string) => void;
-  t: LocaleType;
   isCanEmpty?: boolean;
 }
 
@@ -23,7 +20,6 @@ export const ValidationOfRedactorValue = (
     maxCharacters,
     message,
     callback,
-    t,
     isCanEmpty = false,
   } = options;
 

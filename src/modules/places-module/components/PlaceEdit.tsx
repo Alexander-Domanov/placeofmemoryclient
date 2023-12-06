@@ -248,7 +248,6 @@ export const PlaceEdit: FC = () => {
       message: t.dashboard.places.form.description,
       value,
       callback,
-      t,
     });
   };
 

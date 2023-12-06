@@ -136,7 +136,6 @@ export const CreatePlace: FC = () => {
       message: t.dashboard.places.form.description,
       value,
       callback,
-      t,
     });
   };
 

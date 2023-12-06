@@ -123,7 +123,6 @@ export const Contacts: FC = () => {
       message: t.dashboard.contacts.form.about,
       value,
       callback,
-      t,
       isCanEmpty: true,
     });
   };

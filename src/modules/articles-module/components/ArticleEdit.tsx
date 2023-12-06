@@ -210,7 +210,6 @@ export const ArticleEdit: FC = () => {
       message: t.dashboard.articles.form.content,
       value,
       callback,
-      t,
     });
   };
 
