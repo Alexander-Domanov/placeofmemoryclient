@@ -7,7 +7,7 @@ export const createNewPasswordSchema = () => {
   return yup.object({
     password: yup
       .string()
-      .required(t.auth.signUp.page.schema.password.required)
+      .required(t.auth.recovery.recoveryPage.errorT.passwordT)
       .min(6, t.auth.signUp.page.schema.password.min)
       .max(20, t.auth.signUp.page.schema.password.max)
       .matches(/[a-z]/, t.auth.signUp.page.schema.password.matches)

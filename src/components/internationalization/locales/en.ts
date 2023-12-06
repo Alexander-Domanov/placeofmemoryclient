@@ -111,7 +111,7 @@ export const en: LocaleType = {
       indexTile: 'Recovery',
       resendPage: {
         firstDescription: `The link to check the email has expired`,
-        secondDescription: `Apparently, the link to check has expired. Don't worry, we can send the link again`,
+        secondDescription: `Don't worry, we can send the link again`,
         forgotPasswordLink: `Resend link for verification`,
       },
       recoveryPage: {
@@ -119,6 +119,10 @@ export const en: LocaleType = {
         // placeholderT: '6+ characters',
         descriptionT: `Password must contain 1-9, a-z, A-Z, and certain characters`,
         buttonT: 'Create New Password',
+        errorT: {
+          passwordT: 'Password is a required field',
+        },
+        successMessage: 'Password changed successfully! Redirecting...',
       },
     },
     registrationConfirmation: {

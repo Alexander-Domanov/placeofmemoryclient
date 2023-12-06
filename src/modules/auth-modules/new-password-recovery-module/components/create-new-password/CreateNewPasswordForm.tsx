@@ -26,7 +26,8 @@ export const CreateNewPasswordForm = ({
     onSubmitHandler(password);
     reset();
   };
-  const { descriptionT, labelT, buttonT } = t.auth.recovery.recoveryPage;
+  const { descriptionT, labelT, buttonT, errorT } =
+    t.auth.recovery.recoveryPage;
   return (
     <>
       <form
@@ -40,9 +41,11 @@ export const CreateNewPasswordForm = ({
           error={errors?.password?.message}
           {...register('password')}
         />
+
         <div className="flex justify-center text-sm">
           <span>{descriptionT}</span>
         </div>
+
         <Button disabled={isLoading} className="mt-1" type="submit">
           {isLoading ? <Spinner /> : buttonT}
         </Button>

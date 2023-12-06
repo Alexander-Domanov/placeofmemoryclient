@@ -59,7 +59,7 @@ export const SignUp = () => {
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
-      {!isSuccess ? (
+      {isSuccess ? (
         <div className="text-center mt-4 text-dark-150">
           {t.auth.signUp.page.sentEmailT} &nbsp;
         </div>

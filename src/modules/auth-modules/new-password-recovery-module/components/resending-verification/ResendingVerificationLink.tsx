@@ -9,9 +9,9 @@ export const ResendingVerificationLink = () => {
     t.auth.recovery.resendPage;
   return (
     <AuthLayout>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-8">
         <p className="font-bold">{firstDescription}</p>
-        <p>{secondDescription}</p>
+        <p className="text-dark-150">{secondDescription}</p>
         <Link className="underline" href={routes.auth.forgotPassword}>
           {forgotPasswordLink}
         </Link>

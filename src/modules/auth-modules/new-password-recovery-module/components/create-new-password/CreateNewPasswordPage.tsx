@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { AuthLayout } from '@/components';
@@ -7,6 +7,7 @@ import {
   CreateNewPasswordForm,
   useCreateNewPassword,
 } from '@/modules/auth-modules/new-password-recovery-module';
+import { useTranslation } from '@/components/internationalization';
 
 interface CreateNewPasswordPageProps {
   recoveryCode: string;
@@ -16,6 +17,9 @@ export const CreateNewPasswordPage = ({
   recoveryCode = '',
 }: CreateNewPasswordPageProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const [successMessage, setSuccessMessage] = useState<string>('');
 
   const {
     mutate: createNewPassword,
@@ -30,13 +34,33 @@ export const CreateNewPasswordPage = ({
     });
   };
 
-  if (isSuccess) router.push(routes.auth.signIn);
+  useEffect(() => {
+    let redirectTimer: NodeJS.Timeout;
+
+    if (isSuccess) {
+      setSuccessMessage(t.auth.recovery.recoveryPage.successMessage);
+
+      redirectTimer = setTimeout(() => {
+        router.push(routes.auth.signIn);
+      }, 3000);
+
+      return () => clearTimeout(redirectTimer);
+    }
+    return () => {};
+  }, [isSuccess, router]);
+
   return (
     <AuthLayout>
-      <CreateNewPasswordForm
-        isLoading={isLoading}
-        onSubmitHandler={onSubmitHandler}
-      />
+      {successMessage && (
+        <div className="text-center mb-4">{successMessage}</div>
+      )}
+
+      {!successMessage && (
+        <CreateNewPasswordForm
+          isLoading={isLoading}
+          onSubmitHandler={onSubmitHandler}
+        />
+      )}
     </AuthLayout>
   );
 };

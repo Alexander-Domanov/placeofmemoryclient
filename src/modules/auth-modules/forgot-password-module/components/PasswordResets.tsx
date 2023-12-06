@@ -54,7 +54,7 @@ export const PasswordResets = () => {
     <AuthLayout>
       {showMessage ? (
         <div className="text-justify sm:text-xs text-sm flex gap-3 flex-col">
-          <p>{showMessageT} </p>
+          <p className="text-dark-150">{showMessageT} </p>
 
           <Link
             className="underline text-sm font-bold"
