@@ -33,6 +33,10 @@ export const PlaceFormRules = (t: LocaleType) => ({
         required: true,
         message: t.dashboard.places.form.shortDescription.rules.required,
       },
+      {
+        max: 300,
+        message: t.dashboard.places.form.shortDescription.rules.max,
+      },
     ],
     maxCharacters: 300,
     message: t.dashboard.places.form.shortDescription.rules.max,
@@ -62,7 +66,9 @@ export const PlaceFormRules = (t: LocaleType) => ({
     },
   ],
   photo: {
-    rules: [{ required: true }],
+    rules: [
+      { required: true, message: t.dashboard.places.form.photo.rules.required },
+    ],
     maxCount: 1,
   },
 });

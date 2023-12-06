@@ -1417,19 +1417,19 @@ export const en: LocaleType = {
         },
         administrativeAreaLevel1: {
           label: 'State',
-          placeholder: 'Input State',
+          placeholder: 'State',
         },
         administrativeAreaLevel2: {
           label: 'District',
-          placeholder: 'Input District',
+          placeholder: 'District',
         },
         street: {
           label: 'Street',
-          placeholder: 'Input Street',
+          placeholder: 'Street',
         },
         streetNumber: {
           label: 'Street Number',
-          placeholder: 'Input Street Number',
+          placeholder: 'Street Number',
         },
         buttons: {
           fillForm: 'Fill Form',

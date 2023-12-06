@@ -120,7 +120,7 @@ export const Contacts: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: aboutFormRules.about.maxCharacters,
-      message: t.dashboard.contacts.form.about.label,
+      message: t.dashboard.contacts.form.about,
       value,
       callback,
       t,

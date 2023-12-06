@@ -1,8 +1,14 @@
 import { LocaleType } from '@/components/internationalization';
 
+interface Imessage {
+  rules: {
+    required?: string;
+    max: string;
+  };
+}
 interface IContentValidationOptions {
   maxCharacters: number;
-  message: string;
+  message: Imessage;
   value: string;
   callback: (message?: string) => void;
   t: LocaleType;
@@ -27,9 +33,9 @@ export const ValidationOfRedactorValue = (
   const isExceeded = contentWithoutTags.length > maxCharacters;
 
   if (isExceeded) {
-    callback(message);
+    callback(message.rules.max);
   } else if (isEmptyContent && !isCanEmpty) {
-    callback(`${t.dashboard.rules.required} "${message.split(' ')[0]}"`);
+    callback(message.rules.required);
   } else {
     callback();
   }

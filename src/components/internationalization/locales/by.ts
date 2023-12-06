@@ -1427,19 +1427,19 @@ export const by = {
         },
         administrativeAreaLevel1: {
           label: 'Штат',
-          placeholder: 'Увядзіце штат',
+          placeholder: 'Штат',
         },
         administrativeAreaLevel2: {
           label: 'Раён',
-          placeholder: 'Увядзіце раён',
+          placeholder: 'Раён',
         },
         street: {
           label: 'Вуліца',
-          placeholder: 'Увядзіце вуліцу',
+          placeholder: 'Вуліца',
         },
         streetNumber: {
           label: 'Нумар вуліцы',
-          placeholder: 'Увядзіце нумар вуліцы',
+          placeholder: 'Нумар вуліцы',
         },
         buttons: {
           fillForm: 'Запоўніць форму',

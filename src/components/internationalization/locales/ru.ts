@@ -1423,19 +1423,19 @@ export const ru: LocaleType = {
         },
         administrativeAreaLevel1: {
           label: 'Штат',
-          placeholder: 'Введите штат',
+          placeholder: 'Штат',
         },
         administrativeAreaLevel2: {
           label: 'Район',
-          placeholder: 'Введите район',
+          placeholder: 'Район',
         },
         street: {
           label: 'Улица',
-          placeholder: 'Введите улицу',
+          placeholder: 'Улица',
         },
         streetNumber: {
           label: 'Номер улицы',
-          placeholder: 'Введите номер улицы',
+          placeholder: 'Номер улицы',
         },
         buttons: {
           fillForm: 'Заполнить форму',

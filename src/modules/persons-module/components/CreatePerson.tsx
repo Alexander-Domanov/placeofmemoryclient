@@ -174,7 +174,7 @@ export const CreatePerson: FC = () => {
   ) => {
     return ValidationOfRedactorValue({
       maxCharacters: personFormRules.biography.maxCharacters,
-      message: t.dashboard.persons.form.biography.label,
+      message: t.dashboard.persons.form.biography,
       value,
       callback,
       t,
