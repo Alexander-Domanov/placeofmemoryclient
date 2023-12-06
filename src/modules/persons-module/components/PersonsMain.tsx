@@ -112,9 +112,7 @@ export const PersonsMain: FC<Props> = ({ persons }) => {
           </h2>
         </div>
 
-        <div className="mt-6 h-[1px] bg-dark-300" />
-
-        <div className="mt-10">
+        <div className="mt-16">
           <div className="grid grid-cols-[190px_190px_300px] gap-3 lg:grid-cols-[1fr_1fr_300px] sm:grid-cols-2 sm:gap-3 justify-end">
             <div className="sm:order-1">
               <Input
