@@ -26,8 +26,7 @@ export const CreateNewPasswordForm = ({
     onSubmitHandler(password);
     reset();
   };
-  const { descriptionT, labelT, buttonT, errorT } =
-    t.auth.recovery.recoveryPage;
+  const { descriptionT, labelT, buttonT } = t.auth.recovery.recoveryPage;
   return (
     <>
       <form
