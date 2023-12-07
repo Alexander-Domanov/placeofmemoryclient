@@ -243,12 +243,6 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
           src: photo.versions.huge.url,
         }))}
       >
-        {/* <Tooltip */}
-        {/*  title={`ID: ${record?.photos[0]?.uploadId}`} */}
-        {/*  placement="leftBottom" */}
-        {/*  color="#1087f6" */}
-        {/*  key={record?.photos[0]?.uploadId} */}
-        {/* > */}
         <Space size="middle">
           <Badge size="small" count={record?.photos.length}>
             <Image
@@ -259,7 +253,6 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
             />
           </Badge>
         </Space>
-        {/* </Tooltip> */}
       </Image.PreviewGroup>
     ),
   },

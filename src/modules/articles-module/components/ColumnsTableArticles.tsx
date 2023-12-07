@@ -1,14 +1,15 @@
 import { ColumnsType } from 'antd/es/table';
-import { Row, Tooltip, Typography } from 'antd';
+import { Badge, Image, Row, Space, Tooltip, Typography } from 'antd';
 import Link from 'next/link';
 import React from 'react';
-import { ColorStatusTag, RenderImage } from '@/components';
+import { ColorStatusTag } from '@/components';
 import { IArticle } from '@/types';
 import UpdateArticleStatusComponent from '@/modules/articles-module/components/UpdateArticleStatus';
 import { routes } from '@/common/routing/routes';
 import { convertDateToFormat } from '@/common/helpers/convertDateToFormat';
 import DeleteArticleComponent from '@/modules/articles-module/components/DeleteArticleModal';
 import { LocaleType } from '@/components/internationalization';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
   {
@@ -112,20 +113,23 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     ellipsis: true,
     align: 'center',
     render: (text, record: IArticle) => (
-      <Row justify="space-evenly">
-        {record.photos.map((photo, index) => (
-          // <Tooltip
-          //   title={`ID: ${photo.uploadId}`}
-          //   placement="leftBottom"
-          //   color="#1087f6"
-          //   key={index}
-          // >
-          <Typography.Text key={index}>
-            {RenderImage(photo.versions.huge.url, 40, true)}
-          </Typography.Text>
-          // </Tooltip>
-        ))}
-      </Row>
+      <Image.PreviewGroup
+        preview
+        items={record.photos.map((photo) => ({
+          src: photo.versions.huge.url,
+        }))}
+      >
+        <Space size="middle">
+          <Badge size="small" count={record?.photos.length}>
+            <Image
+              src={record?.photos[0]?.versions.huge.url}
+              width={40}
+              style={{ borderRadius: 4 }}
+              fallback={pictureBackup}
+            />
+          </Badge>
+        </Space>
+      </Image.PreviewGroup>
     ),
   },
   {
