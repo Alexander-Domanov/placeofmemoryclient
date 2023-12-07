@@ -32,7 +32,7 @@ export const ColumnsTablePlaces = (t: LocaleType): ColumnsType<IPlace> => [
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
       <Tooltip
-        title={`name: ${record.owner.userName}`}
+        title={`${t.dashboard.places.table.owner}: ${record.owner.userName}`}
         placement="leftBottom"
         color="#1087f6"
       >

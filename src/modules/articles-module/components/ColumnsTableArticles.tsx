@@ -32,7 +32,7 @@ export const ColumnsTableArticles = (t: LocaleType): ColumnsType<IArticle> => [
     align: 'center',
     render: (text, record) => (
       <Tooltip
-        title={`name: ${record.owner.userName}`}
+        title={`${t.dashboard.articles.table.owner}: ${record.owner.userName}`}
         placement="leftBottom"
         color="#1087f6"
       >

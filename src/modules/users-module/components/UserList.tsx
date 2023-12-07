@@ -102,6 +102,14 @@ export const UserList: FC = () => {
     }
   }, [name]);
 
+  useEffect(() => {
+    if (page === 1) {
+      setPagination({ ...pagination });
+    } else {
+      setPage(1);
+    }
+  }, [extensions]);
+
   const { user, isLoading, me } = useUser({
     id: userId,
     pageNumber: page,

@@ -66,7 +66,7 @@ export const ColumnsTablePersons = (t: LocaleType): ColumnsType<IPerson> => [
     sortDirections: ['ascend', 'descend'],
     render: (text, record) => (
       <Tooltip
-        title={`name: ${record.owner.userName}`}
+        title={`${t.dashboard.persons.table.owner}: ${record.owner.userName}`}
         placement="leftBottom"
         color="#1087f6"
       >

@@ -1090,6 +1090,7 @@ export const en: LocaleType = {
       },
       table: {
         id: 'ID',
+        avatar: 'Avatar',
         name: 'Name',
         email: 'Email',
         status: 'Status',

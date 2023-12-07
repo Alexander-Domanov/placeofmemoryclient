@@ -1178,6 +1178,7 @@ export const by = {
       },
       table: {
         id: 'ID',
+        avatar: 'Аватар',
         name: 'Імя',
         email: 'Адрас электроннай пошты',
         status: 'Статус',

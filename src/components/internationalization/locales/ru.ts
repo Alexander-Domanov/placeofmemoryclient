@@ -1096,6 +1096,7 @@ export const ru: LocaleType = {
       },
       table: {
         id: 'ID',
+        avatar: 'Аватар',
         name: 'Имя',
         email: 'Адрес электронной почты',
         status: 'Статус',

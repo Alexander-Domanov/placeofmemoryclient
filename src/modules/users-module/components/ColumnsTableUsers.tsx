@@ -18,6 +18,7 @@ export const ColumnsTableUsers = (
 ): ColumnsType<IUserWithShortExtensions> => [
   {
     dataIndex: 'id',
+    title: t.dashboard.users.table.avatar,
     key: 'id',
     width: 40,
     sorter: true,
