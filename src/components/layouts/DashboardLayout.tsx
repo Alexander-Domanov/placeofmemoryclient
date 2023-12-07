@@ -54,9 +54,10 @@ const DashboardLayout: NextPage<PropsWithChildren> = ({ children }) => {
         title={t.dashboard.modalInfo.title}
         centered
         open={isModalVisible}
-        okText={t.dashboard.modalInfo.ok}
-        cancelText={t.dashboard.modalInfo.cancel}
-        onOk={() => setModalVisible(false)}
+        footer={[]}
+        // okText={t.dashboard.modalInfo.ok}
+        // cancelText={t.dashboard.modalInfo.cancel}
+        // onOk={() => setModalVisible(false)}
         onCancel={() => setModalVisible(false)}
       >
         <List split={false}>
