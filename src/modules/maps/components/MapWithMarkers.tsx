@@ -17,6 +17,13 @@ interface MapWithMarkersProps {
   locations: IPerson[];
 }
 
+const defaultMapOptions = {
+  terrain: 'road',
+  disableDefaultUI: true,
+  fullscreenControl: true,
+  streetViewControl: false,
+};
+
 const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
   center,
   locations,
@@ -130,6 +137,7 @@ const MapWithMarkersComponent: FC<MapWithMarkersProps> = ({
         zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        options={defaultMapOptions}
       >
         <MarkerF
           key="center"

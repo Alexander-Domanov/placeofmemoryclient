@@ -15,9 +15,9 @@ const containerStyle = {
 
 const defaultMapOptions = {
   terrain: 'road',
-  disableDefaultUI: false,
+  disableDefaultUI: true,
   fullscreenControl: true,
-  streetViewControl: true,
+  streetViewControl: false,
 };
 
 interface MapWithMarkersProps {

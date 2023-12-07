@@ -16,6 +16,13 @@ const initialCenter = {
 };
 const maxZoomLevel = 18;
 
+const defaultMapOptions = {
+  terrain: 'road',
+  // disableDefaultUI: true,
+  fullscreenControl: true,
+  streetViewControl: false,
+};
+
 const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
   const { t } = useTranslation();
   const { isLoaded } = useLoadScript({
@@ -140,6 +147,7 @@ const MapWithAutoComplete: FC<MapLocationProps> = ({ onDefineLocation }) => {
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={handleMapClick}
+        options={{ ...defaultMapOptions }}
       >
         {markerVisible && markerPosition && (
           <Marker position={markerPosition} />

@@ -18,7 +18,7 @@ const defaultMapOptions = {
   terrain: 'road',
   disableDefaultUI: false,
   // fullscreenControl: false,
-  streetViewControl: true,
+  streetViewControl: false,
   backgroundColor: 'rgb(250, 250, 250)',
 };
 
