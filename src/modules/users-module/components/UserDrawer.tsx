@@ -95,16 +95,16 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
                 />
               </Col>
             </Row>
+
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
                 <DescriptionItem
-                  title={t.dashboard.users.drawer.lastName}
-                  content={
-                    selectedUser?.firstName || t.dashboard.users.drawer.na
-                  }
+                  title={t.dashboard.users.drawer.city}
+                  content={selectedUser?.city || t.dashboard.users.drawer.na}
                 />
               </Col>
             </Row>
+
             <Row style={{ marginBottom: 4 }}>
               <Col span={30}>
                 <DescriptionItem
@@ -138,7 +138,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
 
         <Row>
           <Col span={12}>
-            <Divider orientation="right">
+            <Divider orientation="left">
               {t.dashboard.users.drawer.places}
             </Divider>
 
@@ -159,7 +159,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           </Col>
 
           <Col span={12}>
-            <Divider orientation="right">
+            <Divider orientation="left">
               {t.dashboard.users.drawer.persons}
             </Divider>
             <DescriptionItem
@@ -179,7 +179,7 @@ export const UserDrawer: FC<UserDrawerProps> = ({ onUserSelected }) => {
           </Col>
 
           <Col span={12}>
-            <Divider orientation="right">
+            <Divider orientation="left">
               {t.dashboard.users.drawer.articles}
             </Divider>
 

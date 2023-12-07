@@ -17,6 +17,7 @@ interface IBaseUserType {
   avatars: IAvatarVersions | null;
 }
 export interface IUserWithShortExtensions extends IBaseDateType, IBaseUserType {
+  city: string;
   places: ISummaryStatusGroupDto | null;
   persons: ISummaryStatusGroupDto | null;
   articles: ISummaryStatusGroupDto | null;

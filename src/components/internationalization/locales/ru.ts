@@ -1129,7 +1129,7 @@ export const ru: LocaleType = {
         title: 'Профиль пользователя',
         more: 'подробнее…',
         name: 'Имя пользователя',
-        lastName: 'Фамилия пользователя',
+        city: 'Город',
         na: 'Незаполнено',
         email: 'Адрес электронной почты',
         userInformation: 'Информация о пользователе',
@@ -1192,23 +1192,38 @@ export const ru: LocaleType = {
             placeholder: 'Введите ссылку',
             tooltip:
               'Необходимо ввести ссылку на группу или страницу в формате "https://www.facebook.com/...".',
+            rules: {
+              max: 'Максимальная длина: 120 символов',
+              url: 'Поле "Facebook" должно быть валидным',
+            },
           },
           telegram: {
             label: 'Telegram',
             placeholder: 'Введите ссылку',
             tooltip:
               'Необходимо ввести ссылку на группу или канал в формате "https://t.me/...".',
+            rules: {
+              max: 'Максимальная длина: 120 символов',
+              url: 'Поле "Telegram" должно быть валидным',
+            },
           },
           instagram: {
             label: 'Instagram',
             placeholder: 'Введите ссылку',
             tooltip:
               'Необходимо ввести ссылку на группу или страницу в формате "https://www.instagram.com/...".',
+            rules: {
+              max: 'Максимальная длина: 120 символов',
+              url: 'Поле "Instagram" должно быть валидным',
+            },
           },
           partners: {
             label: 'Партнеры',
             placeholder: 'Введите ссылку',
             tooltip: 'Необходимо ввести ссылку на группу или страницу.',
+            rules: {
+              max: 'Максимальная длина: 120 символов',
+            },
           },
         },
         address: {

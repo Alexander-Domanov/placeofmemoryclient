@@ -1123,7 +1123,7 @@ export const en: LocaleType = {
         title: 'User Profile',
         more: 'more…',
         name: 'User Name',
-        lastName: 'Last Name',
+        city: 'City',
         na: 'N/A',
         email: 'Email',
         userInformation: 'User Information',
@@ -1186,23 +1186,38 @@ export const en: LocaleType = {
             placeholder: 'Input link',
             tooltip:
               'You need to enter a link to the group or page in the format "https://www.facebook.com/...".',
+            rules: {
+              max: 'Maximum length: 120 characters',
+              url: 'Link must be valid',
+            },
           },
           telegram: {
             label: 'Telegram',
             placeholder: 'Input link',
             tooltip:
               'You need to enter a link to the group or channel in the format "https://t.me/...".',
+            rules: {
+              max: 'Maximum length: 120 characters',
+              url: 'Link must be valid',
+            },
           },
           instagram: {
             label: 'Instagram',
             placeholder: 'Input link',
             tooltip:
               'You need to enter a link to the group or page in the format "https://www.instagram.com/...".',
+            rules: {
+              max: 'Maximum length: 120 characters',
+              url: 'Link must be valid',
+            },
           },
           partners: {
             label: 'Partners',
             placeholder: 'Input link',
             tooltip: 'You need to enter a link to the group or page.',
+            rules: {
+              max: 'Maximum length: 120 characters',
+            },
           },
         },
         address: {
@@ -1465,7 +1480,7 @@ export const en: LocaleType = {
     delete: {
       title: 'Delete',
       titleConfirm: 'Confirm deletion',
-      description: 'Are you sure you want to delete this item?',
+      description: 'Are you sure you want to delete?',
       cancel: 'Cancel',
       delete: 'Delete',
     },

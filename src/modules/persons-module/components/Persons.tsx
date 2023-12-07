@@ -241,10 +241,6 @@ export const Persons: FC = () => {
         )
       : columnsTablePersons;
 
-  const selectColumnsTablePlacesForStatus = isDisabled
-    ? selectColumnsTablePlaces.filter((column) => column.key !== 'actions')
-    : selectColumnsTablePlaces;
-
   const setScrollForTable =
     me?.role === Role.USER || me?.role === Role.AUTHOR
       ? { x: 1000 }

@@ -197,7 +197,21 @@ export const Contacts: FC = () => {
                   label={
                     t.dashboard.contacts.form.socialNetworks.facebook.label
                   }
-                  rules={[{ whitespace: true }]}
+                  rules={[
+                    { whitespace: true },
+                    {
+                      type: 'url',
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.facebook.rules
+                          .url,
+                    },
+                    {
+                      max: 120,
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.facebook.rules
+                          .max,
+                    },
+                  ]}
                   hasFeedback
                   tooltip={
                     t.dashboard.contacts.form.socialNetworks.facebook.tooltip
@@ -208,6 +222,10 @@ export const Contacts: FC = () => {
                       t.dashboard.contacts.form.socialNetworks.facebook
                         .placeholder
                     }
+                    count={{
+                      show: true,
+                      max: 120,
+                    }}
                     allowClear
                   />
                 </Form.Item>
@@ -217,7 +235,21 @@ export const Contacts: FC = () => {
                   label={
                     t.dashboard.contacts.form.socialNetworks.telegram.label
                   }
-                  rules={[{ whitespace: true }]}
+                  rules={[
+                    { whitespace: true },
+                    {
+                      type: 'url',
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.facebook.rules
+                          .url,
+                    },
+                    {
+                      max: 120,
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.telegram.rules
+                          .max,
+                    },
+                  ]}
                   hasFeedback
                   tooltip={
                     t.dashboard.contacts.form.socialNetworks.telegram.tooltip
@@ -228,6 +260,10 @@ export const Contacts: FC = () => {
                       t.dashboard.contacts.form.socialNetworks.telegram
                         .placeholder
                     }
+                    count={{
+                      show: true,
+                      max: 120,
+                    }}
                     allowClear
                   />
                 </Form.Item>
@@ -237,7 +273,21 @@ export const Contacts: FC = () => {
                   label={
                     t.dashboard.contacts.form.socialNetworks.instagram.label
                   }
-                  rules={[{ whitespace: true }]}
+                  rules={[
+                    { whitespace: true },
+                    {
+                      type: 'url',
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.facebook.rules
+                          .url,
+                    },
+                    {
+                      max: 120,
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.instagram.rules
+                          .max,
+                    },
+                  ]}
                   hasFeedback
                   tooltip={
                     t.dashboard.contacts.form.socialNetworks.instagram.tooltip
@@ -248,6 +298,10 @@ export const Contacts: FC = () => {
                       t.dashboard.contacts.form.socialNetworks.instagram
                         .placeholder
                     }
+                    count={{
+                      show: true,
+                      max: 120,
+                    }}
                     allowClear
                   />
                 </Form.Item>
@@ -257,7 +311,15 @@ export const Contacts: FC = () => {
                   label={
                     t.dashboard.contacts.form.socialNetworks.partners.label
                   }
-                  rules={[{ whitespace: true }]}
+                  rules={[
+                    { whitespace: true },
+                    {
+                      max: 120,
+                      message:
+                        t.dashboard.contacts.form.socialNetworks.partners.rules
+                          .max,
+                    },
+                  ]}
                   hasFeedback
                   tooltip={
                     t.dashboard.contacts.form.socialNetworks.partners.tooltip
@@ -268,6 +330,10 @@ export const Contacts: FC = () => {
                       t.dashboard.contacts.form.socialNetworks.partners
                         .placeholder
                     }
+                    count={{
+                      show: true,
+                      max: 120,
+                    }}
                     allowClear
                   />
                 </Form.Item>
@@ -280,13 +346,24 @@ export const Contacts: FC = () => {
                   <Form.Item
                     name="address"
                     label={t.dashboard.contacts.form.address.label}
-                    rules={[{ whitespace: true, required: true }]}
+                    rules={[
+                      { whitespace: true },
+                      {
+                        required: true,
+                        message:
+                          t.dashboard.contacts.form.address.rules.required,
+                      },
+                    ]}
                     hasFeedback
                   >
                     <Input
                       placeholder={
                         t.dashboard.contacts.form.address.placeholder
                       }
+                      count={{
+                        show: true,
+                        max: 120,
+                      }}
                       allowClear
                     />
                   </Form.Item>
@@ -294,11 +371,21 @@ export const Contacts: FC = () => {
                   <Form.Item
                     name="email"
                     label={t.dashboard.contacts.form.email.label}
-                    rules={[{ whitespace: true, required: true }]}
+                    rules={[
+                      { whitespace: true },
+                      {
+                        required: true,
+                        message: t.dashboard.contacts.form.email.rules.required,
+                      },
+                    ]}
                     hasFeedback
                   >
                     <Input
                       placeholder={t.dashboard.contacts.form.email.placeholder}
+                      count={{
+                        show: true,
+                        max: 120,
+                      }}
                       allowClear
                     />
                   </Form.Item>
