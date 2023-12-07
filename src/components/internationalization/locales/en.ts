@@ -39,6 +39,7 @@ export const en: LocaleType = {
         buttonSignInT: 'Sign In',
         noAccT: "Don't have an account?",
         signUpT: 'Sign Up',
+        successMessage: 'You have successfully logged in! Redirecting...',
         schema: {
           emailT: 'Email field is required',
           passwordT: 'Password field is required',
@@ -46,7 +47,7 @@ export const en: LocaleType = {
         customErrors:
           'Incorrect password, email, or username. Please try again',
         STATUS_ERROR_401_TR: `This account is not present in the system. If you want to register, go to the "Register" page`,
-
+        STATUS_ERROR_400_TR: 'Incorrect password, email, or username',
         STATUS_ERROR_204_TR:
           'A user with this email already exists. Check your email for further instructions',
       },

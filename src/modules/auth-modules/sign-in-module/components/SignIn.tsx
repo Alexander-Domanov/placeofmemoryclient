@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa6';
+import React from 'react';
 import { AuthLayout } from '@/components';
 import { Button, Input, InputWithEye } from '@/ui';
-import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
+import { OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
@@ -25,19 +25,22 @@ export const SignIn = () => {
     passwordT,
     titleT,
     noAccT,
-    customErrors,
+    // customErrors,
+    successMessage,
     forgotT,
-    STATUS_ERROR_204_TR,
-    STATUS_ERROR_401_TR,
+    // STATUS_ERROR_204_TR,
+    // STATUS_ERROR_401_TR,
+    STATUS_ERROR_400_TR,
   } = t.auth.signIn.page;
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin());
-  const { query, push } = useRouter();
-  const { sendLoginData, isLoading } = useLogin(
+  const { push } = useRouter();
+  const { sendLoginData, isLoading, isSuccess } = useLogin(
     () => {
       push(routes.main);
     },
-    () => setCustomError('password', customErrors),
+    () => setCustomError('password', STATUS_ERROR_400_TR),
+    () => setCustomError('email', STATUS_ERROR_400_TR),
     () => reset()
   );
   useChangingLanguageError({ trigger, errors });
@@ -50,96 +53,113 @@ export const SignIn = () => {
     });
   };
 
-  const [viewQueryStatus, setViewQueryStatus] = useState<string | null>(null);
-  const queryStatus = query.status_code as string;
+  // const [viewQueryStatus, setViewQueryStatus] = useState<string | null>(null);
+  // const queryStatus = query.status_code as string;
 
-  useEffect(() => {
-    if (!queryStatus) return;
+  // useEffect(() => {
+  //   if (isError) {
+  //     setCustomError('password', STATUS_ERROR_400_TR);
+  //     setCustomError('email', STATUS_ERROR_400_TR);
+  //   }
+  // }, [isError]);
 
-    if (queryStatus === AUTH2_STATUS['401']) {
-      setViewQueryStatus(STATUS_ERROR_401_TR);
-    }
-
-    if (queryStatus === AUTH2_STATUS['204']) {
-      setViewQueryStatus(STATUS_ERROR_204_TR);
-    }
-  }, [queryStatus]);
+  // useEffect(() => {
+  //   if (!queryStatus) return;
+  //
+  //   if (queryStatus === AUTH2_STATUS['401']) {
+  //     setViewQueryStatus(STATUS_ERROR_401_TR);
+  //   }
+  //
+  //   if (queryStatus === AUTH2_STATUS['400']) {
+  //     setViewQueryStatus(STATUS_ERROR_400_TR);
+  //   }
+  //
+  //   if (queryStatus === AUTH2_STATUS['204']) {
+  //     setViewQueryStatus(STATUS_ERROR_204_TR);
+  //   }
+  // }, [queryStatus]);
 
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
 
   return (
     <AuthLayout>
-      {viewQueryStatus && (
-        <span className="text-center sm:mb-4 mb-8 text-xs">
-          {viewQueryStatus}
-        </span>
-      )}
+      {/* {viewQueryStatus && ( */}
+      {/*  <span className="text-center sm:mb-4 mb-8 text-xs"> */}
+      {/*    {viewQueryStatus} */}
+      {/*  </span> */}
+      {/* )} */}
 
-      <h1 className="font-semibold text-center sm:text-2xl text-4xl">
-        {titleT}
-      </h1>
+      {isSuccess && <div className="text-center mb-4">{successMessage}</div>}
 
-      <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
+      {!isSuccess && (
+        <>
+          <h1 className="font-semibold text-center sm:text-2xl text-4xl">
+            {titleT}
+          </h1>
 
-      <Button
-        onClick={OAUTH_AUTHORIZATION.registrationGoogle}
-        className="gap-1"
-      >
-        {buttonGT} &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
-        oogle
-      </Button>
+          <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
-      <div>
-        <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
-          <div className="flex-grow  h-[1px] bg-dark-300" />
+          <Button
+            onClick={OAUTH_AUTHORIZATION.registrationGoogle}
+            className="gap-1"
+          >
+            {buttonGT} &nbsp; <FaGoogle size={isMobile ? 22 : 33} />
+            oogle
+          </Button>
 
-          <span className="mx-4">{descriptionT} </span>
+          <div>
+            <div className="mt-8 mb-8 flex items-center text-center text-dark-150 justify-center text-sm">
+              <div className="flex-grow  h-[1px] bg-dark-300" />
 
-          <div className="flex-grow h-[1px] bg-dark-300" />
-        </div>
+              <span className="mx-4">{descriptionT} </span>
 
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={handleSubmit(handleFormSubmit)}
-        >
-          <Input
-            type="email"
-            id="email"
-            label={emailT}
-            error={errors?.email?.message}
-            {...register('email')}
-          />
+              <div className="flex-grow h-[1px] bg-dark-300" />
+            </div>
 
-          <InputWithEye
-            id="password"
-            error={errors?.password?.message}
-            label={passwordT}
-            {...register('password')}
-          />
-
-          <div className="flex text-sm justify-end">
-            <Link
-              className="text-xs underline"
-              href={routes.auth.forgotPassword}
+            <form
+              className="flex flex-col gap-3"
+              onSubmit={handleSubmit(handleFormSubmit)}
             >
-              {forgotT}
-            </Link>
+              <Input
+                type="email"
+                id="email"
+                label={emailT}
+                error={errors?.email?.message}
+                {...register('email')}
+              />
+
+              <InputWithEye
+                id="password"
+                error={errors?.password?.message}
+                label={passwordT}
+                {...register('password')}
+              />
+
+              <div className="flex text-sm justify-end">
+                <Link
+                  className="text-xs underline"
+                  href={routes.auth.forgotPassword}
+                >
+                  {forgotT}
+                </Link>
+              </div>
+
+              <Button disabled={isLoading} className="mt-1 " type="submit">
+                {isLoading ? <Spinner /> : buttonSignInT}
+              </Button>
+            </form>
           </div>
 
-          <Button disabled={isLoading} className="mt-1 " type="submit">
-            {isLoading ? <Spinner /> : buttonSignInT}
-          </Button>
-        </form>
-      </div>
+          <div className="flex gap-1 text-sm justify-center ">
+            <span> {noAccT}</span>
 
-      <div className="flex gap-1 text-sm justify-center ">
-        <span> {noAccT}</span>
-
-        <Link className="underline" href={routes.auth.signUp}>
-          {signUpT}
-        </Link>
-      </div>
+            <Link className="underline" href={routes.auth.signUp}>
+              {signUpT}
+            </Link>
+          </div>
+        </>
+      )}
     </AuthLayout>
   );
 };

@@ -4,12 +4,14 @@ import { sendLoginRequest } from '@/modules/auth-modules/sign-in-module';
 interface ILoginMutation {
   onSuccess: () => void;
   setCustomError: () => void;
+  setCustomError2: () => void;
   reset: () => void;
 }
 
 export const useLogin = (
   onSuccess: ILoginMutation['onSuccess'],
   setCustomError: ILoginMutation['setCustomError'],
+  setCustomError2: ILoginMutation['setCustomError2'],
   reset: ILoginMutation['reset']
 ) => {
   const client = useQueryClient();
@@ -34,6 +36,7 @@ export const useLogin = (
     },
     onError: () => {
       setCustomError();
+      setCustomError2();
     },
   });
 
@@ -42,5 +45,6 @@ export const useLogin = (
     sendLoginData,
     variables,
     isLoading,
+    isSuccess,
   };
 };
