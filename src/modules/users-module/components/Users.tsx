@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { Breadcrumb, Flex, Input, Table } from 'antd';
 import { useDebounce } from 'usehooks-ts';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
@@ -36,6 +36,14 @@ export const Users: FC = () => {
   const [role, setRole] = useState(UserRolesForSelect.ALL.toLowerCase());
 
   const userName = useDebounce(pagination.searchTerm, 500);
+
+  useEffect(() => {
+    if (page === 1) {
+      setPagination({ ...pagination });
+    } else {
+      setPage(1);
+    }
+  }, [userName]);
 
   const { users, isFetching } = useUsers({
     pageNumber: page,

@@ -94,6 +94,14 @@ export const UserList: FC = () => {
 
   const name = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
+  useEffect(() => {
+    if (page === 1) {
+      setPagination({ ...pagination });
+    } else {
+      setPage(1);
+    }
+  }, [name]);
+
   const { user, isLoading, me } = useUser({
     id: userId,
     pageNumber: page,

@@ -33,6 +33,14 @@ export const Articles: FC = () => {
 
   const title = useDebounce(pagination.searchTerm.toLowerCase(), 500);
 
+  useEffect(() => {
+    if (page === 1) {
+      setPagination({ ...pagination });
+    } else {
+      setPage(1);
+    }
+  }, [title]);
+
   const { articles, isFetching, me } = useArticles({
     pageNumber: page,
     pageSize,

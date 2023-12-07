@@ -80,6 +80,14 @@ export const Persons: FC = () => {
   const country = useDebounce(pagination.searchCountry, 500);
   const city = useDebounce(pagination.searchCity, 500);
 
+  useEffect(() => {
+    if (page === 1) {
+      setPagination({ ...pagination });
+    } else {
+      setPage(1);
+    }
+  }, [name, lastName, country, city]);
+
   const { persons, isFetching, me } = usePersons({
     pageNumber: page,
     pageSize,

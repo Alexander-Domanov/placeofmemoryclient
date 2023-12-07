@@ -681,19 +681,19 @@ export const en: LocaleType = {
         more: 'More',
         less: 'Less',
         name: {
-          title: 'Search by name',
-          placeholder: 'Search by name',
+          title: 'Search by first name',
+          placeholder: 'Search by first name',
         },
         lastName: {
           title: 'Search by last name',
           placeholder: 'Search by last name',
         },
         birthDate: {
-          title: 'Birth date',
+          title: 'Search by birth date',
           placeholder: 'Year of birth',
         },
         deathDate: {
-          title: 'Death date',
+          title: 'Search by death date',
           placeholder: 'Year of death',
         },
         country: {
@@ -1326,7 +1326,7 @@ export const en: LocaleType = {
       slug: {
         label: 'Slug',
         placeholder: 'This field is auto generated',
-        tooltip: `You can change the slug of the article.
+        tooltip: `You can change the slug.
             This field is for SEO, it must be unique and contain only letters, numbers and dashes.
             Can't start or end with a dash.`,
         rules: {
