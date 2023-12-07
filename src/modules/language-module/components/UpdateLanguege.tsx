@@ -86,7 +86,10 @@ const UpdateLanguage: React.FC<UpdateLanguageComponentProps> = ({
               name={item.name}
               rules={item.rules}
             >
-              <Input placeholder={item.placeholder} />
+              <Input
+                placeholder={item.placeholder}
+                count={{ max: item.count, show: true }}
+              />
             </Form.Item>
           ))}
 

@@ -1273,6 +1273,7 @@ export const en: LocaleType = {
           rules: {
             required: 'Name field is required',
             pattern: 'Language name must contain only text!',
+            max: 'Maximum length: 60 characters',
           },
         },
         native: {
@@ -1281,6 +1282,7 @@ export const en: LocaleType = {
           rules: {
             required: 'Native field is required',
             pattern: 'Language name must contain only text!',
+            max: 'Maximum length: 60 characters',
           },
         },
         code: {
@@ -1298,6 +1300,7 @@ export const en: LocaleType = {
           rules: {
             required: 'Order field is required',
             pattern: 'Language name must contain only number!',
+            max: 'Order must be 2 characters or less!',
           },
         },
         save: 'Save',
