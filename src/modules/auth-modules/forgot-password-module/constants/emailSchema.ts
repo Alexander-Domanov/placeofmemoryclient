@@ -7,8 +7,12 @@ export const emailSchema = () => {
   return yup.object({
     email: yup
       .string()
-      .required(t.auth.signUp.page.schema.email.required)
-      .email(t.auth.signUp.page.schema.email.email)
+      .required(t.auth.signIn.page.schema.email.required)
+      .max(130, t.auth.signIn.page.schema.email.max)
+      .matches(
+        /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        t.auth.signIn.page.schema.email.email
+      )
       .trim(),
   });
 };
