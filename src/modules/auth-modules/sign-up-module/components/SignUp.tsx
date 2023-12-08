@@ -22,8 +22,15 @@ const videoForLayout = '/videos/sign.mp4';
 export const SignUp = () => {
   const { t, localeLanguage } = useTranslation();
   const [showOrHiddenForm, setShowOrHiddenForm] = useState<boolean>(false);
-  const { errors, trigger, register, reset, handleSubmit, setCustomError } =
-    useGlobalForm(registrationSchema());
+  const {
+    errors,
+    trigger,
+    register,
+    reset,
+    handleSubmit,
+    setCustomError,
+    isValid,
+  } = useGlobalForm(registrationSchema());
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   const { sendRegisteredData, isLoading, isSuccess } = useRegister(
@@ -41,7 +48,9 @@ export const SignUp = () => {
     const { email, password, userName } = data;
     sendRegisteredData({ email, password, userName, lang: localeLanguage });
   };
+
   useChangingLanguageError({ errors, trigger });
+
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
 
@@ -59,6 +68,7 @@ export const SignUp = () => {
     emailT,
     passwordT,
   } = t.auth.signUp.page;
+
   return (
     <AuthLayout videoSrc={videoForLayout}>
       <h1 className="font-semibold text-center sm:text-2xl text-4xl">
@@ -107,7 +117,7 @@ export const SignUp = () => {
 
           {showOrHiddenForm && (
             <form
-              className="flex flex-col gap-3 mt-8"
+              className="flex flex-col gap-4 mt-8"
               onSubmit={handleSubmit(registeredDataSubmit)}
             >
               <Input
@@ -137,6 +147,7 @@ export const SignUp = () => {
 
               <InputWithEye
                 id="password"
+                type="password"
                 error={errors?.password?.message}
                 label={passwordT}
                 {...register('password')}
@@ -146,7 +157,11 @@ export const SignUp = () => {
                 <span>{descriptionFormT}</span>
               </div>
 
-              <Button disabled={isLoading} className="mt-8" type="submit">
+              <Button
+                disabled={isLoading || !isValid}
+                className="mt-8"
+                type="submit"
+              >
                 {isLoading ? <Spinner /> : buttonSignUpT}
               </Button>
             </form>

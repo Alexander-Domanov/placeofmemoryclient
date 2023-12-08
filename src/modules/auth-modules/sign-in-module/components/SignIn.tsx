@@ -118,7 +118,7 @@ export const SignIn = () => {
             </div>
 
             <form
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-4"
               onSubmit={handleSubmit(handleFormSubmit)}
             >
               <Input
@@ -131,6 +131,7 @@ export const SignIn = () => {
 
               <InputWithEye
                 id="password"
+                type="password"
                 error={errors?.password?.message}
                 label={passwordT}
                 {...register('password')}

@@ -41,8 +41,18 @@ export const en: LocaleType = {
         signUpT: 'Sign Up',
         successMessage: 'You have successfully logged in! Redirecting...',
         schema: {
-          emailT: 'Email field is required',
-          passwordT: 'Password field is required',
+          email: {
+            required: 'Email field is required',
+            email: 'Email must be valid',
+            max: 'Maximum length: 130 characters',
+          },
+          password: {
+            required: 'Password field is required',
+            min: 'Minimum length: 6 characters',
+            max: 'Password must not exceed 20 characters',
+            matches:
+              'Password must contain 1-9, a-z, A-Z, and specified symbols',
+          },
         },
         customErrors:
           'Incorrect password, email, or username. Please try again',
@@ -65,7 +75,7 @@ export const en: LocaleType = {
         emailT: 'EMAIL',
         passwordT: 'PASSWORD',
         descriptionFormT:
-          'Password must be at least 6 characters, include uppercase and lowercase letters, and numbers.',
+          'Password must be at least 6 characters, include uppercase and lowercase letters, numbers and special characters',
         buttonSignUpT: 'Sign Up',
         descriptionSignInT: 'Already have an account?',
         signInLinkT: 'Sign In',
@@ -75,19 +85,21 @@ export const en: LocaleType = {
         schema: {
           userName: {
             required: 'Username field is required',
+            matches: 'Only 0-9, A-Z, a-z, _, - characters allowed',
             min: 'Minimum length: 6 characters',
             max: 'Maximum length: 30 characters',
           },
           email: {
             required: 'Email field is required',
             email: 'Email must be valid',
+            max: 'Maximum length: 130 characters',
           },
           password: {
             required: 'Password field is required',
             min: 'Minimum length: 6 characters',
             max: 'Password must not exceed 20 characters',
             matches:
-              'Password must contain at least one digit, one uppercase letter, one lowercase letter, and one special character.',
+              'Password must contain 1-9, a-z, A-Z, and specified symbols',
           },
         },
       },

@@ -8,7 +8,7 @@ export const useGlobalForm = (schema: any) => {
     handleSubmit,
     setError,
     trigger,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -24,6 +24,7 @@ export const useGlobalForm = (schema: any) => {
     reset,
     handleSubmit,
     errors,
+    isValid,
     setCustomError,
     trigger,
   };
