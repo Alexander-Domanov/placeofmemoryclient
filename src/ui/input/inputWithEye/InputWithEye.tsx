@@ -6,6 +6,7 @@ import { Input } from '@/ui';
 
 interface PropsType {
   id: string;
+  type: string;
   label: string;
   placeholder: string;
   error: string | FieldValues | any;
@@ -13,7 +14,7 @@ interface PropsType {
 
 export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
   (
-    { label, id, placeholder, error, ...restProps },
+    { label, type, id, placeholder, error, ...restProps },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const [showPass, setShowPass] = useState(false);
@@ -21,7 +22,7 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
     return (
       <div className="relative w-full h-full">
         <Input
-          type={showPass ? 'text' : 'password'}
+          type={showPass ? 'text' : type}
           id={id || ''}
           label={label || ''}
           placeholder={placeholder || ''}

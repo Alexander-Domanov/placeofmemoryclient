@@ -60,7 +60,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <div className="block h-6 -mt-3.5">
             <span
               className={twMerge(
-                'text-xs text-red-500 font-light',
+                'text-xs text-red-500 font-light leading-3 absolute top-10',
                 error
                   ? 'transform opacity-1 transition-all duration-700 ease-in-out'
                   : 'opacity-0 transition-all duration-700 ease-in-out'
