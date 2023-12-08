@@ -69,6 +69,7 @@ export const en: LocaleType = {
         buttonSignUpT: 'Sign Up',
         descriptionSignInT: 'Already have an account?',
         signInLinkT: 'Sign In',
+        back: 'Back',
         sentEmailT:
           'Registration successfully completed! Please check your email. We have sent you a confirmation email. If you don\'t see the email in your inbox, please check your "Spam" folder.',
         schema: {

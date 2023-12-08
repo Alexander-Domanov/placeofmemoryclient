@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa6';
 import { AuthLayout } from '@/components';
-import { Button, Input } from '@/ui';
+import { Button, Input, InputWithEye } from '@/ui';
 import { OAUTH_AUTHORIZATION } from '@/services';
 import {
   registrationSchema,
@@ -24,11 +24,19 @@ export const SignUp = () => {
   const [showOrHiddenForm, setShowOrHiddenForm] = useState<boolean>(false);
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(registrationSchema());
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   const { sendRegisteredData, isLoading, isSuccess } = useRegister(
     () => reset(),
     setCustomError
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      setShowSuccessMessage(true);
+    }
+  }, [isSuccess]);
+
   const registeredDataSubmit = (data: any) => {
     const { email, password, userName } = data;
     sendRegisteredData({ email, password, userName, lang: localeLanguage });
@@ -59,9 +67,17 @@ export const SignUp = () => {
 
       <div className="mt-8 mb-8 h-[1px] transform bg-dark-300" />
 
-      {isSuccess ? (
+      {showSuccessMessage ? (
         <div className="text-center mt-4 text-dark-150">
-          {t.auth.signUp.page.sentEmailT} &nbsp;
+          <span>{t.auth.signUp.page.sentEmailT} &nbsp;</span>
+
+          <Link
+            className="underline text-white"
+            href={routes.auth.signUp}
+            onClick={() => setShowSuccessMessage(false)}
+          >
+            {t.auth.signUp.page.back}
+          </Link>
         </div>
       ) : (
         <>
@@ -110,9 +126,16 @@ export const SignUp = () => {
                 {...register('email')}
               />
 
-              <Input
-                // placeholder={passwordPlaceholderT}
-                type="password"
+              {/* <Input */}
+              {/*  // placeholder={passwordPlaceholderT} */}
+              {/*  type="password" */}
+              {/*  id="password" */}
+              {/*  error={errors?.password?.message} */}
+              {/*  label={passwordT} */}
+              {/*  {...register('password')} */}
+              {/* /> */}
+
+              <InputWithEye
                 id="password"
                 error={errors?.password?.message}
                 label={passwordT}
