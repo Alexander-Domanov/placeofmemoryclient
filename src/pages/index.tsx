@@ -28,8 +28,12 @@ const Home = ({ posts, time, contacts }: Props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { data: posts } = await getArticlesPublic({ title: '' });
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { data: posts } = await getArticlesPublic({
+    title: '',
+    lang: context.locale,
+  });
+
   const { data: contacts } = await getContacts();
 
   return {
