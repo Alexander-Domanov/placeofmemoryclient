@@ -68,12 +68,18 @@ export const SignIn = () => {
   }, [isError]);
 
   useEffect(() => {
+    let redirectTimer: NodeJS.Timeout;
+
     if (isSuccess) {
       setSuccessStatus(true);
-      setTimeout(() => {
+
+      redirectTimer = setTimeout(() => {
         push(routes.main);
       }, 3000);
+
+      return () => clearTimeout(redirectTimer);
     }
+    return () => {};
   }, [isSuccess]);
 
   useEffect(() => {
