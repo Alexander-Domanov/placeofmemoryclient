@@ -15,7 +15,8 @@ import { useTranslation } from '@/components/internationalization';
 import { useChangingLanguageError } from '@/common/hooks/useChangingLanguageError';
 
 export const SignIn = () => {
-  const { t, localeLanguage } = useTranslation();
+  const { t, localeLanguage, defaultLocale } = useTranslation();
+  const lang = localeLanguage === defaultLocale ? '' : `/${localeLanguage}`;
   const {
     emailT,
     buttonSignInT,
@@ -34,11 +35,11 @@ export const SignIn = () => {
   } = t.auth.signIn.page;
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin());
-  const { push, query } = useRouter();
+  const { query } = useRouter();
   const router = useRouter();
   const { sendLoginData, isLoading, isSuccess, isError } = useLogin(
     () => {
-      push(routes.main);
+      // push(routes.main);
     },
     () => setCustomError('password', STATUS_CODE_400_TR.error),
     () => setCustomError('email', STATUS_CODE_400_TR.error),
@@ -50,7 +51,7 @@ export const SignIn = () => {
     sendLoginData({
       email,
       password,
-      lang: localeLanguage,
+      lang,
     });
   };
 
@@ -71,17 +72,17 @@ export const SignIn = () => {
   useEffect(() => {
     let redirectTimer: NodeJS.Timeout;
 
-    if (isSuccess) {
+    if (isSuccess || queryStatus === AUTH2_STATUS['200']) {
       setSuccessStatus(true);
 
       redirectTimer = setTimeout(() => {
-        router.push(routes.main);
+        router.push(`${routes.main}/${lang}`);
       }, 3000);
 
       return () => clearTimeout(redirectTimer);
     }
     return () => {};
-  }, [isSuccess, router]);
+  }, [isSuccess, router, queryStatus]);
 
   useEffect(() => {
     if (!queryStatus) return;
@@ -97,12 +98,12 @@ export const SignIn = () => {
       setShowModal(true);
     }
 
-    if (queryStatus === AUTH2_STATUS['200']) {
-      // setShowTitle(STATUS_CODE_200_TR.title);
-      // setShowMessage(STATUS_CODE_200_TR.description);
-      setSuccessStatus(true);
-      // push(routes.main);
-    }
+    // if (queryStatus === AUTH2_STATUS['200']) {
+    //   // setShowTitle(STATUS_CODE_200_TR.title);
+    //   // setShowMessage(STATUS_CODE_200_TR.description);
+    //   setSuccessStatus(true);
+    //   // push(routes.main);
+    // }
   }, [queryStatus]);
 
   const closeModal = () => {
