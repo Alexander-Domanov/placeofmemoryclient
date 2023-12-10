@@ -39,7 +39,8 @@ export const en: LocaleType = {
         buttonSignInT: 'Sign In',
         noAccT: "Don't have an account?",
         signUpT: 'Sign Up',
-        successMessage: 'You have successfully logged in! Redirecting...',
+        successMessage:
+          'You have successfully logged in! Redirecting to the home page...',
         schema: {
           email: {
             required: 'Email field is required',
@@ -56,10 +57,21 @@ export const en: LocaleType = {
         },
         customErrors:
           'Incorrect password, email, or username. Please try again',
-        STATUS_ERROR_401_TR: `This account is not present in the system. If you want to register, go to the "Register" page`,
-        STATUS_ERROR_400_TR: 'Incorrect password, email, or username',
-        STATUS_ERROR_204_TR:
-          'A user with this email already exists. Check your email for further instructions',
+        STATUS_CODE_401_TR: {
+          title: 'Login Error',
+          description: `Sorry, there was an error attempting to log in. Please ensure the provided credentials are correct and try again.`,
+        },
+        STATUS_CODE_400_TR: {
+          title: 'Registration or Login Error',
+          description: `Sorry, there was an error attempting to register. Please ensure the provided data is correct and try again. If the issue persists, register using a different email address.`,
+          error: 'Incorrect password, email, or username',
+        },
+        STATUS_CODE_200_TR: {
+          title: 'Successful Registration and Login',
+          description: `Congratulations! Your account has been successfully created, and you have been automatically logged in. Welcome!`,
+          error:
+            'A user with this email already exists. Check your email for further instructions',
+        },
       },
       indexTitle: 'Sign In',
     },

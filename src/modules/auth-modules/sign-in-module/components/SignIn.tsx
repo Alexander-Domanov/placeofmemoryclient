@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { FaGoogle } from 'react-icons/fa6';
-import React from 'react';
-import { AuthLayout } from '@/components';
+import React, { useEffect, useState } from 'react';
+import { AuthLayout, ModalInfo } from '@/components';
 import { Button, Input, InputWithEye } from '@/ui';
-import { OAUTH_AUTHORIZATION } from '@/services';
+import { AUTH2_STATUS, OAUTH_AUTHORIZATION } from '@/services';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm';
 import { schemaLogin, useLogin } from '@/modules/auth-modules/sign-in-module';
 import { routes } from '@/common/routing/routes';
@@ -28,19 +28,19 @@ export const SignIn = () => {
     // customErrors,
     successMessage,
     forgotT,
-    // STATUS_ERROR_204_TR,
-    // STATUS_ERROR_401_TR,
-    STATUS_ERROR_400_TR,
+    // STATUS_CODE_200_TR,
+    STATUS_CODE_401_TR,
+    STATUS_CODE_400_TR,
   } = t.auth.signIn.page;
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin());
-  const { push } = useRouter();
-  const { sendLoginData, isLoading, isSuccess } = useLogin(
+  const { push, query } = useRouter();
+  const { sendLoginData, isLoading, isSuccess, isError } = useLogin(
     () => {
       push(routes.main);
     },
-    () => setCustomError('password', STATUS_ERROR_400_TR),
-    () => setCustomError('email', STATUS_ERROR_400_TR),
+    () => setCustomError('password', STATUS_CODE_400_TR.error),
+    () => setCustomError('email', STATUS_CODE_400_TR.error),
     () => reset()
   );
   useChangingLanguageError({ trigger, errors });
@@ -53,46 +53,70 @@ export const SignIn = () => {
     });
   };
 
-  // const [viewQueryStatus, setViewQueryStatus] = useState<string | null>(null);
-  // const queryStatus = query.status_code as string;
+  const [showMessage, setShowMessage] = useState<string | null>(null);
+  const [showTitle, setShowTitle] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [successStatus, setSuccessStatus] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     setCustomError('password', STATUS_ERROR_400_TR);
-  //     setCustomError('email', STATUS_ERROR_400_TR);
-  //   }
-  // }, [isError]);
+  const queryStatus = query.status_code as string;
 
-  // useEffect(() => {
-  //   if (!queryStatus) return;
-  //
-  //   if (queryStatus === AUTH2_STATUS['401']) {
-  //     setViewQueryStatus(STATUS_ERROR_401_TR);
-  //   }
-  //
-  //   if (queryStatus === AUTH2_STATUS['400']) {
-  //     setViewQueryStatus(STATUS_ERROR_400_TR);
-  //   }
-  //
-  //   if (queryStatus === AUTH2_STATUS['204']) {
-  //     setViewQueryStatus(STATUS_ERROR_204_TR);
-  //   }
-  // }, [queryStatus]);
+  useEffect(() => {
+    if (isError) {
+      setCustomError('password', STATUS_CODE_400_TR.error);
+      setCustomError('email', STATUS_CODE_400_TR.error);
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setSuccessStatus(true);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!queryStatus) return;
+
+    if (queryStatus === AUTH2_STATUS['401']) {
+      setShowTitle(STATUS_CODE_401_TR.title);
+      setShowMessage(STATUS_CODE_401_TR.description);
+      setShowModal(true);
+    }
+    if (queryStatus === AUTH2_STATUS['400']) {
+      setShowTitle(STATUS_CODE_400_TR.title);
+      setShowMessage(STATUS_CODE_400_TR.description);
+      setShowModal(true);
+    }
+
+    if (queryStatus === AUTH2_STATUS['200']) {
+      // setShowTitle(STATUS_CODE_200_TR.title);
+      // setShowMessage(STATUS_CODE_200_TR.description);
+      setSuccessStatus(true);
+      push(routes.main);
+    }
+  }, [queryStatus]);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const { width } = useWindowSize();
   const isMobile = width && width < 640;
 
   return (
     <AuthLayout>
-      {/* {viewQueryStatus && ( */}
-      {/*  <span className="text-center sm:mb-4 mb-8 text-xs"> */}
-      {/*    {viewQueryStatus} */}
-      {/*  </span> */}
-      {/* )} */}
+      {showModal && (
+        <ModalInfo
+          onClose={closeModal}
+          title={showTitle as string}
+          message={showMessage as string}
+        />
+      )}
 
-      {isSuccess && <div className="text-center mb-4">{successMessage}</div>}
+      {successStatus && (
+        <div className="text-center mb-4">{successMessage}</div>
+      )}
 
-      {!isSuccess && (
+      {!successStatus && !showModal && (
         <>
           <h1 className="font-semibold text-center sm:text-2xl text-4xl">
             {titleT}
