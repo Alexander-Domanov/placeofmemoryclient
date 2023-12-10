@@ -82,7 +82,7 @@ export const SignIn = () => {
       return () => clearTimeout(redirectTimer);
     }
     return () => {};
-  }, [isSuccess, router, queryStatus]);
+  }, [isSuccess, router, queryStatus, lang]);
 
   useEffect(() => {
     if (!queryStatus) return;
