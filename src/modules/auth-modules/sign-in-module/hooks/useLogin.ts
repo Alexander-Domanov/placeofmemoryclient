@@ -20,6 +20,7 @@ export const useLogin = (
     data,
     isLoading,
     isSuccess,
+    isError,
     variables,
     mutate: sendLoginData,
   } = useMutation({
@@ -44,6 +45,7 @@ export const useLogin = (
     data,
     sendLoginData,
     variables,
+    isError,
     isLoading,
     isSuccess,
   };
