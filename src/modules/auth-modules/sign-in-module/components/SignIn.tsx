@@ -70,6 +70,9 @@ export const SignIn = () => {
   useEffect(() => {
     if (isSuccess) {
       setSuccessStatus(true);
+      setTimeout(() => {
+        push(routes.main);
+      }, 3000);
     }
   }, [isSuccess]);
 
@@ -91,7 +94,7 @@ export const SignIn = () => {
       // setShowTitle(STATUS_CODE_200_TR.title);
       // setShowMessage(STATUS_CODE_200_TR.description);
       setSuccessStatus(true);
-      push(routes.main);
+      // push(routes.main);
     }
   }, [queryStatus]);
 
