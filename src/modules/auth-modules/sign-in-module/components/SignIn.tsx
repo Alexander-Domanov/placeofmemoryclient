@@ -28,7 +28,7 @@ export const SignIn = () => {
     // customErrors,
     successMessage,
     forgotT,
-    STATUS_CODE_200_TR,
+    // STATUS_CODE_200_TR,
     STATUS_CODE_401_TR,
     STATUS_CODE_400_TR,
   } = t.auth.signIn.page;
