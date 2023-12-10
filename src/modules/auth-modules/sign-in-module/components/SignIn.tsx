@@ -35,6 +35,7 @@ export const SignIn = () => {
   const { errors, trigger, register, reset, handleSubmit, setCustomError } =
     useGlobalForm(schemaLogin());
   const { push, query } = useRouter();
+  const router = useRouter();
   const { sendLoginData, isLoading, isSuccess, isError } = useLogin(
     () => {
       push(routes.main);
@@ -74,13 +75,13 @@ export const SignIn = () => {
       setSuccessStatus(true);
 
       redirectTimer = setTimeout(() => {
-        push(routes.main);
+        router.push(routes.main);
       }, 3000);
 
       return () => clearTimeout(redirectTimer);
     }
     return () => {};
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   useEffect(() => {
     if (!queryStatus) return;
