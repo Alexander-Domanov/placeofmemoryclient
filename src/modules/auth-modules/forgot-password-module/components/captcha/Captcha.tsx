@@ -27,12 +27,16 @@ export const Captcha = ({ onRecaptchaChangeHandler }: PropsType) => {
         theme="light"
         style={{ display: 'block', margin: '0 auto' }}
       />
+
       <div className="pt-4 items-center pb-3 text-center text-xs leading-6 text-light-900 font-normal">
         <span>{titleT} </span>
+
         <Link href="https://policies.google.com/privacy" className="underline">
           {privateT}
         </Link>
+
         <span> і </span>
+
         <Link href="https://policies.google.com/terms" className="underline">
           {rules}
         </Link>

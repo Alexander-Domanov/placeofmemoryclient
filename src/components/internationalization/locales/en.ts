@@ -52,7 +52,7 @@ export const en: LocaleType = {
             min: 'Minimum length: 6 characters',
             max: 'Password must not exceed 20 characters',
             matches:
-              'Password must contain 1-9, a-z, A-Z, and specified symbols',
+              'Password must contain 0-9, a-z, A-Z, and specified symbols',
           },
         },
         customErrors:
@@ -111,7 +111,7 @@ export const en: LocaleType = {
             min: 'Minimum length: 6 characters',
             max: 'Password must not exceed 20 characters',
             matches:
-              'Password must contain 1-9, a-z, A-Z, and specified symbols',
+              'Password must contain 0-9, a-z, A-Z, and specified symbols',
           },
         },
       },

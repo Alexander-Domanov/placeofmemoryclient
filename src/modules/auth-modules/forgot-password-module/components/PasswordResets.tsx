@@ -19,8 +19,19 @@ export const PasswordResets = () => {
   const { t, localeLanguage } = useTranslation();
   const [captcha, setCaptcha] = useState('');
   const [showMessage, setShowMessage] = useState<boolean>(false);
-  const { errors, trigger, register, reset, handleSubmit, setCustomError } =
-    useGlobalForm(emailSchema());
+
+  const [isRecaptchaChecked, setIsRecaptchaChecked] = useState<boolean>(false);
+  const [submittedEmail, setSubmittedEmail] = useState<string>('');
+
+  const {
+    errors,
+    trigger,
+    register,
+    reset,
+    handleSubmit,
+    setCustomError,
+    isValid,
+  } = useGlobalForm(emailSchema());
   const { sendLinkPasswordRecovery, isLoading } = useForgotPassword(
     () => setShowMessage(true),
     (field: string, massage: string) => {
@@ -30,14 +41,20 @@ export const PasswordResets = () => {
   );
   const onRecaptchaChange = (token: string) => {
     setCaptcha(token);
+    setIsRecaptchaChecked(!!token);
   };
   const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     const { email } = data;
-    sendLinkPasswordRecovery({
-      data: { email, recaptcha: captcha },
-      lang: localeLanguage,
-    });
-    reset();
+    setSubmittedEmail(email);
+    if (isRecaptchaChecked) {
+      sendLinkPasswordRecovery({
+        data: { email, recaptcha: captcha },
+        lang: localeLanguage,
+      });
+      // reset();
+    } else {
+      setCustomError('recaptcha', 'Please check the reCAPTCHA checkbox.');
+    }
   };
   useChangingLanguageError({ errors, trigger });
   const {
@@ -84,14 +101,18 @@ export const PasswordResets = () => {
             <Input
               type="email"
               id="email"
-              label={emailT}
+              label={emailT || submittedEmail}
               error={errors?.email?.message}
               {...register('email')}
               onBlur={() => trigger('email')}
             />
+
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
 
-            <Button disabled={isLoading} className="mt-1">
+            <Button
+              disabled={isLoading || !isValid || !isRecaptchaChecked}
+              className="mt-1"
+            >
               {isLoading ? <Spinner /> : buttonT}
             </Button>
           </form>
