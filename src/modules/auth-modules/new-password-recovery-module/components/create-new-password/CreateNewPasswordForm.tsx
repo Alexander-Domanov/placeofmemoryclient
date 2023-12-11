@@ -39,6 +39,7 @@ export const CreateNewPasswordForm = ({
           // placeholder={placeholderT}
           error={errors?.password?.message}
           {...register('password')}
+          onBlur={() => trigger('password')}
         />
 
         <div className="flex justify-center text-sm">

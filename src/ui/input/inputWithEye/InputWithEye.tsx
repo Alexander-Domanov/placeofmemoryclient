@@ -10,11 +10,12 @@ interface PropsType {
   label: string;
   placeholder: string;
   error: string | FieldValues | any;
+  onBlur: () => void;
 }
 
 export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
   (
-    { label, type, id, placeholder, error, ...restProps },
+    { label, type, id, placeholder, error, onBlur, ...restProps },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const [showPass, setShowPass] = useState(false);
@@ -29,6 +30,7 @@ export const InputWithEye: FC<Partial<PropsType>> = forwardRef(
           error={error || ''}
           ref={ref}
           {...restProps}
+          onBlur={onBlur}
         />
         <button
           type="button"

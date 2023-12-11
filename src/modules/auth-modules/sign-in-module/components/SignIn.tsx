@@ -162,6 +162,7 @@ export const SignIn = () => {
                 label={emailT}
                 error={errors?.email?.message}
                 {...register('email')}
+                onBlur={() => trigger('email')}
               />
 
               <InputWithEye
@@ -170,6 +171,7 @@ export const SignIn = () => {
                 error={errors?.password?.message}
                 label={passwordT}
                 {...register('password')}
+                onBlur={() => trigger('password')}
               />
 
               <div className="flex text-sm justify-end">

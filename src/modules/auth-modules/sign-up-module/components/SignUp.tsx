@@ -126,6 +126,7 @@ export const SignUp = () => {
                 label={nameT}
                 error={errors?.userName?.message}
                 {...register('userName')}
+                onBlur={() => trigger('userName')}
               />
 
               <Input
@@ -134,6 +135,7 @@ export const SignUp = () => {
                 label={emailT}
                 error={errors?.email?.message}
                 {...register('email')}
+                onBlur={() => trigger('email')}
               />
 
               {/* <Input */}
@@ -151,6 +153,7 @@ export const SignUp = () => {
                 error={errors?.password?.message}
                 label={passwordT}
                 {...register('password')}
+                onBlur={() => trigger('password')}
               />
 
               <div className="text-xs flex justify-center text-dark-150">

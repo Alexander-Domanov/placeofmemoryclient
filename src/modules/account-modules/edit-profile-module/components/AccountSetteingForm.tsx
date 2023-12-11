@@ -69,6 +69,7 @@ export const AccountSettingForm = ({
         {...register('userName')}
         error={errors?.userName?.message}
         disabled={isDisabled}
+        onBlur={() => trigger('userName')}
       />
 
       <Input
