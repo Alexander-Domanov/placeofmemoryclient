@@ -87,6 +87,7 @@ export const PasswordResets = () => {
               label={emailT}
               error={errors?.email?.message}
               {...register('email')}
+              onBlur={() => trigger('email')}
             />
             <Captcha onRecaptchaChangeHandler={onRecaptchaChange} />
 
