@@ -52,7 +52,7 @@ export const en: LocaleType = {
             min: 'Minimum length: 6 characters',
             max: 'Password must not exceed 20 characters',
             matches:
-              'Password must contain 0-9, a-z, A-Z, and specified symbols',
+              'Password must contain 0-9, a-z, A-Z, and specified symbols, except: #, \\, \', ", №',
           },
         },
         customErrors:
@@ -111,7 +111,7 @@ export const en: LocaleType = {
             min: 'Minimum length: 6 characters',
             max: 'Password must not exceed 20 characters',
             matches:
-              'Password must contain 0-9, a-z, A-Z, and specified symbols',
+              'Password must contain 0-9, a-z, A-Z, and specified symbols, except: #, \\, \', ", №',
           },
         },
       },
@@ -123,7 +123,7 @@ export const en: LocaleType = {
         signInLink: 'Go to Sign In',
         titleT: 'Forgot Password?',
         descriptionFirstT: `Enter the email address you used to register, and we will send you instructions to reset your password.`,
-        descriptionSecondT: `For security reasons, we do NOT store your password. So relax, we assure you that we will never send your password by email.`,
+        descriptionSecondT: `For security reasons, we do not store your current password. If you do not remember your password, you can reset it.`,
         emailT: 'EMAIL',
         captchaT: {
           titleT: 'This site is protected by reCAPTCHA Enterprise and Google',
