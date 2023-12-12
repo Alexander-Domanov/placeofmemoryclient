@@ -1,7 +1,7 @@
 import { LocaleType } from '@/components/internationalization';
 
 const REG_FORM_NUMBER = /^[0-9]+$/;
-const REG_FORM_TEXT = /^[a-zA-Z]+$/;
+const REG_FORM_TEXT = /^[a-z]+$/;
 const REG_FORM_NATIVE = /^[\p{L}]+$/u;
 
 export const FORM_ITEMS = (t: LocaleType) => [
