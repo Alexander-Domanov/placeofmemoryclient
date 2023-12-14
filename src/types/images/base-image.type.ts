@@ -4,4 +4,5 @@ export interface IBaseImage {
   width: number;
   height: number;
   fileSize: string;
+  alt: string;
 }
