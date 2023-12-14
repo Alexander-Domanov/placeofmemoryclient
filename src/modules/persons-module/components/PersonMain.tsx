@@ -178,7 +178,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
           href={routes.persons.page(Number(1))}
           className="mt-16 inline-flex text-5xl sm:text-4xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
         >
-          <BsArrowLeftCircleFill className="text-dark-300" />
+          <BsArrowLeftCircleFill className="text-dark-300 hover:text-dark-150" />
           <span className="sr-only">{prevT}</span>
         </Link>
       </div>

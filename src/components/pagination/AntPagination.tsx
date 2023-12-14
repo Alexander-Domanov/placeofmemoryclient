@@ -46,7 +46,7 @@ export const AntPagination: FC<IPaginationProps> = ({
           simple
           prevIcon={
             <button className="mr-48 md:mr-32 sm:mr-6 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200">
-              <BsArrowLeftCircleFill className="text-dark-300" />
+              <BsArrowLeftCircleFill className="text-dark-300 hover:text-dark-150" />
               <span className="sr-only">Previous</span>
             </button>
           }
@@ -55,7 +55,7 @@ export const AntPagination: FC<IPaginationProps> = ({
               type="button"
               className="ml-48 md:ml-32 sm:ml-6 text-5xl sm:text-3xl text-dark-500 rounded-full shadow-icon hover:bg-dark-200"
             >
-              <BsArrowRightCircleFill className="text-dark-300" />
+              <BsArrowRightCircleFill className="text-dark-300 hover:text-dark-150" />
               <span className="sr-only">Next</span>
             </button>
           }

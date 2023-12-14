@@ -64,7 +64,7 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
           )}
         </div>
 
-        <div className="bg-dark-300 flex-grow text-center text-xs font-bold p-2 rounded-b-sm">
+        <div className="bg-dark-300 flex-grow text-center text-xs font-bold p-2 rounded-b-sm hover:bg-dark-150">
           {person.firstName} {person.lastName}
         </div>
       </Link>
