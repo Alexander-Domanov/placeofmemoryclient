@@ -21,6 +21,7 @@ import { IPlace } from '@/types';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
 import { NoDataComponent } from '@/components';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 export const PlaceMain = ({ place }: { place: IPlace }) => {
   const { t } = useTranslation();
@@ -101,8 +102,13 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
                     <div className="mt-10">
                       <div className="flex justify-center mx-auto aspect-w-1 aspect-h-1 max-w-[700px] max-h-[700px] relative">
                         <Image
-                          src={place.photos[0]?.versions.huge.url}
-                          alt={`${place.nameCemetery}`}
+                          src={
+                            place.photos[0]?.versions.huge.url || pictureBackup
+                          }
+                          alt={
+                            place.photos[0]?.versions.huge.alt ||
+                            place.nameCemetery
+                          }
                           width={place.photos[0]?.versions.huge.width}
                           height={place.photos[0]?.versions.huge.height}
                           loading="eager"

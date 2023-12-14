@@ -6,6 +6,7 @@ import { IArticle } from '@/types';
 import { routes } from '@/common/routing/routes';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useTranslation } from '@/components/internationalization';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface Props {
   post: IArticle;
@@ -34,8 +35,8 @@ export const ArticleMain: FC<Props> = ({ post }) => {
         <div className="mt-10">
           <div className="mb-8 flex justify-center mx-auto max-w-[600px] max-h-[600px]">
             <Image
-              src={post.photos[0]?.versions.huge.url}
-              alt={post.title}
+              src={post.photos[0]?.versions.huge.url || pictureBackup}
+              alt={post.photos[0]?.versions.huge.alt || post.title}
               width={post.photos[0]?.versions.huge.width}
               height={post.photos[0]?.versions.huge.height}
               className="object-contain rounded-lg shadow-icon"

@@ -12,6 +12,7 @@ import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useArticlesPublic } from '@/modules/articles-module/hooks/useArticlesPublic';
 import { useTranslation } from '@/components/internationalization';
 import { NoDataComponent } from '@/components';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface Props {
   articles: IGetArticlesResponse;
@@ -128,8 +129,8 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
                     className="relative aspect-[532/244] block"
                   >
                     <Image
-                      src={post.photos[0]?.versions.huge.url}
-                      alt={post.title}
+                      src={post.photos[0]?.versions.huge.url || pictureBackup}
+                      alt={post.photos[0]?.versions.huge.alt || post.title}
                       fill
                       className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
                     />

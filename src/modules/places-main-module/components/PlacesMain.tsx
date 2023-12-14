@@ -11,6 +11,7 @@ import { IGetPlacesResponse } from '@/types';
 import AntPagination from '@/components/pagination/AntPagination';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { NoDataComponent } from '@/components';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface IProps {
   places: IGetPlacesResponse;
@@ -152,8 +153,13 @@ export const PlacesMain = ({ places }: IProps) => {
                         rel="preload"
                       >
                         <Image
-                          src={place.photos[0]?.versions.huge.url}
-                          alt={place.nameCemetery}
+                          src={
+                            place.photos[0]?.versions.huge.url || pictureBackup
+                          }
+                          alt={
+                            place.photos[0]?.versions.huge.alt ||
+                            place.nameCemetery
+                          }
                           fill
                           placeholder="blur"
                           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPUqQcAAN0ArWVCiMAAAAAASUVORK5CYII="

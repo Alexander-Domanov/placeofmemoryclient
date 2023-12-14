@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { IPerson } from '@/types';
 import { routes } from '@/common/routing/routes';
 import { useWindowSize } from '@/common/hooks/useWindowResize';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface Props {
   person: IPerson;
@@ -50,9 +51,12 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
       >
         <div className="aspect-[170/210] relative flex-shrink-0">
           <Image
-            src={person.photos[0]?.versions.medium.url}
+            src={person.photos[0]?.versions.medium.url || pictureBackup}
             fill
-            alt={`${person.firstName} ${person.lastName}`}
+            alt={
+              person.photos[0]?.versions.medium.alt ||
+              `${person.firstName} ${person.lastName}`
+            }
             className="object-cover rounded-t-sm"
           />
           {!isTable && isHovered && (

@@ -18,6 +18,7 @@ import { useWindowSize } from '@/common/hooks/useWindowResize';
 import MapMainWithMarkersComponent from '@/modules/maps/components/MapMainWithMarkers';
 import BreadcrumbMain from '@/components/Breadcrumb/BreadcrumbMain';
 import { useTranslation } from '@/components/internationalization';
+import { pictureBackup } from '@/common-dashboard/constants/picture-backup';
 
 interface Props {
   person: IPerson;
@@ -96,8 +97,11 @@ export const PersonMain: FC<Props> = ({ person }) => {
                 <div className="mt-10">
                   <div className="flex justify-center mx-auto aspect-w-1 aspect-h-1 max-w-[400px] max-h-[400px] relative">
                     <Image
-                      src={person.photos[0]?.versions.huge.url}
-                      alt={`${person.firstName} ${person.lastName}`}
+                      src={person.photos[0]?.versions.huge.url || pictureBackup}
+                      alt={
+                        person.photos[0]?.versions.huge.alt ||
+                        `${person.firstName} ${person.lastName}`
+                      }
                       width={person.photos[0]?.versions.huge.width}
                       height={person.photos[0]?.versions.huge.height}
                       loading="eager"
