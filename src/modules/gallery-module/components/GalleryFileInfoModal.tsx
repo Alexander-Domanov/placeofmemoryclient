@@ -255,7 +255,8 @@ export const GalleryFileInfoModal: FC = () => {
   const onSubmit = (values: FormValues) => {
     updateGalleryFileMutateAsync({
       alt: values.alt,
-      status: values.status.toUpperCase(),
+      status: form.getFieldValue('status')?.toUpperCase(),
+      // status: values.status?.toUpperCase(),
     }).then(() => {
       notification.success({
         message: t.dashboard.gallery.image.notifications.update.title,
