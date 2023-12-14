@@ -54,8 +54,7 @@ export const PersonsItemMain: FC<Props> = ({ person }) => {
             src={person.photos[0]?.versions.medium.url || pictureBackup}
             fill
             alt={
-              person.photos[0]?.versions.medium.alt ||
-              `${person.firstName} ${person.lastName}`
+              person.photos[0]?.alt || `${person.firstName} ${person.lastName}`
             }
             className="object-cover rounded-t-sm"
           />

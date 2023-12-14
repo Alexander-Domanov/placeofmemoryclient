@@ -99,7 +99,7 @@ export const PersonMain: FC<Props> = ({ person }) => {
                     <Image
                       src={person.photos[0]?.versions.huge.url || pictureBackup}
                       alt={
-                        person.photos[0]?.versions.huge.alt ||
+                        person.photos[0]?.alt ||
                         `${person.firstName} ${person.lastName}`
                       }
                       width={person.photos[0]?.versions.huge.width}

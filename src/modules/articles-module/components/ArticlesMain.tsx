@@ -130,7 +130,7 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
                   >
                     <Image
                       src={post.photos[0]?.versions.huge.url || pictureBackup}
-                      alt={post.photos[0]?.versions.huge.alt || post.title}
+                      alt={post.photos[0]?.alt || post.title}
                       fill
                       className="object-cover rounded-lg hover:shadow-iconHover shadow-lg"
                     />

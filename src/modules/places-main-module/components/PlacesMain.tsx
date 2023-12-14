@@ -156,10 +156,7 @@ export const PlacesMain = ({ places }: IProps) => {
                           src={
                             place.photos[0]?.versions.huge.url || pictureBackup
                           }
-                          alt={
-                            place.photos[0]?.versions.huge.alt ||
-                            place.nameCemetery
-                          }
+                          alt={place.photos[0]?.alt || place.nameCemetery}
                           fill
                           placeholder="blur"
                           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPUqQcAAN0ArWVCiMAAAAAASUVORK5CYII="

@@ -105,10 +105,7 @@ export const PlaceMain = ({ place }: { place: IPlace }) => {
                           src={
                             place.photos[0]?.versions.huge.url || pictureBackup
                           }
-                          alt={
-                            place.photos[0]?.versions.huge.alt ||
-                            place.nameCemetery
-                          }
+                          alt={place.photos[0]?.alt || place.nameCemetery}
                           width={place.photos[0]?.versions.huge.width}
                           height={place.photos[0]?.versions.huge.height}
                           loading="eager"
