@@ -1298,7 +1298,7 @@ export const en: LocaleType = {
           placeholder: 'Name',
           rules: {
             required: 'Name field is required',
-            pattern: 'Language name must contain only text!',
+            pattern: 'The language name must contain only lower case text!',
             max: 'Maximum length: 60 characters',
           },
         },
@@ -1316,7 +1316,7 @@ export const en: LocaleType = {
           placeholder: 'Code',
           rules: {
             required: 'Code field is required',
-            pattern: 'Language name must contain only text!',
+            pattern: 'The "Code" field must contain text only!',
             max: 'Code must be 2 characters or less!',
           },
         },
@@ -1325,7 +1325,7 @@ export const en: LocaleType = {
           placeholder: 'Order',
           rules: {
             required: 'Order field is required',
-            pattern: 'Language name must contain only number!',
+            pattern: 'The "Order" field must contain only number!',
             max: 'Order must be 2 characters or less!',
           },
         },
