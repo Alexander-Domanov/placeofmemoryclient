@@ -17,7 +17,7 @@ export const useArticles = (data: IPaginationArticles) => {
     error,
   } = useQuery({
     queryKey: ['articles', { ...data, lang: me?.lang }],
-    queryFn: () => getArticles({ ...data }),
+    queryFn: () => getArticles({ ...data, lang: me?.lang }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
