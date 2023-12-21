@@ -8,7 +8,7 @@ const AuthProtection: FC<PropsWithChildren> = memo(({ children }) => {
   const { pathname, replace } = useRouter();
   const { setUserId, setUserName, setUrlAvatar, setLang } = useUserStore();
 
-  const { isSuccess, isError, fetchStatus } = useMeQuery(
+  const { isSuccess, isError } = useMeQuery(
     (userId) => {
       setUserId(userId);
     },

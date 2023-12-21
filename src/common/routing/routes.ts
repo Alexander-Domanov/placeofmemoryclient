@@ -23,6 +23,7 @@ export const routes = {
     '/articles/[page]',
     '/articles/article/[slug]',
     '/places/[page]',
+    '/places/place/[slug]',
     '/places/place/person',
     '/_error',
     '/auth/registration-confirmation',
