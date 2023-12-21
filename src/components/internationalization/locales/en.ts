@@ -246,7 +246,7 @@ export const en: LocaleType = {
       page: {
         title: 'Search',
         placeholder: 'Search',
-        name: 'NAME',
+        name: 'FIRST NAME',
         lastName: 'LAST NAME',
         birthDate: 'BIRTH YEAR',
         error: 'Incorrect date format',

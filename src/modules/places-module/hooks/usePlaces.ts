@@ -15,7 +15,7 @@ export const usePlaces = (data: IPaginationPlaces) => {
     isFetching,
   } = useQuery({
     queryKey: ['places', { ...data, lang: me?.lang }],
-    queryFn: () => getPlaces({ ...data }),
+    queryFn: () => getPlaces({ ...data, lang: me?.lang }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,
