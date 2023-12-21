@@ -20,7 +20,7 @@ export const useTitlePlaces = (data: {
     error,
   } = useQuery({
     queryKey: ['title-places', { ...data, lang: me?.lang }],
-    queryFn: () => getTitlePlaces({ ...data }),
+    queryFn: () => getTitlePlaces({ ...data, lang: me?.lang }),
     select: (response) => response.data,
     keepPreviousData: true,
     ...noRefetch,

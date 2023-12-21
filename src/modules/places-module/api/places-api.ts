@@ -23,6 +23,7 @@ export const getTitlePlaces = (data: {
   name?: string;
   city?: string;
   country?: string;
+  lang?: string;
 }) => {
   return authInstance.get<IGetTitlePlacesResponse>('places/country/titles', {
     params: {
