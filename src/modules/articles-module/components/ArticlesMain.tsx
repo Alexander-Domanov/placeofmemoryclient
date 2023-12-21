@@ -20,6 +20,7 @@ interface Props {
 
 export const ArticlesMain: FC<Props> = ({ articles }) => {
   const router = useRouter();
+  const lang = router.locale?.toLowerCase();
   const { t } = useTranslation();
 
   const [searchResults, setSearchResults] = useState<IArticle[]>([]);
@@ -31,13 +32,19 @@ export const ArticlesMain: FC<Props> = ({ articles }) => {
   const { foundArticles } = useArticlesPublic({
     title: title.toLowerCase(),
     pageSize: 5,
-    lang: router.locale?.toLowerCase(),
+    lang,
   });
 
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => {
     setIsSearchOpen(false);
   });
+
+  useEffect(() => {
+    if (lang) {
+      router.push(`${routes.articles.page(Number(1))}`);
+    }
+  }, [lang]);
 
   useEffect(() => {
     if (inputValue.length > 0) {

@@ -30,6 +30,8 @@ const CityTooltip: FC<{ city: string; country: string }> = ({
 
 export const PlacesMain = ({ places }: IProps) => {
   const { push, query, pathname, replace } = useRouter();
+  const router = useRouter();
+  const lang = router.locale?.toLowerCase();
   const { t } = useTranslation();
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
@@ -59,9 +61,11 @@ export const PlacesMain = ({ places }: IProps) => {
     places,
   });
 
-  // useEffect(() => {
-  //   setLoading(isLoading);
-  // }, [isLoading]);
+  useEffect(() => {
+    if (lang) {
+      push(`${routes.places.page(String(1))}`);
+    }
+  }, [lang]);
 
   const onPageChange = (newPage: number) => {
     if (dataPlaces && newPage >= 1 && newPage <= dataPlaces.pagesCount) {
