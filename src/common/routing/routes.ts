@@ -17,6 +17,7 @@ export const routes = {
     '/map',
     '/persons',
     '/persons/person',
+    '/persons/person/[slug]',
     '/persons/[page]',
     '/about-the-project',
     '/articles',
